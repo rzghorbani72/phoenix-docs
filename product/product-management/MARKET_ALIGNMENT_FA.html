@@ -1,0 +1,1280 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>هم‌راستایی نیاز همراه اول با بازار</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <div class="cover">
+      <h1>نیازهای همراه اول و بازار: محصول COA، AIVA و Chatbot را چطور بسازیم</h1>
+      <div style="font-size: 12pt">
+        در این سند بررسی می‌کنیم کدام نیازهای همراه اول را هر مشتری دیگری هم دارد و کدام فقط مخصوص
+        همراه اول است. بعد پیشنهاد می‌دهیم محصول را چطور بسازیم که برای هر دو جواب بدهد.
+        تمرکز اصلی روی این سؤال است: «هر مدیر فقط داده معاونت یا اداره خودش را ببیند» را چطور بسازیم؟
+      </div>
+      <p class="meta">
+        مخاطب: مدیر محصول، CTO و سرپرستان فنی · نسخه ۰٫۲ · ۱۵ مهر ۱۴۰۵ ·
+        ورودی‌ها: شیت Fit-Gap پایلوت EX (۸۷ نیازمندی، ۱۰ تصمیم، ۶ مورد Backlog)،
+        وضعیت واقعی هر نیازمندی در کد (از <code>verdicts.tsv</code> و پرونده محصول)،
+        تحلیل رقبا در فصل ۲۵ پرونده محصول، نقشه راه (<code>ROADMAP_FA</code>)
+        و جست‌وجوی تازه در مستندات رقبا (منابع در فصل ۱۲).
+      </p>
+      <p class="small">
+        برچسب منبع: <b>CODE</b> از کد · <b>FIT-GAP</b> از شیت توافق · <b>DOSSIER</b> از پرونده محصول ·
+        <b>WEB</b> از سایت رقبا (فصل ۱۲) · <b>INFERENCE</b> نظر ما؛ قبل از تعهد چک شود.
+      </p>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2>۱. خلاصه</h2>
+    <div class="box">
+      <b>حرف اصلی این سند:</b> بیشتر نیازهای همراه اول خاص همراه اول نیستند. همراه اول آن‌ها را با
+      اسم‌های خودش گفته، ولی رقبای بزرگ همه این‌ها را دارند. مثلاً:
+      <ul>
+        <li>«معاونت ← اداره کل ← اداره» همان <b>ساختار درختی سازمان</b> است که همه رقبا دارند.</li>
+        <li>«فقط مدیر سامانه هویت را ببیند» یعنی <b>دسترسی به داده را سطح‌بندی کنیم</b>.</li>
+        <li>«گروه کوچک نمایش داده نشود» یعنی <b>حداقل تعداد نفر برای نمایش گزارش</b>.</li>
+        <li>«Knowledge فقط مال اداره ما» یعنی <b>هر بخش از دانش یک صاحب داشته باشد</b>.</li>
+      </ul>
+      پیشنهاد ما: این‌ها را یک بار، به شکل عمومی بسازیم. بعد برای همراه اول فقط تنظیمش کنیم.
+      این‌طوری مشتری بعدی، یا فاز بعدی همین مشتری، کد جدید زیادی لازم ندارد.
+    </div>
+
+    <div class="kpis">
+      <div class="kpi"><b>۵۲</b><span>نیازمندی عمومی: هر مشتری مشابه هم همین را می‌خواهد. باید در خود محصول باشد.</span></div>
+      <div class="kpi"><b>۲۲</b><span>نیازمندی تنظیمی: قابلیتش عمومی است، فقط مقدارش برای هر مشتری فرق دارد (مثل متن خوش‌آمد).</span></div>
+      <div class="kpi"><b>۱۴</b><span>نیازمندی مخصوص همراه اول: کار پروژه است، مثل اتصال سرشماره یا SAP.</span></div>
+    </div>
+    <p class="small">
+      جمع این سه عدد ۸۸ است نه ۸۷، چون SEG-07 هم عمومی است (اتصال به سامانه HR) و هم مخصوص همراه اول
+      (اتصال به خود SAP). جدول کامل ۸۷ ردیف در فصل ۴ است.
+      <span class="src"><b class="k k-fg">FIT-GAP</b> 87 rows · <b class="k k-inf">INFERENCE</b> classification</span>
+    </p>
+
+    <h3>پنج نکته اصلی</h3>
+    <ol>
+      <li>
+        <b>مشکل اصلی ما «دسترسی بر اساس واحد سازمانی» است، نه هوش مصنوعی.</b>
+        بخش تحلیل AI و بخش مکالمه تقریباً آماده‌اند. اما امروز سیستم نمی‌داند هر کارمند یا هر تماس
+        مال کدام معاونت یا اداره است. در هیچ سرویسی چنین اطلاعاتی نداریم.
+        <br />
+        در سرویس Auth (ورود و مجوزها) فقط یک فهرست ساده از مجوزها داریم. مجوزها به هیچ معاونت یا اداره‌ای
+        وصل نیستند.
+        <br />
+        در COA هم کاربر فقط دو حالت دارد: یا فقط تماس‌های خودش را می‌بیند، یا همه تماس‌ها را.
+        حالت «فقط تماس‌های معاونت من» وجود ندارد.
+        <br />
+        در MVP این مشکل دیده نمی‌شود، چون تصمیم گرفته شده فقط تیم EX همه داده را ببیند. اما اولین مورد
+        Backlog («هر مدیر فقط حوزه خودش را ببیند») دقیقاً همین را لازم دارد.
+        <span class="src"><b class="k k-code">CODE</b> python/adcs-auth/adcs_auth/jwtoken/serializers.py:29-37 · python/coa-api/coa/apps/main/services/call.py:849-855</span>
+      </li>
+      <li>
+        <b>رقبا همه یک روش دارند.</b> برای هر کاربر سه چیز تعیین می‌کنند:
+        <ul>
+          <li><b>نقش:</b> مثلاً مدیر یا کارشناس.</li>
+          <li><b>محدوده:</b> کدام قسمت سازمان. مثلاً «معاونت فناوری و همه اداره‌های زیرش».</li>
+          <li><b>سطح جزئیات:</b> فقط عدد و نمودار، یا متن نظرات هم، یا نظرات حساس هم.</li>
+        </ul>
+        Qualtrics، Viva Glint، Peakon و Medallia همه همین کار را می‌کنند (فصل ۵).
+      </li>
+      <li>
+        <b>پیشنهاد:</b> همین حالا بخش «مدیریت دسترسی» را طراحی کنیم و نسخه ساده‌اش را بسازیم. این بخش
+        شامل است: درخت سازمان، تعیین محدوده هر کاربر، سطح‌بندی داده، حداقل تعداد نفر و ثبت لاگ دسترسی.
+        <br />
+        در MVP این بخش ساده‌ترین تنظیم را دارد: تیم EX همه سازمان را می‌بیند، یک Knowledge Base داریم و فقط
+        مدیر سامانه در موارد ضروری به هویت دسترسی دارد. این دقیقاً همان تصمیم‌های EX است.
+        <br />
+        بعد از پایلوت، برای اینکه مدیر معاونت فقط معاونت خودش را ببیند، فقط باید یک تنظیم اضافه کنیم.
+        پروژه جدید لازم نیست.
+      </li>
+      <li>
+        <b>شکل محصول:</b>
+        <ul>
+          <li><b>AIVA</b> مکالمه تلفنی را انجام می‌دهد.</li>
+          <li><b>Chatbot</b> همان مکالمه را به‌صورت متنی انجام می‌دهد. همان سؤال‌ها، همان دانش و همان تنظیمات. فقط کانالش فرق دارد.</li>
+          <li><b>COA</b> همه مکالمه‌ها را تحلیل می‌کند و گزارش می‌دهد.</li>
+          <li><b>adcs-auth</b> تعیین می‌کند چه کسی چه چیزی را ببیند.</li>
+        </ul>
+        جزئیات در فصل ۸.
+      </li>
+      <li>
+        <b>چه چیزهایی را نسازیم:</b> SaaS چندمشتری روی یک سرور (فعلاً برای هر مشتری یک نصب جدا، مثل
+        نقشه راه)، نسخه جدا از کد برای همراه اول، و هر صفحه‌ای که اسم یا شماره کارمند را به مدیر نشان دهد.
+        <span class="src"><b class="k k-doc">DOSSIER</b> ROADMAP_FA §3-ج «SaaS چندمستأجره واقعی: فعلاً نه»</span>
+      </li>
+    </ol>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۲. نیازهای همراه اول به زبان بازار</h2>
+    <p>
+      در این فصل هر تصمیم EX را کنار معادلش در بازار گذاشته‌ایم. ستون آخر می‌گوید محصول ما چه قابلیتی
+      لازم دارد و در MVP آن را چطور تنظیم می‌کنیم.
+    </p>
+
+    <h3>الف) ده تصمیم EX</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%">موضوع</th>
+          <th style="width: 27%">تصمیم EX</th>
+          <th style="width: 24%">اسمش در بازار</th>
+          <th>قابلیت لازم ← تنظیم در MVP</th>
+        </tr>
+      </thead>
+      <tr><td>هسته MVP</td><td>شنیدن مداوم صدای کارکنان + یک Knowledge Base کوچک</td><td>Continuous Listening، کنار نظرسنجی سالانه</td><td>یک «برنامه مکالمه» با یک بخش دانش ← فقط یک برنامه فعال</td></tr>
+      <tr><td>دامنه پایلوت</td><td>فقط اعضای اداره تجربه</td><td>جمعیت پایلوت</td><td>قانون «چه کسی می‌تواند تماس بگیرد» بر اساس واحد ← فقط اداره تجربه</td></tr>
+      <tr><td>جامعه مجاز</td><td>کارکنان قراردادی MCI که در Whitelist هستند</td><td>قانون واجد شرایط بودن، از روی اطلاعات HR</td><td>قانون ← «قرارداد MCI و همکاری فعال»</td></tr>
+      <tr><td>Mapping سازمانی</td><td>شماره تلفن برای پیدا کردن واحد کارمند استفاده شود، ولی نمایش داده نشود</td><td>شناسایی کارمند با کلید مخفی</td><td>از شماره، کارمند و واحدش پیدا شود. در گزارش فقط یک کد بی‌معنی بماند.</td></tr>
+      <tr><td>نمایش هویت</td><td>پیش‌فرض مخفی؛ فقط مدیر سامانه در صورت لزوم</td><td>حالت محرمانه + «دسترسی اضطراری» با دلیل و لاگ</td><td>دسترسی به هویت فقط با مجوز موقت ← یک نفر، با ثبت دلیل</td></tr>
+      <tr><td>فایل صوتی خام</td><td>فقط مدیر سامانه</td><td>مجوز جدا برای پخش و دانلود صدا</td><td>سطح «صوت» ← فقط نقش مدیر سامانه</td></tr>
+      <tr><td>خروجی مدیران</td><td>فقط گزارش تجمیعی</td><td>گزارش تجمیعی با حداقل تعداد نفر</td><td>سطح «تجمیعی» برای نقش مدیر ← فعلاً هیچ مدیری دسترسی ندارد</td></tr>
+      <tr><td>Knowledge Base</td><td>فقط محتوای اداره ما، چون محصول چندمالکی ندارد</td><td>چند Knowledge Base، هر کدام با صاحب و خواننده مشخص</td><td>«بخش دانش» با صاحب ← یک بخش، صاحبش اداره تجربه</td></tr>
+      <tr><td>Dashboard</td><td>یک نمای کامل برای چند کاربر EX</td><td>نقش «همه سازمان» کنار نقش «مدیر با زیرمجموعه»</td><td>محدوده «کل سازمان» ← فقط برای کاربران EX</td></tr>
+      <tr><td>Text / Chat</td><td>اولویت دوم، اگر ارزان باشد</td><td>شنیدن از چند کانال (چت، اپ، پیام‌رسان)</td><td>Chatbot = همان برنامه، کانال متنی ← فعلاً خاموش</td></tr>
+      <tr><td>نظرسنجی‌های فعلی</td><td>حفظ می‌شوند</td><td>Listening کنار نظرسنجی</td><td>خروجی تجمیعی برای مقایسه با نظرسنجی ← بعداً</td></tr>
+    </table>
+    <span class="src"><b class="k k-fg">FIT-GAP</b> sheet «راهنما و تصمیمات» rows 6-16 · <b class="k k-inf">INFERENCE</b> mapping</span>
+
+    <h3>ب) شش مورد Backlog: هر کدام روی چه چیزی ساخته می‌شود</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%">Backlog</th>
+          <th>اگر بلوک‌های فصل ۳ را داشته باشیم</th>
+          <th style="width: 22%">کار باقی‌مانده</th>
+        </tr>
+      </thead>
+      <tr><td><b>دسترسی محدود مدیران</b></td><td>بلوک ۱ و ۳. به مدیر معاونت دسترسی روی «معاونت خودش و زیرمجموعه‌ها» می‌دهیم. دستیار تحلیل (AQA) هم باید همین محدودیت را رعایت کند.</td><td>دادن دسترسی + تست مخفی شدن گروه‌های کوچک</td></tr>
+      <tr><td><b>Knowledge Base چندمالکی</b></td><td>بلوک ۵. هر واحد HR یک بخش دانش دارد که فقط خودش ویرایش می‌کند.</td><td>ساخت بخش‌ها + آموزش صاحبان</td></tr>
+      <tr><td><b>پیشنهاد AI برای اصلاح دانش</b></td><td>بلوک ۵. سؤال‌های بی‌جواب هر بخش ثبت می‌شود. AI پیشنهاد می‌دهد و صاحب همان بخش تأیید می‌کند.</td><td>ساخت پیشنهاددهنده (متوسط)</td></tr>
+      <tr><td><b>تماس خروجی</b></td><td>بلوک ۸ (برنامه مکالمه با زمان‌بندی) + بلوک ۴ (لیست افراد هدف، مثلاً نیروهای جدید از روی اطلاعات HR).</td><td>سیستم تماس خروجی و ظرفیت (موج ۲ نقشه راه)</td></tr>
+      <tr><td><b>مدیریت پرونده و اقدام</b></td><td>بلوک ۷ را گسترش می‌دهد: هر مورد مهم یک پرونده می‌شود با مسئول و مهلت. مسئول فقط داده محدوده خودش را می‌بیند.</td><td>مدل پرونده (متوسط)</td></tr>
+      <tr><td><b>بستن چرخه (Closed Loop)</b></td><td>بعد از اقدام، به کارکنان همان واحد خبر می‌دهیم «شنیدیم و این کار را کردیم».</td><td>بعد از مدیریت پرونده</td></tr>
+    </table>
+    <span class="src"><b class="k k-fg">FIT-GAP</b> sheet «Backlog بعدی» · <b class="k k-doc">DOSSIER</b> ROADMAP_FA §3-ب «شنیدیم، انجام دادیم»، §4 موج ۲</span>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۳. نُه بلوک اصلی محصول</h2>
+    <p>
+      همه ۸۷ نیازمندی در این نُه بلوک جا می‌شوند. هر بلوک یک قابلیت عمومی است. برای هر مشتری فقط
+      تنظیماتش فرق می‌کند. ستون «تنظیم MVP» نشان می‌دهد برای همراه اول چه مقداری کافی است.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 4%">#</th>
+          <th style="width: 19%">بلوک</th>
+          <th>به زبان ساده</th>
+          <th style="width: 22%">تنظیم MVP همراه اول</th>
+          <th style="width: 9%">امروز</th>
+        </tr>
+      </thead>
+      <tr><td>۱</td><td><b>درخت سازمان و دسترسی بر اساس واحد</b></td><td>سیستم ساختار سازمان را بداند. مثلاً معاونت ← اداره کل ← اداره. برای مشتری دیگر ممکن است استان ← منطقه ← شعبه باشد. بعد به هر کاربر بگوییم کدام قسمت درخت را می‌بیند.</td><td>درخت سه‌سطحی بارگذاری شود. فقط کاربران EX دسترسی «کل سازمان» بگیرند.</td><td><span class="tag gap">ندارد</span></td></tr>
+      <tr><td>۲</td><td><b>سطح‌بندی داده و حفاظت هویت</b></td><td>داده را پنج سطح می‌کنیم: ۱) عدد و نمودار، ۲) خلاصه بی‌نام، ۳) متن کامل مکالمه، ۴) فایل صوتی، ۵) هویت فرد. هر نقش تا یک سطح مشخص را می‌بیند. صوت و هویت فقط با مجوز موقت و ثبت دلیل باز می‌شوند.</td><td>EX: سطح ۱ و ۲. مدیر سامانه: تا سطح ۳، و صوت و هویت فقط با مجوز اضطراری.</td><td><span class="tag warn">ناقص</span></td></tr>
+      <tr><td>۳</td><td><b>حداقل تعداد نفر و حذف اطلاعات شخصی</b></td><td>اگر در یک گروه کمتر از k نفر باشند، نتیجه آن گروه نشان داده نمی‌شود، چون ممکن است فرد شناسایی شود. اسم همکاران یا شماره‌هایی که داخل حرف‌ها آمده هم از گزارش مدیر حذف می‌شود.</td><td>حداقل ۵ نفر برای عدد و ۱۰ نفر برای متن (عدد رایج بازار)</td><td><span class="tag gap">ندارد</span></td></tr>
+      <tr><td>۴</td><td><b>لیست کارکنان و همگام‌سازی با HR</b></td><td>بدانیم چه کسی اجازه تماس دارد و هر شماره مال کدام کارمند و کدام واحد است. اطلاعات اول با فایل Excel می‌آید و بعداً خودکار از سامانه HR.</td><td>فایل Excel دستی (SEG-01) ← بعداً SAP (SEG-07)</td><td><span class="tag gap">ندارد</span></td></tr>
+      <tr><td>۵</td><td><b>بخش‌های دانش با صاحب مشخص</b></td><td>دانش در چند بخش جدا نگه داشته می‌شود. هر بخش صاحب، ویرایشگر و خواننده مشخص دارد. سؤال‌های بی‌جواب هر بخش هم ثبت می‌شود.</td><td>یک بخش، صاحبش اداره تجربه، برای همه</td><td><span class="tag warn">ناقص</span></td></tr>
+      <tr><td>۶</td><td><b>موتور تحلیل</b></td><td>تبدیل صدا به متن، خلاصه، جدا کردن موضوع‌ها، نوع پیام، احساس، روند، موضوع‌های جدید، هشدار و گزارش. لیست موضوع‌ها و قانون‌های هشدار را هر مشتری خودش تعیین می‌کند.</td><td>لیست موضوع‌های اولیه EX؛ هشدار پیش‌فرض</td><td><span class="tag ok">بیشترش هست</span></td></tr>
+      <tr><td>۷</td><td><b>جدا کردن موارد حساس</b></td><td>حرف‌هایی مثل آزار، تبعیض، تهدید یا تخلف از گزارش عادی جدا می‌شوند و به یک صف خصوصی می‌روند. فقط افراد خاص آن صف را می‌بینند.</td><td>صف فقط برای مدیر سامانه</td><td><span class="tag gap">ندارد</span></td></tr>
+      <tr><td>۸</td><td><b>برنامه مکالمه و کانال‌ها</b></td><td>هر «برنامه» یعنی مجموعه تنظیمات یک مکالمه: متن معرفی، متن حریم خصوصی، حداکثر سؤال تکمیلی، بخش‌های دانش، ابزارها (مثل پیامک) و لیست موضوع‌ها. تلفن (AIVA) و چت (Chatbot) هر دو همین برنامه را اجرا می‌کنند.</td><td>یک برنامه «شنیدن EX»، فقط تلفنی</td><td><span class="tag warn">ناقص</span></td></tr>
+      <tr><td>۹</td><td><b>تست کیفیت و کنترل پایلوت</b></td><td>مجموعه سناریوی تست، تست دوباره بعد از هر تغییر، معیار موفقیت و معیار توقف، و یک محیط دمو با داده نمونه. همه خریداران HR این‌ها را می‌پرسند.</td><td>سناریوهای Track A و B</td><td><span class="tag warn">ناقص</span></td></tr>
+    </table>
+    <span class="src"><b class="k k-code">CODE</b> «امروز» per block, detailed in §9 · <b class="k k-doc">DOSSIER</b> verdicts.tsv · <b class="k k-web">WEB</b> W5, W7 (k defaults)</span>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۴. هر نیازمندی در کدام بلوک است</h2>
+    <p>
+      ستون «وضعیت در کد» از پرونده محصول آمده. یعنی وضعیت واقعی در کد، نه چیزی که در Fit-Gap ادعا شده.
+      ستون آخر می‌گوید این نیازمندی کجا ساخته شود:
+    </p>
+    <ul>
+      <li><span class="tag ok">Generic</span> در خود محصول؛ هر مشتری دیگری هم لازمش دارد.</li>
+      <li><span class="tag warn">Config</span> قابلیتش در محصول است، فقط مقدارش برای همراه اول تنظیم می‌شود.</li>
+      <li><span class="tag gap">MCI-only</span> کار پروژه همراه اول. نباید داخل کد محصول برود.</li>
+    </ul>
+    <div class="scroll-x">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 9%">ID</th>
+          <th>نیازمندی</th>
+          <th style="width: 24%">وضعیت در کد (پرونده)</th>
+          <th style="width: 16%">کجا ساخته شود</th>
+        </tr>
+      </thead>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۱ · درخت سازمان و دسترسی</b> — 5 نیازمندی</td></tr>
+      <tr><td><code>SEG-02</code></td><td>ساختار سازمانی موردنیاز</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>PRV-04</code></td><td>خروجی مدیران به‌صورت Aggregate</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-01</code></td><td>Full View برای EX / مدیر سامانه</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>AN-06</code></td><td>Segment Analysis</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-12</code></td><td>دستیار تحلیل با زبان طبیعی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۲ · سطح‌بندی داده و هویت</b> — 11 نیازمندی</td></tr>
+      <tr><td><code>VIA-04</code></td><td>دریافت شماره تماس به‌عنوان کلید Mapping</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-02</code></td><td>Transcript کامل مکالمه</td><td><span class="tag gap">رد شد (ادعا نادرست)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-01</code></td><td>هویت Hidden by Default</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-02</code></td><td>دسترسی هویت فقط برای مدیر سامانه</td><td><span class="tag warn">جزئی</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>PRV-03</code></td><td>Raw Call فقط برای مدیر سامانه</td><td><span class="tag gap">رد شد (نقص امنیتی بحرانی)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-06</code></td><td>ثبت Audit دسترسی به هویت/صوت</td><td><span class="tag gap">رد شد</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-07</code></td><td>Retention Policy صوت</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>PRV-08</code></td><td>Retention Policy Transcript و داده تحلیلی</td><td><span class="tag gap">رد شد (واقعیت بهتر از ادعا)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>PRV-11</code></td><td>تفکیک دسترسی فنی از دسترسی محتوایی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-08</code></td><td>Drill-down تا Summary مکالمه</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-11</code></td><td>Export داده/گزارش</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۳ · حداقل نفر و حذف اطلاعات شخصی</b> — 3 نیازمندی</td></tr>
+      <tr><td><code>SEG-03</code></td><td>جداسازی Context از هویت نمایشی</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-05</code></td><td>Minimum Group Size / Privacy Suppression</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>PRV-09</code></td><td>PII Detection / Redaction در خروجی‌ها</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۴ · لیست کارکنان و اتصال HR</b> — 9 نیازمندی</td></tr>
+      <tr><td><code>VIA-02</code></td><td>Whitelist کارکنان MCI</td><td><span class="tag warn">جزئی</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>VIA-03</code></td><td>رفتار برای شماره خارج از Whitelist</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>VIA-05</code></td><td>Mapping شماره به اطلاعات سازمانی</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>SEG-01</code></td><td>دریافت دیتاست معتبر کارکنان MCI</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>SEG-04</code></td><td>Refresh / به‌روزرسانی دیتاست</td><td><span class="tag gap">غایب (فرایند)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>SEG-05</code></td><td>مدیریت Mapping ناموفق</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>SEG-06</code></td><td>محدودیت جامعه Pilot به قرارداد MCI</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>SEG-07</code></td><td>اتصال مستقیم به SAP و همگام‌سازی خودکار اطلاعات کارکنان</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span> + <span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-06</code></td><td>بارگذاری Whitelist و Mapping Pilot</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۵ · بخش‌های دانش</b> — 10 نیازمندی</td></tr>
+      <tr><td><code>KB-01</code></td><td>Scope Knowledge فقط اداره خودمان</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>KB-02</code></td><td>Seed Content تأییدشده</td><td><span class="tag warn">خارج از کد</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>KB-03</code></td><td>پاسخ مبتنی بر Source معتبر</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>KB-04</code></td><td>Guardrail محدوده پاسخ</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>KB-05</code></td><td>I Don&#x27;t Know / پاسخ ناموجود</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>KB-07</code></td><td>ثبت سؤالات بدون پاسخ</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>KB-08</code></td><td>FAQ / سؤال پرتکرار</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>KB-09</code></td><td>مدیریت Knowledge توسط یک Scope محدود در Pilot</td><td><span class="tag ok">تأییدشده (ارتقا)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>KB-10</code></td><td>عدم Auto-update Knowledge در MVP</td><td><span class="tag ok">تأییدشده (ارتقا)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>TEC-07</code></td><td>بارگذاری Seed Knowledge</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۶ · موتور تحلیل</b> — 21 نیازمندی</td></tr>
+      <tr><td><code>AI-01</code></td><td>Speech-to-Text فارسی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-03</code></td><td>Summary Fact-based</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-04</code></td><td>تفکیک چند موضوع در یک مکالمه</td><td><span class="tag warn">نامشخص (coa-ai فریز)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-05</code></td><td>تشخیص نوع Voice</td><td><span class="tag warn">نامشخص (coa-ai فریز)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>AI-06</code></td><td>Theme Detection</td><td><span class="tag warn">نامشخص (coa-ai فریز)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>AI-07</code></td><td>Sub-theme Detection</td><td><span class="tag warn">نامشخص (coa-ai فریز)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>AI-08</code></td><td>Sentiment / Direction</td><td><span class="tag warn">جزئی → «تنظیم» نه «توسعه»</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-09</code></td><td>Positive Signal Detection</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-10</code></td><td>Frequency Analysis</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-11</code></td><td>Trend Detection</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-12</code></td><td>Similarity &amp; Clustering</td><td><span class="tag gap">غایب (در ریپوهای فعال)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-13</code></td><td>Emerging Theme Detection</td><td><span class="tag gap">غایب (در ریپوهای فعال)</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-14</code></td><td>Confidence / عدم اطمینان مدل</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AI-15</code></td><td>Severity / اهمیت بالقوه</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-02</code></td><td>حجم تماس و Voice Item</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-03</code></td><td>Top Themes و Sub-themes</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-04</code></td><td>Trend و تغییر موضوعات</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-05</code></td><td>Positive / Negative Signals</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-07</code></td><td>فیلتر زمانی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>AN-09</code></td><td>Alert / Management Signal</td><td><span class="tag gap">رد شد (جزئی)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>AN-10</code></td><td>خروجی مدیریتی دوره‌ای</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۷ · موارد حساس</b> — 1 نیازمندی</td></tr>
+      <tr><td><code>PRV-10</code></td><td>Sensitive Voice Detection و جداسازی</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۸ · برنامه مکالمه و کانال‌ها</b> — 14 نیازمندی</td></tr>
+      <tr><td><code>VIA-01</code></td><td>سرشماره / کانال صوتی Inbound</td><td><span class="tag warn">تنظیم / زیرساخت</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>VIA-06</code></td><td>ثبت Metadata تماس</td><td><span class="tag warn">جزئی</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>VIA-07</code></td><td>مدیریت تماس قطع‌شده یا ناقص</td><td><span class="tag gap">غایب</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>VIA-08</code></td><td>پایداری و کیفیت سرویس صوتی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>CON-01</code></td><td>معرفی کوتاه AI و هدف کانال</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>CON-02</code></td><td>Privacy Notice کوتاه</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>CON-03</code></td><td>شروع Open-ended</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>CON-04</code></td><td>Follow-up هوشمند در صورت ابهام</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>CON-05</code></td><td>عدم تکرار سؤال</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>CON-06</code></td><td>محدودیت Follow-up</td><td><span class="tag warn">جزئی</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>CON-07</code></td><td>تشخیص Voice کامل و عدم سؤال اضافه</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>CON-08</code></td><td>Summary Confirmation در صورت امکان</td><td><span class="tag gap">غایب</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>CON-09</code></td><td>پایان شفاف بدون وعده پیگیری فردی</td><td><span class="tag ok">تأییدشده</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>KB-06</code></td><td>ارسال لینک/اطلاعات با پیامک</td><td><span class="tag ok">تأییدشده (ارتقا از Customization)</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td colspan="4" style="background:var(--surface-2)"><b>بلوک ۹ · تست کیفیت و پایلوت</b> — 13 نیازمندی</td></tr>
+      <tr><td><code>TEC-01</code></td><td>Environment اختصاصی EX</td><td><span class="tag warn">تنظیم / زیرساخت</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-02</code></td><td>Database / Namespace / Compute</td><td><span class="tag warn">تنظیم / زیرساخت</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-03</code></td><td>Network / Domain / Security Setup</td><td><span class="tag warn">تنظیم / زیرساخت</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-04</code></td><td>اتصال سرشماره به سرویس AI</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-05</code></td><td>Demo / Instance آزمایشی</td><td><span class="tag warn">تنظیم</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>TEC-08</code></td><td>Track A: Golden Test Scenarios</td><td><span class="tag warn">خارج از کد</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>TEC-09</code></td><td>Track B: Natural Use</td><td><span class="tag warn">خارج از کد</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-10</code></td><td>Internal UAT و Issue Log</td><td><span class="tag warn">خارج از کد</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-11</code></td><td>Retest پس از اصلاح</td><td><span class="tag warn">خارج از کد</span></td><td><span class="tag ok">Generic</span></td></tr>
+      <tr><td><code>TEC-12</code></td><td>Success Criteria Pilot</td><td><span class="tag warn">خالی — باید پر شود</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>TEC-13</code></td><td>Failure / Red Flag Criteria</td><td><span class="tag warn">خالی — باید پر شود</span></td><td><span class="tag warn">Config</span></td></tr>
+      <tr><td><code>TEC-14</code></td><td>زمان‌بندی و Dependency ردیف‌به‌ردیف</td><td><span class="tag warn">خالی — تعهد MCINEXT</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+      <tr><td><code>TEC-15</code></td><td>Go / No-Go Review</td><td><span class="tag warn">خالی — فرایند</span></td><td><span class="tag gap">MCI-only</span></td></tr>
+    </table>
+    </div>
+    <span class="src"><b class="k k-fg">FIT-GAP</b> fitgap_part1-3.tsv · <b class="k k-doc">DOSSIER</b> verdicts.tsv col 2 · <b class="k k-inf">INFERENCE</b> block and type assignment</span>
+    <div class="box warn">
+      <b>از این جدول چه می‌فهمیم؟</b> بلوک ۶ (تحلیل AI) بزرگ‌ترین بلوک است و بیشترش در کد تأیید شده.
+      اما بلوک‌های ۱، ۲، ۳ و ۷ (دسترسی، هویت، حداقل نفر و موارد حساس) بیشترشان «غایب» یا «رد شد» هستند.
+      یعنی همان چیزهایی که خریدار HR بیشتر از همه چک می‌کند، همان‌هایی است که کم داریم.
+      پرونده محصول هم همین را گفته بود: فایل صوتی بدون چک مالکیت دانلود می‌شود، لاگ دسترسی نداریم،
+      و از طریق AQA می‌شود به هویت رسید.
+      <span class="src"><b class="k k-doc">DOSSIER</b> §5 findings 1, 3, 6 · README «Findings that change the agreement» #1, #3, #13</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۵. رقبا این نیازها را چطور حل کرده‌اند</h2>
+    <p>
+      پرونده محصول (۲۵.۵) فقط گفته بود رقبا «ناشناسی و حداقل نفر» دارند و ما نداریم. این فصل نشان
+      می‌دهد آن‌ها دقیقاً <i>چطور</i> این را ساخته‌اند.
+    </p>
+
+    <h3>الف) هر کاربر چه چیزی را ببیند</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 14%">محصول</th>
+          <th style="width: 30%">کاربر داده چه کسانی را می‌بیند</th>
+          <th style="width: 27%">سطح جزئیات</th>
+          <th>نکته‌ای که به درد ما می‌خورد</th>
+        </tr>
+      </thead>
+      <tr><td><b>Viva Glint</b> (مایکروسافت)</td><td>چهار حالت دارد: ۱) <b>همه</b>، ۲) <b>یک گروه دلخواه</b>، ۳) <b>زیرمجموعه مدیر</b> (مدیر پایین فقط زیردستان مستقیم را می‌بیند و مدیر ارشد کل زیرمجموعه را)، ۴) <b>هم‌گروه با خود کاربر</b> (مثلاً همه کسانی که در منطقه او هستند).</td><td>مجوز جدا برای گزارش، فیلتر نظرات و <b>مدیریت نظرات حساس</b>.</td><td>اگر کسی دو نقش داشته باشد، دسترسی‌هایش <b>جمع</b> می‌شود. مایکروسافت هشدار داده که این ممکن است نظرات را لو بدهد. توصیه‌اش: به مدیر فقط یک فیلتر بدهید.</td></tr>
+      <tr><td><b>Qualtrics EX</b></td><td>بر اساس درخت سازمان. وقتی مدیر Dashboard را باز می‌کند، خودکار فقط داده زیرمجموعه خودش را می‌بیند.</td><td>فیلدهای حساس را علامت می‌زنند. کاربر یا همه آن‌ها را می‌بیند یا هیچ‌کدام.</td><td>درخت سازمان خودکار از سامانه HR به‌روز می‌شود. داده‌های قبلی با <b>ساختار همان زمان</b> نمایش داده می‌شوند.</td></tr>
+      <tr><td><b>Workday Peakon</b></td><td>مدیر از طریق زیردستانش یا گروهی که مسئولش است.</td><td>گروه‌های دسترسی با مجوز «خواندن نظرات حساس» و «علامت زدن نظرات حساس».</td><td>کنار هر نظر نشان می‌دهد <i>کدام مدیرها</i> آن را می‌بینند. یعنی دسترسی شفاف است.</td></tr>
+      <tr><td><b>Medallia</b></td><td>بر اساس «واحد» و «گروه واحد». یک واحد می‌تواند همزمان در چند درخت باشد، مثلاً هم درخت جغرافیایی و هم درخت کسب‌وکار.</td><td>نقش + مجوز. مجوز می‌تواند ترکیبی از واحد، گروه و فیلدهای رکورد باشد.</td><td>فیلتر روی اطلاعاتی است که <b>موقع ثبت</b> روی رکورد ذخیره شده.</td></tr>
+      <tr><td><b>Culture Amp</b></td><td>گزارش بر اساس زیرمجموعه هر مدیر.</td><td>حداقل نفر برای عدد و حداقل نفر برای نظرات، جدا از هم.</td><td>در گزارش‌هایی که می‌شود ریز شد، بعضی پاسخ‌ها حذف می‌شوند تا کسی نتواند با کم و زیاد کردن فیلتر فرد را پیدا کند.</td></tr>
+      <tr><td><b>NICE CXone</b> (مرکز تماس)</td><td>بر اساس تیم و سیاست دسترسی.</td><td>مجوز جدا برای پخش و دانلود صدا، دیدن متن مکالمه و خروجی گرفتن. امکان حذف اطلاعات حساس از متن و صدا.</td><td>گزارش لاگ برای ضبط، جست‌وجو و سیاست‌ها. همان چیزی که PRV-03 و PRV-06 می‌خواهند.</td></tr>
+      <tr><td><b>پرس‌لاین</b> (ایرانی)</td><td>گزارش به تفکیک واحد.</td><td>«محدودیت دسترسی با کد پرسنلی در عین ناشناسی».</td><td>رقیب داخلی مستقیم در نسخه متنی. خریدار ایرانی این روش را دیده است.</td></tr>
+      <tr><td><b>ما (امروز)</b></td><td>فقط دو حالت: تماس‌های خود کاربر یا همه تماس‌ها.</td><td>یک فهرست ساده از مجوزها. سطح‌بندی داده، حداقل نفر، لاگ و صف حساس نداریم.</td><td>فیلتر استان در بخش Trend هست، ولی کاربر خودش انتخابش می‌کند. سیستم آن را اجباری نمی‌کند.</td></tr>
+    </table>
+    <span class="src"><b class="k k-web">WEB</b> W1, W2, W3, W4, W8, W9, W10, W11, W12, W13, W5, W16, W17 · <b class="k k-doc">DOSSIER</b> §25.4 پرس‌لاین · <b class="k k-code">CODE</b> coa/apps/main/services/call.py:849 · coa/apps/trends/views.py:75-76</span>
+
+    <h3>ب) حداقل تعداد نفر: رقبا چه عددی می‌گذارند</h3>
+    <table>
+      <thead>
+        <tr><th style="width: 18%">محصول</th><th>برای عدد و نمودار</th><th>برای متن نظرات</th><th>جلوگیری از شناسایی با فیلترهای پشت‌سرهم</th></tr>
+      </thead>
+      <tr><td>Viva Glint</td><td>۵ نفر (می‌شود تا ۳ کم کرد)</td><td>۱۰ نفر</td><td>اگر یک گروه مخفی شد، گروه کنارش را هم مخفی می‌کند تا نشود از روی تفاضل حدس زد.</td></tr>
+      <tr><td>Culture Amp</td><td>۵ نفر</td><td>عدد جدا</td><td>فیلتر کوچک‌تر از حداقل، حتی وقتی با فیلتر دیگری ترکیب شود، اعمال نمی‌شود.</td></tr>
+      <tr><td>Workday Peakon</td><td>۵ نفر مختلف در یک سال</td><td>عدد جدا برای دیدن نظرات توسط مدیر</td><td>شمارش افراد مختلف وقتی دو گروه روی هم می‌افتند.</td></tr>
+      <tr><td><b>پیشنهاد ما</b></td><td><b>۵ کارمند مختلف</b> (نه ۵ تماس)</td><td><b>۱۰ کارمند مختلف</b> برای خلاصه‌ها</td><td>فیلتر کوچک‌تر از حداقل ممنوع، گروه کناری هم مخفی شود، شمارش بر اساس کارمند در بازه زمانی.</td></tr>
+    </table>
+    <div class="box">
+      <b>نکته مهم برای کانال تلفنی:</b> در نظرسنجی هر نفر یک بار جواب می‌دهد. اما در کانال تلفنی یک نفر
+      ممکن است ده بار تماس بگیرد. اگر تعداد تماس را بشماریم، «۵ تماس از اداره X» ممکن است همه از یک نفر
+      باشد. پس باید تعداد <b>کارمندهای مختلف</b> را بشماریم، نه تعداد تماس‌ها.
+      رقبای نظرسنجی‌محور این مشکل را ندارند و در مستنداتشان هم نیامده. این را باید در PRV-05 بنویسیم
+      (که در Fit-Gap «نیازمند تعریف دقیق‌تر» است).
+      <span class="src"><b class="k k-web">WEB</b> W7, W5, W9 · <b class="k k-inf">INFERENCE</b> voice-specific counting rule</span>
+    </div>
+
+    <h3>ج) دانش چندمالکی، موارد حساس و اتصال به HR</h3>
+    <table>
+      <thead>
+        <tr><th style="width: 18%">موضوع</th><th>رقبا چه کرده‌اند</th><th style="width: 32%">برای ما</th></tr>
+      </thead>
+      <tr><td><b>چند Knowledge Base</b></td><td>ServiceNow: هر Knowledge Base صاحب و مدیر دارد. برای هر Knowledge Base و حتی هر مقاله تعیین می‌شود چه کسی «می‌تواند بخواند» و چه کسی «می‌تواند ویرایش کند». اگر کسی هم اجازه داشت و هم منع، منع برنده است.</td><td>همین مدل را با «بخش دانش» می‌سازیم (بلوک ۵).</td></tr>
+      <tr><td><b>جواب فقط از دانش مجاز</b></td><td>Leena AI: برای هر دستیار تعیین می‌شود از کدام دانش و برای کدام گروه از کارکنان جواب بدهد.</td><td>موقع جست‌وجو در دانش، بر اساس واحد تماس‌گیرنده فیلتر کنیم (بلوک ۵ و ۴).</td></tr>
+      <tr><td><b>نظرات حساس</b></td><td>Peakon: یک لیست کلمه و چند دسته ثابت دارد (خشونت، ایمنی، اخلاق و درستکاری، رفتار ناپسند، موارد دلخواه). Glint: یک مجوز جدا. NAVEX و SpeakUp: یک محصول کامل گزارش تخلف.</td><td>فقط صف خصوصی (بلوک ۷). محصول کامل گزارش تخلف نمی‌سازیم (خط قرمز پرونده ۲۵.۸).</td></tr>
+      <tr><td><b>اتصال به سامانه HR</b></td><td>Culture Amp: اتصال آماده به Workday، BambooHR، HiBob و…، یا ارسال روزانه فایل با SFTP، یا بارگذاری دستی. Qualtrics: به‌روزرسانی خودکار از فهرست کارکنان.</td><td>یک قالب داده ثابت تعریف کنیم. Excel، SFTP و SAP فقط راه‌های مختلف رساندن داده به همان قالب باشند (بلوک ۴).</td></tr>
+    </table>
+    <span class="src"><b class="k k-web">WEB</b> W14, W15, W11, W8, W6, W4 · <b class="k k-doc">DOSSIER</b> §25.2 دسته ۳ Speak-up · §25.8 خط قرمزها</span>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۶. جزئیات: دسترسی بر اساس معاونت، اداره کل و اداره</h2>
+
+    <h3>الف) چه جدول‌هایی لازم داریم</h3>
+    <table>
+      <thead><tr><th style="width: 18%">جدول</th><th>چه چیزی نگه می‌دارد</th><th style="width: 32%">چرا</th></tr></thead>
+      <tr><td><code>OrgLevel</code></td><td>اسم سطح‌ها و ترتیبشان. برای همراه اول: ۱ معاونت، ۲ اداره کل، ۳ اداره.</td><td>کلمه «معاونت» نباید در کد نوشته شود. فقط در تنظیمات باشد تا مشتری دیگر سطح‌های خودش را بگذارد.</td></tr>
+      <tr><td><code>OrgUnit</code></td><td>هر واحد: شناسه، واحد بالاتر، و مسیر کامل از ریشه (مثلاً <code>1.4.17</code>). همچنین سطح، کد، اسم و بازه اعتبار.</td><td>با مسیر کامل، «این واحد و همه زیرمجموعه‌هایش» یک جست‌وجوی ساده می‌شود: همه مسیرهایی که با <code>1.4.</code> شروع می‌شوند.</td></tr>
+      <tr><td><code>Person</code></td><td>کارمند با یک کد مخفی (نه اسم و شماره)، واحدش، مشخصاتش، اجازه تماس، و از چه تاریخی تا چه تاریخی در این واحد بوده.</td><td>وقتی کارمند جابه‌جا می‌شود، رکورد قبلی بسته و رکورد جدید باز می‌شود. داده‌های قبلی او جابه‌جا نمی‌شوند.</td></tr>
+      <tr><td><code>ChannelKey</code></td><td>شماره تلفن یا شناسه چت، به‌صورت رمزشده، وصل به کد کارمند.</td><td>شماره فقط برای پیدا کردن کارمند استفاده می‌شود و هیچ‌وقت در جدول‌های گزارش نمی‌نشیند (VIA-04).</td></tr>
+      <tr><td><code>ScopeGrant</code></td><td>دسترسی هر کاربر: نقش، کدام واحد، با زیرمجموعه یا بدون آن، تا کدام سطح داده، تا چه تاریخی، به چه دلیل و چه کسی داده.</td><td>یک کاربر می‌تواند چند دسترسی داشته باشد. مثلاً مدیر دو اداره، یا سرپرست موقت.</td></tr>
+      <tr><td>روی هر پیام کارمند</td><td>مسیر واحد کارمند <b>در همان لحظه تماس</b> + کد مخفی کارمند</td><td>اگر بعداً ساختار عوض شد، پیام‌های قبلی هنوز در واحد درست خودشان می‌مانند. Medallia و Qualtrics هم همین کار را می‌کنند.</td></tr>
+    </table>
+    <span class="src"><b class="k k-web">WEB</b> W4, W12 · <b class="k k-inf">INFERENCE</b> data model</span>
+
+    <h3>ب) هر نقش چه چیزی را ببیند</h3>
+    <table>
+      <thead>
+        <tr><th style="width: 18%">نقش</th><th>محدوده</th><th>۱ عدد و نمودار</th><th>۲ خلاصه بی‌نام</th><th>۳ متن کامل</th><th>۴ صوت</th><th>۵ هویت</th></tr>
+      </thead>
+      <tr><td>کارشناس EX</td><td>کل سازمان</td><td>✓</td><td>✓ (حداقل ۱۰ نفر)</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>مدیر سامانه (محتوا)</td><td>کل سازمان</td><td>✓</td><td>✓</td><td>✓</td><td>فقط اضطراری</td><td>فقط اضطراری</td></tr>
+      <tr><td>مدیر فنی (زیرساخت)</td><td>—</td><td>—</td><td>—</td><td>—</td><td>—</td><td>— (PRV-11)</td></tr>
+      <tr><td>مدیر معاونت <i>(بعد از پایلوت)</i></td><td>معاونت خودش + زیرمجموعه</td><td>✓ (حداقل ۵ نفر)</td><td>اختیاری (حداقل ۱۰ نفر)</td><td>—</td><td>—</td><td>—</td></tr>
+      <tr><td>صاحب دانش <i>(بعد از پایلوت)</i></td><td>بخش دانش خودش</td><td colspan="5">فقط ویرایش دانش و دیدن سؤال‌های بی‌جواب همان بخش</td></tr>
+      <tr><td>بررسی‌کننده موارد حساس</td><td>صف حساس</td><td colspan="5">فقط صف موارد حساس؛ هر بار باز کردن در لاگ ثبت می‌شود</td></tr>
+    </table>
+    <p class="small">
+      «اضطراری» یعنی یک مجوز موقت که تاریخ انقضا دارد، دلیلش ثبت می‌شود و بهتر است یک نفر دوم هم تأییدش
+      کند. هر استفاده از آن در لاگ ثبت می‌شود (PRV-02، PRV-06). پرونده محصول گفته بود فیلد
+      <code>expires_at</code> (تاریخ انقضای نقش) این کار را ممکن می‌کند. اما امروز این فیلد در کد
+      <b>خوانده نمی‌شود</b>، پس نقش منقضی‌شده هنوز کار می‌کند (بند ج).
+    </p>
+
+    <h3>ج) محدودیت دسترسی کجاها باید چک شود</h3>
+    <ol>
+      <li>
+        <b>موقع ساخت توکن ورود:</b> توکن فقط نقش‌ها را داشته باشد. محدوده هر کاربر هر بار از سرور خوانده
+        شود (با Cache کوتاه). چون اگر ساختار سازمان عوض شود، توکن قدیمی نباید محدوده قدیمی را نگه دارد.
+        همچنین نقش‌های منقضی‌شده باید از توکن حذف شوند. الان کدی که توکن را می‌سازد تاریخ انقضا را نگاه نمی‌کند.
+        <span class="src"><b class="k k-code">CODE</b> python/adcs-auth/adcs_auth/jwtoken/serializers.py:14-24 (no expires_at filter) · adcs_auth/role/models.py:51 (only reference)</span>
+      </li>
+      <li>
+        <b>در COA:</b> یک تابع مشترک مثل <code>apply_scope(qs, user)</code> بسازیم. همه Dashboardها، Trendها
+        و خروجی‌ها از این تابع رد شوند. الان Dashboardها فقط بازه زمانی می‌گیرند و برای همه یکی هستند.
+        <span class="src"><b class="k k-code">CODE</b> python/coa-api/coa/apps/main/services/call.py:68,143 (global dashboards) · :849-855 (two-state scope)</span>
+      </li>
+      <li>
+        <b>در AQA (دستیار سؤال و جواب روی داده):</b> AQA هر SQL که بسازد را اجرا می‌کند. پس کاربر می‌تواند
+        از محدوده‌اش بیرون بزند. راه‌حل باید در خود پایگاه داده باشد. مثلاً قانون دسترسی ردیفی در
+        ClickHouse، یا اجرای SQL فقط روی یک View محدودشده. اینکه فقط در Prompt بنویسیم «فیلتر کن» کافی نیست.
+        <span class="src"><b class="k k-code">CODE</b> python/aqa/aqa/db/postgres.py:78-97 · <b class="k k-doc">DOSSIER</b> finding 13</span>
+      </li>
+      <li>
+        <b>حداقل تعداد نفر:</b> بعد از اعمال محدوده و قبل از نمایش، در همان تابع چک شود. برای واحدی که
+        کمتر از حداقل نفر دارد، Trend و هشدار جدا ساخته نشود. داده‌اش در واحد بالاتر حساب شود.
+      </li>
+      <li>
+        <b>خروجی (Export) و گزارش دوره‌ای:</b> از همان مسیر رد شوند. در خروجی هیچ ستونی بالاتر از سطح
+        مجاز آن نقش نیاید (AN-11).
+      </li>
+      <li>
+        <b>لاگ دسترسی:</b> هر بار که کسی متن کامل، صوت یا هویت را ببیند، و هر بار که دسترسی کسی عوض شود،
+        ثبت شود. الان فقط یک لاگ برای ویرایش برچسب تماس‌ها داریم.
+        <span class="src"><b class="k k-code">CODE</b> python/coa-api/coa/apps/main/models.py:308-319</span>
+      </li>
+    </ol>
+
+    <h3>د) حالت‌های خاص که از اول باید برایشان تصمیم بگیریم</h3>
+    <table>
+      <thead><tr><th style="width: 26%">حالت</th><th>پیشنهاد</th></tr></thead>
+      <tr><td>دو اداره با هم ادغام می‌شوند</td><td>داده قبلی با ساختار همان زمان می‌ماند. اگر لازم شد، یک جدول «اداره قدیم ← اداره جدید» برای نمایش با ساختار فعلی می‌گذاریم (مثل Qualtrics).</td></tr>
+      <tr><td>کارمند به اداره دیگری می‌رود</td><td>پیام‌های قبلی او در اداره قبلی می‌مانند. رکورد قبلی او بسته و رکورد جدید باز می‌شود.</td></tr>
+      <tr><td>یک مدیر مسئول دو حوزه است، یا سرپرست موقت است</td><td>چند دسترسی جدا، هر کدام با تاریخ انقضا. دسترسی‌ها با هم جمع می‌شوند، ولی حداقل نفر روی نتیجه نهایی دوباره چک شود (هشدار مایکروسافت درباره جمع شدن دسترسی‌ها).</td></tr>
+      <tr><td>واحد کوچک‌تر از حداقل نفر</td><td>در نمای مدیر همان واحد مخفی می‌شود. داده‌اش در واحد بالاتر حساب می‌شود. واحد کناری هم مخفی می‌شود تا نشود از روی تفاضل حدس زد.</td></tr>
+      <tr><td>شماره مجاز است ولی واحدش معلوم نیست</td><td>در گروه «نامشخص» می‌رود که فقط در نمای کل سازمان دیده می‌شود. سیستم هیچ‌وقت واحد را حدس نمی‌زند (SEG-05).</td></tr>
+      <tr><td>خود متن خلاصه هویت را لو می‌دهد (مثلاً «من تنها مهندس شیفت شب اداره X هستم»)</td><td>حداقل ۱۰ نفر برای خلاصه‌ها + حذف اطلاعات شخصی (PRV-09). برای واحدهای خیلی کوچک فقط عدد و نمودار نشان دهیم.</td></tr>
+      <tr><td>کارمند درباره مدیر خودش حرف زده</td><td>آن پیام به صف حساس برود، نه به Dashboard همان مدیر <b class="k k-inf">INFERENCE</b>.</td></tr>
+    </table>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۷. جزئیات: دانش با چند صاحب</h2>
+    <table>
+      <thead><tr><th style="width: 22%">بخش</th><th>چطور کار کند</th><th style="width: 30%">الان در کد</th></tr></thead>
+      <tr><td>جدول <code>KnowledgeSpace</code></td><td>هر «بخش دانش» این‌ها را دارد: واحد صاحب، چه کسانی ویرایش کنند، برای کدام کارکنان جواب بدهد، آیا تغییر نیاز به تأیید دارد، و وضعیت.</td><td>وجود ندارد</td></tr>
+      <tr><td>هر سؤال و جواب</td><td>به یک بخش دانش وصل باشد. اجازه ویرایش بر اساس صاحب همان بخش چک شود، نه یک مجوز کلی.</td><td>فیلد «ایجادکننده» هست ولی هیچ‌جا برای فیلتر استفاده نمی‌شود
+        <span class="src"><b class="k k-code">CODE</b> python/adcs-knowledgebase/adcs_kb/knowledgebase/models/qa.py:20-30 · knowledgebase/permissions.py:5-16</span></td></tr>
+      <tr><td>Qdrant (جست‌وجوی معنایی)</td><td>روی هر رکورد، شناسه بخش و لیست واحدهای مخاطب ذخیره شود.</td><td>الان فقط یک hash فرستاده می‌شود
+        <span class="src"><b class="k k-code">CODE</b> adcs_kb/celery/tasks/qdrant.py:137-163</span></td></tr>
+      <tr><td>موقع جواب دادن</td><td>فقط در بخش‌هایی جست‌وجو شود که واحد <b>تماس‌گیرنده</b> مخاطب آن‌هاست. واحد را از روی شماره او پیدا می‌کنیم (بلوک ۴).</td><td><b>ارزان‌ترین قدم:</b> کد جست‌وجو از قبل یک پارامتر فیلتر (<code>query_filter</code>) دارد، فقط کسی آن را پر نمی‌کند
+        <span class="src"><b class="k k-code">CODE</b> python/aiva/aiva/retrieve/qdrant.py:46-52,136-141</span></td></tr>
+      <tr><td>سؤال‌های بی‌جواب</td><td>سؤال‌های بی‌جواب و پرتکرار، جدا برای هر بخش، فقط به صاحب همان بخش نشان داده شود (KB-07، KB-08).</td><td>الان ثبت نمی‌شود <span class="src"><b class="k k-doc">DOSSIER</b> README stage 4</span></td></tr>
+      <tr><td>پیشنهاد AI</td><td>AI فقط پیشنهاد می‌دهد. پیشنهاد به صف تأیید صاحب بخش می‌رود. AI هیچ‌وقت مستقیم دانش را تغییر نمی‌دهد (KB-10).</td><td>تغییر خودکار وجود ندارد (درست است)</td></tr>
+    </table>
+    <div class="box ok">
+      <b>برای MVP هزینه اضافه ندارد:</b> یک بخش دانش به اسم «اداره تجربه» می‌سازیم که برای همه جواب
+      می‌دهد. این KB-01 و KB-09 را پوشش می‌دهد. در Fit-Gap برای KB-09 گفته شده «یک نقش جدید بسازیم»
+      (۳ نفر-روز). بهتر است همین ۳ روز را صرف ساخت «بخش دانش» کنیم که بعداً هم به درد می‌خورد، نه یک
+      نقش که فقط یک بار استفاده می‌شود.
+      <span class="src"><b class="k k-fg">FIT-GAP</b> KB-09 note, effort 3.0</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۸. شکل محصول: COA، AIVA، Chatbot و Auth</h2>
+    <div class="diagram">
+      <svg viewBox="0 0 960 520" role="img" aria-label="Phoenix product shape: channels, program, insight layer and access control">
+        <defs>
+          <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" style="fill: var(--muted)" />
+          </marker>
+        </defs>
+        <g style="font: 13px var(--f-body, sans-serif); fill: var(--ink)">
+          <rect x="20" y="20" width="200" height="70" rx="10" style="fill: var(--surface-2); stroke: var(--c-cyan)" />
+          <text x="120" y="48" text-anchor="middle" style="font-weight:700">AIVA — phone</text>
+          <text x="120" y="70" text-anchor="middle" style="fill: var(--muted)">inbound / outbound calls</text>
+          <rect x="20" y="110" width="200" height="70" rx="10" style="fill: var(--surface-2); stroke: var(--c-cyan)" />
+          <text x="120" y="138" text-anchor="middle" style="font-weight:700">Chatbot — text</text>
+          <text x="120" y="160" text-anchor="middle" style="fill: var(--muted)">web · app · messenger</text>
+
+          <rect x="280" y="20" width="250" height="160" rx="10" style="fill: var(--surface-2); stroke: var(--accent)" />
+          <text x="405" y="46" text-anchor="middle" style="font-weight:700">Program (conversation settings)</text>
+          <text x="300" y="74" style="fill: var(--muted)">• prompt · intro · privacy notice</text>
+          <text x="300" y="96" style="fill: var(--muted)">• max follow-up questions</text>
+          <text x="300" y="118" style="fill: var(--muted)">• knowledge spaces · tools (SMS)</text>
+          <text x="300" y="140" style="fill: var(--muted)">• topic list · alert rules</text>
+          <text x="300" y="162" style="fill: var(--muted)">• who may call</text>
+
+          <rect x="590" y="20" width="350" height="160" rx="10" style="fill: var(--surface-2); stroke: var(--c-teal)" />
+          <text x="765" y="46" text-anchor="middle" style="font-weight:700">COA — analysis &amp; reports</text>
+          <text x="610" y="74" style="fill: var(--muted)">topics · sentiment · severity · summaries</text>
+          <text x="610" y="96" style="fill: var(--muted)">trends · new topics · alerts · reports</text>
+          <text x="610" y="118" style="fill: var(--muted)">AQA assistant · export</text>
+          <rect x="610" y="132" width="310" height="34" rx="6" style="fill: none; stroke: var(--warn); stroke-dasharray: 4 3" />
+          <text x="765" y="154" text-anchor="middle" style="fill: var(--warn); font-weight:700">every query: scope + min group size + level</text>
+
+          <line x1="220" y1="55" x2="278" y2="70" marker-end="url(#ar)" style="stroke: var(--muted)" />
+          <line x1="220" y1="145" x2="278" y2="130" marker-end="url(#ar)" style="stroke: var(--muted)" />
+          <line x1="530" y1="100" x2="588" y2="100" marker-end="url(#ar)" style="stroke: var(--muted)" />
+          <text x="559" y="92" text-anchor="middle" style="fill: var(--muted); font-size: 11px">call +</text>
+          <text x="559" y="118" text-anchor="middle" style="fill: var(--muted); font-size: 11px">caller's unit</text>
+
+          <rect x="700" y="210" width="240" height="56" rx="10" style="fill: var(--surface-2); stroke: var(--bad)" />
+          <text x="820" y="234" text-anchor="middle" style="font-weight:700">Sensitive queue</text>
+          <text x="820" y="254" text-anchor="middle" style="fill: var(--muted)">few reviewers · every view logged</text>
+          <line x1="820" y1="180" x2="820" y2="208" marker-end="url(#ar)" style="stroke: var(--bad)" />
+
+          <rect x="20" y="300" width="920" height="110" rx="10" style="fill: var(--surface); stroke: var(--c-violet); stroke-width: 2" />
+          <text x="480" y="326" text-anchor="middle" style="font-weight:700">adcs-auth — who can see what</text>
+          <text x="40" y="356" style="fill: var(--muted)">org tree (levels set per customer)   ·   access per user: role + unit + sub-units + max data level + expiry</text>
+          <text x="40" y="382" style="fill: var(--muted)">5 data levels   ·   emergency access with reason   ·   min group size   ·   access log   ·   knowledge owners</text>
+          <line x1="120" y1="298" x2="120" y2="182" marker-end="url(#ar)" style="stroke: var(--c-violet); stroke-dasharray: 4 3" />
+          <line x1="405" y1="298" x2="405" y2="182" marker-end="url(#ar)" style="stroke: var(--c-violet); stroke-dasharray: 4 3" />
+          <line x1="660" y1="298" x2="660" y2="182" marker-end="url(#ar)" style="stroke: var(--c-violet); stroke-dasharray: 4 3" />
+          <text x="130" y="250" style="fill: var(--c-violet); font-size: 11px">who may call</text>
+          <text x="415" y="250" style="fill: var(--c-violet); font-size: 11px">which knowledge</text>
+          <text x="650" y="250" text-anchor="end" style="fill: var(--c-violet); font-size: 11px">who sees what</text>
+
+          <rect x="20" y="440" width="920" height="60" rx="10" style="fill: var(--surface-2); stroke: var(--c-orange)" />
+          <text x="480" y="466" text-anchor="middle" style="font-weight:700">HR data sync — one format, several ways in</text>
+          <text x="480" y="488" text-anchor="middle" style="fill: var(--muted)">Excel upload (MVP) · SFTP · SAP (SEG-07) · other HR systems → employees, units, phone numbers, who may call</text>
+          <line x1="480" y1="438" x2="480" y2="412" marker-end="url(#ar)" style="stroke: var(--c-orange)" />
+        </g>
+      </svg>
+    </div>
+    <p class="cap">
+      تلفن و چت هر دو یک «برنامه مکالمه» را اجرا می‌کنند. COA همه چیز را تحلیل می‌کند، ولی هیچ داده‌ای را
+      بدون چک دسترسی، حداقل نفر و سطح داده نشان نمی‌دهد. اطلاعات دسترسی همه از adcs-auth می‌آید.
+    </p>
+
+    <table>
+      <thead><tr><th style="width: 14%">محصول</th><th>کارش در این شکل</th><th style="width: 34%">چه چیزی نسبت به امروز عوض می‌شود</th></tr></thead>
+      <tr><td><b>AIVA</b></td><td>تماس تلفنی را جواب می‌دهد. از روی شماره، کارمند و واحدش را پیدا می‌کند. <b>همان اول تماس</b> چک می‌کند که اجازه تماس دارد. مکالمه را طبق برنامه انجام می‌دهد. در آخر، اطلاعات تماس را با واحد کارمند و کد مخفی او (نه شماره) به COA می‌فرستد.</td><td>الان Whitelist فقط جلوی ذخیره حافظه را می‌گیرد، نه جلوی خود تماس را. به‌صورت پیش‌فرض هم خاموش است. حافظه بلندمدت هم بر اساس شماره تلفن است و باید با قوانین دسترسی هماهنگ شود.
+        <span class="src"><b class="k k-code">CODE</b> python/aiva/aiva/memory/config.py:20-21 · <b class="k k-doc">DOSSIER</b> findings 9, 11</span></td></tr>
+      <tr><td><b>Chatbot</b></td><td>همان برنامه مکالمه را به‌صورت متنی اجرا می‌کند. خروجی‌اش هم همان شکل خروجی تلفن است. پس کارمندی که چت را ترجیح می‌دهد هم در همان گزارش‌ها حساب می‌شود.</td><td>الان تفاوت چت و تلفن با متغیرهای محیطی (env) تعیین می‌شود. برنامه مکالمه باید یک رکورد در دیتابیس باشد، نه یک نصب جدا.
+        <span class="src"><b class="k k-code">CODE</b> python/adcs/adcs/config.py:26-27 · adcs/chat/config.py:111-131</span></td></tr>
+      <tr><td><b>COA</b></td><td>تحلیل و گزارش. همه Dashboardها، Trendها، هشدارها، گزارش‌های دوره‌ای، خروجی‌ها و AQA از یک تابع چک دسترسی رد می‌شوند. موارد حساس به صف جدا می‌روند.</td><td>الان Dashboardها برای همه یکی است. فیلتر استان اختیاری است. AQA هیچ محدودیتی ندارد. لاگ دسترسی نداریم.
+        <span class="src"><b class="k k-code">CODE</b> coa/apps/main/services/call.py:68,143 · coa/apps/trends/views.py:75-76 · aqa/aqa/db/postgres.py:78-97</span></td></tr>
+      <tr><td><b>adcs-auth</b></td><td>درخت سازمان، دسترسی هر کاربر، سطح داده، دسترسی اضطراری، لاگ دسترسی و صاحب هر بخش دانش را نگه می‌دارد.</td><td>الان فقط کاربر، نقش و یک فهرست ساده مجوز داریم. تاریخ انقضای نقش هم اثری ندارد.
+        <span class="src"><b class="k k-code">CODE</b> adcs_auth/role/models.py:12,28,51 · adcs_auth/permission/models.py:9,34</span></td></tr>
+    </table>
+
+    <div class="box">
+      <b>چرا این شکل درست است؟</b> Qualtrics، Glint و Peakon همه همین‌طورند: یک داده، چند نما، یک روش
+      دسترسی. فرق ما با آن‌ها کانال است: صدای فارسی، تلفن و نصب داخل سازمان (نقشه راه §۳-ب).
+      پس روش دسترسی را <b>مثل بقیه بازار</b> می‌سازیم تا خریدار چیز آشنایی ببیند. نوآوری را برای کانال
+      تلفنی و تحلیل صدا نگه می‌داریم.
+      <span class="src"><b class="k k-doc">DOSSIER</b> ROADMAP_FA §2 اصل ۶ «محصول = پیکربندی یک هسته»، اصل ۷</span>
+    </div>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۹. کد امروز چقدر با این شکل فاصله دارد</h2>
+    <table>
+      <thead><tr><th style="width: 19%">بلوک</th><th>چه چیزی الان در کد هست</th><th>چه چیزی نیست</th><th style="width: 8%">حجم کار</th></tr></thead>
+      <tr><td>۱ درخت سازمان و دسترسی</td><td>یک فیلد JSON آزاد روی کاربر (<code>User.metadata</code>) و کد پرسنلی (<code>user_code</code>). چک دوحالته در <code>call.py:849</code>. تنها ساختار درختی موجود، درخت موضوع‌هاست، نه درخت سازمان.</td><td>جدول واحدها، جدول دسترسی‌ها، تابع چک دسترسی در COA، محدودیت در AQA، واحد روی هر پیام</td><td>زیاد</td></tr>
+      <tr><td>۲ سطح‌بندی داده</td><td>مجوزهای <code>view_calls</code> و <code>view_all_calls</code>. فیلد تاریخ انقضا روی نقش.</td><td>خواندن تاریخ انقضا، چک مالکیت فایل صوتی، لاگ دسترسی، مخفی کردن شماره در API، حذف توکن از لاگ‌ها</td><td>متوسط</td></tr>
+      <tr><td>۳ حداقل نفر</td><td>—</td><td>شمارش کارمندهای مختلف، مخفی کردن گروه کوچک، حذف اطلاعات شخصی از متن</td><td>متوسط</td></tr>
+      <tr><td>۴ لیست کارکنان</td><td>استانداردسازی شماره تلفن در AIVA. لیست <code>PHONE_WHITELIST</code> (فقط برای حافظه).</td><td>جدول کارمند و شماره، چک اجازه در شروع تماس، گروه «نامشخص»، اتصال به سامانه HR</td><td>متوسط</td></tr>
+      <tr><td>۵ بخش‌های دانش</td><td>مدیریت کامل سؤال و جواب، برچسب، «ایجادکننده»، پارامتر فیلتر در جست‌وجو</td><td>شناسه بخش، مجوز بر اساس صاحب، اطلاعات بخش در Qdrant، ثبت سؤال‌های بی‌جواب</td><td>کم تا متوسط</td></tr>
+      <tr><td>۶ موتور تحلیل</td><td>برچسب‌های AI روی تماس، Trend با مبنای مقایسه، هشدار با Webhook، AQA</td><td>شدت قابل تنظیم (الان همیشه <code>"high"</code>)، میزان اطمینان، تشخیص موضوع جدید در کد فعال. سرویس <code>coa-ai</code> از تیر ۱۴۰۴ تغییر نکرده.</td><td>متوسط</td></tr>
+      <tr><td>۷ موارد حساس</td><td>—</td><td>تشخیص، صف، مجوز</td><td>متوسط</td></tr>
+      <tr><td>۸ برنامه مکالمه</td><td>هماهنگ‌کننده مکالمه با چند شاخه همزمان، پیام خوش‌آمد، ابزار پیامک و یادآور، دو مسیر چت و تلفن</td><td>ذخیره برنامه به‌صورت داده، جلوگیری از خلاصه تماس‌های خیلی کوتاه (VIA-07)، چک اجازه در شروع تماس</td><td>متوسط</td></tr>
+      <tr><td>۹ تست کیفیت</td><td>فقط AQA تست کیفیت دارد</td><td>دقت تبدیل صدا به متن، درستی خلاصه، دقت موضوع، سناریوهای ثابت در CI</td><td>متوسط</td></tr>
+    </table>
+    <span class="src"><b class="k k-code">CODE</b> adcs-auth/adcs_auth/user/models.py:149,156 · coa/apps/trends/models.py:62-68 · coa/apps/trends/services/webhook.py:93 · coa/apps/files/views.py:19 · coa/middlewares.py:26 · aiva/aiva/memory/config.py:20-21 · <b class="k k-doc">DOSSIER</b> README stages 4, 8; findings 1-5</span>
+
+    <!-- ============================================================ -->
+    <h2 class="pb">۱۰. ترتیب ساخت، روی موج‌های نقشه راه</h2>
+    <p>تاریخ تقویمی نمی‌دهیم (قانون TEC-14). موج‌ها همان موج‌های <code>ROADMAP_FA</code> هستند. فقط مشخص کرده‌ایم هر بلوک در کدام موج می‌آید.</p>
+    <table>
+      <thead><tr><th style="width: 18%">موج</th><th>چه چیزی بسازیم (نسخه ساده‌ای که بعداً بزرگ می‌شود)</th><th style="width: 30%">کِی تمام است</th></tr></thead>
+      <tr><td><b>موج ۰ — اعتماد</b></td><td>بلوک ۲: بستن دانلود صوت بدون مجوز، خواندن تاریخ انقضای نقش، لاگ دسترسی، حذف توکن از لاگ‌ها · بلوک ۳: حداقل نفر بر اساس کارمندهای مختلف · بلوک ۴: جدول کارمند و شماره + چک اجازه در شروع تماس (VIA-02/03) · بلوک ۸: خلاصه نساختن برای تماس‌های خیلی کوتاه (VIA-07) · <b>فقط طراحی</b> بلوک ۱: جدول‌ها و تابع چک دسترسی، با یک دسترسی «کل سازمان»</td><td>هیچ راهی (صفحه، خروجی، AQA، فایل) شماره یا صوت را بدون مجوز نشان ندهد. با تست خودکار چک شود.</td></tr>
+      <tr><td><b>موج ۱ — اثبات پایلوت</b></td><td>بلوک ۱: درخت سه‌سطحی و ذخیره واحد روی هر پیام (SEG-02، AN-06) · بلوک ۵: یک بخش دانش · بلوک ۶: لیست موضوع‌های EX · بلوک ۹: سناریوهای ثابت تست</td><td>گزارش به تفکیک واحد روی داده پایلوت درست کار کند و گروه‌های کوچک واقعاً مخفی شوند.</td></tr>
+      <tr><td><b>موج ۲ — فروش دوم</b></td><td>بلوک ۱: دسترسی مدیر معاونت (اولین مورد Backlog) · بلوک ۵: چند بخش دانش · بلوک ۷: صف حساس · بلوک ۸: کانال Chatbot برای همان برنامه · بلوک ۴: اتصال به SAP</td><td>یک مدیر معاونت فقط داده معاونت خودش را ببیند و AQA هم فقط همین را جواب بدهد.</td></tr>
+      <tr><td><b>موج ۳ — محصول کردن</b></td><td>بلوک ۸: برنامه مکالمه به‌صورت داده با نسخه · بلوک ۱: سطح‌های درخت قابل تنظیم برای مشتری دوم · بلوک ۴: اتصال به یک سامانه HR دیگر</td><td>مشتری دوم با ساختار متفاوت (مثلاً استان ← شعبه) فقط با تنظیمات راه بیفتد.</td></tr>
+    </table>
+    <span class="src"><b class="k k-doc">DOSSIER</b> ROADMAP_FA §4 waves 0-3 · README «Deadline rule»</span>
+
+    <!-- ============================================================ -->
+    <h2>۱۱. ریسک‌ها و کارهایی که نباید بکنیم</h2>
+    <table>
+      <thead><tr><th style="width: 26%">ریسک</th><th>چه کنیم</th></tr></thead>
+      <tr><td>قبل از مشتری دوم، بیش از حد کار عمومی بسازیم</td><td>فقط جدول‌ها و نقطه‌های چک دسترسی را عمومی بسازیم. صفحه مدیریت دسترسی و ابزار ساخت برنامه بعداً. قانون: هر بلوک در MVP باید با یک تنظیم ساده کار کند.</td></tr>
+      <tr><td>لو رفتن هویت از طریق AQA</td><td>محدودیت را در خود پایگاه داده بگذاریم، نه در Prompt. تا آماده نشده، AQA فقط برای کسانی باشد که دسترسی «کل سازمان» دارند.</td></tr>
+      <tr><td>حداقل نفر بالا باعث شود داده زیادی مخفی شود</td><td>داده واحد کوچک را حذف نکنیم، در واحد بالاتر حساب کنیم. به EX گزارش بدهیم چند درصد داده مخفی شده تا آگاهانه تصمیم بگیرند.</td></tr>
+      <tr><td>واحد کارمند از روی فایل قدیمی اشتباه ثبت شود</td><td>تاریخ فایل کارکنان روی هر پیام ثبت شود. برای SEG-04 مسئول و زمان به‌روزرسانی مکتوب شود.</td></tr>
+      <tr><td>کد مخصوص همراه اول وارد محصول شود</td><td>هر کدی که کلمه «معاونت» یا «MCI» را مستقیم بنویسد رد شود. این‌ها فقط در تنظیمات باشند.</td></tr>
+      <tr><td>صف موارد حساس کم‌کم به یک محصول کامل گزارش تخلف تبدیل شود</td><td>خط قرمز پرونده: ناشناسی حقوقی، مدیریت پرونده و الزامات قانونی فعلاً نه.
+        <span class="src"><b class="k k-doc">DOSSIER</b> §25.8 · ROADMAP_FA §3-ج</span></td></tr>
+    </table>
+
+    <!-- ============================================================ -->
+    <h2>۱۲. منابع وب</h2>
+    <ol class="small" style="direction: ltr; text-align: left">
+      <li>W1 — Qualtrics, Roles (EX): <a href="https://qualtrics.com/support/employee-experience/creating-ee-project/participants-tab/roles-ee">qualtrics.com/support/…/roles-ee</a></li>
+      <li>W2 — Qualtrics, Confidentiality Overview (EX): <a href="https://www.qualtrics.com/support/confidentiality-overview-ex/">qualtrics.com/support/confidentiality-overview-ex</a></li>
+      <li>W3 — Qualtrics, Data Access Settings (EX): <a href="https://qualtrics.com/support/survey-platform/sp-administration/data-privacy-tab/data-access-settings/">qualtrics.com/support/…/data-access-settings</a></li>
+      <li>W4 — Qualtrics, Map Org Hierarchy Units (historical roll-up): <a href="https://www.qualtrics.com/support/employee-experience/creating-ee-project/participants-tab/org-hierarchies/hierarchy-tools/map-org-hierarchy-units-ee/">qualtrics.com/support/…/map-org-hierarchy-units-ee</a></li>
+      <li>W5 — Culture Amp, Confidentiality protections in reporting: <a href="https://support.cultureamp.com/en/articles/7048386-confidentiality-protections-in-reporting">support.cultureamp.com/…/7048386</a></li>
+      <li>W6 — Culture Amp, Sync with your HRIS data: <a href="https://support.cultureamp.com/en/articles/7048544-sync-culture-amp-with-your-hris-data">support.cultureamp.com/…/7048544</a></li>
+      <li>W7 — Microsoft, Manage Viva Glint confidentiality thresholds: <a href="https://learn.microsoft.com/en-us/viva/glint/setup/manage-confidentiality-thresholds">learn.microsoft.com/…/manage-confidentiality-thresholds</a></li>
+      <li>W8 — Microsoft, Set up Viva Glint User Roles (data access: All / Custom / Manager Roll-Up / Attribute; cumulative roles; Manage Sensitive Comments): <a href="https://learn.microsoft.com/en-us/viva/glint/setup/set-up-user-roles">learn.microsoft.com/…/set-up-user-roles</a></li>
+      <li>W9 — Workday Peakon, Confidentiality and data visibility: <a href="https://doc.workday.com/peakon/en-us/workday-peakon-employee-voice/general/confidentiality-and-data-visibility/kyw1653644699757.html">doc.workday.com/peakon/…/kyw1653644699757</a></li>
+      <li>W10 — Workday Peakon, Comment access by managers: <a href="https://doc.workday.com/peakon/en-us/workday-peakon-employee-voice/insights/comments/uhm1680016799950.html">doc.workday.com/peakon/…/uhm1680016799950</a></li>
+      <li>W11 — Workday Peakon, Sensitive comments: <a href="https://doc.workday.com/peakon/en-us/workday-peakon-employee-voice/insights/comments/fye1653383231991.html">doc.workday.com/peakon/…/fye1653383231991</a></li>
+      <li>W12 — Medallia, User and org hierarchy settings: <a href="https://docs.medallia.com/medallia-experience-cloud/administration/organization-management/advanced-organization-management/roles-permissions-and-capabilities/user-and-org-hierarchy-settings">docs.medallia.com/…/user-and-org-hierarchy-settings</a></li>
+      <li>W13 — Medallia, Roles, permissions, and capabilities: <a href="https://docs.medallia.com/medallia-experience-cloud/administration/organization-management/advanced-organization-management/roles-permissions-and-capabilities">docs.medallia.com/…/roles-permissions-and-capabilities</a></li>
+      <li>W14 — ServiceNow, Managing access to knowledge bases and articles: <a href="https://www.servicenow.com/docs/r/servicenow-platform/knowledge-management/user-access-knowledge.html">servicenow.com/docs/…/user-access-knowledge</a></li>
+      <li>W15 — Leena AI, Best practices for ServiceNow access &amp; audiences: <a href="https://docs.leena.ai/docs/best-practices-for-servicenow-access-audiences">docs.leena.ai/…/access-audiences</a></li>
+      <li>W16 — NICE CXone, Interactions Hub permissions: <a href="https://help.nicecxone.com/content/admin/security/permissions/searchpermissions.htm">help.nicecxone.com/…/searchpermissions</a></li>
+      <li>W17 — NICE CXone, Activity Audit Report: <a href="https://help.nicecxone.com/Content/reporting/prebuiltreportsaudit/activityauditreport.htm">help.nicecxone.com/…/activityauditreport</a></li>
+    </ol>
+    <p class="small">منابع رقبای ایرانی و دسته‌بندی بازار: فصل ۲۵.۹ پرونده محصول. همه منابع در ۱۵ مهر ۱۴۰۵ (۲۰۲۶-۱۰-۰۷) خوانده شده‌اند.</p>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

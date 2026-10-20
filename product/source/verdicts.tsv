@@ -1,0 +1,87 @@
+VIA-01	تنظیم / زیرساخت	chatbot-iva-agent/src/config.py (AGENT_SIP_*, AGENT_ORIGINAL_CALL_ID_FALLBACK); src/entrypoint.py	قطعی	MCINEXT + MCI-IT	T+5 روز کاری پس از تخصیص سرشماره و Virtual IP	مسیر SIP و هدرهای x-originalcallid/city_code پیاده‌سازی شده؛ فقط تخصیص سرشماره و اتصال Kamailio باقی است
+VIA-02	جزئی	aiva/memory/config.py:20-21 (PHONE_WHITELIST=[], BYPASS_WHITELIST=True); aiva_consume_kafka.py:310	قطعی	MCINEXT	T+7 روز کاری پس از دریافت دیتاست شماره‌ها از EX	⚠️ Whitelist موجود فقط «جمع‌آوری memory» را گیت می‌کند، نه «ورود تماس». گیت پذیرش تماس باید در لایه SIP اضافه شود. ضمناً BYPASS_WHITELIST پیش‌فرض True است
+VIA-03	غایب	جست‌وجو در ۸ سرویس: هیچ مسیر رد تماس غیرمجاز یافت نشد	قطعی	MCINEXT	T+5 روز کاری پس از تعریف پیام توسط EX	نیاز به پیام کوتاه و مسیر قطع در لایه SIP/Agent، بدون ایجاد رکورد تحلیلی
+VIA-04	جزئی	chatbot-iva-agent/src/schema.py (phone_number); coa/apps/main/models.py:381 (user_num)	قطعی	MCINEXT	T+10 روز کاری پس از تصمیم سیاست هویت	شماره هم در payload کافکا و هم در DB به‌صورت plaintext ذخیره می‌شود؛ پنهان‌سازی در Serializer/View نیازمند توسعه است
+VIA-05	غایب	هیچ جدول Mapping شماره→ساختار سازمانی یافت نشد	قطعی	مشترک (دیتاست از EX)	T+10 روز کاری پس از دریافت دیتاست سازمانی	نیاز به مدل داده Mapping (معاونت/اداره کل/اداره) + سرویس Lookup
+VIA-06	جزئی	chatbot-iva-agent/src/schema.py (session_id, call_id, original_call_id, session_duration, agent_prewarmed/started/ended_time); coa/apps/main/models.py:166	قطعی	MCINEXT	T+5 روز کاری (تگ تکمیل/قطع: پس از تعریف EX)	شناسه یکتا، زمان و مدت کامل موجود است؛ فقط تگ Incomplete/Complete باقی مانده — بخش عمده این ردیف «موجود» است
+VIA-07	غایب	هیچ گارد min_duration/min_turns پیش از خلاصه‌سازی یافت نشد	قطعی	MCINEXT	گارد: T+3 روز کاری | تگ Incomplete: پس از تعریف EX	⚠️ Red Flag: احتمال تولید Summary از تماس قطع‌شده. گارد حداقل مدت/نوبت را همین فاز اضافه کنید حتی اگر تگ به تأخیر بیفتد
+VIA-08	تأییدشده	chatbot-iva-agent/src/config.py (AGENT_MAX_UNRECOVERABLE_ERRORS, STT/LLM/TTS retry+timeout); src/utils/prometheus_metrics.py; src/utils/apm.py	قطعی	MCINEXT	—	Retry، timeout، Prometheus و Elastic APM کامل است. ظرفیت هم‌زمانی پایلوت باید با Load Test تثبیت شود
+CON-01	تأییدشده	chatbot-iva-agent/src/config.py (AGENT_GREETING_MESSAGE, AGENT_GREETING_ALLOW_INTERRUPTION)	قطعی	EX (متن)	T+1 روز کاری پس از تأیید متن	متن معرفی کاملاً قابل تنظیم است
+CON-02	تنظیم	همان AGENT_GREETING_MESSAGE	قطعی	EX	T+1 روز کاری پس از تأیید متن Notice	فقط متن؛ هیچ کد جدیدی لازم نیست
+CON-03	تأییدشده	aiva/prompts/greeting.py; aiva/prompts/react.py	قطعی	—	—	شروع آزاد و بدون منو
+CON-04	تأییدشده	aiva/chat/handlers/clarifying.py; aiva/chat/handlers/classification.py; aiva/prompts/clarifying_chitchat.py	قطعی	—	—	شاخه clarifying با classifier مستقل؛ معماری در docs/RequestFlow.md
+CON-05	تأییدشده	aiva/chat/config.py (CHAT_HISTORY_LIMIT=50); docs/RequestFlow.md (ChatContext مشترک)	قطعی	—	—	حفظ Context در طول Conversation ⚠️ AIVA علاوه بر Context تماس، Long-term Memory بین تماس‌ها برای هر شماره می‌سازد (aiva/memory، ChatbotUser.memory) — باید در Notice اعلام یا برای EX خاموش شود.
+CON-06	جزئی	aiva/chat/config.py (REACT_MAX_ITERS=10, AGENT_MAX_HISTORY_TURNS=6)	قطعی	MCINEXT	T+3 روز کاری	سقف حلقه ابزار و تاریخچه موجود است اما «سقف تعداد Follow-up» به‌عنوان پارامتر مستقل وجود ندارد
+CON-07	تأییدشده	aiva/prompts/classification.py:88; aiva/prompts/clarifying_chitchat.py:48	قطعی	—	—	تشخیص Voice کامل در Prompt طبقه‌بندی لحاظ شده
+CON-08	غایب	—	قطعی	EX (بازتعریف)	معلق تا بازتعریف EX	خود توافق این ردیف را «نیازمند بازبینی» دانسته؛ تعهد ندهید
+CON-09	تأییدشده	aiva/chat/config.py (TOOL_CALLING_EXIT_ANSWER, exit_tool); INTENT_AGENT_ENABLED_TOOLS	قطعی	—	—	پایان شفاف بدون وعده SLA
+AI-01	تأییدشده	chatbot-iva-agent/src/utils/stt.py + AGENT_STT_MODEL/BASE_URL; adcs POST /api/v1/chat/asr	قطعی	MCINEXT	—	⚠️ پیاده‌سازی شده اما WER هرگز اندازه‌گیری نشده. «موجود» یعنی implemented نه measured
+AI-02	رد شد (ادعا نادرست)	coa/apps/main/models.py:397 (raw_input); services/call.py:771 ("asr_data": raw_input if debug); models.py:395 (conversation_reform); chatbot-iva-agent/src/schema.py (messages[].text)	قطعی	مشترک (تصمیم سیاست)	T+2 روز کاری برای تصمیم سیاست	⚠️⚠️ Transcript ذخیره می‌شود و روی Kafka منتشر می‌شود. «خارج از Scope» نادرست است. یا نگهداری را اعلام کنید یا ذخیره را متوقف کنید
+AI-03	تأییدشده	coa/apps/main/models.py:372 (call_summary); chatbot-iva-agent AGENT_LLM_SESSION_SUMMARY_URL	قطعی	MCINEXT	—	⚠️ معیار پذیرش این ردیف مقایسه با Transcript است — به AI-02 گره خورده. Faithfulness سنجیده نشده
+AI-04	نامشخص (coa-ai فریز)	coa/apps/main/models.py:396 (topics JSON), 370 (category_subcategory_dict) — فقط خواندن نتیجه	محتمل	MCINEXT	T+15 روز کاری پس از بازفعال‌سازی coa-ai	منطق تفکیک چندموضوعی در python/coa-ai است که آخرین کامیتش 2025-07-13 است
+AI-05	نامشخص (coa-ai فریز)	coa/config.py (schema تگ‌ها)	محتمل	مشترک	T+15 روز کاری پس از تعریف دقیق EX	Multi-label بودن قابل تأیید نشد
+AI-06	نامشخص (coa-ai فریز)	category_subcategory_dict; GET /api/v1/analyse/calls/Thematic-analysis/category	محتمل	مشترک (Taxonomy از EX)	T+10 روز کاری پس از دریافت Taxonomy	لایه سرویس‌دهی و گزارش کامل است؛ کیفیت Coding سنجیده نشده
+AI-07	نامشخص (coa-ai فریز)	GET /api/v1/analyse/calls/Thematic-analysis/subcategory	محتمل	مشترک	همان AI-06	زیرموضوع در API و مدل داده پشتیبانی می‌شود
+AI-08	جزئی → «تنظیم» نه «توسعه»	coa/apps/main/models.py:340-345 (user_sentiment, agent_sentiment, *_meta, index دار)	قطعی	MCINEXT	T+5 روز کاری	Sentiment از قبل ذخیره می‌شود؛ فقط مقیاس سه‌سطحی و عبارت‌بندی «مبتنی بر محتوا» نیاز به تنظیم دارد. ⚠️ سلول معیار پذیرش این ردیف کپی شرح نیاز است — از EX معیار واقعی بخواهید
+AI-09	جزئی	user_sentiment (مقادیر مثبت) + models.py:373 (suggestions)	محتمل	MCINEXT	T+5 روز کاری	داده هست؛ View/فیلتر اختصاصی Positive لازم است
+AI-10	تأییدشده	coa/apps/main/services/thematic_analysis.py; /analyse/calls/Thematic-analysis/*	قطعی	—	—	Frequency و سهم موضوعات کامل
+AI-11	تأییدشده	coa/apps/trends/services/sync.py; coa/apps/trends/models.py:81 (trend_score, baseline, trend_signal, is_trend, time_series)	قطعی	—	—	Baseline و signal واقعی دارد — نه فقط شمارش حجم
+AI-12	غایب (در ریپوهای فعال)	هیچ کد clustering/similarity یافت نشد	قطعی	MCINEXT	T+20 روز کاری	یا در coa-ai فریزشده است یا وجود ندارد؛ پیش از تعهد بررسی شود
+AI-13	غایب (در ریپوهای فعال)	هیچ کد emerging/candidate topic یافت نشد	قطعی	MCINEXT	T+20 روز کاری	همین وضعیت AI-12
+AI-14	جزئی	chatbot-iva-agent/src/schema.py (transcript_confidence per utterance)	قطعی	MCINEXT	T+10 روز کاری	Confidence در سطح ASR از قبل روی Kafka جریان دارد؛ Confidence خروجی LLM و برچسب Needs Review غایب است
+AI-15	غایب	هیچ فیلد severity مستقل از sentiment یافت نشد	قطعی	مشترک	T+15 روز کاری	trends/services/webhook.py:93 فقط severity ثابت "high" دارد
+SEG-01	تنظیم	—	قطعی	EX	T+3 روز کاری پس از تحویل دیتاست	وابستگی کامل به EX
+SEG-02	تنظیم	—	قطعی	EX	همان SEG-01	حداقل سه فیلد سازمانی
+SEG-03	جزئی	coa/apps/users/permissions.py; coa/apps/main/services/call.py:849 (view_all_calls → agent_id scoping)	قطعی	MCINEXT	T+10 روز کاری	RBAC و Row-level scoping واقعی موجود است؛ پنهان‌سازی هویت در لایه Serializer لازم است
+SEG-04	غایب (فرایند)	—	قطعی	مشترک	T+5 روز کاری پس از توافق تناوب	فرایند و مسئول، نه کد
+SEG-05	جزئی	هیچ برچسب Unmapped در مدل داده یافت نشد	محتمل	MCINEXT	T+7 روز کاری	در توافق «موجود» علامت خورده اما شاهد کدی پیدا نشد — پیش از UAT تأیید کنید
+SEG-06	تنظیم	—	قطعی	EX	T+3 روز کاری	محدودسازی جامعه پایلوت
+SEG-07	غایب	هیچ کد SAP/middleware یافت نشد	قطعی	MCI-IT (اعطای دسترسی)	Phase 2 — T+30 روز کاری پس از اعطای دسترسی SAP	⚠️ بزرگ‌ترین آیتم توسعه کل توافق و خارج از کنترل تیم شما. جایگزین MVP: SEG-01 + SEG-04 (اکسل + تناوب مستند)
+PRV-01	غایب	grep redact|mask|anonymi|deidentif در ۸ سرویس → صفر نتیجه	قطعی	MCINEXT	T+10 روز کاری پس از تصمیم سیاست هویت	هیچ لایه پنهان‌سازی هویت وجود ندارد
+PRV-02	جزئی	coa/apps/users/permissions.py (AnyOfPermission, HasPermission, PermissionGroup)	قطعی	MCINEXT	T+10 روز کاری	زیرساخت RBAC آماده است؛ Role «مدیر سامانه» و مسیر Resolve هویت ساخته نشده ⚠️ مسیر دوم: AQA روی ClickHouse Query آزاد می‌زند و ممکن است user_num برگرداند؛ کاربر DB مخصوص AQA باید فقط به View بدون ستون هویتی دسترسی داشته باشد.
+PRV-03	رد شد (نقص امنیتی بحرانی)	coa/apps/files/views.py:19 → @with_permissions({view_calls}) سپس minio.download(name) بدون بررسی مالکیت	قطعی	MCINEXT	⛔ پیش از UAT — T+3 روز کاری	⚠️⚠️ IDOR: هر کاربر دارای view_calls می‌تواند با دادن نام فایل، صوت هر تماسی را دانلود کند. نام فایل از call_id مشتق می‌شود (services/call.py). این ردیف «موجود» علامت خورده و نیست
+PRV-04	تأییدشده	dashboard endpoints تجمیعی (coa/apps/iva, coa/apps/main/views)	محتمل	MCINEXT	T+3 روز کاری برای بازبینی Export	گزارش‌های تجمیعی درست است، اما Export و Drill-down باید از نظر فیلد هویتی بازبینی شود
+PRV-05	غایب	grep min_count|k_anon|suppress → فقط contextlib.suppress بی‌ربط	قطعی	مشترک	T+7 روز کاری پس از تعیین حد k توسط EX	هیچ Suppression گروه کوچک وجود ندارد
+PRV-06	رد شد	grep audit|LogEntry|access_log|viewed_by|actor_id در coa-api, adcs, aiva, adcs-auth, aqa, agentlib و هر دو KB → صفر نتیجه	قطعی	MCINEXT	T+10 روز کاری	⚠️ Audit Log وجود ندارد. آنچه هست coa/middlewares.py:26 (لاگ method/path/headers) است که Audit Trail قابل کوئری نیست
+PRV-07	تأییدشده	coa/apps/main/management/commands/archive_old_calls.py (ARCHIVE_CALLS_MONTHS, pg_dump → MinIO → delete → VACUUM، با abort-on-failure و --dry-run)	قطعی	—	—	✅ طراحی Retention درست و قابل اثبات است
+PRV-08	رد شد (واقعیت بهتر از ادعا)	همان archive_old_calls: جدول call_ai_tags (شامل raw_input و call_summary) هم آرشیو و حذف می‌شود	قطعی	MCINEXT	T+2 روز کاری برای مستندسازی	⚠️ دلیل ذکرشده («عدم ارائه transcribe») نادرست است. Retention داده ساختاریافته عملاً پیاده شده — این را مطالبه کنید
+PRV-09	غایب	صفر کد redaction/PII	قطعی	MCINEXT	T+15 روز کاری	کاملاً Greenfield
+PRV-10	جزئی	coa/apps/main/models.py:346-348 (user_bad_words, agent_bad_words, *_meta)	قطعی	MCINEXT	T+20 روز کاری	فقط «الفاظ نامناسب» تشخیص داده می‌شود. آزار، تبعیض و تهدید تشخیص داده نمی‌شود. هرگز عدد Recall نسنجیده اعلام نکنید
+PRV-11	تأییدشده	python/adcs-auth (صدور توکن) + permission-based RBAC در همه سرویس‌ها	قطعی	—	—	⚠️ adcs-auth صفر فایل تست دارد در حالی که مرجع احراز هویت همه سرویس‌هاست ⚠️ Chat APIهای aiva و adcs همه permission_classes=() هستند؛ امنیت به Gateway سپرده شده.
+KB-01	تأییدشده	adcs_kb/knowledgebase/api.py (/qa, /list_qa, /question, /answer)	قطعی	—	—	ورود سؤال/پاسخ از پنل
+KB-02	خارج از کد	adcs_kb /import موجود است	قطعی	EX	T+0 (تحویل EX)	ستون وضعیت در توافق خالی است
+KB-03	تأییدشده	aiva/retrieve/qdrant.py; aiva/chat/config.py (CONTEXTS_COLLECTION_NAME, CONTEXT_RETRIEVE_THRESHOLD=0.5)	قطعی	—	—	RAG با آستانه شباهت قابل تنظیم
+KB-04	تنظیم	aiva/prompts/guardrail.py; GUARDRAIL_COLLECTION_NAME + GUARDRAIL_RETRIEVE_COUNT; adcs_kb /guardrail	قطعی	EX (مستند)	T+5 روز کاری پس از دریافت مستند EX	Guardrail مبتنی بر مثال در Qdrant — با داده تنظیم می‌شود نه کد
+KB-05	تأییدشده	aiva/prompts/guardrail.py + شاخه clarifying در orchestrator	محتمل	—	—	رفتار «نمی‌دانم» در Prompt هست؛ با Golden Set تأیید شود
+KB-06	تأییدشده (ارتقا از Customization)	aiva/tools/sms.py (POST resan.mci.dev/api/messages/send/to/); در AGENT_ENABLED_TOOLS پیش‌فرض فعال؛ chatbot-iva-agent/src/utils/sms.py	قطعی	MCINEXT	T+5 روز کاری برای Guardrail و Rate limit	✅ ساخته شده. ⚠️ اما LLM خودش تصمیم ارسال می‌گیرد → پیش از پایلوت Rate limit و محدودسازی لازم است
+KB-07	غایب	grep unanswered|no_answer|dont_know → صفر نتیجه	قطعی	MCINEXT	T+7 روز کاری	«نیازمند بررسی فنی» را به آیتم توسعه برآوردشده ارتقا دهید
+KB-08	غایب	—	قطعی	MCINEXT	T+10 روز کاری	قابل واگذاری به AQA با یک Query آماده
+KB-09	تأییدشده (ارتقا)	نوشتن در KB فقط از طریق API با اقدام انسانی	قطعی	—	—	این یک «محدودیت» است نه توسعه — برای نساختن چیزی هزینه نگیرید
+KB-10	تأییدشده (ارتقا)	هیچ مسیر auto-ingest/self-update در KB یافت نشد	قطعی	—	—	به‌صورت ساختاری برقرار است
+AN-01	تأییدشده	coa/apps/main/views/*; coa/apps/iva/views.py; adcs/dashboard/api.py	قطعی	—	—	View کامل تحلیلی موجود
+AN-02	تأییدشده	/analyse/dashboard/calls/report; /iva/dashboard/metrics; /iva/dashboard/time-buckets	قطعی	—	—
+AN-03	تأییدشده	/analyse/calls/Thematic-analysis/{category,subcategory} + /enums	قطعی	—	—
+AN-04	تأییدشده	/trends/, /trends/categories/, /trends/subjects/<id>/	قطعی	—	—
+AN-05	جزئی	sentiment در call_ai_tags	محتمل	MCINEXT	T+5 روز کاری	فقط View/فیلتر اختصاصی Positive لازم است
+AN-06	غایب	—	قطعی	مشترک	T+12 روز کاری پس از تکمیل Mapping سازمانی	وابسته به VIA-05 و PRV-05 — نمی‌تواند زودتر از آن‌ها تحویل شود
+AN-07	تأییدشده	timeseries endpoints + پارامترهای date_from/date_to	قطعی	—	—
+AN-08	تأییدشده	GET /api/v1/analyse/voice/call/<call_id> (CallDetailAPIView)	قطعی	MCINEXT	وابسته به اصلاح PRV-03	Drill-down کار می‌کند اما دسترسی Audio باید طبق PRV-03 اصلاح شود
+AN-09	رد شد (جزئی)	coa/apps/trends/services/webhook.py:93 → severity ثابت "high"؛ هیچ آستانه کاربرپسند یافت نشد	قطعی	MCINEXT	T+10 روز کاری	⚠️ در توافق «موجود» است ولی یادداشت خودتان می‌گوید قابل تنظیم نیست. خودتان Downgrade کنید
+AN-10	تأییدشده	/trends/report/; /analyse/calls/special-analysis/timeseries/report	قطعی	—	—
+AN-11	تأییدشده	coa/apps/experts/service.py (خروجی CSV)	قطعی	MCINEXT	T+3 روز کاری	باید فیلدهای هویتی از Export حذف شوند تا معیار پذیرش برآورده شود
+AN-12	تأییدشده	python/aqa — 9,119 LOC؛ POST /api/v1/chat/message (SSE)؛ /configs/{prompts,sql-examples}؛ POST /eval/run	قطعی	—	—	✅ قوی‌ترین دارایی نمایشی شما. تنها سرویسی که Eval Harness دارد
+TEC-01	تنظیم / زیرساخت	helm/cloud; dockerfiles/	قطعی	MCINEXT + MCI-IT	T+10 روز کاری پس از تخصیص منابع
+TEC-02	تنظیم / زیرساخت	helm/cloud; coa-api/docker-compose.yml	قطعی	MCINEXT + MCI-IT	همان TEC-01	⚠️ Celery با concurrency=1 اجرا می‌شود — سقف ظرفیت را پیش از تعهد مشخص کنید
+TEC-03	تنظیم / زیرساخت	ansible-roles/envoy_*; ansible-roles/ingress_controller	قطعی	MCINEXT + MCI-IT	همان TEC-01
+TEC-04	تنظیم	chatbot-iva-agent SIP config	قطعی	MCINEXT + MCI-IT	T+5 روز کاری پس از تخصیص سرشماره
+TEC-05	تنظیم	—	قطعی	MCINEXT	T+7 روز کاری	محیط Demo با داده نمونه
+TEC-06	تنظیم	—	قطعی	EX (دیتاست)	T+3 روز کاری پس از تحویل دیتاست
+TEC-07	تأییدشده	adcs_kb /import	قطعی	EX	T+0	اجرا توسط EX
+TEC-08	خارج از کد	—	قطعی	EX	T+0	سناریوها را EX می‌نویسد
+TEC-09	خارج از کد	—	قطعی	EX	T+0
+TEC-10	خارج از کد	—	قطعی	مشترک	T+0
+TEC-11	خارج از کد	—	قطعی	EX	T+0
+TEC-12	خالی — باید پر شود	—	—	مشترک	T+5 روز کاری	⚠️ ستون وضعیت در توافق خالی است. چهار دسته معیار موفقیت باید پیش از پایلوت تثبیت شود
+TEC-13	خالی — باید پر شود	—	—	مشترک	T+5 روز کاری	⚠️ باید VIA-07 (Summary ساختگی)، PRV-03 (افشای صوت) و PRV-10 (Sensitive) را صریحاً شامل شود
+TEC-14	خالی — تعهد MCINEXT	—	—	MCINEXT	T+3 روز کاری	⚠️ همین فایل پاسخ این ردیف است. معیار پذیرش خودِ این ردیف سپر شماست: بدون مشخص‌بودن Dependency هیچ Timeline تعهد نهایی نیست
+TEC-15	خالی — فرایند	—	—	مشترک	پس از پایان UAT	Go/No-Go مبتنی بر Evidence نه Demo

@@ -1,0 +1,1511 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>راهنمای یادگیری هوش مصنوعی</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <section class="cover">
+      <div class="small">راهنمای شخصی — تیم Phoenix</div>
+      <h1>به‌روز ماندن در هوش مصنوعی: مفاهیم، اعداد و منابع</h1>
+      <div class="sub">
+        این راهنما کمک می‌کند مفاهیم اصلی هوش مصنوعی را بفهمید، صفحه یک مدل در
+        Hugging Face و جدول رتبه‌بندی‌ها را درست بخوانید، معنی اختصارها و اعداد
+        را بدانید و هر هفته با یک روال ساده به‌روز بمانید.
+      </div>
+      <table class="meta">
+        <tr><td>هدف</td><td>خودتان بتوانید یک مدل تازه را بخوانید، بسنجید و بگویید به درد Phoenix می‌خورد یا نه.</td></tr>
+        <tr><td>مخاطب</td><td>مدیر محصول فنی و هر کسی در تیم که می‌خواهد از خبرها عقب نماند</td></tr>
+        <tr><td>تمرکز ویژه</td><td>هوش مصنوعی صوتی (گفتار به متن، متن به گفتار، تشخیص نوبت) — چون Phoenix یک دستیار صوتی فارسی است</td></tr>
+        <tr><td>مبنا</td><td>مستندات Hugging Face، مقاله‌ها و وب‌سایت جدول‌های رتبه‌بندی (بازدید مهر ۱۴۰۵)</td></tr>
+        <tr><td>تاریخ</td><td>۱۵ مهر ۱۴۰۵</td></tr>
+      </table>
+    </section>
+
+    <h2 id="read">راهنمای خواندن</h2>
+    <p>
+      این سند یازده فصل دارد. لازم نیست همه را یک‌جا بخوانید. اگر عجله دارید، این
+      چهار فصل را اول بخوانید:
+    </p>
+    <ol>
+      <li><b><a href="#hf">خواندن Hugging Face</a></b> — تا صفحه هر مدل را بفهمید.</li>
+      <li><b><a href="#abbr">فرهنگ اختصارات</a></b> — هر وقت به حرفی مثل <span class="en">SFT</span> یا <span class="en">RTFx</span> رسیدید، اینجا را باز کنید.</li>
+      <li><b><a href="#models">فهرست مدل‌های معروف</a></b> — Qwen، Gemma، Llama و بقیه؛ هر کدام برای چه کاری.</li>
+      <li><b><a href="#routine">روال هفتگی</a></b> — تا یادگیری یک عادت شود، نه یک پروژه.</li>
+    </ol>
+    <p>
+      اصطلاح‌ها به انگلیسی هم آمده‌اند، چون در سایت‌ها و مقاله‌ها همان شکل
+      انگلیسی را می‌بینید. هر اصطلاح اولین بار که می‌آید توضیح داده می‌شود.
+    </p>
+    <div class="box warn">
+      <b>یک هشدار:</b> این حوزه هر ماه عوض می‌شود. عددهای جدول‌ها و رتبه مدل‌ها را عمداً
+      ننوشته‌ایم، چون زود کهنه می‌شوند. فصل «فهرست مدل‌های معروف» فقط <b>خانواده‌ها و کاربردشان</b> را می‌گوید، نه نسخه برتر امروز. به جای عدد، یاد می‌گیریم
+      <b>چطور</b> جدول‌ها را بخوانیم. مفهوم‌ها و روش‌ها سال‌ها معتبر می‌مانند.
+    </div>
+
+    <h3>مسیر ۳۰ / ۶۰ / ۹۰ روزه</h3>
+    <table>
+      <thead><tr><th style="width: 16%">بازه</th><th>هدف</th><th style="width: 38%">کار عملی</th></tr></thead>
+      <tr><td><b>روز ۱ تا ۳۰</b></td><td>مفاهیم پایه و زبان مشترک. بدانید توکن، پنجره متن، تنظیم دقیق و RAG چیست.</td><td>فصل «مفاهیم پایه»، «موضوع‌های تکمیلی» و «فهرست مدل‌های معروف». فصل‌های اول دوره LLM در Hugging Face. هر روز ۱۵ دقیقه روال روزانه.</td></tr>
+      <tr><td><b>روز ۳۱ تا ۶۰</b></td><td>خواندن مدل و جدول. صفحه هر مدل را بفهمید و عددها را مقایسه کنید.</td><td>فصل ۳ و ۵. تمرین ۱ و ۲ از فصل آخر. یک مدل کوچک را روی لپ‌تاپ اجرا کنید.</td></tr>
+      <tr><td><b>روز ۶۱ تا ۹۰</b></td><td>صدا و ارزیابی خودتان. بتوانید دو مدل گفتار به متن را روی صدای فارسی خودمان مقایسه کنید.</td><td>فصل ۶. دوره صوت Hugging Face. تمرین ۳. یک گزارش یک‌صفحه‌ای برای تیم.</td></tr>
+    </table>
+
+    <!-- ================= بخش اول ================= -->
+    <section class="part">
+      <div class="num">بخش اول</div>
+      <div class="ttl">مفاهیم</div>
+      <div class="desc">زبان مشترک: کلمه‌هایی که در هر خبر، مقاله و صفحه مدل می‌بینید.</div>
+    </section>
+
+    <h2 id="basics">مفاهیم پایه</h2>
+
+    <h3>از یادگیری ماشین تا مدل زبانی بزرگ</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مفهوم</th><th>یعنی چه</th></tr></thead>
+      <tr><td><b>یادگیری ماشین</b> <span class="en">(ML)</span></td><td>به جای نوشتن قانون، به کامپیوتر مثال می‌دهیم تا خودش الگو را پیدا کند.</td></tr>
+      <tr><td><b>یادگیری عمیق</b> <span class="en">(Deep Learning)</span></td><td>نوعی یادگیری ماشین با «شبکه عصبی» چندلایه. تقریباً همه مدل‌های امروزی از این نوع‌اند.</td></tr>
+      <tr><td><b>مدل زبانی بزرگ</b> <span class="en">(LLM)</span></td><td>شبکه‌ای که با حجم بسیار زیادی متن آموزش دیده و فقط یک کار می‌کند: <b>پیش‌بینی تکه بعدی متن</b>. همه توانایی‌هایش (جواب دادن، خلاصه کردن، کد نوشتن) از همین یک کار می‌آید.</td></tr>
+      <tr><td><b>ترنسفورمر</b> <span class="en">(Transformer)</span></td><td>معماری (نقشه ساخت) تقریباً همه مدل‌های زبانی امروز. ایده اصلی‌اش «توجه» است.</td></tr>
+      <tr><td><b>توجه</b> <span class="en">(Attention)</span></td><td>مدل برای فهم هر کلمه، به همه کلمه‌های قبلی نگاه می‌کند و وزن می‌دهد که کدام مهم‌ترند. هزینه‌اش با طول متن زیاد می‌شود.</td></tr>
+      <tr><td><b>چندوجهی</b> <span class="en">(Multimodal)</span></td><td>مدلی که علاوه بر متن، تصویر یا صدا یا ویدیو هم می‌گیرد یا می‌سازد.</td></tr>
+    </table>
+
+    <h3>توکن، پنجره متن و بردار معنایی</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مفهوم</th><th>یعنی چه</th></tr></thead>
+      <tr><td><b>توکن</b> <span class="en">(Token)</span></td><td>تکه‌ای از متن که مدل با آن کار می‌کند؛ گاهی یک کلمه، گاهی بخشی از کلمه. قیمت و سرعت همه‌جا بر حسب توکن است. <b>متن فارسی معمولاً توکن بیشتری از همان متن انگلیسی مصرف می‌کند</b>، پس گران‌تر و کندتر است.</td></tr>
+      <tr><td><b>توکن‌ساز</b> <span class="en">(Tokenizer)</span></td><td>برنامه‌ای که متن را به توکن می‌شکند. هر مدل توکن‌ساز خودش را دارد. توکن‌ساز خوب برای فارسی یعنی هزینه کمتر.</td></tr>
+      <tr><td><b>پنجره متن</b> <span class="en">(Context window)</span></td><td>بیشترین مقدار متنی (ورودی + خروجی) که مدل در یک بار می‌بیند؛ مثلاً <span class="en">128K</span> یعنی حدود ۱۲۸ هزار توکن. هر چه خارج از پنجره باشد، برای مدل وجود ندارد.</td></tr>
+      <tr><td><b>بردار معنایی</b> <span class="en">(Embedding)</span></td><td>تبدیل متن به یک فهرست عدد، طوری که متن‌های هم‌معنی عددهای نزدیک داشته باشند. پایه جست‌وجوی معنایی و بانک دانش است.</td></tr>
+      <tr><td><b>دما</b> <span class="en">(Temperature)</span></td><td>میزان تصادفی بودن جواب. دمای پایین یعنی جواب قابل‌پیش‌بینی‌تر؛ برای کارهای دقیق مثل استخراج داده، دما را پایین بگذارید.</td></tr>
+      <tr><td><b>توهم</b> <span class="en">(Hallucination)</span></td><td>وقتی مدل با اطمینان چیزی می‌گوید که درست نیست. هیچ مدلی از آن خالی نیست؛ باید با طراحی محصول کنترلش کرد.</td></tr>
+    </table>
+
+    <h3>یک مدل چطور ساخته می‌شود</h3>
+    <p>ساختن یک مدل گفت‌وگو معمولاً سه مرحله دارد:</p>
+    <ol>
+      <li><b>پیش‌آموزش</b> <span class="en">(Pre-training)</span> — مدل روی حجم بسیار زیادی متن، پیش‌بینی کلمه بعد را یاد می‌گیرد. خروجی این مرحله «مدل پایه» <span class="en">(Base)</span> است: زبان را بلد است ولی به سؤال جواب مرتب نمی‌دهد.</li>
+      <li><b>تنظیم با دستور</b> <span class="en">(SFT / Instruction tuning)</span> — با هزاران نمونه «سؤال → جواب خوب» یاد می‌گیرد مثل دستیار رفتار کند. خروجی: مدل <span class="en">Instruct</span> یا <span class="en">Chat</span>.</li>
+      <li><b>هم‌راستاسازی با ترجیح</b> <span class="en">(RLHF، DPO)</span> — به مدل دو جواب نشان می‌دهند و می‌گویند کدام بهتر است. مدل یاد می‌گیرد جواب مفیدتر و امن‌تر بدهد.</li>
+    </ol>
+    <p>
+      <b>مدل‌های استدلالی</b> <span class="en">(Reasoning models)</span> یک مرحله
+      دیگر هم دارند: با یادگیری تقویتی <span class="en">(RL)</span> روی مسئله‌هایی
+      که جواب قابل‌بررسی دارند (ریاضی، کد) یاد می‌گیرند قبل از جواب «فکر کنند».
+      این فکر کردن توکن مصرف می‌کند؛ پس دقیق‌ترند ولی <b>کندتر و گران‌ترند</b>.
+      برای گفت‌وگوی صوتی که تأخیر مهم است، معمولاً مدل غیراستدلالی یا حالت فکر
+      کوتاه بهتر است.
+    </p>
+
+    <h3>تطبیق مدل با کار خودمان</h3>
+    <table>
+      <thead><tr><th style="width: 22%">روش</th><th>چه وقت</th><th style="width: 22%">هزینه</th></tr></thead>
+      <tr><td><b>نوشتن دستور خوب</b> <span class="en">(Prompting)</span></td><td>همیشه اول از این شروع کنید. با چند مثال در دستور <span class="en">(Few-shot)</span> خیلی از کارها حل می‌شود.</td><td>تقریباً صفر</td></tr>
+      <tr><td><b>بازیابی + تولید</b> <span class="en">(RAG)</span></td><td>وقتی مدل باید از دانش خود سازمان جواب بدهد (آیین‌نامه، مستندات). متن مرتبط پیدا و کنار سؤال به مدل داده می‌شود. بانک دانش Phoenix همین است.</td><td>کم تا متوسط</td></tr>
+      <tr><td><b>تنظیم دقیق</b> <span class="en">(Fine-tuning)</span></td><td>وقتی رفتار یا قالب خروجی ثابتی می‌خواهید، یا مدل کوچک باید کار مشخصی را خوب انجام دهد. <span class="en">LoRA</span> روشی ارزان است که فقط بخش کوچکی از وزن‌ها را تغییر می‌دهد.</td><td>متوسط (داده + سخت‌افزار)</td></tr>
+      <tr><td><b>عامل</b> <span class="en">(Agent)</span> و <b>استفاده از ابزار</b> <span class="en">(Tool use)</span></td><td>وقتی مدل باید کاری انجام دهد (ثبت درخواست، فرستادن پیامک، پرس‌وجو از پایگاه داده). مدل تصمیم می‌گیرد کدام ابزار را با چه ورودی صدا بزند. <span class="en">MCP</span> یک قرارداد استاندارد برای وصل کردن ابزارها به مدل است.</td><td>متوسط؛ آزمودنش سخت است</td></tr>
+    </table>
+
+    <h3>اجرای مدل (استنتاج)</h3>
+    <p><b>استنتاج</b> <span class="en">(Inference)</span> یعنی استفاده از مدل آموزش‌دیده برای جواب دادن. این مفهوم‌ها در انتخاب سرور و هزینه مهم‌اند:</p>
+    <table>
+      <thead><tr><th style="width: 22%">مفهوم</th><th>یعنی چه</th></tr></thead>
+      <tr><td><b>پارامتر</b> <span class="en">(Parameters)</span></td><td>عددهای داخل مدل که در آموزش تنظیم شده‌اند. <span class="en">8B</span> یعنی ۸ میلیارد. پارامتر بیشتر معمولاً یعنی تواناتر ولی سنگین‌تر.</td></tr>
+      <tr><td><b>کوانتیزه کردن</b> <span class="en">(Quantization)</span></td><td>ذخیره هر عدد با بیت کمتر (مثلاً ۴ بیت به جای ۱۶). مدل کوچک‌تر و سریع‌تر می‌شود و کمی دقت از دست می‌دهد. قاعده سرانگشتی حافظه: <b>پارامتر × بیت ÷ ۸</b>؛ مدل ۸B در ۱۶ بیت حدود ۱۶ گیگابایت، در ۴ بیت حدود ۵ گیگابایت.</td></tr>
+      <tr><td><b>ترکیب متخصص‌ها</b> <span class="en">(MoE)</span></td><td>مدل از چند «متخصص» ساخته شده و برای هر توکن فقط چند تا فعال می‌شوند. مثلاً <span class="en">30B-A3B</span> یعنی ۳۰ میلیارد پارامتر کل که ۳ میلیاردش فعال است: <b>حافظه به اندازه ۳۰B لازم است ولی سرعت نزدیک مدل ۳B است</b>.</td></tr>
+      <tr><td><b>حافظه نهان KV</b> <span class="en">(KV cache)</span></td><td>مدل محاسبه‌های متن قبلی را نگه می‌دارد تا دوباره حساب نکند. متن بلند = حافظه بیشتر روی کارت گرافیک.</td></tr>
+      <tr><td><b>تأخیر و توان عملیاتی</b> <span class="en">(Latency / Throughput)</span></td><td>تأخیر: یک کاربر چقدر منتظر می‌ماند. توان: سرور در ثانیه به چند نفر جواب می‌دهد. اغلب یکی را فدای دیگری می‌کنید. برای تلفن، <b>تأخیر</b> مهم‌تر است.</td></tr>
+      <tr><td><b>دسته‌بندی</b> <span class="en">(Batching)</span></td><td>پردازش هم‌زمان درخواست چند کاربر روی یک کارت گرافیک. موتورهایی مثل <span class="en">vLLM</span> این کار را خودکار می‌کنند.</td></tr>
+    </table>
+
+    <h2 id="hf" class="pb">خواندن Hugging Face</h2>
+    <p>
+      <span class="en">huggingface.co</span> مثل «گیت‌هاب هوش مصنوعی» است: جایی که
+      تقریباً همه مدل‌ها و داده‌های باز منتشر می‌شوند. هر مدل یک «مخزن» دارد با
+      فایل‌های وزن، توکن‌ساز و یک صفحه توضیح به نام <b>کارت مدل</b>.
+    </p>
+
+    <h3>بخش‌های سایت</h3>
+    <table>
+      <thead><tr><th style="width: 20%">بخش</th><th>چه دارد</th><th style="width: 30%">چطور استفاده کنید</th></tr></thead>
+      <tr><td><b>Models</b></td><td>همه مدل‌ها. فیلتر بر اساس کار <span class="en">(Task)</span>، زبان، مجوز، کتابخانه و اندازه.</td><td>فیلتر <span class="en">Languages: Persian</span> و <span class="en">Task: Automatic Speech Recognition</span> را امتحان کنید. مرتب‌سازی با <span class="en">Trending</span> نشان می‌دهد این هفته چه داغ است.</td></tr>
+      <tr><td><b>Datasets</b></td><td>داده‌های آموزش و ارزیابی، با پیش‌نمایش ردیف‌ها.</td><td>قبل از استفاده، مجوز و نحوه جمع‌آوری را در کارت داده بخوانید.</td></tr>
+      <tr><td><b>Spaces</b></td><td>برنامه‌های کوچک قابل اجرا در مرورگر؛ نسخه نمایشی مدل‌ها و همه جدول‌های رتبه‌بندی اینجا هستند.</td><td>قبل از نصب هر مدل، اول نسخه نمایشی‌اش را با چند جمله فارسی امتحان کنید.</td></tr>
+      <tr><td><b>Papers</b> (<span class="en">Daily Papers</span>)</td><td>مقاله‌های روز که جامعه انتخاب کرده، با پیوند به مدل و داده مرتبط.</td><td>روزی یک نگاه به عنوان‌ها؛ هفته‌ای یکی را کامل بخوانید.</td></tr>
+      <tr><td><b>Collections</b></td><td>فهرست‌های گردآوری‌شده؛ مثلاً همه نسخه‌های یک خانواده مدل.</td><td>برای دیدن یک‌جای همه اندازه‌ها و نسخه‌های کوانتیزه.</td></tr>
+      <tr><td><b>Learn</b></td><td>دوره‌های رایگان: LLM، صوت، عامل‌ها، تنظیم دقیق.</td><td>مسیر یادگیری اصلی در فصل «کجا به‌روز بمانیم».</td></tr>
+    </table>
+
+    <h3>کارت مدل، فیلد به فیلد</h3>
+    <p>نام مدل خودش نیمی از اطلاعات را می‌دهد. یک نام فرضی را باز می‌کنیم:</p>
+    <p class="en" style="text-align: center; font-size: 1.1em"><b>Org/ModelName-3.5-30B-A3B-Instruct-AWQ</b></p>
+    <table>
+      <thead><tr><th style="width: 22%">تکه</th><th>یعنی</th></tr></thead>
+      <tr><td><span class="en">Org/</span></td><td>سازنده یا کسی که منتشر کرده. اگر سازنده اصلی نیست، احتمالاً نسخه تغییریافته یا کوانتیزه دیگران است.</td></tr>
+      <tr><td><span class="en">3.5</span></td><td>نسل و نسخه.</td></tr>
+      <tr><td><span class="en">30B-A3B</span></td><td>۳۰ میلیارد پارامتر کل، ۳ میلیارد فعال (مدل MoE).</td></tr>
+      <tr><td><span class="en">Instruct</span> / <span class="en">Chat</span> / <span class="en">Base</span></td><td><span class="en">Instruct</span> و <span class="en">Chat</span> برای گفت‌وگو آماده‌اند. <span class="en">Base</span> برای تنظیم دقیق است، نه برای استفاده مستقیم.</td></tr>
+      <tr><td><span class="en">AWQ</span> / <span class="en">GPTQ</span> / <span class="en">GGUF</span> / <span class="en">FP8</span> / <span class="en">MLX</span></td><td>نسخه کوانتیزه یا قالب خاص. <span class="en">GGUF</span> برای llama.cpp و Ollama (لپ‌تاپ و CPU)، <span class="en">AWQ</span>، <span class="en">GPTQ</span> و <span class="en">FP8</span> برای سرور با کارت گرافیک و vLLM، <span class="en">MLX</span> برای مک.</td></tr>
+      <tr><td><span class="en">Q4_K_M</span>، <span class="en">Q8_0</span></td><td>سطح کوانتیزه در GGUF. عدد بعد از Q تعداد بیت است. <span class="en">Q4_K_M</span> تعادل رایج بین اندازه و کیفیت است.</td></tr>
+    </table>
+
+    <p>داخل کارت مدل و ستون کناری صفحه، این‌ها را نگاه کنید:</p>
+    <table>
+      <thead><tr><th style="width: 22%">فیلد</th><th>چه بپرسید</th></tr></thead>
+      <tr><td><b>License</b> (مجوز)</td><td>آیا استفاده تجاری مجاز است؟ <span class="en">Apache-2.0</span> و <span class="en">MIT</span> آزادند. مجوزهای اختصاصی سازنده‌ها (مثل مجوز Llama یا Gemma) شرط دارند. <span class="en">CC-BY-NC</span> یعنی <b>فقط غیرتجاری</b> — برای محصول ما قابل استفاده نیست.</td></tr>
+      <tr><td><b>Gated</b></td><td>برای دانلود باید فرم پر کنید و شرایط را بپذیرید. گاهی دسترسی از ایران محدود است.</td></tr>
+      <tr><td><b>Model size / Tensor type</b></td><td>اندازه و دقت ذخیره <span class="en">(BF16، FP16، FP8، INT4)</span>. با قاعده حافظه بالا حساب کنید روی سرور ما جا می‌شود یا نه.</td></tr>
+      <tr><td><b>Context length</b></td><td>پنجره متن. معمولاً در فایل <span class="en">config.json</span> با نام <span class="en">max_position_embeddings</span> هم آمده است.</td></tr>
+      <tr><td><b>Languages</b></td><td>آیا فارسی <span class="en">(fa)</span> رسماً پشتیبانی می‌شود؟ «چندزبانه» لزوماً یعنی فارسی خوب نیست؛ همیشه خودتان بیازمایید.</td></tr>
+      <tr><td><b>Evaluation / Benchmarks</b></td><td>جدول نتایج. مهم: سازنده خودش اندازه گرفته یا کس دیگری؟ با چه تنظیمی (چند مثال، با یا بدون فکر کردن)؟ فصل «بنچمارک‌ها» را ببینید.</td></tr>
+      <tr><td><b>Downloads / Likes</b></td><td>نشانه محبوبیت، نه کیفیت. دانلود ماه گذشته را نشان می‌دهد.</td></tr>
+      <tr><td><b>Model tree</b></td><td>مدل پایه این مدل چیست و چند نسخه تنظیم‌شده یا کوانتیزه از آن ساخته شده است. برای پیدا کردن نسخه فارسی‌شده یک مدل معروف عالی است.</td></tr>
+      <tr><td><b>Files</b></td><td>قالب <span class="en">safetensors</span> امن است. فایل‌های <span class="en">.bin</span> یا <span class="en">.pkl</span> قدیمی ممکن است کد اجرا کنند؛ از مخزن ناشناس دانلود نکنید.</td></tr>
+      <tr><td><b>Inference Providers</b></td><td>آیا می‌شود بدون نصب، از طریق سرویس‌دهنده‌ها امتحانش کرد.</td></tr>
+    </table>
+
+    <h3>کارت داده</h3>
+    <ul>
+      <li><b>Splits</b> — بخش‌های داده: <span class="en">train</span> برای آموزش، <span class="en">validation</span> برای تنظیم، <span class="en">test</span> فقط برای سنجش نهایی. عددی که روی <span class="en">test</span> گزارش شده معتبرتر است.</li>
+      <li><b>اندازه</b> — تعداد ردیف یا ساعت صدا. برای صدا: چند گوینده، چه لهجه‌هایی، تلفنی یا میکروفون خوب؟</li>
+      <li><b>منبع و مجوز</b> — داده از کجا آمده و آیا اجازه استفاده تجاری دارد.</li>
+    </ul>
+
+    <h3>از کجا بفهمیم یک مخزن قابل اعتماد است</h3>
+    <div class="box ok">
+      <ol>
+        <li>سازنده یک سازمان شناخته‌شده است یا کارت کامل و صادقانه دارد (محدودیت‌ها را هم گفته).</li>
+        <li>نتایج ارزیابی قابل تکرار است: نام داده، تنظیمات و کد ارزیابی آمده.</li>
+        <li>مجوز روشن است و با استفاده ما جور است.</li>
+        <li>فایل‌ها <span class="en">safetensors</span> هستند و اندازه‌شان با تعداد پارامتر ادعایی جور است.</li>
+        <li>در بخش <span class="en">Community</span> مشکل جدی بی‌جواب نمانده است.</li>
+      </ol>
+    </div>
+
+    <h2 id="abbr" class="pb">فرهنگ اختصارات</h2>
+    <p>به ترتیب الفبای انگلیسی. ستون آخر می‌گوید معمولاً کجا می‌بینیدش.</p>
+    <table>
+      <thead><tr><th style="width: 13%">اختصار</th><th style="width: 24%">شکل کامل</th><th>معنی ساده</th><th style="width: 14%">کجا</th></tr></thead>
+      <tr><td class="en">A3B, A22B</td><td class="en">Active params</td><td>پارامترهای فعال در مدل MoE</td><td>نام مدل</td></tr>
+      <tr><td class="en">ASR / STT</td><td class="en">Automatic Speech Recognition / Speech-to-Text</td><td>تبدیل گفتار به متن</td><td>صوت</td></tr>
+      <tr><td class="en">AWQ, GPTQ</td><td class="en">Activation-aware / GPT Quantization</td><td>دو روش کوانتیزه کردن ۴ بیتی برای کارت گرافیک</td><td>نام مدل</td></tr>
+      <tr><td class="en">BF16, FP16, FP8</td><td class="en">Brain Float 16, Floating Point</td><td>دقت ذخیره عددها؛ عدد = تعداد بیت</td><td>کارت مدل</td></tr>
+      <tr><td class="en">BLEU, chrF</td><td class="en">—</td><td>شباهت ترجمه به ترجمه مرجع (بالاتر بهتر)</td><td>ترجمه</td></tr>
+      <tr><td class="en">CER</td><td class="en">Character Error Rate</td><td>درصد خطا در سطح حرف (پایین‌تر بهتر)</td><td>صوت</td></tr>
+      <tr><td class="en">CoT</td><td class="en">Chain of Thought</td><td>فکر کردن قدم‌به‌قدم قبل از جواب</td><td>بنچمارک</td></tr>
+      <tr><td class="en">DPO</td><td class="en">Direct Preference Optimization</td><td>آموزش با «این جواب بهتر از آن است»؛ ساده‌تر از RLHF</td><td>مقاله</td></tr>
+      <tr><td class="en">Elo</td><td class="en">—</td><td>امتیاز رتبه‌بندی از مقایسه دوبه‌دو، مثل شطرنج</td><td>آرنا</td></tr>
+      <tr><td class="en">EM</td><td class="en">Exact Match</td><td>جواب دقیقاً با جواب درست یکی است یا نه</td><td>بنچمارک</td></tr>
+      <tr><td class="en">EOU / EOT</td><td class="en">End of Utterance / Turn</td><td>تشخیص اینکه کاربر حرفش تمام شده</td><td>صوت</td></tr>
+      <tr><td class="en">F1</td><td class="en">—</td><td>ترکیب دقت و پوشش در یک عدد (۰ تا ۱)</td><td>طبقه‌بندی</td></tr>
+      <tr><td class="en">GGUF</td><td class="en">—</td><td>قالب فایل llama.cpp و Ollama</td><td>نام مدل</td></tr>
+      <tr><td class="en">GQA, MLA</td><td class="en">Grouped-Query / Multi-head Latent Attention</td><td>روش‌های کم کردن حافظه توجه</td><td>معماری</td></tr>
+      <tr><td class="en">LoRA, QLoRA</td><td class="en">Low-Rank Adaptation</td><td>تنظیم دقیق ارزان؛ QLoRA روی مدل کوانتیزه</td><td>تنظیم دقیق</td></tr>
+      <tr><td class="en">MoE</td><td class="en">Mixture of Experts</td><td>ترکیب متخصص‌ها؛ فقط بخشی از مدل فعال می‌شود</td><td>معماری</td></tr>
+      <tr><td class="en">MOS</td><td class="en">Mean Opinion Score</td><td>میانگین نمره شنونده‌ها به کیفیت صدا (۱ تا ۵)</td><td>صوت</td></tr>
+      <tr><td class="en">MCP</td><td class="en">Model Context Protocol</td><td>استاندارد وصل کردن ابزار و داده به مدل</td><td>عامل‌ها</td></tr>
+      <tr><td class="en">NLI</td><td class="en">Natural Language Inference</td><td>آیا جمله دوم از جمله اول نتیجه می‌شود</td><td>بنچمارک</td></tr>
+      <tr><td class="en">PEFT</td><td class="en">Parameter-Efficient Fine-Tuning</td><td>نام کلی روش‌هایی مثل LoRA؛ کتابخانه‌ای به همین نام</td><td>تنظیم دقیق</td></tr>
+      <tr><td class="en">PPL</td><td class="en">Perplexity</td><td>چقدر مدل از متن «تعجب می‌کند» (پایین‌تر بهتر)</td><td>مقاله</td></tr>
+      <tr><td class="en">pass@1, pass@k</td><td class="en">—</td><td>با ۱ یا k بار تلاش، حداقل یک جواب درست بود؟</td><td>کد و ریاضی</td></tr>
+      <tr><td class="en">RAG</td><td class="en">Retrieval-Augmented Generation</td><td>پیدا کردن متن مرتبط و دادن آن به مدل</td><td>محصول</td></tr>
+      <tr><td class="en">RLHF, RLVR</td><td class="en">RL from Human Feedback / Verifiable Rewards</td><td>یادگیری تقویتی با نظر انسان / با جواب قابل‌بررسی</td><td>مقاله</td></tr>
+      <tr><td class="en">RoPE</td><td class="en">Rotary Position Embedding</td><td>روش فهماندن ترتیب کلمه‌ها؛ در افزایش پنجره متن می‌بینید</td><td>معماری</td></tr>
+      <tr><td class="en">RTF, RTFx</td><td class="en">Real-Time Factor (inverse)</td><td>RTF: زمان پردازش ÷ طول صدا (پایین‌تر بهتر). RTFx برعکس آن است (بالاتر بهتر)</td><td>صوت</td></tr>
+      <tr><td class="en">S2S</td><td class="en">Speech-to-Speech</td><td>مدلی که صدا می‌گیرد و مستقیم صدا می‌دهد</td><td>صوت</td></tr>
+      <tr><td class="en">SER</td><td class="en">Speech Emotion Recognition</td><td>تشخیص احساس از صدا</td><td>صوت</td></tr>
+      <tr><td class="en">SFT</td><td class="en">Supervised Fine-Tuning</td><td>آموزش با نمونه‌های سؤال و جواب درست</td><td>کارت مدل</td></tr>
+      <tr><td class="en">SIM / SECS</td><td class="en">Speaker Similarity</td><td>شباهت صدای ساخته‌شده به صدای مرجع</td><td>صوت</td></tr>
+      <tr><td class="en">SOTA</td><td class="en">State of the Art</td><td>بهترین نتیجه شناخته‌شده تا امروز</td><td>همه‌جا</td></tr>
+      <tr><td class="en">TPOT / ITL</td><td class="en">Time Per Output Token / Inter-Token Latency</td><td>فاصله بین توکن‌های خروجی</td><td>استنتاج</td></tr>
+      <tr><td class="en">TTFT, TTFA</td><td class="en">Time To First Token / Audio</td><td>چقدر طول می‌کشد اولین توکن یا اولین تکه صدا برسد</td><td>استنتاج و صوت</td></tr>
+      <tr><td class="en">tok/s</td><td class="en">Tokens per second</td><td>سرعت تولید متن</td><td>استنتاج</td></tr>
+      <tr><td class="en">TTS</td><td class="en">Text-to-Speech</td><td>تبدیل متن به گفتار</td><td>صوت</td></tr>
+      <tr><td class="en">VAD</td><td class="en">Voice Activity Detection</td><td>تشخیص اینکه کسی حرف می‌زند یا سکوت است</td><td>صوت</td></tr>
+      <tr><td class="en">VLM</td><td class="en">Vision-Language Model</td><td>مدلی که تصویر و متن را با هم می‌فهمد</td><td>مدل</td></tr>
+      <tr><td class="en">WER</td><td class="en">Word Error Rate</td><td>درصد خطا در سطح کلمه (پایین‌تر بهتر)</td><td>صوت</td></tr>
+      <tr><td class="en">0-shot, 5-shot</td><td class="en">—</td><td>تعداد مثالی که در دستور به مدل داده شده</td><td>بنچمارک</td></tr>
+    </table>
+
+    <h2 id="topics" class="pb">موضوع‌های تکمیلی هوش مصنوعی</h2>
+    <p>
+      فصل «مفاهیم پایه» زبان مشترک را داد. این فصل بقیه موضوع‌هایی را فهرست می‌کند
+      که یک عضو تازه تیم باید حداقل یک‌بار درباره‌شان خوانده باشد. برای هر موضوع
+      می‌نویسیم <b>چیست</b>، <b>چرا به Phoenix مربوط است</b> و <b>از کجا بخوانیم</b>.
+    </p>
+
+    <h3>نقشه یک‌نگاه</h3>
+    <table>
+      <thead><tr><th style="width: 22%">موضوع</th><th>چرا مهم است</th><th style="width: 12%">اولویت</th></tr></thead>
+      <tr><td><b>نوشتن دستور خوب</b> <span class="en">(Prompting)</span></td><td>ارزان‌ترین راه بهتر کردن رفتار دستیار. همه چیز از اینجا شروع می‌شود.</td><td>اول بخوانید</td></tr>
+      <tr><td><b>بانک دانش و RAG</b></td><td>دستیار باید از دانش مشتری جواب بدهد، نه از حافظه مدل.</td><td>اول بخوانید</td></tr>
+      <tr><td><b>ابزار و عامل</b> <span class="en">(Tool use، Agent، MCP)</span></td><td>دستیار باید کار انجام دهد: ثبت درخواست، پیامک، پرس‌وجو.</td><td>اول بخوانید</td></tr>
+      <tr><td><b>خروجی ساختاریافته</b></td><td>برنامه ما به JSON درست نیاز دارد، نه متن آزاد.</td><td>مهم</td></tr>
+      <tr><td><b>ارزیابی</b> <span class="en">(Eval)</span></td><td>بدون آن نمی‌دانیم تغییر جدید بهتر شد یا بدتر.</td><td>اول بخوانید</td></tr>
+      <tr><td><b>تنظیم دقیق</b> <span class="en">(Fine-tuning)</span></td><td>برای مدل کوچک و کار ثابت یا برای کم کردن هزینه.</td><td>بعداً</td></tr>
+      <tr><td><b>سرو کردن مدل</b> <span class="en">(Serving)</span></td><td>مدل را چطور روی سرور خودمان اجرا کنیم و هزینه چقدر می‌شود.</td><td>مهم</td></tr>
+      <tr><td><b>ایمنی و حریم خصوصی</b></td><td>صدای مشتری داده حساس است. تزریق دستور و نشت داده خطر واقعی‌اند.</td><td>مهم</td></tr>
+      <tr><td><b>هزینه و تأخیر</b></td><td>در تماس تلفنی هر ثانیه تأخیر حس می‌شود.</td><td>مهم</td></tr>
+      <tr><td><b>مجوز مدل</b> <span class="en">(License)</span></td><td>همه مدل‌های «باز» برای استفاده تجاری آزاد نیستند.</td><td>مهم</td></tr>
+      <tr><td><b>چندوجهی</b> <span class="en">(Vision، Audio)</span></td><td>مدل‌هایی که مستقیم صدا یا تصویر می‌فهمند؛ آینده دستیار صوتی.</td><td>بعداً</td></tr>
+    </table>
+
+    <h3>۱. نوشتن دستور خوب (Prompting)</h3>
+    <p>
+      <b>دستور سیستمی</b> <span class="en">(System prompt)</span> متنی است که
+      رفتار دستیار را تعیین می‌کند: نقش، لحن، قوانین، ابزارها. قاعده‌های ساده:
+    </p>
+    <ul>
+      <li><b>روشن و مشخص بنویسید.</b> «مؤدب باش» کم است. «همیشه با «شما» صحبت کن و هر جواب را حداکثر در دو جمله بگو» بهتر است.</li>
+      <li><b>مثال بدهید</b> <span class="en">(Few-shot)</span>. دو یا سه نمونه «ورودی ← خروجی خوب» بیشتر از ده خط توضیح اثر دارد.</li>
+      <li><b>«نکن» را کم بنویسید.</b> به جای «اسم رقیب را نیاور» بنویسید «فقط درباره محصولات ما حرف بزن».</li>
+      <li><b>کار بزرگ را تکه کنید.</b> یک دستور برای یک کار. چند کار = چند مرحله.</li>
+      <li><b>دستور را نسخه‌گذاری کنید</b> مثل کد، و هر تغییر را با ارزیابی بسنجید.</li>
+    </ul>
+    <p class="small">برای صدا: جواب کوتاه بخواهید. شکل لیست، ستاره و جدول در تلفن خوانده نمی‌شود.</p>
+    <p class="small en">Read: Anthropic prompt engineering docs · OpenAI prompting guide · promptingguide.ai</p>
+
+    <h3>۲. بانک دانش و RAG</h3>
+    <p>
+      RAG یعنی قبل از جواب دادن، متن مرتبط را از بانک دانش پیدا کنیم و کنار سؤال
+      به مدل بدهیم. مراحلش:
+    </p>
+    <table>
+      <thead><tr><th style="width: 22%">مرحله</th><th>یعنی چه</th><th style="width: 30%">خطای رایج</th></tr></thead>
+      <tr><td><b>تکه‌کردن</b> <span class="en">(Chunking)</span></td><td>سند را به تکه‌های کوچک (مثلاً ۲۰۰ تا ۵۰۰ توکن) تقسیم می‌کنیم.</td><td>تکه‌ای که وسط جمله یا جدول بریده شود.</td></tr>
+      <tr><td><b>بردارسازی</b> <span class="en">(Embedding)</span></td><td>هر تکه با مدل بردار معنایی به عدد تبدیل و در پایگاه برداری ذخیره می‌شود.</td><td>مدلی که فارسی را خوب نمی‌فهمد.</td></tr>
+      <tr><td><b>جست‌وجو</b> <span class="en">(Retrieval)</span></td><td>سؤال هم بردار می‌شود و نزدیک‌ترین تکه‌ها پیدا می‌شوند. ترکیب جست‌وجوی معنایی با جست‌وجوی کلمه‌ای (<span class="en">BM25</span>) به آن <b>جست‌وجوی ترکیبی</b> <span class="en">(Hybrid)</span> می‌گویند.</td><td>فقط معنایی؛ اسم و کد محصول را گم می‌کند.</td></tr>
+      <tr><td><b>بازرتبه‌بندی</b> <span class="en">(Reranker)</span></td><td>مدل کوچکی ۲۰ تکه اول را دوباره و دقیق‌تر مرتب می‌کند و ۳ تا ۵ تکه بهتر را نگه می‌دارد.</td><td>حذف این مرحله؛ اغلب بزرگ‌ترین جهش کیفیت را می‌دهد.</td></tr>
+      <tr><td><b>تولید جواب</b></td><td>تکه‌ها در دستور می‌روند و مدل فقط با آن‌ها جواب می‌دهد، با ارجاع به منبع.</td><td>اجازه دادن به مدل که وقتی جواب در تکه‌ها نیست «حدس بزند».</td></tr>
+    </table>
+    <div class="box"><b>اشتباه معمول:</b> وقتی RAG بد جواب می‌دهد، اغلب مدل زبانی مقصر نیست؛ <b>جست‌وجو</b> تکه درست را پیدا نکرده. اول بسنجید «تکه درست در ۵ نتیجه اول بود؟»، بعد سراغ مدل بروید.</div>
+    <p class="small en">Read: Anthropic "Contextual Retrieval" · Hugging Face Advanced RAG cookbook · LlamaIndex / LangChain RAG docs</p>
+
+    <h3>۳. ابزار، عامل و MCP</h3>
+    <ul>
+      <li><b>صدا زدن ابزار</b> <span class="en">(Tool / Function calling)</span>: شما فهرست ابزارها را با توضیح و ورودی‌ها به مدل می‌دهید. مدل به جای متن، یک «درخواست صدا زدن ابزار» با ورودی‌های JSON برمی‌گرداند. برنامه شما ابزار را اجرا می‌کند و نتیجه را به مدل برمی‌گرداند.</li>
+      <li><b>عامل</b> <span class="en">(Agent)</span>: مدلی که در یک حلقه چند بار ابزار صدا می‌زند تا کار تمام شود. هر چه مراحل بیشتر باشد، احتمال خطا بیشتر است (۹۰٪ در هر مرحله، بعد از ۱۰ مرحله فقط حدود ۳۵٪ درست).</li>
+      <li><b>MCP</b> <span class="en">(Model Context Protocol)</span>: استاندارد باز برای وصل کردن ابزار و داده به هر مدل؛ یک‌بار ابزار را می‌نویسید، همه جا کار می‌کند.</li>
+      <li><b>چند عامل</b> <span class="en">(Multi-agent)</span>: چند مدل با نقش‌های جدا. قدرتمند ولی پرهزینه و سخت‌اشکال‌یابی؛ اول با یک عامل ساده شروع کنید.</li>
+    </ul>
+    <p><b>قاعده‌های ایمنی برای ابزار:</b> ابزارهای خطرناک (پرداخت، حذف) تأیید انسان بخواهند؛ ورودی ابزار را همیشه اعتبارسنجی کنید؛ مدل را مجبور به حدس نکنید، بگذارید بپرسد.</p>
+    <p class="small en">Read: Anthropic "Building effective agents" · modelcontextprotocol.io · BFCL / τ-bench papers</p>
+
+    <h3>۴. خروجی ساختاریافته</h3>
+    <p>
+      وقتی برنامه به JSON نیاز دارد، «لطفاً JSON بده» کافی نیست. روش‌های مطمئن:
+      <b>حالت JSON / طرح‌واره</b> <span class="en">(Structured outputs، JSON schema)</span>
+      در API، یا <b>رمزگشایی محدود</b> <span class="en">(Constrained decoding)</span>
+      در سرورهایی مثل <span class="en">vLLM</span> که مدل را مجبور می‌کند فقط توکن‌های مجاز تولید کند.
+      بعد از آن هم همیشه خروجی را با کد اعتبارسنجی کنید.
+    </p>
+
+    <h3>۵. ارزیابی (Eval)</h3>
+    <p>
+      ارزیابی برای مدل‌ها همان تست واحد برای کد است. مجموعه‌ای از نمونه‌های واقعی
+      با «جواب خوب» روشن می‌سازید و بعد از هر تغییر (مدل، دستور، RAG) دوباره اجرا می‌کنید.
+    </p>
+    <table>
+      <thead><tr><th style="width: 22%">روش</th><th>چه وقت</th></tr></thead>
+      <tr><td><b>معیار دقیق</b></td><td>جواب یک مقدار مشخص دارد: دسته‌بندی، استخراج، <span class="en">WER</span>، درست‌بودن ابزار.</td></tr>
+      <tr><td><b>مدل به‌عنوان داور</b> <span class="en">(LLM-as-judge)</span></td><td>جواب آزاد است (لحن، مفید بودن). یک مدل قوی با یک فهرست معیار نمره می‌دهد. داور سوگیری دارد (جواب بلند را دوست دارد)؛ ۲۰ نمونه را خودتان هم نمره بدهید و با داور مقایسه کنید.</td></tr>
+      <tr><td><b>ارزیابی انسانی</b></td><td>برای تصمیم‌های مهم و برای اعتبارسنجی داور. گران ولی قابل‌اعتمادترین.</td></tr>
+      <tr><td><b>آزمون روی تماس واقعی</b></td><td>تماس‌های ضبط‌شده با اجازه، بازپخش روی نسخه جدید. بهترین سیگنال برای محصول صوتی.</td></tr>
+    </table>
+    <p class="small en">Read: Hamel Husain "Your AI product needs evals" · Eugene Yan "Task-specific LLM evals" · Hugging Face LLM course</p>
+
+    <h3>۶. تنظیم دقیق در عمل</h3>
+    <ul>
+      <li>اول <b>دستور خوب + RAG</b> را امتحان کنید. فقط اگر کافی نبود، سراغ تنظیم دقیق بروید.</li>
+      <li><b>داده باکیفیت از داده زیاد مهم‌تر است.</b> ۵۰۰ تا ۵۰۰۰ نمونه تمیز معمولاً کافی است.</li>
+      <li>ابزارها: <span class="en">Hugging Face TRL، PEFT، Unsloth، Axolotl، LLaMA-Factory</span>.</li>
+      <li><b>تقطیر</b> <span class="en">(Distillation)</span>: جواب مدل بزرگ را برای آموزش مدل کوچک استفاده می‌کنیم تا ارزان‌تر شود. مجوز مدل بزرگ را بررسی کنید.</li>
+      <li>بعد از تنظیم دقیق حتماً دوباره ارزیابی کنید؛ ممکن است مدل چیزهای دیگر را فراموش کند.</li>
+    </ul>
+
+    <h3>۷. سرو کردن مدل (Serving)</h3>
+    <table>
+      <thead><tr><th style="width: 20%">ابزار</th><th>کاربرد</th></tr></thead>
+      <tr><td class="en">vLLM</td><td>موتور استاندارد سرور برای مدل زبانی روی کارت گرافیک؛ دسته‌بندی خودکار، رمزگشایی محدود. اولین انتخاب برای تولید.</td></tr>
+      <tr><td class="en">SGLang, TensorRT-LLM</td><td>رقیب‌های سریع vLLM؛ برای بار سنگین و بهینه‌سازی سخت‌افزار انویدیا.</td></tr>
+      <tr><td class="en">llama.cpp, Ollama, LM Studio</td><td>اجرا روی لپ‌تاپ و CPU با قالب GGUF. عالی برای آزمایش؛ برای بار زیاد مناسب نیست.</td></tr>
+      <tr><td class="en">Triton, Ray Serve, KServe</td><td>مدیریت چند مدل و مقیاس‌دهی در Kubernetes.</td></tr>
+      <tr><td class="en">Hugging Face TGI / Inference Endpoints</td><td>سرویس آماده برای سرو؛ ساده‌تر ولی کم‌انعطاف‌تر.</td></tr>
+    </table>
+    <p>
+      برای برآورد حافظه: وزن‌ها (پارامتر × بیت ÷ ۸) + حافظه نهان KV + حدود ۲۰٪ سربار.
+      برای تماس تلفنی، ابتدا <b>TTFT</b> و بعد <b>توان عملیاتی</b> را بسنجید.
+    </p>
+
+    <h3>۸. ایمنی و حریم خصوصی</h3>
+    <table>
+      <thead><tr><th style="width: 24%">خطر</th><th>یعنی چه و چه کنیم</th></tr></thead>
+      <tr><td><b>تزریق دستور</b> <span class="en">(Prompt injection)</span></td><td>متنی که از بیرون می‌آید (سند، ایمیل، صحبت مشتری) به مدل دستور می‌دهد: «قوانین قبلی را فراموش کن». ورودی بیرونی را «داده» بدانید، نه «دستور»؛ ابزارهای خطرناک را محدود کنید.</td></tr>
+      <tr><td><b>نشت داده</b></td><td>دستیار اطلاعات مشتری A را به مشتری B می‌گوید. دسترسی را در کد کنترل کنید، نه در دستور.</td></tr>
+      <tr><td><b>توهم</b></td><td>جواب ساختگی. با RAG، ارجاع به منبع و «نمی‌دانم» گفتن کنترل می‌شود.</td></tr>
+      <tr><td><b>داده صوتی</b></td><td>صدا اطلاعات شخصی و حتی زیستی است. رضایت، مدت نگهداری و پنهان‌سازی (<span class="en">PII redaction</span>) را از اول طراحی کنید.</td></tr>
+      <tr><td><b>سوءاستفاده از صدا</b></td><td>شبیه‌سازی صدا (Voice cloning) برای کلاهبرداری. فقط با رضایت مکتوب.</td></tr>
+      <tr><td><b>نرده‌های ایمنی</b> <span class="en">(Guardrails)</span></td><td>فیلتر ورودی و خروجی (مثلاً Llama Guard، NeMo Guardrails) به‌علاوه تست حمله‌ای <span class="en">(Red teaming)</span>.</td></tr>
+    </table>
+    <p class="small en">Read: OWASP Top 10 for LLM Applications · NIST AI RMF</p>
+
+    <h3>۹. هزینه و تأخیر</h3>
+    <ul>
+      <li>قیمت API بر حسب <b>میلیون توکن</b> است و ورودی و خروجی جدا قیمت دارند؛ خروجی چند برابر گران‌تر است.</li>
+      <li><b>ذخیره دستور</b> <span class="en">(Prompt caching)</span>: قسمت ثابت دستور (مثلاً دستور سیستمی) ارزان‌تر و سریع‌تر حساب می‌شود.</li>
+      <li><b>مدل کوچک برای کار ساده</b>: مسیریابی بین مدل کوچک و بزرگ <span class="en">(Routing)</span> هزینه را چند برابر کم می‌کند.</li>
+      <li><b>پخش زنده</b> <span class="en">(Streaming)</span>: جواب را تکه‌تکه به TTS بدهید، منتظر پایان جواب نمانید.</li>
+      <li>تأخیر کل = پایان نوبت + ASR + TTFT + TTFA + شبکه. هر کدام را جدا اندازه بگیرید.</li>
+    </ul>
+
+    <h3>۱۰. مجوز مدل</h3>
+    <table>
+      <thead><tr><th style="width: 26%">مجوز</th><th>یعنی چه</th></tr></thead>
+      <tr><td class="en">Apache 2.0, MIT</td><td>آزاد؛ استفاده تجاری و تغییر مجاز است. بهترین حالت.</td></tr>
+      <tr><td><b>مجوزهای سفارشی</b> (مثل Llama، نسخه‌های قدیمی Gemma)</td><td>استفاده تجاری مجاز ولی با شرط: سقف تعداد کاربر، منع بعضی کاربردها، یا ذکر نام. متن را بخوانید.</td></tr>
+      <tr><td class="en">CC-BY-NC, «non-commercial»</td><td><b>استفاده تجاری ممنوع.</b> فقط برای پژوهش و آزمایش.</td></tr>
+      <tr><td><b>مدل بسته</b> (API)</td><td>وزن‌ها را ندارید؛ فقط از API استفاده می‌کنید. شرایط نگهداری داده و دسترسی از ایران را بررسی کنید.</td></tr>
+    </table>
+    <div class="box warn"><b>یادآوری:</b> مجوز مدل، مجوز داده آموزش و مجوز مدل‌های وابسته (مثلاً تقطیر از یک مدل بسته) سه چیز جدا هستند. پیش از استفاده تجاری، همیشه صفحه LICENSE را بخوانید.</div>
+
+    <h3>۱۱. چندوجهی</h3>
+    <ul>
+      <li><b>مدل تصویر-زبان</b> <span class="en">(VLM)</span>: عکس یا اسکنر سند را می‌فهمد؛ مثلاً خواندن فرم و فاکتور.</li>
+      <li><b>مدل صوتی-زبانی</b> <span class="en">(Audio LLM)</span>: به جای ASR جدا، صدا را مستقیم می‌شنود و لحن و احساس را هم می‌فهمد.</li>
+      <li><b>صدا به صدا</b> <span class="en">(Speech-to-speech، Realtime)</span>: یک مدل برای شنیدن، فکر کردن و حرف زدن؛ تأخیر خیلی کم، ولی کنترل کمتر روی هر مرحله و فارسی ضعیف‌تر.</li>
+      <li>زنجیره جدا (ASR ← LLM ← TTS) هنوز برای Phoenix <b>قابل‌کنترل‌تر و قابل‌سنجش‌تر</b> است؛ ولی روند به سمت مدل‌های یکپارچه است، پس دنبالش کنید.</li>
+    </ul>
+
+    <h3>مسیر مطالعه پیشنهادی (به ترتیب)</h3>
+    <ol>
+      <li>دوره رایگان LLM در Hugging Face (فصل‌های ۱ تا ۴).</li>
+      <li>راهنمای Prompt Engineering از Anthropic یا OpenAI.</li>
+      <li>مقاله «Building effective agents» (Anthropic).</li>
+      <li>مقاله Contextual Retrieval + یک آموزش عملی RAG.</li>
+      <li>مقاله «Your AI product needs evals» (Hamel Husain).</li>
+      <li>دوره‌های Andrej Karpathy: «Intro to LLMs» و «Let's build GPT» (برای فهم عمیق).</li>
+      <li>دوره صوت Hugging Face (برای ASR و TTS).</li>
+    </ol>
+
+    <!-- ================= بخش دوم ================= -->
+    <section class="part">
+      <div class="num">بخش دوم</div>
+      <div class="ttl">عددها</div>
+      <div class="desc">هر جدول رتبه‌بندی چه چیزی را اندازه می‌گیرد و کجا گولمان می‌زند.</div>
+    </section>
+
+    <h2 id="bench">بنچمارک‌ها و معیارها</h2>
+    <p>
+      <b>بنچمارک</b> <span class="en">(Benchmark)</span> یک آزمون استاندارد است:
+      مجموعه‌ای سؤال با جواب درست. <b>معیار</b> <span class="en">(Metric)</span>
+      عددی است که از آزمون درمی‌آید (مثلاً درصد درست). <b>جدول رتبه‌بندی</b>
+      <span class="en">(Leaderboard)</span> نتیجه چند مدل روی یک یا چند آزمون است.
+    </p>
+
+    <h3>مهم‌ترین بنچمارک‌های مدل زبانی</h3>
+    <table>
+      <thead><tr><th style="width: 18%">نام</th><th>چه چیزی را می‌سنجد</th><th style="width: 30%">مراقب باشید</th></tr></thead>
+      <tr><td class="en">MMLU, MMLU-Pro</td><td>دانش عمومی در ۵۷ رشته، چهارگزینه‌ای (Pro: ده‌گزینه‌ای و سخت‌تر)</td><td>MMLU تقریباً اشباع شده؛ همه مدل‌های بزرگ نمره بالا دارند.</td></tr>
+      <tr><td class="en">GPQA Diamond</td><td>سؤال‌های علمی سطح دکترا که با جست‌وجو هم سخت پیدا می‌شوند</td><td>فقط ۱۹۸ سؤال؛ اختلاف چند درصدی ممکن است تصادفی باشد.</td></tr>
+      <tr><td class="en">HLE</td><td><span class="en">Humanity's Last Exam</span>: سؤال‌های بسیار سخت از متخصص‌ها</td><td>برای مقایسه مدل‌های پیشرو؛ برای کار روزمره کم‌ربط.</td></tr>
+      <tr><td class="en">AIME, MATH</td><td>ریاضی مسابقه‌ای</td><td>نشانه توان استدلال، نه توان گفت‌وگو.</td></tr>
+      <tr><td class="en">LiveCodeBench, SWE-bench</td><td>نوشتن کد؛ SWE-bench رفع مشکل واقعی در مخزن‌های گیت‌هاب</td><td>نسخه <span class="en">Verified</span> یا <span class="en">Pro</span> را با هم مقایسه نکنید.</td></tr>
+      <tr><td class="en">IFEval</td><td>اجرای دقیق دستور («در ۳ جمله»، «بدون ویرگول»)</td><td>برای محصول ما مهم است: دستیار باید قالب را رعایت کند.</td></tr>
+      <tr><td class="en">BFCL, τ-bench</td><td>صدا زدن درست ابزار؛ τ-bench گفت‌وگوی چندمرحله‌ای با کاربر شبیه‌سازی‌شده و قوانین کسب‌وکار</td><td><b>نزدیک‌ترین بنچمارک به دستیار Phoenix</b> (پرسیدن، ابزار، رعایت سیاست).</td></tr>
+      <tr><td class="en">RULER, Needle</td><td>استفاده واقعی از متن بلند</td><td>پنجره ۱ میلیون توکنی لزوماً یعنی استفاده خوب از همه آن نیست.</td></tr>
+      <tr><td class="en">MTEB</td><td>کیفیت بردار معنایی در جست‌وجو، دسته‌بندی و خوشه‌بندی</td><td>برای بانک دانش. نسخه فارسی هم دارد (پایین ببینید).</td></tr>
+      <tr><td class="en">LMArena</td><td>رأی کاربران بین دو جواب ناشناس؛ امتیاز Elo</td><td>سلیقه کاربران را می‌سنجد؛ جواب‌های بلند و قالب‌بندی‌شده رأی بیشتری می‌گیرند. «کنترل سبک» را روشن کنید.</td></tr>
+    </table>
+
+    <h3>چرا یک عدد کافی نیست</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مشکل</th><th>یعنی چه</th></tr></thead>
+      <tr><td><b>آلودگی</b> <span class="en">(Contamination)</span></td><td>سؤال‌های آزمون در داده آموزش بوده؛ مدل جواب را حفظ کرده، نفهمیده. بنچمارک‌های «زنده» که مدام سؤال تازه می‌گیرند (مثل LiveCodeBench) این مشکل را کم می‌کنند.</td></tr>
+      <tr><td><b>اشباع</b> <span class="en">(Saturation)</span></td><td>همه مدل‌ها نزدیک ۹۰٪ یا بالاتر؛ دیگر فرقی نشان نمی‌دهد.</td></tr>
+      <tr><td><b>تنظیم متفاوت</b></td><td>یک مدل با ۵ مثال و فکر کردن، دیگری بدون مثال. عددها قابل مقایسه نیستند. در جدول دنبال <span class="en">0-shot</span>، <span class="en">CoT</span>، <span class="en">thinking</span>، <span class="en">pass@1</span> بگردید.</td></tr>
+      <tr><td><b>بازه اطمینان</b></td><td>در آرنا کنار هر امتیاز «±» آمده. اگر بازه دو مدل هم‌پوشانی دارد، عملاً هم‌رتبه‌اند.</td></tr>
+      <tr><td><b>گزارش سازنده</b></td><td>عدد کارت مدل را خود سازنده اندازه گرفته. عدد مستقل (Artificial Analysis، Epoch AI، آرنا) معتبرتر است.</td></tr>
+      <tr><td><b>زبان</b></td><td>تقریباً همه بنچمارک‌ها انگلیسی‌اند. نمره بالا در انگلیسی تضمین فارسی خوب نیست.</td></tr>
+    </table>
+    <div class="box"><b>قاعده طلایی:</b> جدول‌ها فقط فهرست کوتاه می‌سازند. تصمیم نهایی با <b>آزمون روی داده خودمان</b> است: ۵۰ تا ۲۰۰ نمونه واقعی فارسی از کار Phoenix، با معیار روشن.</div>
+
+    <h3>جدول‌های فارسی</h3>
+    <table>
+      <thead><tr><th style="width: 30%">جدول</th><th>چه دارد</th></tr></thead>
+      <tr><td><b>Open Persian LLM Leaderboard</b><br /><span class="small en">huggingface.co/spaces/PartAI/open-persian-llm-leaderboard</span></td><td>سنجش مدل‌های زبانی روی آزمون‌های فارسی؛ کار مشترک دانشگاه امیرکبیر و پارت.</td></tr>
+      <tr><td><b>Persian LLM Alignment Leaderboard</b><br /><span class="small en">mcilab-llm-alignment-evaluation.hf.space</span></td><td>سنجش هم‌راستایی مدل‌ها (ایمنی، انصاف، ارزش‌ها) به فارسی.</td></tr>
+      <tr><td><b>FaMTEB</b> (در MTEB)</td><td>نسخه فارسی MTEB برای مدل‌های بردار معنایی؛ مستقیم به کار بانک دانش می‌آید.</td></tr>
+      <tr><td><b>Open Persian ASR Leaderboard</b><br /><span class="small en">navidved-open-persian-asr-leaderboard.hf.space</span></td><td>مقایسه مدل‌های گفتار به متن فارسی با WER و CER روی چند داده (Common Voice، یوتیوب فارسی و…).</td></tr>
+    </table>
+
+    <h2 id="voice" class="pb">فصل ویژه صدا</h2>
+    <p>
+      Phoenix یک زنجیره صوتی است: <b>تشخیص گفتار ← گفتار به متن ← مدل زبانی ←
+      متن به گفتار</b>، به‌علاوه تشخیص پایان نوبت. پایه‌های این زنجیره در
+      «پرونده فنی» (<span class="en">TECHNICAL_DOSSIER_FA</span>، بخش مبانی صوت)
+      آمده است. اینجا فقط <b>عددها</b> را یاد می‌گیریم.
+    </p>
+
+    <h3>گفتار به متن (ASR / STT)</h3>
+    <p>
+      <b>WER</b> = (کلمه‌های جاافتاده + کلمه‌های اضافه + کلمه‌های اشتباه) ÷ تعداد
+      کلمه‌های متن درست. مثال: متن درست «می‌خواهم مرخصی بگیرم» (۳ کلمه)، مدل
+      نوشته «میخوام مرخصی بگیرم». اگر «میخوام» اشتباه حساب شود، WER = ۱ ÷ ۳ ≈ ۳۳٪.
+    </p>
+    <div class="box warn">
+      <b>چرا برای فارسی CER را هم ببینید:</b> در فارسی نیم‌فاصله
+      («می‌خواهم» یا «میخواهم»)، «ی» و «ک» عربی، و نوشتار محاوره‌ای
+      («میخوام») باعث می‌شود WER بی‌دلیل بالا برود، در حالی که معنی درست است.
+      CER حساسیت کمتری دارد. مهم‌تر از آن: <b>قبل از حساب کردن، هر دو متن را
+      یکسان‌سازی <span class="en">(Normalization)</span> کنید</b> — یک شکل برای
+      ی و ک، نیم‌فاصله، عددها و علامت‌ها. جدول‌های معتبر روش یکسان‌سازی را
+      اعلام می‌کنند.
+    </div>
+    <table>
+      <thead><tr><th style="width: 22%">معیار</th><th>یعنی</th><th style="width: 28%">برای Phoenix</th></tr></thead>
+      <tr><td><b>WER / CER</b></td><td>درصد خطا (پایین‌تر بهتر)</td><td>روی صدای <b>تلفنی ۸ کیلوهرتز</b> بسنجید، نه صدای استودیو. فرق می‌تواند چند برابر باشد.</td></tr>
+      <tr><td><b>RTFx</b></td><td>چند برابر سریع‌تر از زمان واقعی. RTFx = ۱۰۰ یعنی یک دقیقه صدا در ۰٫۶ ثانیه</td><td>برای تحلیل تماس (CCA) که دسته‌ای کار می‌کند، مهم است.</td></tr>
+      <tr><td><b>تأخیر جریانی</b></td><td>در حالت زنده <span class="en">(Streaming)</span>، چقدر پس از گفتن، متن می‌رسد</td><td>برای تلفن‌گو (IVA) از WER هم مهم‌تر است.</td></tr>
+      <tr><td><b>Short-form / Long-form</b></td><td>صدای کوتاه (چند ثانیه) یا طولانی (یک تماس کامل)</td><td>تحلیل تماس = بلند؛ گفت‌وگوی زنده = کوتاه.</td></tr>
+      <tr><td><b>Diarization (DER)</b></td><td>جدا کردن «چه کسی کی حرف زد»؛ DER نرخ خطای آن</td><td>در تماس‌های تک‌کاناله لازم است.</td></tr>
+    </table>
+
+    <h3>متن به گفتار (TTS)</h3>
+    <table>
+      <thead><tr><th style="width: 22%">معیار</th><th>یعنی</th></tr></thead>
+      <tr><td><b>MOS</b></td><td>شنونده‌ها از ۱ تا ۵ نمره می‌دهند. بالای ۴ یعنی طبیعی. پرهزینه و کند است.</td></tr>
+      <tr><td><b>CMOS</b></td><td>مقایسه دو صدا کنار هم: کدام بهتر و چقدر. حساس‌تر از MOS.</td></tr>
+      <tr><td><b>UTMOS و مانند آن</b></td><td>مدلی که MOS را خودکار تخمین می‌زند. برای مقایسه سریع خوب است، ولی روی فارسی کمتر آزموده شده.</td></tr>
+      <tr><td><b>WER معکوس</b> (وضوح)</td><td>صدای ساخته‌شده را دوباره با ASR به متن تبدیل می‌کنند؛ اگر WER پایین بود، صدا واضح است. اشتباه تلفظ عددها و نام‌ها را پیدا می‌کند.</td></tr>
+      <tr><td><b>SIM</b></td><td>شباهت صدا به گوینده مرجع (در شبیه‌سازی صدا).</td></tr>
+      <tr><td><b>TTFA</b></td><td>زمان تا اولین تکه صدا. برای تلفن، زیر چند صد میلی‌ثانیه هدف خوبی است.</td></tr>
+      <tr><td><b>Elo آرنا</b></td><td>رأی شنونده‌ها بین دو صدا (TTS Arena، Artificial Analysis Speech Arena).</td></tr>
+    </table>
+
+    <h3>تشخیص گفتار و نوبت (VAD، Turn detection)</h3>
+    <table>
+      <thead><tr><th style="width: 26%">معیار</th><th>یعنی</th></tr></thead>
+      <tr><td><b>تأخیر پایان نوبت</b></td><td>از لحظه‌ای که کاربر ساکت شد تا لحظه‌ای که سیستم فهمید نوبت اوست. کم = سریع، ولی…</td></tr>
+      <tr><td><b>قطع نابه‌جا</b> <span class="en">(False endpoint)</span></td><td>…سیستم وسط مکث کاربر («خب… راستش…») حرفش را قطع کند. این دو با هم معامله می‌شوند.</td></tr>
+      <tr><td><b>قطع‌کردن کاذب</b> <span class="en">(False barge-in)</span></td><td>صدای «اوهوم» یا نویز باعث شود دستیار ساکت شود.</td></tr>
+      <tr><td><b>تأخیر کل پاسخ</b> <span class="en">(Voice-to-voice latency)</span></td><td>از پایان حرف کاربر تا شنیدن اولین صدای دستیار. مجموع: پایان نوبت + ASR + TTFT مدل زبانی + TTFA. <b>مهم‌ترین عدد تجربه کاربر در تلفن</b>.</td></tr>
+    </table>
+    <div class="box ok">
+      <b>ربط به Phoenix:</b> آخرین تغییر مخزن (کامیت <span class="en">537415cb8</span>) تشخیص
+      پایان نوبت در AIVA را با پرسیدن از مدل زبانی («آیا جمله کامل است؟») بهتر
+      کرده است. این دقیقاً معامله «تأخیر پایان نوبت» و «قطع نابه‌جا» است؛ برای
+      سنجیدنش هر دو عدد را با هم گزارش کنید.
+    </div>
+
+    <h3>جدول‌های صوت</h3>
+    <table>
+      <thead><tr><th style="width: 30%">جدول</th><th>چه دارد</th></tr></thead>
+      <tr><td><b>Open ASR Leaderboard</b> (Hugging Face)<br /><span class="small en">huggingface.co/spaces/hf-audio/open_asr_leaderboard</span></td><td>بیش از ۶۰ مدل باز و تجاری روی ۱۱ داده؛ WER و RTFx با یکسان‌سازی استاندارد؛ بخش چندزبانه و بلند. فارسی در بخش چندزبانه نیست؛ برای فارسی جدول فارسی بالا را ببینید.</td></tr>
+      <tr><td><b>Artificial Analysis — Speech</b><br /><span class="small en">artificialanalysis.ai</span></td><td>سنجش مستقل گفتار به متن (دسته‌ای و جریانی)، متن به گفتار (آرنا) و گفتار به گفتار؛ با قیمت و سرعت.</td></tr>
+      <tr><td><b>TTS Arena V2</b><br /><span class="small en">huggingface.co/spaces/TTS-AGI/TTS-Arena-V2</span></td><td>رأی دوبه‌دو شنونده‌ها با Elo.</td></tr>
+    </table>
+
+    <!-- ================= بخش سوم: مدل‌ها ================= -->
+    <section class="part">
+      <div class="num">بخش سوم</div>
+      <div class="ttl">مدل‌ها</div>
+      <div class="desc">خانواده مدل‌های معروف، هر کدام برای چه کاری خوب است و برای Phoenix کدام را اول امتحان کنیم.</div>
+    </section>
+
+    <h2 id="models">فهرست مدل‌های معروف و کاربرد آن‌ها</h2>
+    <div class="box warn">
+      <b>قبل از خواندن:</b> این فهرست بر اساس <b>خانواده</b> است، نه نسخه دقیق. هر چند
+      هفته یک نسخه تازه می‌آید. وضعیت این فصل مهر ۱۴۰۵ است و بخشی از آن از منابع
+      ثانویه (وبلاگ‌ها و تجمیع‌کننده‌ها) آمده. <b>قبل از هر تصمیم، کارت مدل رسمی
+      و مجوز را در Hugging Face بخوانید.</b> ستون «نسخه‌های اخیر» فقط برای این است که
+      بدانید دنبال چه اسمی بگردید.
+    </div>
+
+    <h3>چطور اسم یک مدل را بخوانیم</h3>
+    <p>
+      مثال: <span class="en">Qwen3-30B-A3B-Instruct-2507-FP8</span> یعنی خانواده
+      <span class="en">Qwen</span>، نسل ۳، ۳۰ میلیارد پارامتر کل با ۳ میلیارد فعال (MoE)،
+      نسخه گفت‌وگو (<span class="en">Instruct</span>)، ساخته‌شده در ماه ۷ سال ۲۰۲۵،
+      با دقت ۸ بیت. اختصارها در فصل <a href="#abbr">فرهنگ اختصارات</a> هستند.
+    </p>
+
+    <h3>۱. مدل‌های زبانی باز (Open-weight LLM)</h3>
+    <p>«باز» یعنی وزن‌ها را دانلود می‌کنید و روی سرور خودتان اجرا می‌کنید. این برای حریم خصوصی و هزینه مهم است.</p>
+    <table class="big">
+      <thead><tr><th style="width: 14%">خانواده</th><th style="width: 12%">سازنده</th><th style="width: 22%">اندازه‌ها و مجوز</th><th>کاربرد اصلی و نقطه قوت</th><th style="width: 20%">مراقب باشید</th></tr></thead>
+      <tr>
+        <td class="en"><b>Qwen</b><br />(Qwen3، 3.5، 3.6)</td>
+        <td>Alibaba</td>
+        <td>از زیر ۱B تا صدها B؛ هم متراکم هم MoE (مثلاً <span class="en">30B-A3B، 35B-A3B</span>). بیشتر نسخه‌ها <span class="en">Apache 2.0</span>.</td>
+        <td><b>همه‌کاره و چندزبانه.</b> گفت‌وگو، کد، ریاضی، استدلال، صدا زدن ابزار. خانواده بزرگی دارد: مدل متنی، تصویری (<span class="en">Qwen-VL</span>)، کد (<span class="en">Qwen-Coder</span>)، بردار معنایی، ASR و TTS. <b>اولین نامزد برای دستیار فارسی.</b></td>
+        <td>کیفیت فارسی را روی داده خودتان بسنجید. نسخه‌های سنگین فکر می‌کنند و کندتر می‌شوند.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>Gemma</b><br />(Gemma 3، 3n، 4)</td>
+        <td>Google</td>
+        <td>از حدود ۱B تا حدود ۳۰B؛ نسخه‌های «E» برای دستگاه کوچک. نسل ۴ گزارش شده با <span class="en">Apache 2.0</span> (نسل‌های قدیمی‌تر مجوز سفارشی داشتند).</td>
+        <td><b>مدل کوچک و کارآمد.</b> چندزبانه خوب (۱۰۰+ زبان)، چندوجهی (تصویر و در بعضی نسخه‌ها صدا)، پنجره متن بلند. برای یک کارت گرافیک معمولی و دستگاه‌های لبه مناسب است.</td>
+        <td>مجوز هر نسل را جدا بخوانید. در کار ابزار و کد معمولاً از Qwen عقب‌تر است.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>Llama</b><br />(Llama 3.x، 4)</td>
+        <td>Meta</td>
+        <td>۱B تا صدها B؛ Llama 4 به شکل MoE. مجوز سفارشی <span class="en">Llama Community License</span>.</td>
+        <td><b>اکوسیستم بزرگ.</b> بیشترین ابزار، آموزش و نسخه‌های تنظیم‌شده در جامعه. پایه خوب برای تنظیم دقیق. <span class="en">Llama Guard</span> برای ایمنی.</td>
+        <td>مجوز شرط دارد (سقف کاربر، ذکر نام). فارسی رسمی پشتیبانی نمی‌شود، باید سنجید.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>DeepSeek</b><br />(V3، R1، V4)</td>
+        <td>DeepSeek</td>
+        <td>خیلی بزرگ (صدها B، MoE). بیشتر نسخه‌ها <span class="en">MIT</span>. نسخه‌های «Distill» کوچک‌تر هم هستند.</td>
+        <td><b>استدلال و کد با هزینه پایین.</b> R1 مدل استدلالی باز معروف بود. برای تحلیل سخت، ریاضی و برنامه‌نویسی. تقطیرها روی Qwen/Llama برای سخت‌افزار کوچک.</td>
+        <td>برای اجرای کامل کلاستر چند-GPU لازم است. در تلفن، فکر کردن طولانی = تأخیر.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>Mistral</b><br />(Small، Medium، Large، Mixtral، Ministral)</td>
+        <td>Mistral AI</td>
+        <td>کوچک تا بزرگ؛ بعضی <span class="en">Apache 2.0</span>، بعضی مجوز تحقیقاتی یا فقط API.</td>
+        <td><b>مدل اروپایی، سریع و کارآمد.</b> زبان‌های اروپایی، فراخوانی ابزار، کد (<span class="en">Codestral، Devstral</span>)، صدا (<span class="en">Voxtral</span>).</td>
+        <td>فارسی متوسط. مجوز هر مدل متفاوت است.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>gpt-oss</b></td>
+        <td>OpenAI</td>
+        <td>دو اندازه حدود ۲۰B و ۱۲۰B (MoE)، <span class="en">Apache 2.0</span>.</td>
+        <td><b>استدلال و ابزار</b>؛ سطح فکر کردن قابل تنظیم (کم/متوسط/زیاد). فقط متنی.</td>
+        <td>انگلیسی‌محور؛ فارسی ضعیف‌تر.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>GLM</b><br />(GLM-4.x، 5)</td>
+        <td>Zhipu / Z.ai</td>
+        <td>متوسط تا بزرگ (MoE)، معمولاً مجوز آزاد.</td>
+        <td><b>کد و عامل‌ها</b> (کار چندمرحله‌ای با ابزار). در جدول‌های کد و عامل بالاست.</td>
+        <td>بیشتر چینی-انگلیسی.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>Kimi</b><br />(K2، K3)</td>
+        <td>Moonshot AI</td>
+        <td>خیلی بزرگ (بیش از هزار میلیارد، MoE)؛ مجوز اصلاح‌شده MIT.</td>
+        <td><b>عامل‌ها و کد، متن بلند.</b> نزدیک به مدل‌های بسته پیشرو در بعضی آزمون‌ها.</td>
+        <td>سخت‌افزار بسیار سنگین؛ عملاً از طریق API یا سرویس میزبان.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>MiniMax</b></td>
+        <td>MiniMax</td>
+        <td>بزرگ، MoE؛ مجوز آزاد در نسخه‌های اخیر.</td>
+        <td><b>عامل و کد، متن بسیار بلند.</b></td>
+        <td>سنگین.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>Phi</b></td>
+        <td>Microsoft</td>
+        <td>کوچک (چند B)، <span class="en">MIT</span>.</td>
+        <td><b>مدل خیلی کوچک و خوب در ریاضی/استدلال.</b> برای دستگاه‌های ضعیف و آزمایش.</td>
+        <td>دانش عمومی و چندزبانگی محدود.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>OLMo، SmolLM، Granite</b></td>
+        <td>AI2، Hugging Face، IBM</td>
+        <td>کوچک تا متوسط؛ <span class="en">Apache 2.0</span>.</td>
+        <td><b>کاملاً باز</b> (داده و کد آموزش هم منتشر شده). OLMo برای پژوهش و شفافیت؛ SmolLM برای دستگاه کوچک؛ Granite برای سازمان‌ها.</td>
+        <td>معمولاً از Qwen/Llama ضعیف‌ترند.</td>
+      </tr>
+      <tr>
+        <td class="en"><b>مدل‌های فارسی</b><br />(مثلاً Dorna، PersianMind، Sialk…)</td>
+        <td>جامعه ایرانی و شرکت‌ها</td>
+        <td>معمولاً تنظیم‌شده روی Llama/Qwen/Gemma؛ مجوز از پایه ارث می‌برد.</td>
+        <td><b>بهبود فارسی روی مدل‌های پایه.</b> جدول <span class="en">Open Persian LLM Leaderboard</span> را نگاه کنید.</td>
+        <td>کیفیت ناهمگون؛ اغلب از مدل پایه عمومی جدیدتر عقب می‌ماند. حتماً بسنجید.</td>
+      </tr>
+    </table>
+
+    <h3>۲. مدل‌های بسته (فقط API)</h3>
+    <p>وزن‌ها در دسترس نیست. معمولاً قوی‌ترین مدل‌ها هستند و راه سریع برای نمونه‌سازی. هزینه، حریم خصوصی و دسترسی را بسنجید.</p>
+    <table>
+      <thead><tr><th style="width: 18%">خانواده</th><th style="width: 14%">سازنده</th><th>کاربرد و نکته</th></tr></thead>
+      <tr><td class="en"><b>Claude</b> (Fable، Opus، Sonnet، Haiku)</td><td>Anthropic</td><td>کد، عامل‌ها، متن بلند، پیروی دقیق از دستور. Haiku سریع و ارزان برای کارهای زیاد.</td></tr>
+      <tr><td class="en"><b>GPT</b></td><td>OpenAI</td><td>همه‌کاره؛ API صوتی زنده (Realtime)، تصویر، ابزار. مدل‌های «o» و GPT جدید برای استدلال.</td></tr>
+      <tr><td class="en"><b>Gemini</b></td><td>Google</td><td>پنجره متن خیلی بلند، چندوجهی (ویدیو، صدا، تصویر)، ارتباط با Google Cloud. Gemini Live برای صدا. Flash برای سرعت و قیمت.</td></tr>
+      <tr><td class="en"><b>Grok</b></td><td>xAI</td><td>گفت‌وگو و استدلال؛ دسترسی به داده X.</td></tr>
+      <tr><td class="en"><b>Command</b></td><td>Cohere</td><td>RAG و کار سازمانی؛ مدل <span class="en">Embed</span> و <span class="en">Rerank</span> معروف.</td></tr>
+    </table>
+
+    <h3>۳. مدل‌های بردار معنایی و بازرتبه‌بندی (برای RAG)</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مدل</th><th>کاربرد و نکته</th></tr></thead>
+      <tr><td class="en"><b>Qwen3-Embedding / Reranker</b></td><td>چندزبانه و قوی؛ اندازه‌های ۰٫۶B تا ۸B. نامزد اول برای فارسی.</td></tr>
+      <tr><td class="en"><b>BGE-M3</b> (BAAI)</td><td>چندزبانه، سه نوع جست‌وجو در یک مدل (معنایی، کلمه‌ای، چندبرداری)، متن بلند. انتخاب محبوب و امن.</td></tr>
+      <tr><td class="en"><b>multilingual-e5</b> (Microsoft)</td><td>سبک و پرکاربرد برای زبان‌های زیاد.</td></tr>
+      <tr><td class="en"><b>EmbeddingGemma</b></td><td>کوچک (حدود ۳۰۰M) و کارآمد برای دستگاه کوچک.</td></tr>
+      <tr><td class="en"><b>Jina v3/v4</b>، <b>Nomic Embed</b></td><td>متن بلند و چندوجهی؛ مجوز را بخوانید.</td></tr>
+      <tr><td class="en"><b>BGE-reranker</b>، <b>Cohere Rerank</b></td><td>بازرتبه‌بندی نتایج جست‌وجو. معمولاً بیشترین بهبود را برای هزینه کم می‌دهد.</td></tr>
+    </table>
+    <p class="small">برای انتخاب نهایی، نتیجه <span class="en">FaMTEB</span> را نگاه کنید و بعد روی سؤال‌های واقعی خودتان بسنجید.</p>
+
+    <h3>۴. گفتار به متن (ASR)</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مدل</th><th>کاربرد و نکته</th></tr></thead>
+      <tr><td class="en"><b>Whisper</b> (large-v3، turbo)</td><td>OpenAI، <span class="en">MIT</span>. چندزبانه (۹۹+ زبان). استاندارد پایه. <b>turbo</b> سریع‌تر. فارسی قابل‌قبول ولی روی صدای تلفنی ممکن است ضعیف باشد. با <span class="en">faster-whisper</span> سریع‌تر اجرا می‌شود.</td></tr>
+      <tr><td class="en"><b>Qwen3-ASR</b></td><td>۰٫۶B و ۱٫۷B، <span class="en">Apache 2.0</span>؛ حدود ۵۰ زبان و گویش. تازه؛ روی صدای فارسی بسنجید.</td></tr>
+      <tr><td class="en"><b>NVIDIA Canary / Parakeet</b></td><td>از بهترین‌ها در Open ASR Leaderboard برای انگلیسی؛ بسیار سریع. فارسی محدود؛ بسنجید.</td></tr>
+      <tr><td class="en"><b>Meta MMS / SeamlessM4T</b></td><td>پوشش بسیار زیاد زبان‌ها، ترجمه گفتار. مجوز غیرتجاری در بعضی نسخه‌ها.</td></tr>
+      <tr><td class="en"><b>Voxtral</b> (Mistral)</td><td>مدل صوتی-زبانی و ASR باز.</td></tr>
+      <tr><td><b>مدل‌های فارسی تنظیم‌شده</b></td><td>نسخه‌های Whisper تنظیم‌شده روی فارسی؛ <span class="en">Open Persian ASR Leaderboard</span> را ببینید.</td></tr>
+      <tr><td><b>سرویس‌های ابری</b></td><td>Deepgram، AssemblyAI، Google/Azure STT، ElevenLabs Scribe. پخش زنده و تأخیر کم؛ پشتیبانی از فارسی را بررسی کنید.</td></tr>
+    </table>
+
+    <h3>۵. متن به گفتار (TTS)</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مدل</th><th>کاربرد و نکته</th></tr></thead>
+      <tr><td class="en"><b>Qwen3-TTS</b></td><td>حدود ۱٫۷B، <span class="en">Apache 2.0</span>؛ چند زبان، شبیه‌سازی صدا از چند ثانیه نمونه. تازه؛ فارسی را بسنجید.</td></tr>
+      <tr><td class="en"><b>Kokoro</b></td><td>فقط ۸۲M، <span class="en">Apache 2.0</span>؛ فوق‌العاده سبک و سریع، روی CPU هم اجرا می‌شود. فارسی رسمی ندارد.</td></tr>
+      <tr><td class="en"><b>Chatterbox</b></td><td><span class="en">MIT</span>؛ شبیه‌سازی صدا و حالت‌های احساسی، چندزبانه.</td></tr>
+      <tr><td class="en"><b>XTTS-v2</b> (Coqui)</td><td>شبیه‌سازی صدا، چندزبانه از جمله فارسی؛ مجوز غیرتجاری (CPML)، پس برای محصول تجاری مناسب نیست مگر مجوز بگیرید.</td></tr>
+      <tr><td class="en"><b>F5-TTS، Fish Speech، Orpheus، Piper، Dia</b></td><td>گزینه‌های باز دیگر با کیفیت و مجوز متفاوت. Piper سبک و آفلاین است.</td></tr>
+      <tr><td><b>مدل‌های فارسی</b></td><td>به‌دنبال TTS فارسی در Hugging Face با فیلتر <span class="en">Languages: Persian</span> بگردید؛ کیفیت و مجوز بسیار متفاوت است.</td></tr>
+      <tr><td><b>سرویس‌های ابری</b></td><td>ElevenLabs، OpenAI TTS، Azure، Google. کیفیت بالا؛ فارسی و هزینه را بسنجید.</td></tr>
+    </table>
+    <p class="small">برای صدا مقایسه بشنوید: <span class="en">TTS Arena V2</span> و <span class="en">Artificial Analysis Speech Arena</span>.</p>
+
+    <h3>۶. تشخیص صحبت و نوبت (VAD و Turn detection)</h3>
+    <table>
+      <thead><tr><th style="width: 22%">مدل</th><th>کاربرد</th></tr></thead>
+      <tr><td class="en"><b>Silero VAD</b></td><td>سبک، سریع، MIT؛ استاندارد عملی برای تشخیص صحبت/سکوت.</td></tr>
+      <tr><td class="en"><b>TEN VAD</b>، <b>WebRTC VAD</b></td><td>گزینه‌های سبک دیگر.</td></tr>
+      <tr><td class="en"><b>LiveKit turn detector، Pipecat Smart Turn</b></td><td>مدل‌های کوچک متن/صدا برای تشخیص «کاربر حرفش را تمام کرد»؛ فقط سکوت کافی نیست.</td></tr>
+    </table>
+
+    <h3>۷. تصویر، سند و کد</h3>
+    <table>
+      <thead><tr><th style="width: 22%">نوع</th><th>مدل‌های معروف</th></tr></thead>
+      <tr><td><b>تصویر-زبان (VLM)</b></td><td class="en">Qwen-VL، Gemma (چندوجهی)، Llama 4، InternVL، Pixtral، MiniCPM-V</td></tr>
+      <tr><td><b>خواندن سند و OCR</b></td><td class="en">Qwen-VL، olmOCR، DeepSeek-OCR، PaddleOCR، Docling، Surya</td></tr>
+      <tr><td><b>تولید تصویر</b></td><td class="en">FLUX، Stable Diffusion، Qwen-Image (باز)؛ Imagen، GPT-image (بسته)</td></tr>
+      <tr><td><b>کد</b></td><td class="en">Qwen-Coder، Devstral، Codestral، DeepSeek، GLM، Kimi</td></tr>
+    </table>
+
+    <h3>کدام مدل برای کدام کار؟</h3>
+    <table class="big">
+      <thead><tr><th style="width: 22%">کار</th><th>شروع پیشنهادی</th><th style="width: 30%">نکته</th></tr></thead>
+      <tr><td><b>گفت‌وگوی صوتی فارسی</b> (مغز دستیار)</td><td>مدل متوسط و سریع، غیراستدلالی: خانواده Qwen (۳۰ تا ۳۵B با MoE فعال ۳B) یا Gemma؛ مدل بسته مثل Claude Haiku/Sonnet یا Gemini Flash برای مقایسه.</td><td>TTFT کم و ابزار درست. روی تماس‌های واقعی فارسی بسنجید.</td></tr>
+      <tr><td><b>صدا زدن ابزار و کار چندمرحله‌ای</b></td><td>Qwen، GLM، gpt-oss یا مدل بسته (Claude، GPT).</td><td>با BFCL و τ-bench و نمونه‌های خودتان بسنجید.</td></tr>
+      <tr><td><b>تحلیل پس از تماس</b> (خلاصه، امتیاز، کشف موضوع)</td><td>مدل بزرگ‌تر و دقیق‌تر، حتی استدلالی؛ تأخیر مهم نیست.</td><td>می‌شود دسته‌ای و شبانه اجرا کرد؛ ارزان‌تر.</td></tr>
+      <tr><td><b>بانک دانش (RAG)</b></td><td>بردار: Qwen3-Embedding یا BGE-M3؛ بازرتبه: BGE-reranker؛ تولید: همان مدل گفت‌وگو.</td><td>اول کیفیت جست‌وجو را بسنجید.</td></tr>
+      <tr><td><b>تبدیل صدا به متن</b></td><td>Whisper large-v3/turbo، Qwen3-ASR؛ سرویس ابری برای مقایسه؛ مدل فارسی تنظیم‌شده.</td><td>WER/CER روی ۲۰ قطعه صدای تلفنی خودتان.</td></tr>
+      <tr><td><b>تبدیل متن به صدا</b></td><td>Qwen3-TTS، Chatterbox؛ سرویس ابری برای مقایسه.</td><td>مجوز تجاری و کیفیت فارسی را با گوش بسنجید (MOS داخلی).</td></tr>
+      <tr><td><b>دسته‌بندی ساده</b> (قصد، احساس، موضوع)</td><td>مدل کوچک ۱ تا ۴B یا تنظیم دقیق روی داده خودتان.</td><td>ارزان‌ترین و سریع‌ترین؛ داده برچسب‌خورده بسازید.</td></tr>
+      <tr><td><b>خواندن اسکن فرم و فاکتور</b></td><td>Qwen-VL یا مدل بسته چندوجهی.</td><td>روی نمونه واقعی با کیفیت بد بسنجید.</td></tr>
+      <tr><td><b>نمونه‌سازی سریع</b></td><td>مدل بسته (Claude، GPT، Gemini).</td><td>سریع‌ترین راه برای دیدن «شدنی است یا نه»؛ بعد با مدل باز مقایسه کنید.</td></tr>
+      <tr><td><b>اجرای محلی روی لپ‌تاپ</b></td><td>Ollama یا LM Studio با Qwen/Gemma کوچک (۴ تا ۹B، GGUF ۴بیت).</td><td>برای آزمایش و یادگیری، نه تولید.</td></tr>
+    </table>
+
+    <div class="box"><b>روش پیشنهادی برای انتخاب:</b> ۱) فهرست کوتاه ۳ تا ۵ مدل از جدول‌ها و این فصل؛ ۲) مجوز و حافظه را بررسی کنید؛ ۳) هر کدام را روی ۵۰ تا ۲۰۰ نمونه فارسی خودتان بسنجید؛ ۴) فقط بعد از آن تصمیم بگیرید. فهرست «۱۰ دقیقه» در فصل <a href="#routine">روال هفتگی</a> است.</div>
+
+    <h3>کجا فهرست مدل‌های تازه را ببینیم</h3>
+    <ul class="small">
+      <li class="en">huggingface.co/models (Trending، فیلتر Languages: Persian)</li>
+      <li class="en">artificialanalysis.ai (مقایسه کیفیت، سرعت، قیمت)</li>
+      <li class="en">lmarena.ai (رأی کاربران)</li>
+      <li class="en">openrouter.ai/models (فهرست و قیمت مدل‌های API)</li>
+      <li class="en">ollama.com/library (مدل‌های قابل اجرای محلی)</li>
+      <li class="en">Sebastian Raschka «Ahead of AI»، Interconnects، The Batch (خبرنامه)</li>
+    </ul>
+
+    <!-- ================= بخش چهارم ================= -->
+    <section class="part">
+      <div class="num">بخش چهارم</div>
+      <div class="ttl">عادت</div>
+      <div class="desc">از کجا بخوانیم، هر چند وقت و چطور یک مدل تازه را در ده دقیقه بسنجیم.</div>
+    </section>
+
+    <h2 id="sources">کجا به‌روز بمانیم</h2>
+    <p>منبع زیاد است؛ مشکل انتخاب است. هر دسته را با هدفش آورده‌ایم. با ستاره‌دارها شروع کنید.</p>
+
+    <h3>جدول‌ها و داده مستقل</h3>
+    <table>
+      <thead><tr><th style="width: 30%">منبع</th><th>به چه درد می‌خورد</th><th style="width: 14%">هر چند وقت</th></tr></thead>
+      <tr><td><b>★ Artificial Analysis</b><br /><span class="small en">artificialanalysis.ai</span></td><td>مقایسه مستقل کیفیت، سرعت (tok/s، TTFT) و قیمت مدل‌ها و سرویس‌دهنده‌ها؛ صوت هم دارد.</td><td>هفتگی</td></tr>
+      <tr><td><b>★ LMArena</b><br /><span class="small en">lmarena.ai</span></td><td>رأی کاربران؛ بخش‌های جدا برای متن، کد، تصویر، جست‌وجو.</td><td>هفتگی</td></tr>
+      <tr><td><b>Epoch AI</b><br /><span class="small en">epoch.ai</span></td><td>روندهای بلندمدت: هزینه آموزش، توان محاسبه، پیشرفت بنچمارک‌ها.</td><td>ماهانه</td></tr>
+      <tr><td><b>Hugging Face Leaderboards</b><br /><span class="small en">huggingface.co/spaces → leaderboard</span></td><td>جدول‌های تخصصی (صوت، فارسی، بردار معنایی). Open LLM Leaderboard قدیمی در ۲۰۲۵ بازنشسته شد و فقط بایگانی‌اش مانده.</td><td>ماهانه</td></tr>
+    </table>
+
+    <h3>مقاله‌ها</h3>
+    <table>
+      <thead><tr><th style="width: 30%">منبع</th><th>به چه درد می‌خورد</th><th style="width: 14%">هر چند وقت</th></tr></thead>
+      <tr><td><b>★ HF Daily Papers</b><br /><span class="small en">huggingface.co/papers</span></td><td>مقاله‌های داغ روز با پیوند به مدل و کد.</td><td>روزانه (فقط عنوان)</td></tr>
+      <tr><td><b>arXiv</b><br /><span class="small en">arxiv.org — cs.CL، cs.SD، eess.AS</span></td><td>منبع اصلی همه مقاله‌ها. cs.CL زبان، cs.SD و eess.AS صدا.</td><td>وقت نیاز</td></tr>
+      <tr><td><b>alphaXiv</b><br /><span class="small en">alphaxiv.org</span></td><td>بحث و پرسش روی هر مقاله؛ فهمش آسان‌تر می‌شود.</td><td>وقت نیاز</td></tr>
+    </table>
+    <div class="box"><b>چطور یک مقاله را در ۲۰ دقیقه بخوانید:</b> (۱) چکیده؛ (۲) شکل اول و جدول نتایج اصلی؛ (۳) نتیجه‌گیری و محدودیت‌ها؛ (۴) فقط اگر به کارتان می‌آید، بخش روش. بپرسید: با چه چیزی مقایسه کرده؟ کد و وزن منتشر شده؟ به فارسی یا صدای تلفنی ربط دارد؟</div>
+
+    <h3>خبرنامه و وبلاگ</h3>
+    <table>
+      <thead><tr><th style="width: 30%">منبع</th><th>به چه درد می‌خورد</th></tr></thead>
+      <tr><td><b>★ The Batch</b> (DeepLearning.AI)</td><td>خلاصه هفتگی ساده و کم‌حاشیه؛ برای شروع عالی.</td></tr>
+      <tr><td><b>★ Simon Willison's Weblog</b><br /><span class="small en">simonwillison.net</span></td><td>آزمون عملی و صادقانه مدل‌ها و ابزارها، تقریباً هر روز.</td></tr>
+      <tr><td><b>Import AI</b> (Jack Clark)</td><td>مقاله‌های مهم هفته با نگاه سیاستی و ایمنی.</td></tr>
+      <tr><td><b>Interconnects</b> (Nathan Lambert)</td><td>عمیق درباره آموزش پس از پیش‌آموزش (RLHF، مدل‌های باز).</td></tr>
+      <tr><td><b>Latent Space</b> (پادکست و خبرنامه)</td><td>نگاه مهندس هوش مصنوعی: عامل‌ها، ابزار، استنتاج. قسمت‌های صوتی هم دارد.</td></tr>
+      <tr><td><b>وبلاگ آزمایشگاه‌ها</b></td><td>Anthropic، OpenAI، Google DeepMind، Meta AI، Mistral، Qwen، DeepSeek — اعلام رسمی مدل‌ها. همیشه با منبع مستقل مقایسه کنید.</td></tr>
+      <tr><td><b>وبلاگ Hugging Face</b><br /><span class="small en">huggingface.co/blog</span></td><td>آموزش‌های عملی و معرفی مدل‌های باز، از جمله صوت.</td></tr>
+    </table>
+
+    <h3>دوره‌ها (رایگان)</h3>
+    <table>
+      <thead><tr><th style="width: 30%">دوره</th><th>برای چه</th></tr></thead>
+      <tr><td><b>★ Hugging Face LLM Course</b><br /><span class="small en">huggingface.co/learn</span></td><td>ترنسفورمر، توکن‌ساز، تنظیم دقیق با کد واقعی.</td></tr>
+      <tr><td><b>★ Hugging Face Audio Course</b></td><td>ASR، TTS، طبقه‌بندی صدا؛ مستقیم مربوط به Phoenix.</td></tr>
+      <tr><td><b>Hugging Face Agents Course</b></td><td>عامل‌ها و استفاده از ابزار.</td></tr>
+      <tr><td><b>Andrej Karpathy — Neural Networks: Zero to Hero</b> (یوتیوب)</td><td>ساختن یک مدل زبانی کوچک از صفر؛ بهترین راه برای فهم عمیق. ویدیوی «Intro to LLMs» او برای شروع یک‌ساعته عالی است.</td></tr>
+      <tr><td><b>fast.ai — Practical Deep Learning</b></td><td>یادگیری عمیق کاربردی، اول عمل بعد نظریه.</td></tr>
+      <tr><td><b>Stanford CS336 — Language Modeling from Scratch</b></td><td>برای وقتی که پایه محکم شد؛ جزئیات آموزش و استنتاج.</td></tr>
+    </table>
+
+    <h3>منابع فارسی و جامعه ایرانی</h3>
+    <ul>
+      <li>صفحه سازمان‌های ایرانی در Hugging Face (مثل <span class="en">PartAI</span>، <span class="en">MCINext</span>) — مدل‌ها، داده‌ها و جدول‌های فارسی.</li>
+      <li>فیلتر <span class="en">Languages: Persian</span> در بخش Models و Datasets، مرتب‌شده با <span class="en">Trending</span>.</li>
+      <li>داده <span class="en">Common Voice</span> فارسی (Mozilla) — مرجع رایج برای سنجش گفتار به متن فارسی.</li>
+    </ul>
+
+    <h2 id="routine" class="pb">روال هفتگی</h2>
+    <table>
+      <thead><tr><th style="width: 18%">بازه</th><th>چه کنید</th><th style="width: 16%">زمان</th></tr></thead>
+      <tr><td><b>روزانه</b></td><td>عنوان‌های HF Daily Papers و Trending مدل‌ها؛ یک خبرنامه. فقط آنچه به صوت، فارسی یا عامل‌ها مربوط است را یادداشت کنید.</td><td>۱۵ دقیقه</td></tr>
+      <tr><td><b>هفتگی</b></td><td>نگاه به Artificial Analysis و LMArena؛ خواندن کامل یک مقاله یا یک پست عمیق؛ امتحان یک مدل تازه در Space یا روی لپ‌تاپ. یک یادداشت سه‌خطی در کانال تیم.</td><td>۲ ساعت</td></tr>
+      <tr><td><b>ماهانه</b></td><td>یک موضوع عمیق (مثلاً «مدل‌های گفتار به گفتار») و یک آزمایش روی داده خودمان. بازبینی: آیا چیزی دیدیم که نقشه راه Phoenix را تغییر دهد؟</td><td>نیم روز</td></tr>
+    </table>
+
+    <h3>سنجش یک مدل تازه در ۱۰ دقیقه</h3>
+    <ol>
+      <li><b>چه کسی ساخته و با چه مجوزی؟</b> اگر تجاری نیست، همین‌جا تمام.</li>
+      <li><b>اندازه و حافظه:</b> با قاعده «پارامتر × بیت ÷ ۸» — روی سرور ما جا می‌شود؟</li>
+      <li><b>فارسی:</b> در کارت آمده؟ در جدول فارسی هست؟</li>
+      <li><b>عدد مستقل:</b> در Artificial Analysis یا آرنا چه جایگاهی دارد؟ نه فقط کارت سازنده.</li>
+      <li><b>آزمون دستی:</b> ۵ جمله واقعی از کار Phoenix (یک سؤال منابع انسانی، یک جمله محاوره‌ای، یک عدد و تاریخ) در نسخه نمایشی.</li>
+      <li><b>سرعت:</b> TTFT و tok/s (یا برای صوت: RTFx و تأخیر جریانی).</li>
+      <li><b>نتیجه:</b> «ارزش آزمون کامل دارد / ندارد» و یک دلیل.</li>
+    </ol>
+
+    <h3>اجرای خودتان</h3>
+    <table>
+      <thead><tr><th style="width: 26%">ابزار</th><th>کی</th></tr></thead>
+      <tr><td><b>Spaces</b></td><td>سریع‌ترین راه؛ بدون نصب.</td></tr>
+      <tr><td><b>Ollama</b> یا <b>llama.cpp</b></td><td>اجرای مدل GGUF روی لپ‌تاپ: <span class="en">ollama run &lt;model&gt;</span></td></tr>
+      <tr><td><b>transformers</b> (پایتون)</td><td>کنترل کامل؛ برای ارزیابی روی داده خودمان. برای صدا: <span class="en">pipeline("automatic-speech-recognition")</span></td></tr>
+      <tr><td><b>vLLM</b></td><td>اجرای جدی روی سرور با کارت گرافیک؛ همان چیزی که در تولید استفاده می‌شود.</td></tr>
+      <tr><td><b>lighteval</b> / <b>lm-evaluation-harness</b></td><td>اجرای بنچمارک‌های استاندارد برای تکرار یک عدد.</td></tr>
+    </table>
+
+    <div class="box warn">
+      <b>فهرست «به یک عدد اعتماد نکن»:</b>
+      <ul>
+        <li>تنظیم آزمون (چند مثال، با فکر یا بی‌فکر) یکسان است؟</li>
+        <li>بازه اطمینان یا تعداد سؤال گفته شده؟</li>
+        <li>چه کسی اندازه گرفته؟</li>
+        <li>بنچمارک اشباع یا آلوده نیست؟</li>
+        <li>به زبان و نوع داده ما (فارسی، تلفنی، محاوره‌ای) ربط دارد؟</li>
+      </ul>
+    </div>
+
+    <h2 id="practice">تمرین‌ها</h2>
+    <ol>
+      <li>
+        <b>خواندن سه کارت مدل.</b> یک مدل زبانی، یک مدل گفتار به متن و یک مدل
+        بردار معنایی که فارسی پشتیبانی می‌کنند پیدا کنید. برای هر کدام این جدول
+        را پر کنید: سازنده · مجوز · پارامتر (کل/فعال) · دقت و قالب · پنجره متن ·
+        فارسی؟ · عدد مستقل · حافظه لازم · نتیجه.
+      </li>
+      <li>
+        <b>خواندن یک جدول.</b> در LMArena دو مدل نزدیک به هم را پیدا کنید. آیا
+        بازه اطمینانشان هم‌پوشانی دارد؟ با «کنترل سبک» جایشان عوض می‌شود؟
+      </li>
+      <li>
+        <b>WER روی صدای خودمان.</b> ۲۰ قطعه صدای تلفنی فارسی (با اجازه و بدون
+        اطلاعات شخصی) با متن درست آماده کنید. دو مدل گفتار به متن را اجرا کنید،
+        متن‌ها را یکسان‌سازی کنید و WER و CER را با کتابخانه
+        <span class="en">jiwer</span> یا <span class="en">evaluate</span> حساب
+        کنید. عدد را با جدول فارسی مقایسه کنید: چقدر فرق دارد و چرا؟
+      </li>
+      <li>
+        <b>تأخیر کل.</b> در یک تماس آزمایشی Phoenix، چهار زمان را جدا بنویسید:
+        پایان نوبت، ASR، TTFT مدل زبانی، TTFA. کدام بیشترین سهم را دارد؟
+      </li>
+      <li>
+        <b>گزارش یک‌صفحه‌ای.</b> یک مدل تازه را با فهرست «۱۰ دقیقه» بسنجید و
+        نتیجه را برای تیم بنویسید.
+      </li>
+    </ol>
+
+    <h2 id="refs">منابع</h2>
+    <ul class="small">
+      <li class="en">Hugging Face Hub docs, model cards: huggingface.co/docs/hub/model-cards</li>
+      <li class="en">Open LLM Leaderboard archive: huggingface.co/docs/leaderboards/en/open_llm_leaderboard/archive</li>
+      <li class="en">Open ASR Leaderboard paper: arxiv.org/abs/2510.06961</li>
+      <li class="en">TTS Arena V2: huggingface.co/spaces/TTS-AGI/TTS-Arena-V2</li>
+      <li class="en">Artificial Analysis: artificialanalysis.ai (text, speech-to-text, text-to-speech, speech-to-speech)</li>
+      <li class="en">LMArena: lmarena.ai</li>
+      <li class="en">Open Persian LLM Leaderboard: huggingface.co/spaces/PartAI/open-persian-llm-leaderboard</li>
+      <li class="en">Persian LLM Alignment Leaderboard: mcilab-llm-alignment-evaluation.hf.space</li>
+      <li class="en">Open Persian ASR Leaderboard: navidved-open-persian-asr-leaderboard.hf.space</li>
+      <li class="en">Spontaneous Persian Speech dataset (SIGUL 2026): aclanthology.org/2026.sigul-1.26</li>
+    </ul>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

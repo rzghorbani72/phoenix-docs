@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>Phoenix — ردیاب Fit-Gap</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <section class="cover">
+      <div class="small">محرمانه — داخلی MCINEXT</div>
+      <h1>ردیاب Fit-Gap پایلوت صدای کارکنان</h1>
+      <div class="sub">۸۷ نیازمندی توافق MCINEXT × EX همراه اول، با وضعیت تأییدشده از کد، شاهد، مالک وابستگی و ددلاین پیشنهادی</div>
+      <p class="meta">نسخه قابل ویرایش: <code>FIT_GAP_TRACKER.xlsx</code> (همین داده؛ ستون‌های «اولویت EX» و «ددلاین نهایی» را در Excel پر کنید) · تولیدشده از <code>source/verdicts.tsv</code> و <code>fitgap_part*.tsv</code></p>
+      <nav class="menu"><div class="menu-grp">شیت‌ها</div><ul><li><a href="#guide">راهنما</a></li><li><a href="#rows">ردیف‌ها</a></li><li><a href="#summary">خلاصه</a></li><li><a href="#findings">یافته‌های بحرانی</a></li><li><a href="#architecture">معماری</a></li></ul></nav>
+    </section>
+<h2 id="guide">راهنما</h2>
+<p class="lede">راهنمای استفاده از این فایل</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:26.2%"><col style="width:73.8%"></colgroup>
+<tbody>
+<tr><td class="c-key">موضوع</td><td>توافق Fit-Gap پایلوت صدای کارکنان (EX) — MCINEXT × اداره تجربه کارکنان همراه اول</td></tr>
+<tr><td class="c-key">تعداد نیازمندی</td><td>۸۷ ردیف در ۸ بلوک</td></tr>
+<tr><td class="c-key">مبنای ستون «وضعیت تأییدشده»</td><td>خوانش مستقیم کد مخزن phoenix — فقط پروژه‌های پایتونِ فعال در ۳ ماه گذشته</td></tr>
+<tr><td class="c-key">تاریخ بررسی کد</td><td>۱۴۰۵/۰۷/۰۶ — معادل 2026-09-28</td></tr>
+<tr><td class="c-key">دامنه بررسی</td><td>coa-api, aiva, adcs, aqa, chatbot-iva-agent, agentlib, adcs-auth, adcs-knowledgebase, aiva-knowledgebase, fastlib</td></tr>
+<tr><td class="c-key">خارج از دامنه</td><td>python/coa-ai — موتور تحلیل احساسات/خلاصه/موضوع. آخرین کامیت 2025-07-13 (۱۴ ماه فریز)</td></tr>
+<tr><td class="c-key">ستون‌هایی که شما پر می‌کنید</td><td>«اولویت EX» را EX پر می‌کند. «ددلاین نهایی» را شما بر اساس ستون «ددلاین پیشنهادی» تثبیت می‌کنید.</td></tr>
+<tr><td class="c-key">قاعده ددلاین</td><td>هیچ تاریخ تقویمی ننویسید. بنویسید «T + n روز کاری از دریافت [ورودی مشخص]». مبنای این قاعده معیار پذیرش خودِ ردیف TEC-14 است.</td></tr>
+<tr class="sub"><td colspan="2">معنای رنگ‌ها</td></tr>
+<tr><td class="c-ok">سبز — تأییدشده</td><td>در کد پیدا شد و کار می‌کند. قابل دفاع در UAT.</td></tr>
+<tr><td class="c-warn">زرد — جزئی</td><td>بخشی پیاده شده. بدون توضیح، در UAT رد می‌شود.</td></tr>
+<tr><td class="c-bad">قرمز — رد شد</td><td>ادعای توافق با کد نمی‌خواند. پیش از جلسه اصلاح کنید.</td></tr>
+<tr><td class="c-gap">طوسی — غایب</td><td>هیچ کدی وجود ندارد. توسعه واقعی لازم است.</td></tr>
+<tr><td class="c-edit">آبی — خالی</td><td>ستون در توافق خالی مانده و باید پر شود.</td></tr>
+<tr><td>بدون رنگ — تنظیم/زیرساخت</td><td>کد لازم نیست؛ Configuration یا فرایند است.</td></tr>
+<tr><td class="c-key">نمونه سطر پرشده</td><td>مثال: PRV-03 | ادعا: موجود در محصول | تأییدشده: رد شد | شاهد: coa/apps/files/views.py:19 | ددلاین: پیش از UAT، T+3 روز کاری</td></tr>
+</tbody>
+</table></div>
+<h2 id="rows">ردیف‌ها</h2>
+<div class="filters"><input type="search" id="q" placeholder="جست‌وجو در ID، نیازمندی، شاهد…" aria-label="جست‌وجو"><select id="st" aria-label="فیلتر وضعیت"><option value="">همه وضعیت‌ها</option><option value="c-ok">تأییدشده</option><option value="c-warn">جزئی / نامشخص</option><option value="c-bad">رد شد</option><option value="c-gap">غایب</option><option value="c-edit">خالی در توافق</option><option value="plain">تنظیم / خارج از کد</option></select><span id="cnt" class="small"></span></div>
+<div class="scroll-x"><table class="sheet wide" style="width:3536px">
+<colgroup><col style="width:187px"><col style="width:76px"><col style="width:221px"><col style="width:442px"><col style="width:391px"><col style="width:85px"><col style="width:170px"><col style="width:187px"><col style="width:391px"><col style="width:76px"><col style="width:136px"><col style="width:255px"><col style="width:442px"><col style="width:340px"><col style="width:136px"></colgroup>
+<thead><tr><th>بلوک</th><th>ID</th><th>نیازمندی</th><th>شرح نیاز / رفتار مورد انتظار</th><th>سناریو یا معیار پذیرش</th><th>اولویت EX</th><th>وضعیت اعلامی MCINEXT</th><th>وضعیت تأییدشده با کد</th><th>شاهد در کد (file:line)</th><th>اطمینان</th><th>مالک وابستگی</th><th>ددلاین پیشنهادی</th><th>اقدام لازم / ریسک</th><th>توضیحات فنی توافق</th><th>ددلاین نهایی</th></tr></thead>
+<tbody>
+<tr data-st="plain"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-01</td><td>سرشماره / کانال صوتی Inbound</td><td>یک کانال صوتی مشخص برای EX ایجاد شود تا کارکنان Whitelist‌شده بتوانند مستقیماً با AI تماس بگیرند. کانال باید مستقل از محیط عمومی Contact Center قابل استفاده و قابل ردیابی باشد.</td><td>شماره پایلوت از یک شماره مجاز تماس می‌گیرد و بدون اپراتور انسانی وارد مکالمه AI می‌شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم / زیرساخت</td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_SIP_*, AGENT_ORIGINAL_CALL_ID_FALLBACK); src/entrypoint.py</td><td class="c-num">قطعی</td><td>MCINEXT + MCI-IT</td><td>T+5 روز کاری پس از تخصیص سرشماره و Virtual IP</td><td>مسیر SIP و هدرهای x-originalcallid/city_code پیاده‌سازی شده؛ فقط تخصیص سرشماره و اتصال Kamailio باقی است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-02</td><td>Whitelist کارکنان MCI</td><td>فقط شماره‌های متعلق به کارکنان با قرارداد MCI که در دیتاست تأییدشده قرار دارند اجازه ورود به سرویس پایلوت را داشته باشند.</td><td>تماس شماره داخل Whitelist وارد سرویس می‌شود؛ شماره خارج از Whitelist وارد Flow اصلی نمی‌شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">aiva/memory/config.py:20-21 (PHONE_WHITELIST=[], BYPASS_WHITELIST=True); aiva_consume_kafka.py:310</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+7 روز کاری پس از دریافت دیتاست شماره‌ها از EX</td><td class="c-warn">⚠️ Whitelist موجود فقط «جمع‌آوری memory» را گیت می‌کند، نه «ورود تماس». گیت پذیرش تماس باید در لایه SIP اضافه شود. ضمناً BYPASS_WHITELIST پیش‌فرض True است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-03</td><td>رفتار برای شماره خارج از Whitelist</td><td>برای شماره غیرمجاز رفتار شفاف و کنترل‌شده تعریف شود؛ مانند پیام کوتاه عدم دسترسی، بدون افشای اطلاعات داخلی یا ایجاد رکورد تحلیلی اشتباه.</td><td>یک شماره غیرمجاز تست شود و پیام صحیح دریافت کند؛ تماس به‌عنوان Voice کارکنان ثبت نشود.</td><td class="c-edit"></td><td>نیازمند بررسی فنی</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">جست‌وجو در ۸ سرویس: هیچ مسیر رد تماس غیرمجاز یافت نشد</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+5 روز کاری پس از تعریف پیام توسط EX</td><td class="c-gap">نیاز به پیام کوتاه و مسیر قطع در لایه SIP/Agent، بدون ایجاد رکورد تحلیلی</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-04</td><td>دریافت شماره تماس به‌عنوان کلید Mapping</td><td>شماره تماس صرفاً برای شناسایی رکورد کارمند و اتصال Context سازمانی دریافت شود؛ شماره نباید به‌صورت پیش‌فرض در Dashboard تحلیلی دیده شود.</td><td>شماره کارمند به رکورد صحیح Mapping می‌شود ولی در View تحلیلی نام/شماره نمایش داده نمی‌شود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (phone_number); coa/apps/main/models.py:381 (user_num)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری پس از تصمیم سیاست هویت</td><td class="c-warn">شماره هم در payload کافکا و هم در DB به‌صورت plaintext ذخیره می‌شود؛ پنهان‌سازی در Serializer/View نیازمند توسعه است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-05</td><td>Mapping شماره به اطلاعات سازمانی</td><td>سیستم بتواند از طریق دیتاست مورد تأیید، شماره را به اطلاعات لازم سازمانی مانند معاونت، اداره کل و اداره متصل کند.</td><td>یک تماس آزمایشی در تحلیل با Segment سازمانی صحیح نمایش داده شود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">هیچ جدول Mapping شماره→ساختار سازمانی یافت نشد</td><td class="c-num">قطعی</td><td>مشترک (دیتاست از EX)</td><td>T+10 روز کاری پس از دریافت دیتاست سازمانی</td><td class="c-gap">نیاز به مدل داده Mapping (معاونت/اداره کل/اداره) + سرویس Lookup</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-06</td><td>ثبت Metadata تماس</td><td>برای هر تماس شناسه یکتا، تاریخ و ساعت، مدت تماس و وضعیت تکمیل/قطع تماس ثبت شود تا تحلیل و Audit ممکن باشد.</td><td>هر تماس یک Conversation ID یکتا و Metadata کامل قابل مشاهده در Backend داشته باشد.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (session_id, call_id, original_call_id, session_duration, agent_prewarmed/started/ended_time); coa/apps/main/models.py:166</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+5 روز کاری (تگ تکمیل/قطع: پس از تعریف EX)</td><td class="c-warn">شناسه یکتا، زمان و مدت کامل موجود است؛ فقط تگ Incomplete/Complete باقی مانده — بخش عمده این ردیف «موجود» است</td><td class="c-note">برخی موارد مانند شناسه یکتا و تاریخ و ساعت از قبل در سامانه موجود است ولی وضعیت تکمیل یا قطع تماس نیازمند ارائه تعریف مشخص و واضح جهت ایجاد تگ می‌باشد که در فاز فعلی اولویت ندارد. همچنین جستجو روی Metadata نیازمند ارائه نمونه و توسعه از سمت تیم MCINEXT است.</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-07</td><td>مدیریت تماس قطع‌شده یا ناقص</td><td>اگر تماس قبل از پایان قطع شد، سیستم آن را Incomplete علامت بزند و فقط بخش واقعاً دریافت‌شده را ذخیره کند؛ AI نباید اطلاعات نگفته را تکمیل یا حدس بزند.</td><td>تماس عمداً قطع شود؛ رکورد Incomplete ایجاد شود و Summary ساختگی تولید نشود.</td><td class="c-edit"></td><td>نیازمند بررسی فنی</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">هیچ گارد min_duration/min_turns پیش از خلاصه‌سازی یافت نشد</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>گارد: T+3 روز کاری | تگ Incomplete: پس از تعریف EX</td><td class="c-gap">⚠️ Red Flag: احتمال تولید Summary از تماس قطع‌شده. گارد حداقل مدت/نوبت را همین فاز اضافه کنید حتی اگر تگ به تأخیر بیفتد</td><td class="c-note">وضعیت تکمیل یا قطع تماس نیازمند ارائه تعریف مشخص و واضح جهت ایجاد تگ می‌باشد که در فاز فعلی اولویت ندارد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-08</td><td>پایداری و کیفیت سرویس صوتی</td><td>کانال در محدوده ظرفیت Pilot باید کیفیت و پایداری کافی داشته باشد و خطاهای اتصال، قطع تماس یا Failure ثبت شوند.</td><td>چند تماس متوالی و هم‌زمان Pilot بدون از دست‌رفتن رکورد اجرا شوند و Error Log در دسترس تیم فنی باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_MAX_UNRECOVERABLE_ERRORS, STT/LLM/TTS retry+timeout); src/utils/prometheus_metrics.py; src/utils/apm.py</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>—</td><td class="c-ok">Retry، timeout، Prometheus و Elastic APM کامل است. ظرفیت هم‌زمانی پایلوت باید با Load Test تثبیت شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-01</td><td>معرفی کوتاه AI و هدف کانال</td><td>در ابتدای تماس AI به‌صورت کوتاه و شفاف خود را معرفی کند و بگوید کانال برای شنیدن تجربه، مسئله، پیشنهاد و سؤال کارکنان است.</td><td>Intro کوتاه، قابل فهم و بدون متن حقوقی طولانی اجرا شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_GREETING_MESSAGE, AGENT_GREETING_ALLOW_INTERRUPTION)</td><td class="c-num">قطعی</td><td>EX (متن)</td><td>T+1 روز کاری پس از تأیید متن</td><td class="c-ok">متن معرفی کاملاً قابل تنظیم است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>2. Conversation Experience</td><td class="c-num">CON-02</td><td>Privacy Notice کوتاه</td><td>در ابتدای تعامل، نحوه کلی استفاده از مکالمه و اینکه داده برای تحلیل تجربه کارکنان استفاده می‌شود به کارمند اعلام شود.</td><td>کاربر قبل از بیان محتوای اصلی، Notice تأییدشده EX را می‌شنود.</td><td class="c-edit"></td><td>موجود در محصول</td><td>تنظیم</td><td class="c-mono">همان AGENT_GREETING_MESSAGE</td><td class="c-num">قطعی</td><td>EX</td><td>T+1 روز کاری پس از تأیید متن Notice</td><td>فقط متن؛ هیچ کد جدیدی لازم نیست</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-03</td><td>شروع Open-ended</td><td>مکالمه با یک سؤال باز آغاز شود و کارمند مجبور به انتخاب منو یا طبقه‌بندی Voice خود نباشد.</td><td>کارمند بتواند هر موضوعی را با زبان طبیعی مطرح کند بدون اینکه ابتدا Category انتخاب کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/prompts/greeting.py; aiva/prompts/react.py</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">شروع آزاد و بدون منو</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-04</td><td>Follow-up هوشمند در صورت ابهام</td><td>AI فقط زمانی سؤال تکمیلی بپرسد که برای فهم موضوع Gap واقعی وجود دارد؛ سؤال باید Neutral، مرتبط و مبتنی بر صحبت قبلی فرد باشد.</td><td>برای جمله مبهم «فرایند ارزیابی خوب نیست» AI سؤال روشن‌کننده مرتبط بپرسد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/chat/handlers/clarifying.py; aiva/chat/handlers/classification.py; aiva/prompts/clarifying_chitchat.py</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">شاخه clarifying با classifier مستقل؛ معماری در docs/RequestFlow.md</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-05</td><td>عدم تکرار سؤال</td><td>AI اطلاعاتی را که کارمند قبلاً در همان Conversation گفته دوباره سؤال نکند و Context مکالمه را حفظ کند.</td><td>در سناریوی UAT، اطلاعات گفته‌شده مجدداً درخواست نشود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/chat/config.py (CHAT_HISTORY_LIMIT=50); docs/RequestFlow.md (ChatContext مشترک)</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">حفظ Context در طول Conversation ⚠️ AIVA علاوه بر Context تماس، Long-term Memory بین تماس‌ها برای هر شماره می‌سازد (aiva/memory، ChatbotUser.memory) — باید در Notice اعلام یا برای EX خاموش شود.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>2. Conversation Experience</td><td class="c-num">CON-06</td><td>محدودیت Follow-up</td><td>مکالمه نباید به مصاحبه طولانی یا بازجویی تبدیل شود. تعداد/منطق Follow-up قابل کنترل باشد و پس از فهم کافی مکالمه جمع‌بندی شود.</td><td>برای Conversation عادی، تعداد Follow-up از سقف توافق‌شده در UAT عبور نکند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">aiva/chat/config.py (REACT_MAX_ITERS=10, AGENT_MAX_HISTORY_TURNS=6)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+3 روز کاری</td><td class="c-warn">سقف حلقه ابزار و تاریخچه موجود است اما «سقف تعداد Follow-up» به‌عنوان پارامتر مستقل وجود ندارد</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-07</td><td>تشخیص Voice کامل و عدم سؤال اضافه</td><td>اگر کارمند از ابتدا موضوع، زمان/زمینه و اثر مسئله را روشن توضیح داده، AI فقط به‌دلیل قابلیت مکالمه سؤال اضافه نپرسد.</td><td>سناریوی کامل تست شود و Unnecessary Follow-up رخ ندهد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/prompts/classification.py:88; aiva/prompts/clarifying_chitchat.py:48</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">تشخیص Voice کامل در Prompt طبقه‌بندی لحاظ شده</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>2. Conversation Experience</td><td class="c-num">CON-08</td><td>Summary Confirmation در صورت امکان</td><td>در صورت پشتیبانی محصول، AI بتواند قبل از پایان برداشت کوتاه خود را بازگو کند تا فرد آن را تأیید یا اصلاح کند.</td><td>کاربر بتواند Summary را تأیید یا یک نکته مهم را اصلاح کند.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX (بازتعریف)</td><td>معلق تا بازتعریف EX</td><td class="c-gap">خود توافق این ردیف را «نیازمند بازبینی» دانسته؛ تعهد ندهید</td><td class="c-note">این مورد به دلیل عدم خوش تعریفی و عدم امکان تعریف روش صحیح سوال پرسیدن در حین تماس، احتیاج به بازبینی دارد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-09</td><td>پایان شفاف بدون وعده پیگیری فردی</td><td>Closing Message دریافت Voice را تأیید کند، اما چون MVP برای رسیدگی فردی طراحی نشده، SLA یا وعده پاسخ شخصی ایجاد نکند.</td><td>هیچ عبارت «ظرف X ساعت پیگیری می‌شود» یا وعده خارج از Scope شنیده نشود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/chat/config.py (TOOL_CALLING_EXIT_ANSWER, exit_tool); INTENT_AGENT_ENABLED_TOOLS</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">پایان شفاف بدون وعده SLA</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-01</td><td>Speech-to-Text فارسی</td><td>مکالمه فارسی با کیفیت قابل قبول به متن تبدیل شود و کیفیت آن روی نوع بیان واقعی کارکنان، نه فقط نمونه‌های استودیویی، سنجیده شود.</td><td>مجموعه سناریوهای UAT با لهجه/سرعت طبیعی اجرا و خطاهای STT ثبت شوند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">chatbot-iva-agent/src/utils/stt.py + AGENT_STT_MODEL/BASE_URL; adcs POST /api/v1/chat/asr</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>—</td><td class="c-ok">⚠️ پیاده‌سازی شده اما WER هرگز اندازه‌گیری نشده. «موجود» یعنی implemented نه measured</td><td class="c-note">این بخش جزئی از کل یک سرویس می‌باشد و بهبود کیفیت بر عهده تیم MCINEXT است و نیازی به بررسی تک تک مکالمات از سوی EX نمی‌باشد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>3. AI Analysis</td><td class="c-num">AI-02</td><td>Transcript کامل مکالمه</td><td>متن Conversation به شکلی قابل بازیابی برای کاربران مجاز ذخیره شود و ارتباط آن با Conversation ID حفظ شود.</td><td>Transcript هر تماس تکمیل‌شده در Backend موجود و به تماس صحیح متصل باشد.</td><td class="c-edit"></td><td>فعلاً خارج از Scope</td><td><span class="tag t-bad">رد شد (ادعا نادرست)</span></td><td class="c-mono">coa/apps/main/models.py:397 (raw_input); services/call.py:771 (&quot;asr_data&quot;: raw_input if debug); models.py:395 (conversation_reform); chatbot-iva-agent/src/schema.py (messages[].text)</td><td class="c-num">قطعی</td><td>مشترک (تصمیم سیاست)</td><td>T+2 روز کاری برای تصمیم سیاست</td><td class="c-bad">⚠️⚠️ Transcript ذخیره می‌شود و روی Kafka منتشر می‌شود. «خارج از Scope» نادرست است. یا نگهداری را اعلام کنید یا ذخیره را متوقف کنید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-03</td><td>Summary Fact-based</td><td>AI برای هر مکالمه یا Voice Item خلاصه کوتاهی تولید کند که فقط آنچه فرد گفته بازتاب دهد و علت/قضاوت جدید اختراع نکند.</td><td>Human Reviewer بتواند Summary را با Transcript مقایسه و Faithfulness آن را تأیید کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/main/models.py:372 (call_summary); chatbot-iva-agent AGENT_LLM_SESSION_SUMMARY_URL</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>—</td><td class="c-ok">⚠️ معیار پذیرش این ردیف مقایسه با Transcript است — به AI-02 گره خورده. Faithfulness سنجیده نشده</td><td class="c-note">معیار پذیرش از طریق شنیدن مکالمه و بررسی خلاصه تماس امکان پذیر است.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-04</td><td>تفکیک چند موضوع در یک مکالمه</td><td>اگر کارمند در یک تماس چند مسئله مستقل مطرح کرد، سیستم آن‌ها را به Voice Itemهای جداگانه تفکیک کند تا هر موضوع Coding مستقل داشته باشد.</td><td>سناریوی غذا + ارتقا + پرتال حداقل به سه Voice Item مجزا شکسته شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">نامشخص (coa-ai فریز)</span></td><td class="c-mono">coa/apps/main/models.py:396 (topics JSON), 370 (category_subcategory_dict) — فقط خواندن نتیجه</td><td class="c-num">محتمل</td><td>MCINEXT</td><td>T+15 روز کاری پس از بازفعال‌سازی coa-ai</td><td class="c-warn">منطق تفکیک چندموضوعی در python/coa-ai است که آخرین کامیتش 2025-07-13 است</td><td class="c-note">در سامانه تحلیل هوشمند به صورت خودکار به صورت جداگانه تشخیص داده می‌شوند.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-05</td><td>تشخیص نوع Voice</td><td>نوع پیام مانند پیشنهاد، Pain Point، شکایت، نگرانی، سؤال/ابهام یا تجربه مثبت تشخیص داده شود؛ در صورت نیاز Multi-label باشد.</td><td>پیامی که هم Pain Point و هم Suggestion دارد، هر دو جنبه را از دست ندهد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-warn">نامشخص (coa-ai فریز)</span></td><td class="c-mono">coa/config.py (schema تگ‌ها)</td><td class="c-num">محتمل</td><td>مشترک</td><td>T+15 روز کاری پس از تعریف دقیق EX</td><td class="c-warn">Multi-label بودن قابل تأیید نشد</td><td class="c-note">نیازمند تعریف دقیق‌تر</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-06</td><td>Theme Detection</td><td>موضوع اصلی هر Voice Item بر اساس Taxonomy مورد توافق EX شناسایی شود.</td><td>Coding AI روی نمونه‌های Human-coded با تیم EX مقایسه شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">نامشخص (coa-ai فریز)</span></td><td class="c-mono">category_subcategory_dict; GET /api/v1/analyse/calls/Thematic-analysis/category</td><td class="c-num">محتمل</td><td>مشترک (Taxonomy از EX)</td><td>T+10 روز کاری پس از دریافت Taxonomy</td><td class="c-warn">لایه سرویس‌دهی و گزارش کامل است؛ کیفیت Coding سنجیده نشده</td><td class="c-note">امکان ارائه لیست ابتدایی بابت موضوعات مختلف از تیم EX به تیم MCINEXT وجود دارد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-07</td><td>Sub-theme Detection</td><td>در صورت وجود ساختار زیرموضوع، AI Voice را در Sub-theme مناسب قرار دهد تا گزارش بیش از حد کلی نشود.</td><td>برای Voice رستوران، زیرموضوعی مانند کیفیت/تنوع در صورت تعریف Taxonomy تشخیص داده شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">نامشخص (coa-ai فریز)</span></td><td class="c-mono">GET /api/v1/analyse/calls/Thematic-analysis/subcategory</td><td class="c-num">محتمل</td><td>مشترک</td><td>همان AI-06</td><td class="c-warn">زیرموضوع در API و مدل داده پشتیبانی می‌شود</td><td class="c-note">موجود در سامانه که به صورت خودکار ایجاد می‌کند.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-08</td><td>Sentiment / Direction</td><td>جهت کلی محتوای Voice در سطح Positive / Neutral-Mixed / Negative تحلیل شود؛ مبنا محتوای بیان‌شده باشد نه ادعای قطعی درباره حالت روانی فرد.</td><td>جهت کلی محتوای Voice در سطح Positive / Neutral-Mixed / Negative تحلیل شود؛ مبنا محتوای بیان‌شده باشد نه ادعای قطعی درباره حالت روانی فرد.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی → «تنظیم» نه «توسعه»</span></td><td class="c-mono">coa/apps/main/models.py:340-345 (user_sentiment, agent_sentiment, *_meta, index دار)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+5 روز کاری</td><td class="c-warn">Sentiment از قبل ذخیره می‌شود؛ فقط مقیاس سه‌سطحی و عبارت‌بندی «مبتنی بر محتوا» نیاز به تنظیم دارد. ⚠️ سلول معیار پذیرش این ردیف کپی شرح نیاز است — از EX معیار واقعی بخواهید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-09</td><td>Positive Signal Detection</td><td>سیستم علاوه بر مشکلات و نارضایتی‌ها، تجربه‌های مثبت و بهبودهای دیده‌شده توسط کارکنان را نیز استخراج کند.</td><td>بازخورد مثبت درباره یک خدمت در Dashboard/Report قابل مشاهده باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">user_sentiment (مقادیر مثبت) + models.py:373 (suggestions)</td><td class="c-num">محتمل</td><td>MCINEXT</td><td>T+5 روز کاری</td><td class="c-warn">داده هست؛ View/فیلتر اختصاصی Positive لازم است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-10</td><td>Frequency Analysis</td><td>تعداد و سهم Voiceهای مرتبط با Theme/Sub-theme در بازه زمانی محاسبه شود تا موضوعات پرتکرار مشخص شوند.</td><td>Top Themeها براساس واحد تحلیل مشخص و Denominator شفاف گزارش شوند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/main/services/thematic_analysis.py; /analyse/calls/Thematic-analysis/*</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">Frequency و سهم موضوعات کامل</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-11</td><td>Trend Detection</td><td>سیستم تغییر موضوعات در زمان را تشخیص دهد و Rising/Stable/Falling یا روند مشابه ارائه کند؛ صرف Volume بالا به معنی Alert نباشد.</td><td>موضوعی با رشد محسوس نسبت به Baseline به‌عنوان Rising شناسایی شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/trends/services/sync.py; coa/apps/trends/models.py:81 (trend_score, baseline, trend_signal, is_trend, time_series)</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">Baseline و signal واقعی دارد — نه فقط شمارش حجم</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-12</td><td>Similarity &amp; Clustering</td><td>Voiceهای مشابه بدون حذف رکورد اصلی در Clusterهای مشترک قرار گیرند تا Patternهای تکرارشونده قابل مشاهده شوند.</td><td>چند بازخورد مشابه درباره دسترسی روز اول در یک Cluster مشترک دیده شوند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-gap">غایب (در ریپوهای فعال)</span></td><td class="c-mono">هیچ کد clustering/similarity یافت نشد</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+20 روز کاری</td><td class="c-gap">یا در coa-ai فریزشده است یا وجود ندارد؛ پیش از تعهد بررسی شود</td><td class="c-note">نیازمند تعریف دقیق‌تر از سوی تیم EX</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-13</td><td>Emerging Theme Detection</td><td>سیستم بتواند موضوع جدیدی را که در Taxonomy موجود نیست ولی چند Voice مشابه درباره آن شکل گرفته شناسایی و به‌عنوان Candidate نمایش دهد.</td><td>موضوع جدید به‌زور به نزدیک‌ترین Theme موجود Map نشود و Candidate قابل Review ایجاد شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-gap">غایب (در ریپوهای فعال)</span></td><td class="c-mono">هیچ کد emerging/candidate topic یافت نشد</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+20 روز کاری</td><td class="c-gap">همین وضعیت AI-12</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-14</td><td>Confidence / عدم اطمینان مدل</td><td>در صورت امکان Confidence خروجی‌های اصلی ثبت شود و AI در موارد مبهم بتواند Unclear / Needs Review بدهد، نه اینکه Classification قطعی بسازد.</td><td>نمونه صوت یا متن مبهم به‌عنوان Low Confidence/Needs Review قابل تشخیص باشد.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (transcript_confidence per utterance)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-warn">Confidence در سطح ASR از قبل روی Kafka جریان دارد؛ Confidence خروجی LLM و برچسب Needs Review غایب است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-15</td><td>Severity / اهمیت بالقوه</td><td>در صورت امکان، شدت موضوع از Sentiment جداگانه تشخیص داده شود تا یک محتوای آرام ولی مهم از یک شکایت کم‌اهمیت متمایز شود.</td><td>یک موضوع دارای پیامد جدی بتواند Severity بالاتر از Sentiment آن دریافت کند.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">هیچ فیلد severity مستقل از sentiment یافت نشد</td><td class="c-num">قطعی</td><td>مشترک</td><td>T+15 روز کاری</td><td class="c-gap">trends/services/webhook.py:93 فقط severity ثابت &quot;high&quot; دارد</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-01</td><td>دریافت دیتاست معتبر کارکنان MCI</td><td>برای Pilot یک دیتاست کنترل‌شده شامل شماره تماس و Attributeهای موردنیاز کارکنان MCI در اختیار سیستم قرار گیرد.</td><td>نسخه اولیه دیتاست بدون فیلدهای غیرضروری بارگذاری و قابل Mapping باشد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>T+3 روز کاری پس از تحویل دیتاست</td><td>وابستگی کامل به EX</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-02</td><td>ساختار سازمانی موردنیاز</td><td>حداقل فیلدهای معاونت، اداره کل و اداره برای تحلیل Segmentها قابل استفاده باشند؛ Attribute اضافه فقط در صورت نیاز واقعی وارد شود.</td><td>Voice هر تماس در Segment سازمانی صحیح Aggregate شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>همان SEG-01</td><td>حداقل سه فیلد سازمانی</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-03</td><td>جداسازی Context از هویت نمایشی</td><td>سیستم بتواند از Context سازمانی برای تحلیل استفاده کند بدون اینکه نام یا شماره فرد را در Dashboard عادی نمایش دهد.</td><td>فیلتر سازمانی کار کند ولی جدول/نمودار نام یا شماره افراد را نشان ندهد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">coa/apps/users/permissions.py; coa/apps/main/services/call.py:849 (view_all_calls → agent_id scoping)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-warn">RBAC و Row-level scoping واقعی موجود است؛ پنهان‌سازی هویت در لایه Serializer لازم است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-04</td><td>Refresh / به‌روزرسانی دیتاست</td><td>فرایند به‌روزرسانی Whitelist و Mapping کارکنان مشخص باشد تا جابه‌جایی سازمانی یا تغییر شماره باعث استفاده از داده قدیمی نشود.</td><td>روش Refresh، تناوب و مسئول به‌روزرسانی مستند شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-gap">غایب (فرایند)</span></td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>مشترک</td><td>T+5 روز کاری پس از توافق تناوب</td><td class="c-gap">فرایند و مسئول، نه کد</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-05</td><td>مدیریت Mapping ناموفق</td><td>اگر شماره داخل Whitelist باشد ولی Context سازمانی آن قابل بازیابی نباشد، سیستم رکورد را Unmapped علامت بزند و از نسبت‌دادن حدسی جلوگیری کند.</td><td>نمونه Unmapped در گزارش خطا/داده دیده شود و به واحد اشتباه نسبت داده نشود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">هیچ برچسب Unmapped در مدل داده یافت نشد</td><td class="c-num">محتمل</td><td>MCINEXT</td><td>T+7 روز کاری</td><td class="c-warn">در توافق «موجود» علامت خورده اما شاهد کدی پیدا نشد — پیش از UAT تأیید کنید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-06</td><td>محدودیت جامعه Pilot به قرارداد MCI</td><td>در نسخه اول Segmentها فقط برای جامعه MCI تحلیل شوند؛ گروه‌های قراردادی دیگر تا تعیین Source و Mapping معتبر خارج از Pilot بمانند.</td><td>هیچ رکورد غیر-MCI بدون تصمیم جدید وارد جامعه Pilot نشود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>T+3 روز کاری</td><td>محدودسازی جامعه پایلوت</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-07</td><td>اتصال مستقیم به SAP و همگام‌سازی خودکار اطلاعات کارکنان</td><td>سامانه به‌جای دریافت و به‌روزرسانی دستی فایل Excel کارکنان، به SAP یا سرویس واسط مورد تأیید متصل شود و اطلاعات موردنیاز کارکنان را به‌صورت خودکار دریافت و به‌روزرسانی کند. با ایجاد، جابه‌جایی یا خروج همکار در SAP، اطلاعات سامانه نیز براساس زمان‌بندی یا مکانیزم Sync مورد توافق به‌روزرسانی شود.</td><td>پس از تغییر اطلاعات یک کارمند در SAP، مانند جابه‌جایی از یک اداره به اداره دیگر، اطلاعات او بدون بارگذاری Excel و در بازه زمانی توافق‌شده در سامانه EX به‌روزرسانی شود. خطاهای Sync نیز قابل مشاهده و پیگیری باشند.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">هیچ کد SAP/middleware یافت نشد</td><td class="c-num">قطعی</td><td>MCI-IT (اعطای دسترسی)</td><td>Phase 2 — T+30 روز کاری پس از اعطای دسترسی SAP</td><td class="c-gap">⚠️ بزرگ‌ترین آیتم توسعه کل توافق و خارج از کنترل تیم شما. جایگزین MVP: SEG-01 + SEG-04 (اکسل + تناوب مستند)</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-01</td><td>هویت Hidden by Default</td><td>نام و شماره کارمند در View عادی سامانه نمایش داده نشود، حتی برای مدیر سامانه؛ مشاهده هویت نیازمند اقدام مشخص و سطح دسترسی ویژه باشد.</td><td>بازکردن Dashboard/لیست تماس‌ها هویت را به‌صورت Default نشان ندهد.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">grep redact|mask|anonymi|deidentif در ۸ سرویس → صفر نتیجه</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری پس از تصمیم سیاست هویت</td><td class="c-gap">هیچ لایه پنهان‌سازی هویت وجود ندارد</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-02</td><td>دسترسی هویت فقط برای مدیر سامانه</td><td>در Pilot تنها Role مدیر سامانه امکان Resolve کردن هویت را در صورت ضرورت داشته باشد؛ سایر کاربران EX چنین دسترسی نداشته باشند.</td><td>کاربر غیرمدیر نتواند از UI، Export یا مسیر دیگر هویت را بازیابی کند.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">coa/apps/users/permissions.py (AnyOfPermission, HasPermission, PermissionGroup)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-warn">زیرساخت RBAC آماده است؛ Role «مدیر سامانه» و مسیر Resolve هویت ساخته نشده ⚠️ مسیر دوم: AQA روی ClickHouse Query آزاد می‌زند و ممکن است user_num برگرداند؛ کاربر DB مخصوص AQA باید فقط به View بدون ستون هویتی دسترسی داشته باشد.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-03</td><td>Raw Call فقط برای مدیر سامانه</td><td>فایل صوتی خام تماس فقط برای مدیر سامانه و در صورت نیاز عملیاتی/بازبینی قابل دسترسی باشد.</td><td>هیچ View مدیریتی یا کاربر عادی امکان Play/Download صوت خام نداشته باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-bad">رد شد (نقص امنیتی بحرانی)</span></td><td class="c-mono">coa/apps/files/views.py:19 → @with_permissions({view_calls}) سپس minio.download(name) بدون بررسی مالکیت</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>⛔ پیش از UAT — T+3 روز کاری</td><td class="c-bad">⚠️⚠️ IDOR: هر کاربر دارای view_calls می‌تواند با دادن نام فایل، صوت هر تماسی را دانلود کند. نام فایل از call_id مشتق می‌شود (services/call.py). این ردیف «موجود» علامت خورده و نیست</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-04</td><td>خروجی مدیران به‌صورت Aggregate</td><td>اگر خروجی به مدیران ارائه می‌شود، صرفاً تحلیل تجمیعی، Trend، Theme و Summary غیرهویتی نمایش داده شود؛ نه هویت فردی یا Raw Call.</td><td>نمونه گزارش ارائه‌شده به مدیر فاقد نام، شماره و صوت فردی باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">dashboard endpoints تجمیعی (coa/apps/iva, coa/apps/main/views)</td><td class="c-num">محتمل</td><td>MCINEXT</td><td>T+3 روز کاری برای بازبینی Export</td><td class="c-ok">گزارش‌های تجمیعی درست است، اما Export و Drill-down باید از نظر فیلد هویتی بازبینی شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-05</td><td>Minimum Group Size / Privacy Suppression</td><td>برای جلوگیری از شناسایی افراد در Segmentهای کوچک، حداقل تعداد لازم برای نمایش Drill-down یا Breakdown قابل تنظیم باشد.</td><td>فیلترهایی که گروه بسیار کوچک می‌سازند داده جزئی نمایش ندهند.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">grep min_count|k_anon|suppress → فقط contextlib.suppress بی‌ربط</td><td class="c-num">قطعی</td><td>مشترک</td><td>T+7 روز کاری پس از تعیین حد k توسط EX</td><td class="c-gap">هیچ Suppression گروه کوچک وجود ندارد</td><td class="c-note">نیازمند تعریف دقیق تر</td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-06</td><td>ثبت Audit دسترسی به هویت/صوت</td><td>هر بار که مدیر سامانه هویت یا Raw Call را مشاهده می‌کند، کاربر، زمان و رکورد موردنظر Log شود.</td><td>یک دسترسی آزمایشی انجام و Audit Event قابل بازیابی باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-bad">رد شد</span></td><td class="c-mono">grep audit|LogEntry|access_log|viewed_by|actor_id در coa-api, adcs, aiva, adcs-auth, aqa, agentlib و هر دو KB → صفر نتیجه</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-bad">⚠️ Audit Log وجود ندارد. آنچه هست coa/middlewares.py:26 (لاگ method/path/headers) است که Audit Trail قابل کوئری نیست</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-07</td><td>Retention Policy صوت</td><td>مدت نگهداری فایل صوتی خام مشخص و قابل اعمال باشد؛ نگهداری نامحدود صرفاً به دلیل امکان فنی انجام نشود.</td><td>Policy توافق‌شده بتواند روی رکوردهای Pilot اعمال و حذف/آرشیو آن قابل اثبات باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/main/management/commands/archive_old_calls.py (ARCHIVE_CALLS_MONTHS, pg_dump → MinIO → delete → VACUUM، با abort-on-failure و --dry-run)</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">✅ طراحی Retention درست و قابل اثبات است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-08</td><td>Retention Policy Transcript و داده تحلیلی</td><td>مدت نگهداری Transcript و داده ساختاریافته مستقل از Audio قابل تعریف باشد تا نیاز تحلیلی و محرمانگی متوازن شود.</td><td>Retention هر نوع داده در مستند فنی مشخص شود.</td><td class="c-edit"></td><td>فعلاً خارج از Scope</td><td><span class="tag t-warn">رد شد (واقعیت بهتر از ادعا)</span></td><td class="c-mono">همان archive_old_calls: جدول call_ai_tags (شامل raw_input و call_summary) هم آرشیو و حذف می‌شود</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+2 روز کاری برای مستندسازی</td><td class="c-warn">⚠️ دلیل ذکرشده («عدم ارائه transcribe») نادرست است. Retention داده ساختاریافته عملاً پیاده شده — این را مطالبه کنید</td><td class="c-note">به دلیل عدم ارائه transcribe، موضوعیت ندارد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-09</td><td>PII Detection / Redaction در خروجی‌ها</td><td>اگر کارمند در متن نام فرد دیگری یا جزئیات قابل‌شناسایی را بیان کرد، Output مدیریتی بتواند نسخه De-identified/Redacted ارائه دهد.</td><td>سناریوی دارای نام شخص در Manager-facing Summary بدون PII نمایش داده شود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">صفر کد redaction/PII</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+15 روز کاری</td><td class="c-gap">کاملاً Greenfield</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-10</td><td>Sensitive Voice Detection و جداسازی</td><td>محتوای بالقوه حساس مانند آزار، تبعیض، تهدید یا تخلف از جریان عادی Dashboard/Alert جدا شود و دسترسی آن محدود باشد.</td><td>سناریوی حساس در Dashboard عمومی با Transcript خام ظاهر نشود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">coa/apps/main/models.py:346-348 (user_bad_words, agent_bad_words, *_meta)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+20 روز کاری</td><td class="c-warn">فقط «الفاظ نامناسب» تشخیص داده می‌شود. آزار، تبعیض و تهدید تشخیص داده نمی‌شود. هرگز عدد Recall نسنجیده اعلام نکنید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-11</td><td>تفکیک دسترسی فنی از دسترسی محتوایی</td><td>داشتن دسترسی Technical Admin به زیرساخت نباید به‌صورت پیش‌فرض معادل دسترسی آزاد به محتوای کارکنان باشد.</td><td>Roleهای فنی و محتوایی در معماری دسترسی قابل تفکیک باشند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">python/adcs-auth (صدور توکن) + permission-based RBAC در همه سرویس‌ها</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">⚠️ adcs-auth صفر فایل تست دارد در حالی که مرجع احراز هویت همه سرویس‌هاست ⚠️ Chat APIهای aiva و adcs همه permission_classes=() هستند؛ امنیت به Gateway سپرده شده.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-01</td><td>Scope Knowledge فقط اداره خودمان</td><td>در MVP فقط Knowledge مربوط به اداره ارتباطات و تجربه کارکنان وارد شود تا نیاز به Multi-owner Access و Governance پیچیده ایجاد نشود.</td><td>AI فقط در Domainهای تأییدشده اداره پاسخ محتوایی بدهد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">adcs_kb/knowledgebase/api.py (/qa, /list_qa, /question, /answer)</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">ورود سؤال/پاسخ از پنل</td><td class="c-note">ورود اطلاعات از طریق پنل به صورت سوال و پاسخ ممکن است.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-02</td><td>Seed Content تأییدشده</td><td>تیم EX مجموعه اولیه سؤال/جواب، فرایند، لینک و اطلاعات خدمت را به‌عنوان Source of Truth آماده و تحویل دهد.</td><td>محتوای بارگذاری‌شده دارای Owner و نسخه تأییدشده باشد.</td><td class="c-edit"></td><td></td><td>خارج از کد</td><td class="c-mono">adcs_kb /import موجود است</td><td class="c-num">قطعی</td><td>EX</td><td>T+0 (تحویل EX)</td><td>ستون وضعیت در توافق خالی است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-03</td><td>پاسخ مبتنی بر Source معتبر</td><td>AI پاسخ را از Knowledge بارگذاری‌شده تولید کند و از ساختن سیاست، شماره یا فرایند خارج از منابع جلوگیری شود.</td><td>سؤال دارای پاسخ در Knowledge پاسخ صحیح و هم‌راستا با Source دریافت کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/retrieve/qdrant.py; aiva/chat/config.py (CONTEXTS_COLLECTION_NAME, CONTEXT_RETRIEVE_THRESHOLD=0.5)</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">RAG با آستانه شباهت قابل تنظیم</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-04</td><td>Guardrail محدوده پاسخ</td><td>Agent بداند چه موضوعاتی داخل Domain پایلوت است و در خارج از آن پاسخ قطعی سازمانی تولید نکند.</td><td>سؤال خارج از Scope با پاسخ کنترل‌شده مواجه شود، نه پاسخ ساختگی.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">aiva/prompts/guardrail.py; GUARDRAIL_COLLECTION_NAME + GUARDRAIL_RETRIEVE_COUNT; adcs_kb /guardrail</td><td class="c-num">قطعی</td><td>EX (مستند)</td><td>T+5 روز کاری پس از دریافت مستند EX</td><td>Guardrail مبتنی بر مثال در Qdrant — با داده تنظیم می‌شود نه کد</td><td class="c-note">بر اساس مستند ارائه شده توسط EX تعریف می‌گردد.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-05</td><td>I Don't Know / پاسخ ناموجود</td><td>وقتی Knowledge پاسخ معتبر ندارد، AI صریحاً اعلام کند اطلاعات کافی ندارد و در صورت تعریف، مرجع جایگزین معرفی کند.</td><td>سناریوی سؤال بدون پاسخ در Knowledge بدون Hallucination مدیریت شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">aiva/prompts/guardrail.py + شاخه clarifying در orchestrator</td><td class="c-num">محتمل</td><td>—</td><td>—</td><td class="c-ok">رفتار «نمی‌دانم» در Prompt هست؛ با Golden Set تأیید شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-06</td><td>ارسال لینک/اطلاعات با پیامک</td><td>در موارد مناسب AI بتواند لینک، اطلاعات تماس یا خلاصه موردنیاز را از طریق پیامک برای تماس‌گیرنده ارسال کند.</td><td>در یک سناریوی تست، لینک تأییدشده به شماره تماس‌گیرنده ارسال شود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-ok">تأییدشده (ارتقا از Customization)</span></td><td class="c-mono">aiva/tools/sms.py (POST resan.mci.dev/api/messages/send/to/); در AGENT_ENABLED_TOOLS پیش‌فرض فعال؛ chatbot-iva-agent/src/utils/sms.py</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+5 روز کاری برای Guardrail و Rate limit</td><td class="c-ok">✅ ساخته شده. ⚠️ اما LLM خودش تصمیم ارسال می‌گیرد → پیش از پایلوت Rate limit و محدودسازی لازم است</td><td class="c-note">مشخص شدن سناریو‌های ارسال پیامک از طرف تیم EX و معرفی تیم فنی پیامکی به MCINEXT</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-07</td><td>ثبت سؤالات بدون پاسخ</td><td>سؤال‌هایی که AI نتوانسته از Knowledge پاسخ دهد ثبت شوند تا تیم EX Gapهای دانشی را ببیند.</td><td>لیست Unanswered Questions قابل استخراج باشد.</td><td class="c-edit"></td><td>نیازمند بررسی فنی</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">grep unanswered|no_answer|dont_know → صفر نتیجه</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+7 روز کاری</td><td class="c-gap">«نیازمند بررسی فنی» را به آیتم توسعه برآوردشده ارتقا دهید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-08</td><td>FAQ / سؤال پرتکرار</td><td>سیستم از روی مکالمات نشان دهد چه سؤال‌هایی پرتکرارند تا محتوای Knowledge و ارتباطات داخلی براساس نیاز واقعی بهبود یابد.</td><td>Top Questions در یک بازه زمانی قابل مشاهده باشند.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-gap">قابل واگذاری به AQA با یک Query آماده</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-09</td><td>مدیریت Knowledge توسط یک Scope محدود در Pilot</td><td>در MVP نیاز به دسترسی چند Owner برای حوزه‌های مختلف نداریم؛ مدیریت Knowledge فقط توسط تیم/کاربر تعیین‌شده اداره تجربه انجام شود.</td><td>هیچ Requirement توسعه Multi-owner مانع Launch Pilot نشود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-ok">تأییدشده (ارتقا)</span></td><td class="c-mono">نوشتن در KB فقط از طریق API با اقدام انسانی</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">این یک «محدودیت» است نه توسعه — برای نساختن چیزی هزینه نگیرید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-10</td><td>عدم Auto-update Knowledge در MVP</td><td>AI می‌تواند Gapها را نشان دهد اما در نسخه اول حق تغییر خودکار Knowledge Base را نداشته باشد.</td><td>هیچ تغییر Knowledge بدون اقدام/تأیید انسانی اعمال نشود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-ok">تأییدشده (ارتقا)</span></td><td class="c-mono">هیچ مسیر auto-ingest/self-update در KB یافت نشد</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">به‌صورت ساختاری برقرار است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-01</td><td>Full View برای EX / مدیر سامانه</td><td>یک View کامل تحلیلی برای تعداد محدودی از کاربران EX یا مدیر سامانه ایجاد شود؛ در MVP نیاز به چند Dashboard تفکیک‌شده برای مدیران نداریم.</td><td>کاربر مجاز EX بتواند کل داده Pilot را طبق قواعد Privacy تحلیل کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/main/views/*; coa/apps/iva/views.py; adcs/dashboard/api.py</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">View کامل تحلیلی موجود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-02</td><td>حجم تماس و Voice Item</td><td>Dashboard تعداد Conversationها و در صورت Segmentation، تعداد Voice Itemها را با بازه زمانی شفاف نمایش دهد.</td><td>Count تماس و Voice Item با داده خام Pilot قابل تطبیق باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">/analyse/dashboard/calls/report; /iva/dashboard/metrics; /iva/dashboard/time-buckets</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-03</td><td>Top Themes و Sub-themes</td><td>موضوعات و زیرموضوعات پرتکرار با تعداد/سهم مشخص نمایش داده شوند.</td><td>کاربر بتواند Top Themeها را برای بازه زمانی انتخاب‌شده ببیند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">/analyse/calls/Thematic-analysis/{category,subcategory} + /enums</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-04</td><td>Trend و تغییر موضوعات</td><td>Dashboard تغییر Themeها در طول زمان و موضوعات Rising/Stable/Falling را نشان دهد.</td><td>یک Topic با افزایش واقعی نسبت به دوره پایه در Trend قابل تشخیص باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">/trends/, /trends/categories/, /trends/subjects/&lt;id&gt;/</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-05</td><td>Positive / Negative Signals</td><td>خروجی فقط شکایت‌محور نباشد و تجربه‌های مثبت نیز در کنار Signalهای منفی قابل مشاهده باشند.</td><td>حداقل یک View/فیلتر برای Positive Signals وجود داشته باشد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td><span class="tag t-warn">جزئی</span></td><td class="c-mono">sentiment در call_ai_tags</td><td class="c-num">محتمل</td><td>MCINEXT</td><td>T+5 روز کاری</td><td class="c-warn">فقط View/فیلتر اختصاصی Positive لازم است</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-06</td><td>Segment Analysis</td><td>تحلیل بر اساس معاونت، اداره کل و اداره در صورت کفایت داده و رعایت Privacy ممکن باشد.</td><td>فیلتر Segment روی داده Mapping‌شده کار کند و گروه کوچک Suppress شود.</td><td class="c-edit"></td><td>نیازمند توسعه / Customization</td><td><span class="tag t-gap">غایب</span></td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>مشترک</td><td>T+12 روز کاری پس از تکمیل Mapping سازمانی</td><td class="c-gap">وابسته به VIA-05 و PRV-05 — نمی‌تواند زودتر از آن‌ها تحویل شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-07</td><td>فیلتر زمانی</td><td>امکان مشاهده بازه‌های زمانی مختلف مانند روز/هفته/ماه یا Custom Range وجود داشته باشد.</td><td>انتخاب بازه زمانی تمام KPIها و Trendهای مرتبط را به‌روزرسانی کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">timeseries endpoints + پارامترهای date_from/date_to</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-08</td><td>Drill-down تا Summary مکالمه</td><td>EX بتواند از Theme یا Cluster به Voice Item/Conversation Summary برسد؛ دسترسی به Transcript یا Audio تابع Permission باشد.</td><td>از یک Theme نمونه به Summaryهای پشتیبان Drill-down انجام شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">GET /api/v1/analyse/voice/call/&lt;call_id&gt; (CallDetailAPIView)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>وابسته به اصلاح PRV-03</td><td class="c-ok">Drill-down کار می‌کند اما دسترسی Audio باید طبق PRV-03 اصلاح شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-09</td><td>Alert / Management Signal</td><td>برای موضوعات پرتکرار، Spike، Trend مهم یا مورد حساس امکان ایجاد Signal/Alert قابل تنظیم وجود داشته باشد؛ هر Voice منفی نباید Alert شود.</td><td>سناریوی Spike Alert ایجاد کند ولی High Volume پایدار Alert تکراری نسازد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-bad">رد شد (جزئی)</span></td><td class="c-mono">coa/apps/trends/services/webhook.py:93 → severity ثابت &quot;high&quot;؛ هیچ آستانه کاربرپسند یافت نشد</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+10 روز کاری</td><td class="c-bad">⚠️ در توافق «موجود» است ولی یادداشت خودتان می‌گوید قابل تنظیم نیست. خودتان Downgrade کنید</td><td class="c-note">به صورت کلی Alertها و Trendها اطلاع رسانی می‌گردد ولی قابل تنظیم توسط کاربر نیست.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-10</td><td>خروجی مدیریتی دوره‌ای</td><td>سیستم بتواند Summary قابل ارائه از مهم‌ترین موضوعات، تغییرات و Signalها برای تیم EX/جلسه مدیریت تولید کند.</td><td>یک Weekly/Periodic Summary از داده Pilot با Evidence قابل ردیابی تولید شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">/trends/report/; /analyse/calls/special-analysis/timeseries/report</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-11</td><td>Export داده/گزارش</td><td>در صورت نیاز تیم EX، خروجی ساختاریافته یا گزارش قابل Export باشد تا تحلیل تکمیلی یا ارائه مدیریتی ممکن شود.</td><td>Export نمونه فاقد فیلدهای هویتی غیرمجاز باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">coa/apps/experts/service.py (خروجی CSV)</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+3 روز کاری</td><td class="c-ok">باید فیلدهای هویتی از Export حذف شوند تا معیار پذیرش برآورده شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-12</td><td>دستیار تحلیل با زبان طبیعی</td><td>در صورت آماده بودن قابلیت، کاربران محدود EX بتوانند درباره کل داده Pilot سؤال طبیعی بپرسند و پاسخ همراه با شواهد دریافت کنند.</td><td>سؤال «مهم‌ترین موضوع این ماه چیست؟» پاسخ مبتنی بر داده Pilot و قابل Trace دریافت کند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">python/aqa — 9,119 LOC؛ POST /api/v1/chat/message (SSE)؛ /configs/{prompts,sql-examples}؛ POST /eval/run</td><td class="c-num">قطعی</td><td>—</td><td>—</td><td class="c-ok">✅ قوی‌ترین دارایی نمایشی شما. تنها سرویسی که Eval Harness دارد</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-01</td><td>Environment اختصاصی EX</td><td>به دلیل محرمانگی داده کارکنان، محیط سرویس EX با منابع و تنظیمات مشخص و مورد تأیید ایجاد شود.</td><td>Environment Pilot مستقل و قابل شناسایی از محیط‌های دیگر آماده باشد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم / زیرساخت</td><td class="c-mono">helm/cloud; dockerfiles/</td><td class="c-num">قطعی</td><td>MCINEXT + MCI-IT</td><td>T+10 روز کاری پس از تخصیص منابع</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-02</td><td>Database / Namespace / Compute</td><td>زیرساخت داده، Namespace و منابع پردازشی موردنیاز قبل از UAT فراهم و ظرفیت اولیه مشخص شود.</td><td>تیم فنی آماده‌بودن اجزای زیرساخت را برای شروع UAT تأیید کند.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم / زیرساخت</td><td class="c-mono">helm/cloud; coa-api/docker-compose.yml</td><td class="c-num">قطعی</td><td>MCINEXT + MCI-IT</td><td>همان TEC-01</td><td>⚠️ Celery با concurrency=1 اجرا می‌شود — سقف ظرفیت را پیش از تعهد مشخص کنید</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-03</td><td>Network / Domain / Security Setup</td><td>نیازهای Network، Domain و دسترسی‌های امنیتی لازم برای سرویس صوتی و پنل تحلیل مشخص و اجرا شوند.</td><td>Checklist زیرساختی بدون Blocker باز پیش از UAT بسته شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم / زیرساخت</td><td class="c-mono">ansible-roles/envoy_*; ansible-roles/ingress_controller</td><td class="c-num">قطعی</td><td>MCINEXT + MCI-IT</td><td>همان TEC-01</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-04</td><td>اتصال سرشماره به سرویس AI</td><td>سرشماره/شماره پایلوت به Voice Agent و Backend صحیح متصل شود و مسیر تماس End-to-End تست شود.</td><td>تماس آزمایشی از شماره Whitelist از سرشماره تا ذخیره رکورد موفق باشد.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">chatbot-iva-agent SIP config</td><td class="c-num">قطعی</td><td>MCINEXT + MCI-IT</td><td>T+5 روز کاری پس از تخصیص سرشماره</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-05</td><td>Demo / Instance آزمایشی</td><td>پیش از Sign-off کامل، یک محیط آزمایشی با داده غیرحساس یا Sample برای Explore کردن محصول و کشف Gap واقعی در اختیار تیم EX قرار گیرد.</td><td>تیم EX بتواند بدون داده واقعی کارکنان قابلیت‌های اصلی را مشاهده و تست کند.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>MCINEXT</td><td>T+7 روز کاری</td><td>محیط Demo با داده نمونه</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-06</td><td>بارگذاری Whitelist و Mapping Pilot</td><td>دیتاست شماره‌ها و Context سازمانی جامعه Pilot با فرمت توافق‌شده آماده، اعتبارسنجی و وارد سیستم شود.</td><td>نمونه‌گیری از Mappingها بدون خطای معنادار تأیید شود.</td><td class="c-edit"></td><td>نیازمند تنظیم / Configuration</td><td>تنظیم</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX (دیتاست)</td><td>T+3 روز کاری پس از تحویل دیتاست</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-07</td><td>بارگذاری Seed Knowledge</td><td>Knowledge اولیه اداره خودمان در قالب مورد قبول محصول آماده و بارگذاری شود.</td><td>مجموعه سؤال‌های Golden به پاسخ صحیح بر اساس Seed Knowledge برسند.</td><td class="c-edit"></td><td>موجود در محصول</td><td><span class="tag t-ok">تأییدشده</span></td><td class="c-mono">adcs_kb /import</td><td class="c-num">قطعی</td><td>EX</td><td>T+0</td><td class="c-ok">اجرا توسط EX</td><td class="c-note">توسط تیم EX انجام می‌شود.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-08</td><td>Track A: Golden Test Scenarios</td><td>مجموعه سناریوهای کنترل‌شده برای تست Featureها طراحی شود؛ مانند Voice چندموضوعی، Voice مبهم، Positive، سؤال بدون پاسخ، Sensitive و تماس قطع‌شده.</td><td>برای هر سناریو Expected Result و Pass/Fail ثبت شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td>خارج از کد</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>T+0</td><td>سناریوها را EX می‌نویسد</td><td class="c-note">توسط تیم EX انجام می‌شود.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-09</td><td>Track B: Natural Use</td><td>علاوه بر تست اسکریپت‌شده، اعضای اداره مانند یک کاربر واقعی و بدون متن از پیش تعیین‌شده از کانال استفاده کنند تا رفتار طبیعی محصول سنجیده شود.</td><td>Feedback کاربران Natural Use جدا از Golden Scenario Tests ثبت شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td>خارج از کد</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>T+0</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-10</td><td>Internal UAT و Issue Log</td><td>تمام خطاها، Gapها، رفتارهای غیرمنتظره و درخواست‌های اصلاح در یک Issue Log واحد ثبت شوند.</td><td>هر Issue دارای شناسه، شدت، Owner، وضعیت و نتیجه Retest باشد.</td><td class="c-edit"></td><td>موجود در محصول</td><td>خارج از کد</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>مشترک</td><td>T+0</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-11</td><td>Retest پس از اصلاح</td><td>هر اصلاح فنی یا Configuration مهم باید روی سناریوی قبلی مجدداً تست شود تا Regression ایجاد نشده باشد.</td><td>Issue فقط بعد از Retest موفق بسته شود.</td><td class="c-edit"></td><td>موجود در محصول</td><td>خارج از کد</td><td class="c-mono">—</td><td class="c-num">قطعی</td><td>EX</td><td>T+0</td><td></td><td class="c-note">توسط تیم EX انجام می‌شود.</td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-12</td><td>Success Criteria Pilot</td><td>قبل از اجرای Pilot معیارهای موفقیت در چهار دسته Experience، AI Quality، Management Value و Governance تعریف شوند.</td><td>Go/No-Go براساس معیارهای از قبل ثبت‌شده انجام شود، نه صرف موفقیت Demo.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">خالی — باید پر شود</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>مشترک</td><td>T+5 روز کاری</td><td class="c-edit">⚠️ ستون وضعیت در توافق خالی است. چهار دسته معیار موفقیت باید پیش از پایلوت تثبیت شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-13</td><td>Failure / Red Flag Criteria</td><td>مواردی مانند STT ضعیف، Alert Noise، افشای هویت، Follow-up نامرتبط یا Sensitive Detection نامطمئن به‌عنوان Red Flag از قبل تعریف شوند.</td><td>برای Red Flagها تصمیم اصلاح/توقف/کاهش Scope مشخص باشد.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">خالی — باید پر شود</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>مشترک</td><td>T+5 روز کاری</td><td class="c-edit">⚠️ باید VIA-07 (Summary ساختگی)، PRV-03 (افشای صوت) و PRV-10 (Sensitive) را صریحاً شامل شود</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-14</td><td>زمان‌بندی و Dependency ردیف‌به‌ردیف</td><td>MCINEXT پس از Fit-Gap برای هر Requirement داخل Scope، Dependency و Deadline/برآورد زمانی ارائه کند.</td><td>هیچ Timeline کلی بدون مشخص‌بودن Dependencyهای اصلی به‌عنوان تعهد نهایی ثبت نشود.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">خالی — تعهد MCINEXT</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>MCINEXT</td><td>T+3 روز کاری</td><td class="c-edit">⚠️ همین فایل پاسخ این ردیف است. معیار پذیرش خودِ این ردیف سپر شماست: بدون مشخص‌بودن Dependency هیچ Timeline تعهد نهایی نیست</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-15</td><td>Go / No-Go Review</td><td>پس از UAT و Pilot محدود، جلسه تصمیم برگزار شود و براساس Evidence مشخص شود محصول آماده توسعه بیشتر، نیازمند اصلاح یا نیازمند بازنگری Scope است.</td><td>خروجی جلسه شامل تصمیم، Gapهای باز و Roadmap مرحله بعد باشد.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">خالی — فرایند</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>مشترک</td><td>پس از پایان UAT</td><td class="c-edit">Go/No-Go مبتنی بر Evidence نه Demo</td><td class="c-note"></td><td class="c-edit"></td></tr>
+</tbody>
+</table></div>
+<h2 id="summary">خلاصه</h2>
+<p class="lede">خلاصه وضعیت — محاسبه زنده از شیت «ردیف‌ها»</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:27.4%"><col style="width:11.3%"><col style="width:11.3%"><col style="width:50.0%"></colgroup>
+<thead><tr><th>دسته</th><th>تعداد</th><th>درصد</th><th>تفسیر</th></tr></thead>
+<tbody>
+<tr class="sub"><td colspan="4">— وضعیت اعلامی در توافق —</td></tr>
+<tr><td>موجود در محصول</td><td class="c-num">43</td><td class="c-num">49%</td><td>ادعای «ساخته شده» — بیشترین فشار UAT روی این‌هاست</td></tr>
+<tr><td>نیازمند تنظیم / Configuration</td><td class="c-num">17</td><td class="c-num">20%</td><td>بدون کد جدید؛ سریع‌ترین بخش</td></tr>
+<tr><td>نیازمند توسعه / Customization</td><td class="c-num">17</td><td class="c-num">20%</td><td>توسعه واقعی؛ منبع اصلی ریسک زمان‌بندی</td></tr>
+<tr><td>نیازمند بررسی فنی</td><td class="c-num">3</td><td class="c-num">3%</td><td>باید به آیتم برآوردشده تبدیل شود</td></tr>
+<tr><td>فعلاً خارج از Scope</td><td class="c-num">2</td><td class="c-num">2%</td><td>هر دو ردیف با کد نمی‌خوانند — AI-02 و PRV-08</td></tr>
+<tr><td>بدون وضعیت (خالی)</td><td class="c-num">5</td><td class="c-num">6%</td><td>KB-02 و TEC-12 تا TEC-15</td></tr>
+<tr class="sub"><td colspan="4">— وضعیت تأییدشده با کد —</td></tr>
+<tr><td>تأییدشده</td><td class="c-num">30</td><td class="c-num">34%</td><td>در کد اثبات شد — قابل دفاع</td></tr>
+<tr><td>جزئی</td><td class="c-num">12</td><td class="c-num">14%</td><td>بخشی پیاده — نیازمند توضیح دقیق در جلسه</td></tr>
+<tr><td>رد شد</td><td class="c-num">5</td><td class="c-num">6%</td><td>ادعای توافق نادرست — پیش از جلسه اصلاح شود</td></tr>
+<tr><td>غایب</td><td class="c-num">15</td><td class="c-num">17%</td><td>هیچ کدی نیست — توسعه واقعی</td></tr>
+<tr><td>نامشخص</td><td class="c-num">4</td><td class="c-num">5%</td><td>در coa-ai فریزشده — بدون داده سرعت تیم</td></tr>
+<tr><td>تنظیم</td><td class="c-num">12</td><td class="c-num">14%</td><td>Configuration یا زیرساخت</td></tr>
+<tr><td>خارج از کد</td><td class="c-num">5</td><td class="c-num">6%</td><td>فرایند یا وظیفه EX</td></tr>
+<tr><td>خالی</td><td class="c-num">4</td><td class="c-num">5%</td><td>ستون توافق خالی است</td></tr>
+<tr class="sub"><td colspan="4">— وابستگی —</td></tr>
+<tr><td>EX</td><td class="c-num">13</td><td class="c-num">15%</td><td>ساعت شما شروع نمی‌شود تا EX ورودی را تحویل دهد</td></tr>
+<tr><td>MCINEXT</td><td class="c-num">39</td><td class="c-num">45%</td><td>تعهد مستقیم تیم شما</td></tr>
+<tr><td>مشترک</td><td class="c-num">13</td><td class="c-num">15%</td><td>نیازمند تصمیم دوطرفه</td></tr>
+<tr><td>MCI-IT</td><td class="c-num">1</td><td class="c-num">1%</td><td>خارج از کنترل هر دو تیم — مثل دسترسی SAP</td></tr>
+<tr><td class="c-key">یادداشت</td><td></td><td></td><td class="c-note">درصدها با فرمول COUNTIF محاسبه می‌شوند؛ اگر وضعیتی را در شیت «ردیف‌ها» تغییر دهید این جدول خودکار به‌روز می‌شود. ستاره در الگوی جست‌وجو به معنای «شروع‌شده با» است.</td></tr>
+</tbody>
+</table></div>
+<h2 id="findings">یافته‌های بحرانی</h2>
+<p class="lede">یافته‌های بحرانی از خوانش کد</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:5.1%"><col style="width:16.7%"><col style="width:21.8%"><col style="width:37.2%"><col style="width:19.2%"></colgroup>
+<thead><tr><th>#</th><th>عنوان</th><th>شاهد در کد</th><th>معنا برای کسب‌وکار</th><th>اقدام</th></tr></thead>
+<tbody>
+<tr><td class="c-num">۱</td><td class="c-bad">IDOR روی فایل صوتی خام</td><td class="c-mono">coa/apps/files/views.py:19 — @with_permissions({view_calls}) و سپس minio.download(name) بدون بررسی مالکیت</td><td>هر کاربر دارای view_calls می‌تواند صوت هر تماسی را دانلود کند. نام فایل از call_id مشتق می‌شود. ردیف PRV-03 «موجود» علامت خورده و نیست. روی داده صوتی کارکنان، این یافته می‌تواند پایلوت را متوقف کند.</td><td class="c-bad">⛔ اصلاح پیش از UAT — T+3 روز کاری</td></tr>
+<tr><td class="c-num">۲</td><td class="c-bad">Transcript ذخیره می‌شود ولی «خارج از Scope» اعلام شده</td><td class="c-mono">coa/apps/main/models.py:397 (raw_input) · services/call.py:771 · chatbot-iva-agent/src/schema.py (messages[].text)</td><td>متن مکالمه ذخیره و روی Kafka منتشر می‌شود و حتی transcript_confidence دارد. ادعای AI-02 و دلیل PRV-08 نادرست است. هم اعتبار فنی را می‌برد و هم یک ریسک حریم خصوصی اعلام‌نشده ایجاد می‌کند.</td><td class="c-bad">تصمیم سیاست در ۲ روز: نگهداری و اعلام، یا توقف ذخیره</td></tr>
+<tr><td class="c-num">۳</td><td class="c-bad">Audit Log وجود ندارد</td><td class="c-mono">جست‌وجوی audit|LogEntry|access_log|viewed_by|actor_id در ۸ سرویس → صفر نتیجه</td><td>ردیف PRV-06 «موجود» علامت خورده است. آنچه هست coa/middlewares.py:26 است که لاگ زیرساختی است نه Audit Trail قابل کوئری. ضمناً همان میدل‌ویر تمام هدرها را لاگ می‌کند؛ یعنی توکن‌های Authorization وارد لاگ می‌شوند.</td><td class="c-bad">Downgrade در توافق + برآورد T+10 روز کاری</td></tr>
+<tr><td class="c-num">۴</td><td class="c-warn">موتور تحلیل ۱۴ ماه فریز است</td><td class="c-mono">python/coa-ai — آخرین کامیت 2025-07-13، در حالی که coa-api در 2026-09-27 کامیت دارد</td><td>تمام ردیف‌های کیفیت بلوک ۳ (AI-04 تا AI-07، AI-12، AI-13) از کدی می‌گذرند که هیچ داده سرعتِ به‌روز ندارد. برای این بلوک ددلاین تهاجمی ندهید.</td><td class="c-warn">بازفعال‌سازی یا تأیید پایداری پیش از تعهد</td></tr>
+<tr><td class="c-num">۵</td><td class="c-warn">هیچ سنجش کیفیتی برای AIVA و CCA وجود ندارد</td><td class="c-mono">تنها Eval موجود: aqa POST /api/v1/eval/run — هیچ معادلی برای WER، Faithfulness یا دقت Theme نیست</td><td>۴۳ ردیف «موجود در محصول» شامل ۱۱ ادعای کیفیتی است. «موجود» یعنی implemented نه measured، ولی EX آن را measured تست می‌کند (معیار AI-06 صریحاً مقایسه با نمونه Human-coded است).</td><td class="c-warn">Golden Set حداقلی پیش از UAT</td></tr>
+<tr><td class="c-num">۶</td><td class="c-ok">خبر خوب: Pruner مخرب وجود ندارد</td><td class="c-mono">تمام مسیرهای حذف بررسی شد: archive_old_calls.py (آرشیو→حذف) · trends/services/sync.py:388 (بازسازی کامل) · services/call.py:448</td><td>آنچه روی وایت‌بورد به‌عنوان «حذف topic و تماس‌هایش» طراحی شده بود پیاده نشده است. همچنین TrendAnnotation عمداً denormalize شده تا یادداشت‌های انسانی از بازسازی جان سالم ببرند.</td><td class="c-ok">اقدامی لازم نیست — این را به‌عنوان نقطه قوت ارائه کنید</td></tr>
+<tr><td class="c-num">۷</td><td class="c-ok">خبر خوب: Retention بهتر از ادعاست</td><td class="c-mono">archive_old_calls.py — pg_dump → MinIO → حذف → VACUUM، با abort-on-failure و --dry-run</td><td>PRV-07 درست است و PRV-08 هم عملاً پوشش داده شده چون call_ai_tags هم آرشیو و حذف می‌شود. شما دارید کمتر از توان واقعی‌تان ادعا می‌کنید.</td><td class="c-ok">PRV-08 را از «خارج از Scope» خارج کنید</td></tr>
+<tr><td class="c-num">۸</td><td class="c-ok">خبر خوب: پیامک ساخته شده</td><td class="c-mono">aiva/tools/sms.py → POST resan.mci.dev/api/messages/send/to/ · در AGENT_ENABLED_TOOLS پیش‌فرض فعال</td><td>KB-06 به‌اشتباه «نیازمند توسعه» علامت خورده است. اما LLM خودش تصمیم ارسال می‌گیرد، پس وابستگی واقعی «سناریوهای EX» یک نیاز Guardrail است نه یک نیاز یکپارچه‌سازی.</td><td class="c-ok">ارتقا به «موجود» + Rate limit در T+5 روز کاری</td></tr>
+<tr><td class="c-num">۹</td><td class="c-warn">Whitelist هست ولی جای اشتباه</td><td class="c-mono">aiva/memory/config.py:20-21 — PHONE_WHITELIST=[] و BYPASS_WHITELIST=True · aiva_consume_kafka.py:310</td><td>این Whitelist فقط «جمع‌آوری memory» را گیت می‌کند، نه «پذیرش تماس». نیاز VIA-02 پذیرش تماس است که باید در لایه SIP پیاده شود. ضمناً پیش‌فرض روی Bypass است.</td><td class="c-warn">گیت SIP + پرکردن PHONE_WHITELIST و BYPASS_WHITELIST=false</td></tr>
+<tr><td class="c-num">۱۰</td><td class="c-ok">AQA قوی‌ترین دارایی نمایشی شماست</td><td class="c-mono">python/aqa — 9,119 خط · POST /api/v1/chat/message (SSE) · /configs/prompts قابل ویرایش در Runtime · /eval/run</td><td>ردیف AN-12 (دستیار تحلیل با زبان طبیعی) که بلندپروازانه‌ترین ردیف توافق است، واقعاً ساخته شده و تنها سرویسی است که Eval Harness دارد.</td><td class="c-ok">در جلسه Demo زنده بگیرید</td></tr>
+<tr><td class="c-num">۱۱</td><td class="c-warn">Long-term Memory بین تماس‌ها</td><td class="c-mono">aiva/memory/management/commands/aiva_consume_kafka.py · ChatbotUser.memory · aiva/chat/views/session.py</td><td>پس از هر تماس یک خلاصه از کاربر ساخته و در تماس بعدی به Context داده می‌شود؛ شماره و Memory در Tracing Span هم ثبت می‌شوند. برای کارکنان یک تصمیم Privacy است.</td><td class="c-warn">اعلام در Privacy Notice یا خاموش‌کردن Consumer برای EX</td></tr>
+<tr><td class="c-num">۱۲</td><td class="c-bad">Chat APIها بدون Authentication</td><td class="c-mono">permission_classes = () در همه Viewهای چت aiva و adcs</td><td>امنیت به Gateway سپرده شده. هرکس Session را با شماره دلخواه بسازد، Memory آن شماره را در Context می‌گیرد.</td><td class="c-bad">Gateway تنها مسیر ورود در Pilot</td></tr>
+<tr><td class="c-num">۱۳</td><td class="c-warn">AQA مسیر دوم به هویت</td><td class="c-mono">aqa/agents/tools/sql_executor.py — Query آزاد، Read-only فقط با کاربر DB</td><td>PRV-02 «هر مسیر دیگر» بازیابی هویت را منع می‌کند؛ AQA می‌تواند ستون شماره را برگرداند.</td><td class="c-warn">View بدون ستون هویتی برای کاربر DB مخصوص AQA</td></tr>
+</tbody>
+</table></div>
+<h2 id="architecture">معماری</h2>
+<p class="lede">سرویس‌های فعال پایتون — کامیت در ۳ ماه گذشته</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:21.3%"><col style="width:8.2%"><col style="width:8.2%"><col style="width:37.7%"><col style="width:24.6%"></colgroup>
+<thead><tr><th>سرویس</th><th>خط کد</th><th>فایل</th><th>نقش</th><th>آخرین کامیت</th></tr></thead>
+<tbody>
+<tr><td>python/coa-api</td><td class="c-num">31596</td><td class="c-num">325</td><td>لایه سرویس‌دهی CCA — تحلیل، Trend، تیکت، کارشناس، داشبورد IVA، Sync با ClickHouse، آرشیو</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/agentlib</td><td class="c-num">19188</td><td class="c-num">444</td><td>کتابخانه هسته Agent — LLM، ابزار، ReAct، Monitoring. ۱۴۰ فایل تست</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/aiva</td><td class="c-num">11492</td><td class="c-num">121</td><td>مغز چت IVA — Orchestrator رویدادمحور: Guardrail، Intent، Classification، Clarifying، VoiceBridge، ReAct</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>python/adcs</td><td class="c-num">11411</td><td class="c-num">230</td><td>نسل قبلی/موازی aiva — Chat API، پروکسی ASR/TTS، داشبورد چت، بازخورد</td><td class="c-num">2026-09-25</td></tr>
+<tr><td>python/aqa</td><td class="c-num">9119</td><td class="c-num">156</td><td>Agentic Query Analyzer — تبدیل زبان طبیعی به SQL روی داده تحلیلی. دارای Eval</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/chatbot-iva-agent</td><td class="c-num">5671</td><td class="c-num">26</td><td>Agent صوتی Realtime روی LiveKit — SIP، VAD، Turn detection، STT/TTS، ضبط، Kafka</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>python/adcs-knowledgebase</td><td class="c-num">4716</td><td class="c-num">84</td><td>میکروسرویس دانش — CRUD سؤال/پاسخ، Guardrail، Tag، Summarize، Import/Export</td><td class="c-num">فعال</td></tr>
+<tr><td>python/adcs-auth</td><td class="c-num">2610</td><td class="c-num">67</td><td>احراز هویت مرکزی — صدور JWT. ⚠️ صفر فایل تست</td><td class="c-num">فعال</td></tr>
+<tr><td>python/fastlib</td><td class="c-num">1740</td><td class="c-num">40</td><td>زیرساخت مشترک FastAPI — لاگ درخواست، پوشش خطا، healthz</td><td class="c-num">فعال</td></tr>
+<tr><td>python/aiva-knowledgebase</td><td class="c-num">730</td><td class="c-num">17</td><td>میکروسرویس دانش AIVA — Embedding با کلاینت OpenAI-compatible</td><td class="c-num">فعال</td></tr>
+<tr><td>golang/grogu</td><td class="c-num">—</td><td class="c-num">—</td><td>Ingestion اصلی CCA (Go): Kafka، MinIO، ASR با Circuit Breaker، MyMCI، Upsert در Postgres، Dead-letter</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>golang/neurobox-gateway</td><td class="c-num">—</td><td class="c-num">—</td><td>Gateway مدل‌های ASR/TTS روی Triton (gRPC)</td><td class="c-num">2026-09-13</td></tr>
+<tr><td>golang/websocall</td><td class="c-num">—</td><td class="c-num">—</td><td>Voice روی WebSocket برای مرورگر</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>golang/dobby</td><td class="c-num">—</td><td class="c-num">—</td><td>MCP Server برای Toolهای AIVA</td><td class="c-num">2026-09-27</td></tr>
+<tr><td class="c-warn">python/coa-ai</td><td class="c-num">—</td><td class="c-num">—</td><td class="c-warn">⚠️ موتور تحلیل (احساسات، خلاصه، موضوع) — خارج از دامنه بررسی، ۱۴ ماه فریز</td><td class="c-num">2025-07-13</td></tr>
+<tr class="sub"><td colspan="5">زیرساخت داده</td></tr>
+<tr><td>PostgreSQL</td><td></td><td></td><td>۱۹ جدول اصلی: voices، calls، call_ai_tags، call_records، trends، subjects، trend_annotations، tickets، experts …</td><td></td></tr>
+<tr><td>ClickHouse</td><td></td><td></td><td>منبع نتایج تحلیل؛ چهار Daemon همگام‌سازی: clickhouse_sync، clickhouse_update_sync، failed_calls_sync، sync_canonical_mappings</td><td></td></tr>
+<tr><td>Qdrant (gRPC)</td><td></td><td></td><td>کالکشن‌های AIVA: guardrail، aiva-contexts، aiva-instructions، aiva-classification، aiva-jokes — آستانه و top-k قابل تنظیم</td><td></td></tr>
+<tr><td>MinIO / S3</td><td></td><td></td><td>باکت chatbot-mci-iva برای ضبط تماس + مقصد آرشیو pg_dump</td><td></td></tr>
+<tr><td>Kafka</td><td></td><td></td><td>تولید: chatbot-mci-iva (از Agent صوتی) · مصرف: chatbot-mci-iva-intent (ماژول memory در aiva)</td><td></td></tr>
+<tr><td>مدل‌های LLM</td><td></td><td></td><td>google/gemma-4-31B-it (میزبانی داخلی) و openai/gpt-oss-120b — هفت نقش مستقل و هرکدام جداگانه قابل تنظیم</td><td></td></tr>
+<tr><td>رصدپذیری</td><td></td><td></td><td>Prometheus، Elastic APM، Phoenix/OpenTelemetry tracing</td><td></td></tr>
+</tbody>
+</table></div>
+    <script>
+(function () {
+  var q = document.getElementById('q'), st = document.getElementById('st'), cnt = document.getElementById('cnt');
+  if (!q) return;
+  var rows = [].slice.call(document.querySelectorAll('tr[data-st]'));
+  function run() {
+    var term = q.value.trim().toLowerCase(), want = st.value, n = 0;
+    rows.forEach(function (r) {
+      var ok = (!want || r.getAttribute('data-st') === want) && (!term || r.textContent.toLowerCase().indexOf(term) > -1);
+      r.hidden = !ok; if (ok) n++;
+    });
+    cnt.textContent = n + ' از ' + rows.length + ' ردیف';
+  }
+  q.addEventListener('input', run); st.addEventListener('change', run); run();
+})();
+</script>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

@@ -1,0 +1,1007 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>نقشه راه Phoenix HR</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <div class="cover">
+      <h1>نقشه راه Phoenix HR: از پایلوت تا محصول</h1>
+      <div style="font-size: 12pt">
+        چطور فکر کنیم، تیم را چطور هدایت کنیم، چه چیزی بسازیم و پروژه را از نظر فنی
+        به کدام سمت ببریم
+      </div>
+      <p class="meta">
+        مخاطب: مدیر محصول فنی، CTO و سرپرستان فنی · نسخه ۰٫۱ · ۱۳ مهر ۱۴۰۵ ·
+        مبنا: کد مخزن (بازبینی ۷ مهر ۱۴۰۵)، توافق Fit-Gap پایلوت EX، و تحلیل
+        رقبا در فصل ۲۵ <code>PRODUCT_DOSSIER_FA.pdf</code>
+      </p>
+      <p class="small">
+        برچسب‌ها: <b>CODE</b> از کد مخزن · <b>FIT-GAP</b> ردیف توافق · <b>WEB</b>
+        از منابع فصل ۲۵.۹ پرونده · <b>INFERENCE</b> استدلال؛ پیش از تعهد بررسی
+        شود.
+      </p>
+    </div>
+
+    <h2>۱. در یک صفحه</h2>
+    <div class="box">
+      <b>تز محصول:</b> «کانال شنیدن و گفت‌وگوی صوتی فارسی برای کارکنان بدون
+      میز، که داخل سازمان اجرا می‌شود و به HRIS موجود وصل می‌شود، نه اینکه
+      جایگزینش شود.» هیچ‌یک از ۱۳ HCM بزرگ جهانی و هیچ رقیب ایرانی این ترکیب را
+      ندارد (پرونده ۲۵.۵ و ۲۵.۵ب).
+    </div>
+    <ol>
+      <li>
+        <b>موتور ساخته شده، اعتماد نه.</b> Voice Agent، Orchestrator، تحلیل
+        تماس، Trend و AQA واقعی و باکیفیت‌اند؛ ولی حذف هویت، آستانه گروه کوچک،
+        Audit Log و کنترل مالکیت صوت وجود ندارد. این‌ها همان چیزی است که
+        خریدار HR می‌خرد. <span class="small">FIT-GAP PRV-01/03/05/06/09</span>
+      </li>
+      <li>
+        <b>«SaaS» امروز SaaS نیست.</b> در کد هیچ مفهوم Tenant وجود ندارد و برای
+        هر مشتری یک استقرار جدا ساخته شده (<code>chatbot-mci</code>،
+        <code>chatbot-tejarat</code>، <code>chatbot-mobinnet</code>). برای بازار
+        دولتی و بزرگ ایران این مزیت است، نه نقص: مدل درست فعلاً «استقرار
+        خصوصی مدیریت‌شده» است. <span class="small">CODE grep tenant → 0</span>
+      </li>
+      <li>
+        <b>تیم کوچک و متمرکز روی یک نفر است.</b> حدود ۱۰ نفر روی سرویس‌های
+        اصلی؛ یک نفر ~۴۲٪ کامیت‌ها و دو نفر ~۵۸٪ از تیر ۱۴۰۵. همزمان چند
+        چت‌بات مشتریان دیگر هم نگهداری می‌شود.
+        <span class="small">GIT shortlog since 2026-06-28</span>
+      </li>
+      <li>
+        <b>ترتیب درست:</b> اول آزمون خرید را پاس کنیم (اعتماد)، بعد پایلوت را
+        با عدد اثبات کنیم، بعد محصول دوم را به همان مشتری بفروشیم، و فقط بعد
+        از آن برای مشتری دوم «محصولی» کنیم.
+      </li>
+    </ol>
+
+    <h2>۲. چطور فکر کنیم: هشت اصل تصمیم‌گیری</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 4%">#</th>
+          <th style="width: 26%">اصل</th>
+          <th>یعنی در عمل</th>
+        </tr>
+      </thead>
+      <tr><td>۱</td><td><b>یک خریدار، یک مسئله، یک عدد</b></td><td>هر Feature باید به مسئله مکتوب EX و یک معیار قابل اندازه‌گیری گره بخورد؛ «جالب است» دلیل ساخت نیست.</td></tr>
+      <tr><td>۲</td><td><b>«پیاده‌سازی شده» ≠ «اندازه‌گیری شده»</b></td><td>STT هست ولی WER هرگز سنجیده نشده؛ خلاصه هست ولی وفاداری سنجیده نشده (AI-01، AI-03). هیچ قابلیت AI بدون Eval تحویل‌شده حساب نمی‌شود.</td></tr>
+      <tr><td>۳</td><td><b>اعتماد قبل از هوشمندی</b></td><td>در HR، Privacy و Audit Feature فروش‌اند، نه هزینه. تا PRV بسته نشده، Feature جدید AI نمی‌سازیم.</td></tr>
+      <tr><td>۴</td><td><b>بدون Dependency، Deadline نداریم</b></td><td>همه تعهدها «T + n روز کاری پس از دریافت X» (قاعده TEC-14).</td></tr>
+      <tr><td>۵</td><td><b>لایه روی HRIS، نه رقیب HRIS</b></td><td>با راهکاران، دیدگاه و SAP رقابت نمی‌کنیم؛ اتصال اول فقط‌خواندنی و فایلی است. Payroll و پرونده پرسنلی هرگز.</td></tr>
+      <tr><td>۶</td><td><b>محصول = پیکربندی یک هسته</b></td><td>Pulse، Exit Interview، Helpdesk و Onboarding یک موتورند با Prompt، دانش، Tool و Taxonomy متفاوت. اگر محصول دوم کد جدید زیادی بخواهد، معماری اشتباه است.</td></tr>
+      <tr><td>۷</td><td><b>تمایز را جایی بسازیم که رقیب نمی‌تواند</b></td><td>تلفن فارسی، داخل سازمان، کارکنان بی‌میز. «Helpdesk که فقط جواب می‌دهد» به‌زودی کالایی است (همه ۱۳ HCM دارند).</td></tr>
+      <tr><td>۸</td><td><b>شواهد، نه دمو</b></td><td>تصمیم ادامه/توقف هر موج با عدد گرفته می‌شود (TEC-15)، و دمو همیشه سناریوی واقعی با استثناست.</td></tr>
+    </table>
+
+    <h2 class="pb">۳. چه بسازیم: سه لایه قابلیت</h2>
+    <p>
+      پاسخ به این سؤال که «با توجه به پروژه فعلی، چه چیزی برای یک SaaS موفق HR
+      در برابر رقبای بزرگ لازم است و چه چیزی فراتر از توان امروز ماست».
+    </p>
+
+    <h3>الف) حداقل‌های ورود به بازار — بدون این‌ها خریده نمی‌شویم</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 24%">قابلیت</th>
+          <th style="width: 12%">امروز</th>
+          <th>چرا لازم است / چه کسی دارد</th>
+          <th style="width: 10%">تلاش</th>
+        </tr>
+      </thead>
+      <tr><td>حذف هویت، آستانه k، Audit Log، کنترل مالکیت صوت</td><td><span class="tag gap">ندارد</span></td><td>آزمون خرید (راهنمای چارگون) و همه رقبای Listening. سناریوی دمو امروز در ۴ گام شکست می‌خورد.</td><td>M</td></tr>
+      <tr><td>ماتریس نقش × داده</td><td><span class="tag warn">جزئی</span></td><td>RBAC هست (PRV-11)؛ نقش‌های HR (مدیر واحد، کارشناس EX، بررسی‌کننده زمان‌دار) تعریف نشده.</td><td>S</td></tr>
+      <tr><td>اندازه‌گیری کیفیت AI (WER، وفاداری خلاصه، دقت موضوع)</td><td><span class="tag gap">ندارد</span></td><td>بدون عدد، معیار پذیرش نداریم. فقط AQA Eval دارد.</td><td>M</td></tr>
+      <tr><td>پیکربندی توسط خود مشتری</td><td><span class="tag warn">جزئی</span></td><td>متن و دانش آری؛ آستانه هشدار و قواعد نه (AN-09، CON-06). همه HCMها Studio دارند.</td><td>M</td></tr>
+      <tr><td>ورود ساختار سازمانی با اعتبارسنجی</td><td><span class="tag warn">جزئی</span></td><td>Segmentation بدون آن بی‌معناست (SEG-01..07).</td><td>S</td></tr>
+      <tr><td>داشبورد ROI و KPI محصول</td><td><span class="tag gap">ندارد</span></td><td>Deel و Leena نتیجه را با «ساعت صرفه‌جویی» گزارش می‌کنند؛ خریدار تمدید را با این می‌سنجد.</td><td>S</td></tr>
+      <tr><td>فرایند پشتیبانی، SLA و مدیریت تغییر</td><td><span class="tag gap">ندارد</span></td><td>پرسش ۹ راهنمای خرید.</td><td>S</td></tr>
+      <tr><td>استقرار تکرارپذیر برای مشتری جدید</td><td><span class="tag warn">جزئی</span></td><td>Helm و Ansible هست (TEC-01)؛ «یک مشتری در یک هفته» هنوز آزموده نشده.</td><td>M</td></tr>
+      <tr><td>گواهی امنیتی برای بازار دولتی</td><td><span class="tag gap">ندارد</span></td><td>نوع و الزام گواهی برای خریدار دولتی/نیمه‌دولتی باید بررسی شود <b>INFERENCE</b>.</td><td>?</td></tr>
+    </table>
+
+    <h3>ب) تمایزدهنده‌ها — جایی که می‌توانیم ببریم</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 26%">قابلیت</th>
+          <th>چرا ما و نه رقیب</th>
+          <th style="width: 22%">از کد فعلی</th>
+          <th style="width: 8%">تلاش</th>
+        </tr>
+      </thead>
+      <tr><td><b>Voice Pulse همیشه‌باز</b> برای کارکنان بی‌میز</td><td>UKG فقط از Siri/Google و بدون فارسی؛ Qualtrics و Perceptyx متنی.</td><td>IVA + Clarifying + CCA + Trend</td><td>M</td></tr>
+      <tr><td><b>Copilot تحلیل با «نمایش کار»</b></td><td>چارگون پرسش زبان طبیعی را در Pilot دارد؛ ما Eval و SQL قابل بازبینی داریم.</td><td>AQA</td><td>S</td></tr>
+      <tr><td><b>هشدار زودهنگام موضوع در واحد</b></td><td>Trend با Baseline واقعی؛ رقبای داخلی BI ایستا دارند.</td><td><code>trends/models.py</code></td><td>S</td></tr>
+      <tr><td><b>Benchmark و مدل احساس فارسی</b></td><td>دارایی داده‌ای که هیچ رقیب ایرانی ندارد؛ Perceptyx نشان داد مدل کوچک = مدل بزرگ.</td><td><code>call_ai_tags</code> + رونوشت پایلوت</td><td>S–M</td></tr>
+      <tr><td><b>«شنیدیم، انجام دادیم»</b></td><td>فقط ۴۸٪ کارکنان اثر بازخورد را می‌بینند (Qualtrics ۲۰۲۶).</td><td><code>send_sms</code> + Trend</td><td>S</td></tr>
+      <tr><td><b>Exit Interview و پیگیری نیروی جدید با تلفن</b></td><td>پشته همان Pulse؛ فقط تماس خروجی کم است.</td><td>IVA + Reminder</td><td>M</td></tr>
+      <tr><td><b>Helpdesk صوتی قانون کار و فیش</b> (فقط‌خواندنی)</td><td>پربازدیدترین سؤالات HR ایران (مالیات حقوق، سنوات)؛ کارکنان شیفتی فیش را نمی‌فهمند.</td><td>AIVA + KB + SMS</td><td>M</td></tr>
+      <tr><td><b>کار در قطعی اینترنت</b></td><td>LLM و تلفن داخل سازمان؛ خریدار ایرانی ۱۴۰۵ آن را شرط کرده.</td><td>Self-hosted LLM، Triton</td><td>S</td></tr>
+    </table>
+
+    <h3>ج) فراتر از محصول فعلی یا دشوار</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%">قابلیت</th>
+          <th>چرا دشوار است</th>
+          <th style="width: 30%">توصیه</th>
+        </tr>
+      </thead>
+      <tr><td><b>SaaS چندمستأجره واقعی</b></td><td>مفهوم Tenant در هیچ سرویس، جدول یا Auth نیست؛ جداسازی داده، صورت‌حساب، ثبت‌نام خودکار و بازطراحی Qdrant/MinIO لازم است.</td><td>فعلاً نه. فقط اگر بازار SMB انتخاب شد (XL).</td></tr>
+      <tr><td><b>اقدام نوشتنی در HRIS</b> (ثبت مرخصی و…)</td><td>به API و مجوز شریک وابسته است؛ احراز هویت قوی کارمند و مسئولیت حقوقی خطا.</td><td>بعد از Read-only؛ با شریک (Open API چارگون).</td></tr>
+      <tr><td><b>HRIS، Payroll، حضور و غیاب</b></td><td>بازار اشباع (راهکاران، دیدگاه)؛ قوانین محلی سنگین.</td><td>هرگز.</td></tr>
+      <tr><td><b>مصاحبه استخدامی AI</b></td><td>Audit سوگیری مستقل، تشخیص جعل هویت، اتصال ATS، ریسک حقوقی (Eightfold با ISO 42001).</td><td>Later؛ فقط با شریک ATS.</td></tr>
+      <tr><td><b>پیش‌بینی ترک خدمت</b></td><td>داده HR تاریخی لازم دارد؛ امتیاز فردی اعتماد را از بین می‌برد.</td><td>فقط سطح گروه، بعد از اتصال داده.</td></tr>
+      <tr><td><b>گراف مهارت و Talent Intelligence</b></td><td>Eightfold روی ۱٫۶ میلیارد مسیر شغلی ساخته؛ ما داده نداریم.</td><td>نسازیم.</td></tr>
+      <tr><td><b>Speak-up با ناشناسی حقوقی</b></td><td>تغییر صدا، مدیریت پرونده با Audit، پیگیری دوطرفه با کد، الزام حقوقی.</td><td>Later؛ بازار خالی ولی پرریسک.</td></tr>
+      <tr><td><b>گویش‌ها و زبان‌های ایرانی</b> (ترکی آذری، کردی، لری، لهجه‌های محلی)</td><td>داده صوتی برچسب‌دار کم؛ WER فعلی حتی برای فارسی معیار سنجیده نشده.</td><td>مسیر پژوهشی؛ اگر جواب دهد، قوی‌ترین مانع ورود رقیب است.</td></tr>
+      <tr><td><b>تماس خروجی در مقیاس</b></td><td>رضایت و مقررات مخابراتی، ظرفیت (Celery با concurrency=1، TEC-02)، زمان‌بندی.</td><td>Next؛ با آزمون بار.</td></tr>
+      <tr><td><b>Studio ساخت Agent بدون کد</b></td><td>UI، نسخه‌بندی، Sandbox، Eval خودکار.</td><td>بعد از سومین سناریوی مشابه.</td></tr>
+      <tr><td><b>احراز هویت صوتی</b></td><td>مدل بیومتریک و ریسک جعل.</td><td>با شریک (عصر گویش پرداز «شناسا»).</td></tr>
+      <tr><td><b>پیام‌رسان‌های داخلی</b> (بله، روبیکا)</td><td>دسترسی API و سیاست پلتفرم؛ Tool روبیکا هست ولی خاموش.</td><td>Next، پس از اثبات تلفن.</td></tr>
+    </table>
+
+    <h2 class="pb">۴. نقشه راه موجی</h2>
+    <p>
+      هر موج «معیار خروج» دارد، نه فقط تاریخ. تاریخ‌ها نشانگرند و به Dependency
+      وابسته‌اند (اصل ۴). ظرفیت فرض‌شده: تیم فعلی سرویس‌های اصلی.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 15%">موج</th>
+          <th>محتوا</th>
+          <th style="width: 30%">معیار خروج</th>
+        </tr>
+      </thead>
+      <tr>
+        <td><b>موج ۰ — اعتماد</b><br /><span class="small">مهر تا اواسط آبان ۱۴۰۵ (~۶ هفته)</span></td>
+        <td>
+          PRV-03 (مالکیت صوت) ← PRV-06 (Audit) ← PRV-05 (آستانه k) ← PRV-01/09
+          (حذف هویت هنگام ورود داده) ← VIA-03 (رد تماس غیرمجاز) · حذف Token از
+          Log (<code>coa-api/coa/middlewares.py:31</code>) · پر کردن
+          TEC-12/13/15 · محیط دمو با داده نمونه (TEC-05) · تحویل «بسته پاسخ به
+          معیارهای انتخاب».
+        </td>
+        <td>سناریوی دمو با سه استثنا (بسته پاسخ، بخش ۵) بدون شکست اجرا شود؛ EX معیارهای پذیرش را امضا کند.</td>
+      </tr>
+      <tr>
+        <td><b>موج ۱ — اثبات پایلوت</b><br /><span class="small">آبان تا دی ۱۴۰۵</span></td>
+        <td>
+          UAT و پایلوت EX · Harness سنجش WER، وفاداری خلاصه و دقت موضوع ·
+          مجموعه طلایی ۱۰ تماس در CI · Benchmark احساس فارسی (۱٬۰۰۰ قطعه) ·
+          هزینه و تأخیر هر تماس از داده واقعی · تصمیم درباره <code>coa-ai</code>
+          فریزشده (احیا یا جایگزینی، AI-04..07).
+        </td>
+        <td>معیارهای پذیرش پاس؛ گزارش پایلوت با عدد مشارکت، موضوع‌ها و هزینه هر تماس؛ Go از جلسه TEC-15.</td>
+      </tr>
+      <tr>
+        <td><b>موج ۲ — فروش دوم به همان مشتری</b><br /><span class="small">بهمن ۱۴۰۵ تا فروردین ۱۴۰۶</span></td>
+        <td>
+          تماس خروجی زمان‌بندی‌شده (یک بار، برای چهار محصول) · Exit Interview ·
+          «شنیدیم، انجام دادیم» · Nudge مدیر با Severity قابل تنظیم · Copilot
+          تحلیل با نمایش SQL · Helpdesk صوتی فقط‌خواندنی با ۱۰–۱۲ Intent پرتکرار و
+          بسته دانش قانون کار.
+        </td>
+        <td>یک قرارداد توسعه با EX یا واحد دیگر همراه اول؛ نرخ مشارکت دوره دوم Pulse بالاتر از دوره اول.</td>
+      </tr>
+      <tr>
+        <td><b>موج ۳ — محصولی‌سازی</b><br /><span class="small">اردیبهشت تا تیر ۱۴۰۶</span></td>
+        <td>
+          مدل داده «سناریو» نسخه‌دار (Prompt + دانش + Tool + Taxonomy + سیاست) ·
+          تنظیمات کاربری برای EX · استقرار یک‌هفته‌ای برای مشتری جدید · MCP
+          Server برای خروجی Insight تجمیعی · اتصال فقط‌خواندنی به یک HRIS (از
+          مسیر شریک) · Trust Center و تمرین قطع اینترنت.
+        </td>
+        <td>مشتری دوم (خارج از همراه اول) بدون کد اختصاصی راه‌اندازی شود.</td>
+      </tr>
+      <tr>
+        <td><b>موج ۴ — شرط‌بندی‌ها</b><br /><span class="small">نیمه دوم ۱۴۰۶</span></td>
+        <td>
+          یکی یا دو مورد از لایه «ج» بر اساس داده بازار: Speak-up، توضیح فیش با
+          اتصال Payroll، غربالگری استخدام با شریک ATS، مسیر پژوهشی گویش‌ها.
+        </td>
+        <td>هر شرط‌بندی با یک مشتری متعهد شروع شود، نه با فرض.</td>
+      </tr>
+    </table>
+
+    <h2 class="pb">۵. چطور تیم را هدایت کنیم</h2>
+    <h3>الف) ساختار: سه جریان با مالک مشخص</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%">جریان</th>
+          <th>محدوده</th>
+          <th style="width: 30%">معیار سلامت</th>
+        </tr>
+      </thead>
+      <tr><td><b>اعتماد و پلتفرم</b></td><td><code>adcs-auth</code>، Audit، حذف هویت، آستانه k، استقرار، امنیت، ظرفیت</td><td>صفر نشت هویت در آزمون؛ ۱۰۰٪ دسترسی‌ها در Log؛ زمان راه‌اندازی مشتری</td></tr>
+      <tr><td><b>گفت‌وگو</b></td><td><code>chatbot-iva-agent</code>، <code>aiva</code>، <code>agentlib</code>، دانش، تماس خروجی</td><td>نرخ تماس کامل؛ WER؛ تأخیر پاسخ؛ نرخ ارجاع به انسان</td></tr>
+      <tr><td><b>بینش</b></td><td><code>coa-api</code>، Trend، <code>aqa</code>، مدل احساس و موضوع</td><td>دقت موضوع؛ وفاداری خلاصه؛ زمان رسیدن به بینش</td></tr>
+    </table>
+    <div class="box">
+      <b>ریسک تمرکز دانش:</b> با تمرکز ~۴۲٪ کامیت‌ها روی یک نفر، هر جریان یک
+      مالک دوم آموزش‌دیده داشته باشد؛ <code>CODEOWNERS</code> با دو نام برای
+      هر سرویس؛ Pair Programming روی <code>aiva</code> در موج ۰ و ۱.
+      <span class="small">INFERENCE from GIT</span>
+    </div>
+
+    <h3>ب) تمرکز و ظرفیت</h3>
+    <ul>
+      <li>
+        سقف ظرفیت برای چت‌بات مشتریان دیگر را صریح کنید (مثلاً ۲۰٪) تا موج ۰ و
+        ۱ قربانی درخواست‌های پراکنده نشوند <b>INFERENCE</b>.
+      </li>
+      <li>۲۰٪ ظرفیت هر Sprint برای بدهی فنی و امنیت؛ در موج ۰ این عدد بیشتر است.</li>
+      <li>هر کار جدید باید به یک ردیف Fit-Gap یا یک ایده شماره‌دار فصل ۲۵ وصل باشد.</li>
+    </ul>
+
+    <h3>ج) آهنگ کار</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 20%">جلسه</th>
+          <th style="width: 14%">تکرار</th>
+          <th>خروجی</th>
+        </tr>
+      </thead>
+      <tr><td>مرور محصول</td><td>هفتگی</td><td>به‌روزرسانی <code>FIT_GAP_TRACKER.xlsx</code> به‌عنوان تنها منبع حقیقت؛ Blockerها و Dependencyهای منتظر EX.</td></tr>
+      <tr><td>دموی سناریو با EX</td><td>دوهفتگی</td><td>همیشه سناریوی واقعی با یک استثنا؛ بازخورد ثبت‌شده.</td></tr>
+      <tr><td>Discovery</td><td>ماهانه</td><td>گفت‌وگو با ۵ کارمند خط مقدم و ۳ کارشناس EX؛ فهرست سؤالات واقعی (نه فرضی).</td></tr>
+      <tr><td>مرور شاخص‌ها</td><td>ماهانه</td><td>درخت شاخص (بخش ۷)؛ تصمیم توقف یا ادامه هر ایده.</td></tr>
+      <tr><td>مرور رقبا</td><td>فصلی</td><td>به‌روزرسانی فصل ۲۵ پرونده؛ ورود عامراندیش یا عصر گویش پرداز به HR را رصد کنید.</td></tr>
+    </table>
+
+    <h3>د) تعریف «انجام شد» برای هر قابلیت AI</h3>
+    <ol>
+      <li>مجموعه آزمون و معیار با عدد پایه.</li>
+      <li>Trace در Phoenix/OpenTelemetry (الگوی موجود در <code>aqa</code> و <code>adcs-knowledgebase</code>).</li>
+      <li>بازبینی حریم خصوصی: چه داده‌ای ذخیره می‌شود، چه کسی می‌بیند.</li>
+      <li>هزینه هر تماس یا هر درخواست اندازه‌گیری شده.</li>
+      <li>مسیر بازگشت (Rollback) و Flag خاموش‌کردن.</li>
+    </ol>
+
+    <h3>هـ) قواعد تصمیم: بسازیم، شریک شویم، یا نسازیم</h3>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%">تصمیم</th>
+          <th>وقتی…</th>
+          <th style="width: 34%">نمونه</th>
+        </tr>
+      </thead>
+      <tr><td><b>بسازیم</b></td><td>تمایز ما را تقویت می‌کند و بیش از ۷۰٪ آن از هسته موجود می‌آید.</td><td>Pulse، Exit Interview، Copilot، مدل احساس فارسی</td></tr>
+      <tr><td><b>شریک شویم</b></td><td>داده یا مجوزش مال دیگری است.</td><td>HRIS (چارگون، همکاران سیستم)، بیومتریک صوتی، ATS</td></tr>
+      <tr><td><b>نسازیم</b></td><td>رقیب داده یا توزیع برتر دارد، یا خط قرمز اخلاقی است.</td><td>Payroll، گراف مهارت، امتیاز ریسک فردی، Passive Listening</td></tr>
+      <tr><td><b>متوقف کنیم</b></td><td>بعد از دو دوره، شاخص هدف حرکت نکرد.</td><td>هر ایده‌ای در موج ۲ به بعد</td></tr>
+    </table>
+
+    <h2 class="pb">۶. چطور پروژه را فنی هدایت کنیم</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 4%">#</th>
+          <th style="width: 24%">جهت فنی</th>
+          <th>اقدام</th>
+          <th style="width: 10%">موج</th>
+        </tr>
+      </thead>
+      <tr><td>۱</td><td><b>Privacy در ورودی، نه خروجی</b></td><td>حذف هویت پیش از ذخیره، در مسیر مصرف Kafka و یک بار برای همه سرویس‌ها؛ Audit به‌صورت Middleware مشترک در <code>adcs</code>؛ آستانه k در لایه Query (هم <code>coa-api</code> هم View‌های AQA).</td><td>۰</td></tr>
+      <tr><td>۲</td><td><b>Eval به‌عنوان دروازه انتشار</b></td><td>سه لایه: Eval آفلاین روی هر Commit، مجموعه طلایی ~۱۰ تماس فارسی که Deploy را متوقف می‌کند، و پایش روزانه روی Trace واقعی (الگوی Rippling). الگوی <code>aqa/api/routers/evaluation/run.py</code> را به IVA و AIVA ببرید.</td><td>۱</td></tr>
+      <tr><td>۳</td><td><b>Observability یکسان</b></td><td>Tracing فعلی <code>aqa</code> و دانش را به <code>aiva</code> و <code>chatbot-iva-agent</code> گسترش دهید؛ هزینه، تأخیر و نتیجه هر Turn در یک داشبورد.</td><td>۱</td></tr>
+      <tr><td>۴</td><td><b>«سناریو» به‌عنوان داده</b></td><td>تعریف هر محصول (Prompt، دانش، Tool، Taxonomy، سیاست حریم خصوصی، KPI) در یک مدل نسخه‌دار به جای متغیر محیطی؛ پایه Studio و استقرار سریع.</td><td>۲–۳</td></tr>
+      <tr><td>۵</td><td><b>LLM هرگز مقدار نسازد</b></td><td>برای اقدام‌ها: Slot با Resolver از سیستم ثبت، تأیید شفاهی پیش از Write، Idempotency؛ ارتقای Clarifying فعلی (<code>aiva/chat/utils/agents.py:148</code>).</td><td>۲</td></tr>
+      <tr><td>۶</td><td><b>Integration با قرارداد روشن</b></td><td>اول فایل با Validator و گزارش خطا؛ بعد MCP (Client موجود در <code>agentlib-plugin-mcp</code>)؛ MCP Server برای خروجی Insight تجمیعی.</td><td>۲–۳</td></tr>
+      <tr><td>۷</td><td><b>ظرفیت و بار</b></td><td>رفع سقف Celery با concurrency=1 (TEC-02)؛ آزمون بار با اسکریپت موجود <code>websocall</code> پیش از تماس خروجی.</td><td>۱–۲</td></tr>
+      <tr><td>۸</td><td><b>هزینه هر تماس</b></td><td>۵ تا ۷ فراخوانی LLM در هر Turn؛ مسیریابی کارهای ساده (احساس، طبقه‌بندی) به مدل کوچک؛ Prompt پایدار برای Cache که الان هست.</td><td>۱–۲</td></tr>
+      <tr><td>۹</td><td><b>بدهی پنهان</b></td><td>تصمیم صریح درباره <code>coa-ai</code> فریزشده (آخرین کامیت تیر ۱۴۰۴) که منطق موضوع‌گذاری در آن است.</td><td>۱</td></tr>
+      <tr><td>۱۰</td><td><b>تاب‌آوری بدون اینترنت</b></td><td>فهرست همه وابستگی‌های خارجی در زمان اجرا (API، مدل، Package)، حذف آن‌ها، و تمرین دوره‌ای قطع اینترنت.</td><td>۳</td></tr>
+      <tr><td>۱۱</td><td><b>چندمشتری بدون چندمستأجری</b></td><td>یک Chart و Values جدا برای هر مشتری، پیکربندی به‌عنوان داده، و چک‌لیست راه‌اندازی یک‌هفته‌ای. Tenancy واقعی فقط با تصمیم بازار SMB.</td><td>۳</td></tr>
+    </table>
+
+    <h2>۷. درخت شاخص‌ها</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%">سطح</th>
+          <th>شاخص</th>
+          <th style="width: 30%">منبع داده</th>
+        </tr>
+      </thead>
+      <tr><td><b>کسب‌وکار</b></td><td>تمدید پایلوت؛ فروش محصول دوم؛ مشتری دوم</td><td>قرارداد</td></tr>
+      <tr><td><b>محصول</b></td><td>نرخ مشارکت کارکنان خط مقدم؛ نرخ تماس کامل؛ زمان رسیدن به بینش؛ اقدام‌های ثبت‌شده مدیر</td><td><code>coa-api</code>، Trend، ایده ۱۹</td></tr>
+      <tr><td><b>کیفیت AI</b></td><td>WER؛ وفاداری خلاصه؛ دقت موضوع و احساس؛ نرخ ارجاع درست به انسان</td><td>Harness موج ۱</td></tr>
+      <tr><td><b>اعتماد</b></td><td>نشت هویت = ۰؛ پوشش Audit = ۱۰۰٪؛ گروه زیر k نمایش داده‌نشده = ۱۰۰٪</td><td>آزمون‌های موج ۰</td></tr>
+      <tr><td><b>اقتصاد</b></td><td>هزینه و تأخیر هر تماس</td><td>Payload پایان Session (<code>chatbot-iva-agent/src/schema.py:142-170</code>)</td></tr>
+      <tr><td><b>تیم</b></td><td>زمان از Merge تا Production؛ تعداد مالک دوم آموزش‌دیده</td><td>Git و CI</td></tr>
+    </table>
+
+    <h2>۸. ریسک‌های نقشه راه</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 28%">ریسک</th>
+          <th>نشانه</th>
+          <th style="width: 34%">پاسخ</th>
+        </tr>
+      </thead>
+      <tr><td>Dependencyهای EX دیر برسند</td><td>۱۳ ردیف فقط به EX وابسته‌اند</td><td>تعهد شرطی T+n؛ پیگیری هفتگی در مرور محصول</td></tr>
+      <tr><td>کیفیت STT روی صدای واقعی کارکنان پایین باشد</td><td>WER سنجیده نشده</td><td>Harness در اول موج ۱؛ گزینه جایگزین (آوانگار پارت) را از قبل آزموده نگه دارید</td></tr>
+      <tr><td>ورود عامراندیش یا عصر گویش پرداز به HR</td><td>اعلام محصول HR</td><td>Case Study پایلوت و دانش دامنه HR زودتر منتشر شود</td></tr>
+      <tr><td>فرسودگی یا رفتن نفر کلیدی</td><td>تمرکز ~۴۲٪ کامیت‌ها</td><td>مالک دوم، CODEOWNERS، مستندسازی</td></tr>
+      <tr><td>پراکندگی تیم بین مشتریان</td><td>چت‌بات‌های متعدد در مخزن</td><td>سقف ظرفیت صریح</td></tr>
+      <tr><td>همراه اول سامانه HR را از SAP به سامانه دیگری ببرد</td><td>آگهی کارشناس ERP: «مشارکت در انتخاب نرم‌افزار ماژول‌های HR»</td><td>اتصال SEG-07 پشت Adapter مستقل از فروشنده (پرونده ۲۵.۳ج)</td></tr>
+      <tr><td>چارگون پرسش زبان طبیعی را عمومی کند</td><td>اکنون در Pilot</td><td>تمایز AQA را به Eval و صوت گره بزنید؛ شراکت از مسیر Open API را بررسی کنید</td></tr>
+    </table>
+
+    <h2>۹. بیست روز اول: کارهای این هفته و هفته بعد</h2>
+    <ol>
+      <li>اصلاح PRV-03 و حذف Token از Log — امروز؛ کوچک و بحرانی.</li>
+      <li>تعیین مالک هر سه جریان و مالک دوم هر سرویس.</li>
+      <li>جلسه با EX برای k، متن اعلان حریم خصوصی، فهرست شماره‌ها و معیارهای پذیرش (بسته پاسخ، بخش ۱۱).</li>
+      <li>طراحی Audit Middleware و حذف هویت در ورودی (یک سند یک‌صفحه‌ای، بعد پیاده‌سازی).</li>
+      <li>ضبط ۲۰ تماس آزمایشی داخلی و ساخت اولین مجموعه طلایی.</li>
+      <li>نسخه نهایی بسته پاسخ با اعداد EX و ارسال پیش از جلسه ارزیابی.</li>
+    </ol>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

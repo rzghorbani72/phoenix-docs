@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>الهام از بازار برای Phoenix</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <section class="cover">
+      <div class="small">محرمانه — داخلی MCINEXT</div>
+      <h1>الهام از بازار: شرکت‌های مشابه چه ساخته‌اند و ما چطور بسازیم</h1>
+      <div class="sub">
+        ویژگی‌های کلیدی شرکت‌هایی که بیشترین شباهت را به Phoenix دارند، با زبان
+        ساده: هر ویژگی چطور کار می‌کند، ما امروز چه داریم، چطور آن را بسازیم و
+        چقدر شدنی است.
+      </div>
+      <table class="meta">
+        <tr><td>هدف</td><td>ساختن یک محصول کامل که نیاز واقعی بازار ایران را برآورده کند. شرکت‌های ایرانی رقیب ما هستند؛ شرکت‌های خارجی فقط منبع ایده‌اند.</td></tr>
+        <tr><td>اولویت</td><td><b>نسخه ۱ = نیازهای توافق UAT همراه اول</b> (۸۷ ردیف Fit-Gap). هر ویژگی که در توافق نیست به نسخه‌های بعد می‌رود. در فهرست پایانی، شماره ردیف توافق کنار هر ویژگی آمده است.</td></tr>
+        <tr><td>مخاطب</td><td>مدیر محصول، سرپرستان فنی و تیم توسعه</td></tr>
+        <tr><td>مبنا</td><td>وب‌سایت، وبلاگ و مستندات شرکت‌ها (بازدید مهر ۱۴۰۵) و کد مخزن Phoenix</td></tr>
+        <tr><td>تاریخ</td><td>۱۳ مهر ۱۴۰۵</td></tr>
+      </table>
+    </section>
+
+    <h2 id="read">راهنمای خواندن</h2>
+    <p>هر کارت این سند پنج بخش دارد:</p>
+    <ol>
+      <li><b>چه ساخته‌اند</b> — ویژگی به زبان ساده.</li>
+      <li><b>چطور کار می‌کند</b> — مراحل کار، تا جایی که شرکت منتشر کرده است.</li>
+      <li><b>ما امروز چه داریم</b> — از روی کد Phoenix.</li>
+      <li><b>چطور بسازیم</b> — گام‌های پیشنهادی برای تیم.</li>
+      <li><b>شدنی بودن</b> — یکی از سه سطح زیر.</li>
+    </ol>
+    <p>نسخه هر ایده (۱، ۲ یا ۳) در فهرست پایانی آمده است؛ نسخه ۱ فقط نیازهای توافق UAT همراه اول است.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 18%">سطح</th><th>یعنی</th></tr>
+      </thead>
+      <tr><td><span class="tag t-ok">آسان</span></td><td>بیشتر کار تنظیم یا تکمیل چیزی است که داریم؛ چند هفته با تیم فعلی.</td></tr>
+      <tr><td><span class="tag t-warn">متوسط</span></td><td>بخش تازه‌ای باید ساخته شود؛ حدود یک تا دو ماه.</td></tr>
+      <tr><td><span class="tag t-bad">سخت</span></td><td>یک فصل یا بیشتر، یا وابسته به داده و همکاری سازمان دیگر.</td></tr>
+    </table>
+    <div class="box warn">
+      <b>یک هشدار درباره منابع:</b> شرکت‌های ایرانی جزئیات فنی منتشر نمی‌کنند
+      و بیشتر صفحه‌هایشان تبلیغاتی است. برای آن‌ها فقط آنچه خودشان گفته‌اند
+      آمده و هر جا حدس زده‌ایم با برچسب <b>«برداشت ما»</b> مشخص شده است. جزئیات
+      «چطور کار می‌کند» بیشتر از وبلاگ و مستندات شرکت‌های خارجی آمده است.
+    </div>
+
+    <h2 id="phoenix">Phoenix در چهار بخش</h2>
+    <p>برای اینکه مقایسه ساده باشد، محصول خودمان را در چهار بخش می‌بینیم:</p>
+    <table>
+      <thead>
+        <tr><th style="width: 24%">بخش</th><th>چه کاری می‌کند</th><th style="width: 22%">نام در کد</th></tr>
+      </thead>
+      <tr><td><b>۱. تلفن‌گوی هوشمند</b></td><td>کارمند با یک شماره تماس می‌گیرد و با یک دستیار صوتی فارسی حرف می‌زند؛ دستیار گوش می‌دهد، جواب می‌دهد و اگر لازم شد تماس را به انسان می‌دهد.</td><td>IVA</td></tr>
+      <tr><td><b>۲. مغز گفت‌وگو</b></td><td>منظور کاربر را می‌فهمد، اگر حرف مبهم بود سؤال تکمیلی می‌پرسد، از بانک دانش جواب پیدا می‌کند و می‌تواند پیامک یا یادآور بفرستد.</td><td>AIVA و بانک دانش</td></tr>
+      <tr><td><b>۳. تحلیل تماس</b></td><td>هر تماس به متن تبدیل می‌شود؛ موضوع، زیرموضوع، احساس، خلاصه و پیشنهادها استخراج می‌شود و روند هر موضوع در طول زمان دنبال می‌شود.</td><td>CCA و coa-api</td></tr>
+      <tr><td><b>۴. پرسش از داده</b></td><td>مدیر به فارسی سؤال می‌پرسد («چرا نارضایتی در استان فارس بالا رفت؟») و جواب را با نمودار می‌گیرد.</td><td>AQA</td></tr>
+    </table>
+    <p>
+      زیر این چهار بخش، پایه‌ها هستند: ورود کاربران و نقش‌ها، نگهداری و پاک کردن
+      داده، و اجرای کامل داخل سازمان بدون نیاز به اینترنت.
+    </p>
+
+    <h2 id="choose" class="pb">کدام شرکت‌ها و چرا شبیه ما هستند</h2>
+    <p>
+      شرکت‌ها را فقط بر اساس <b>شباهت به چهار بخش Phoenix</b> انتخاب کردیم. در
+      ستون «شباهت دقیق» ویژگی هر شرکت کنار معادلش در محصول ما آمده است. شرکتی
+      که فقط نرم‌افزار حقوق و دستمزد یا پرونده پرسنلی دارد، حتی اگر بزرگ باشد،
+      اینجا نیامده؛ چون چیزی برای ساختن بخش‌های ما یاد نمی‌دهد.
+    </p>
+    <table>
+      <thead>
+        <tr><th style="width: 16%">شرکت</th><th style="width: 8%">کشور</th><th>شباهت دقیق: ویژگی آن‌ها ← معادل در Phoenix</th><th style="width: 9%">شباهت</th></tr>
+      </thead>
+      <tr><td><b>سخن</b></td><td>ایران</td><td>«رسا» (تماس‌گیرنده آزاد حرف می‌زند، بدون منو) ← <b>تلفن‌گوی هوشمند</b> با شروع آزاد · «کوالکس» (تحلیل همه تماس‌ها: احساس، خلاصه، کلیدواژه) ← <b>تحلیل تماس</b> · «لنابات» (چت‌بات با مدل زبانی) ← <b>مغز گفت‌وگو</b></td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>عامراندیش</b></td><td>ایران</td><td>«هوشتل» (اپراتور تلفنی هوشمند فارسی با انتقال به انسان) ← <b>تلفن‌گوی هوشمند</b> · «داشبورد پایش» (تبدیل همه مکالمه‌ها به متن، سنجه‌های تماس) ← <b>تحلیل تماس</b> · «فرساوا» ← موتور گفتار به متن ما</td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>سیتاک</b></td><td>ایران</td><td>ضبط دوکاناله + گفتار به متن + خلاصه + کلمات حساس + هشدار تماس بحرانی ← <b>تحلیل تماس</b> ما که دقیقاً همین زنجیره را دارد (به جز هشدار تک‌تماس)</td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>عصر گویش پرداز</b></td><td>ایران</td><td>«نیوشا» و «رومند» (تلفن گویا و ربات صوتی) ← <b>تلفن‌گوی هوشمند</b> · «نویسا» و «آریانا» ← موتورهای گفتار ما</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>پارت (ویرا)</b></td><td>ایران</td><td>«آوانگار» و «آواشو» ← موتورهای گفتار ما · «دانیار» و «درنا» (چت‌بات و مدل زبانی فارسی) ← <b>مغز گفت‌وگو</b></td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>پشتیار</b></td><td>ایران</td><td>منشی تلفنی ۲۴ ساعته با هوش مصنوعی فارسی ← <b>تلفن‌گوی هوشمند</b> (برای کسب‌وکار کوچک، نه سازمان)</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>چارگون (دیدگاه)</b></td><td>ایران</td><td>چت‌بات پاسخ به سؤالات منابع انسانی ← <b>مغز گفت‌وگو + بانک دانش</b> · پرسش زبان طبیعی روی داده ← <b>پرسش از داده</b> · مشتری همان واحد منابع انسانی</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>پرس‌لاین</b></td><td>ایران</td><td>نظرسنجی تجربه کارکنان با «ورود با کد پرسنلی، نتیجه بی‌نام» ← <b>هدف پایلوت ما</b> (شنیدن صدای کارکنان) و نیاز ناشناس ماندن · فقط متنی</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>Perceptyx</b></td><td>آمریکا</td><td>«گفت‌وگو به جای نظرسنجی» ← <b>کل پایلوت ما</b> · تحلیل موضوع، نیت، احساس نظرها ← <b>تحلیل تماس</b> · پرسش آزاد روی نظرها ← <b>پرسش از داده</b></td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>Qualtrics</b></td><td>آمریکا</td><td>سؤال تکمیلی هوشمند وقتی جواب مبهم است ← شاخه <b>سؤال تکمیلی</b> مغز گفت‌وگو (ردیف CON-04)</td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>Listen Labs</b></td><td>آمریکا</td><td>مصاحبه خودکار با تنظیم عمق سؤال تکمیلی ← <b>سقف سؤال تکمیلی</b> (ردیف CON-06) · تحلیل خودکار مصاحبه‌ها ← <b>تحلیل تماس</b></td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>Observe.AI، Level AI، Calabrio</b></td><td>آمریکا</td><td>ارزیابی خودکار همه تماس‌ها با شاهد و درجه اطمینان ← <b>تحلیل تماس</b> و نیاز «اعلام عدم اطمینان مدل» (ردیف AI-14)</td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>Leena AI</b></td><td>آمریکا/هند</td><td>دستیار صوتی منابع انسانی با بانک دانش و ارجاع به انسان ← <b>تلفن‌گو + مغز گفت‌وگو + بانک دانش</b> (بلوک دانش توافق)</td><td><span class="tag t-ok">زیاد</span></td></tr>
+      <tr><td><b>Moveworks</b></td><td>آمریکا</td><td>دستیار کارکنان که مقدار را حدس نمی‌زند و فقط وقت ابهام می‌پرسد ← <b>مغز گفت‌وگو</b></td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>Rippling، Lattice</b></td><td>آمریکا</td><td>جواب با نمایش پرس‌وجو و شاهد ← <b>پرسش از داده</b> و خلاصه مبتنی بر واقعیت (ردیف AI-03)</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td><b>Paradox، HiBob، UKG، SAP</b></td><td>آمریکا/اروپا</td><td>تماس و یادآوری، ساختن بانک دانش از سؤال واقعی، صوت برای کارکنان خط مقدم (SAP روی LiveKit، همان زیرساخت ما) ← <b>تلفن‌گو</b> و <b>بانک دانش</b></td><td><span class="tag t-warn">متوسط</span></td></tr>
+    </table>
+
+    <!-- ================= بخش: رقبای ایرانی ================= -->
+    <section class="part">
+      <div class="num">بخش اول</div>
+      <div class="ttl">رقبای ایرانی</div>
+      <div class="desc">شرکت‌هایی که در ایران همین نوع فناوری را می‌فروشند. از هر کدام می‌پرسیم: چه ویژگی‌ای دارد که ما هم باید داشته باشیم، و چطور آن را بهتر بسازیم.</div>
+    </section>
+
+    <h2 id="sokhan">سخن — مرکز تماس هوشمند کامل</h2>
+    <p class="small">وب‌سایت: <span class="en">sokhan.ai</span> · مشتریان اعلام‌شده: بانک، بیمه، کشاورزی، حمل‌ونقل</p>
+    <div class="box ok"><b>چرا شبیه ماست:</b> مثل ما هم تلفن‌گوی هوشمند فارسی دارد (رسا، بدون منو)، هم تحلیل همه تماس‌ها (کوالکس)، هم چت‌بات با مدل زبانی (لنابات). تنها شرکت ایرانی که سه بخش از چهار بخش ما را با هم دارد.</div>
+    <h3>چه ساخته‌اند</h3>
+    <table>
+      <thead><tr><th style="width: 22%">محصول</th><th>کار</th></tr></thead>
+      <tr><td><b>رسا</b> — توزیع هوشمند تماس</td><td>به جای منوی «برای … عدد ۱ را بزنید»، تماس‌گیرنده حرفش را آزادانه می‌گوید و سیستم او را به جای درست می‌فرستد یا خودش جواب می‌دهد. ۲۴ ساعته، با انتقال به کارشناس.</td></tr>
+      <tr><td><b>کوالکس</b> — کنترل کیفیت تماس</td><td>همه تماس‌ها (نه نمونه) به متن تبدیل و تحلیل می‌شوند: رعایت متن استاندارد، زمان صحبت هر طرف، سکوت، احساس (نارضایتی، رضایت، استرس)، انتقال و قطع تماس، سرعت گفتار، کلیدواژه‌ها. امتیاز خودکار با معیارهای قابل تنظیم، <b>هشدار لحظه‌ای به سرپرست</b>، <b>بازخورد روزانه به هر کارشناس</b>، تعیین نیاز آموزشی هر کارشناس، داشبورد با ۲۰+ شاخص.</td></tr>
+      <tr><td><b>یارکس</b> — دستیار کارشناس</td><td>هنگام تماس، اطلاعات مشتری را از سامانه مشتریان نشان می‌دهد، بر اساس منظور مشتری جواب پیشنهاد می‌کند، کارهای بعد از تماس را خودکار انجام می‌دهد و خلاصه می‌نویسد.</td></tr>
+      <tr><td><b>تیکابات</b></td><td>پاسخ در پیام‌رسان‌ها (بله، تلگرام، واتس‌اپ، اینستاگرام) بر اساس درخت دانش، با ارجاع به انسان.</td></tr>
+      <tr><td><b>لنابات</b></td><td>چت‌بات با مدل زبانی بزرگ برای وب و پیام‌رسان.</td></tr>
+    </table>
+    <h3>چطور کار می‌کند</h3>
+    <p>
+      طبق گفته خودشان: تبدیل گفتار به متن مخصوص فارسی، <b>جدا کردن صدای هر
+      گوینده</b> و کاهش نویز، سپس تحلیل متن. اتصال به تلفن اینترنتی، مرکز تلفن
+      سازمان و فضای ابری. جزئیات بیشتری منتشر نشده است.
+    </p>
+    <h3>ما امروز چه داریم</h3>
+    <ul>
+      <li>شروع آزاد گفت‌وگو بدون منو (همان ایده رسا) — <span class="tag t-ok">داریم</span></li>
+      <li>تحلیل همه تماس‌ها: موضوع، احساس، خلاصه، کلمات نامناسب — <span class="tag t-ok">داریم</span></li>
+      <li>کارنامه کارشناس با خروجی فایل — <span class="tag t-warn">ناقص</span></li>
+      <li>هشدار لحظه‌ای برای یک تماس خاص — <span class="tag t-gap">نداریم</span> (فقط هشدار روند)</li>
+      <li>بازخورد دوره‌ای خودکار به هر نفر — <span class="tag t-gap">نداریم</span></li>
+      <li>دستیار زنده کارشناس — <span class="tag t-gap">نداریم</span></li>
+      <li>پیام‌رسان‌ها — <span class="tag t-warn">ناقص</span> (ابزار روبیکا هست ولی خاموش)</li>
+    </ul>
+    <h3>چطور بسازیم و چه الهامی می‌گیریم</h3>
+    <ol>
+      <li><b>بازخورد دوره‌ای خودکار:</b> همان ایده «بازخورد روزانه به کارشناس» را برای منابع انسانی برگردانیم: هر هفته به مدیر هر واحد یک خلاصه کوتاه از موضوع‌های پرتکرار واحدش (فقط اگر تعداد افراد به حد نصاب رسیده باشد). از داده تحلیلی موجود ساخته می‌شود. <span class="tag t-ok">آسان</span></li>
+      <li><b>هشدار تماس حساس:</b> اگر در تماسی موضوعی مثل آزار، خطر ایمنی یا تهدید آمد، به یک نقش مجاز و محدود اطلاع داده شود — نه به مدیر مستقیم. <span class="tag t-ok">آسان</span></li>
+      <li><b>دستیار کارشناس منابع انسانی:</b> وقتی تماس به کارشناس انسانی منتقل می‌شود، خلاصه گفت‌وگو و جواب‌های پیشنهادی از بانک دانش روی صفحه کارشناس بیاید. <span class="tag t-bad">سخت</span> (رابط کاربری تازه و اتصال به مرکز تلفن)</li>
+    </ol>
+    <div class="box"><b>جمع‌بندی:</b> سخن کامل‌ترین مجموعه ایرانی برای مرکز تماس است. مزیت ما باید در دانش حوزه منابع انسانی، شنیدن صدای کارکنان و حفظ حریم خصوصی باشد؛ این‌ها در محصولات سخن دیده نمی‌شود.</div>
+
+    <h2 id="amerandish">عامراندیش — اپراتور هوشمند و پایش مرکز تماس</h2>
+    <p class="small">وب‌سایت: <span class="en">amerandish.com</span> · محصولات: هوشتل، فرساوا، بات‌آوا، داشبورد پایش</p>
+    <div class="box ok"><b>چرا شبیه ماست:</b> هوشتل همان کار تلفن‌گوی ما را می‌کند (گوش دادن، تبدیل به متن، فهمیدن، جواب، انتقال به انسان) و داشبورد پایشش همان کار تحلیل تماس ما را.</div>
+    <h3>چه ساخته‌اند</h3>
+    <ul>
+      <li><b>هوشتل:</b> اپراتور هوشمند تلفنی روی تلفن اینترنتی؛ گوش می‌دهد، به متن تبدیل می‌کند، می‌فهمد و مثل اپراتور جواب می‌دهد؛ اگر جواب پیدا نکند تماس را به انسان می‌دهد.</li>
+      <li><b>پروژه سایپا و ایران‌خودرو:</b> پاسخ به سؤالات تکراری، معرفی نمایندگی‌های هر شهر، ثبت درخواست امداد و نوبت تعمیر، ثبت شکایت با تبدیل خودکار حرف به متن، پیگیری تمدید ثبت‌نام. ادعا: حدود <b>۸۰٪ سؤالات مشابه</b> هستند و خودکار می‌شوند.</li>
+      <li><b>داشبورد پایش مرکز تماس:</b> تبدیل کل مکالمه به متن و گزارش بر اساس کلیدواژه، به همراه فهرست مفصلی از سنجه‌ها (جدول زیر).</li>
+    </ul>
+    <h3>سنجه‌هایی که اندازه می‌گیرند</h3>
+    <table>
+      <thead><tr><th style="width: 50%">سنجه‌های عددی</th><th>سنجه‌های کیفی</th></tr></thead>
+      <tr>
+        <td>مدت تماس · زمان صحبت اپراتور · زمان صحبت تماس‌گیرنده · مدت سکوت · زمان انتظار · تماس‌های رهاشده · تعداد نوبت صحبت · تکرار سؤال (نشانه نفهمیدن) · نرخ انتقال تماس · سرعت گفتار · حجم تماس هر شماره</td>
+        <td>آیا تماس‌گیرنده به جواب درست رسید؟ · دسته‌بندی موضوع · بلندی صدا · رعایت دستورالعمل · متن کامل گفت‌وگو</td>
+      </tr>
+    </table>
+    <h3>ما امروز چه داریم</h3>
+    <p>
+      ضبط دوکاناله (صدای هر طرف جدا) و زمان هر جمله را داریم؛ پس بیشتر سنجه‌های
+      عددی بالا را می‌توانیم بدون مدل تازه حساب کنیم. «آیا به جواب رسید؟» را
+      نداریم.
+    </p>
+    <h3>چطور بسازیم و چه الهامی می‌گیریم</h3>
+    <ol>
+      <li><b>سنجه‌های عددی هر تماس:</b> از روی زمان‌بندی جمله‌های دو کانال: زمان صحبت هر طرف، سکوت‌های طولانی، هم‌زمان حرف زدن، تعداد نوبت. برای خط صدای کارکنان معنای تازه دارد: تماس‌های خیلی کوتاه یا پر از سکوت یعنی سؤال ما بد طراحی شده. <span class="tag t-ok">آسان</span></li>
+      <li><b>«آیا به جواب رسید؟»:</b> در پایان تماس میز خدمت، مدل زبانی با خواندن متن تشخیص دهد که سؤال جواب گرفت، ارجاع شد یا بی‌جواب ماند. پایه سنجش «حل بدون انسان» است. <span class="tag t-ok">آسان</span></li>
+      <li><b>ثبت شکایت با صدا:</b> همان الگوی ثبت شکایت ایران‌خودرو برای «گزارش مشکل محیط کار». <span class="tag t-warn">متوسط</span></li>
+    </ol>
+    <div class="box"><b>جمع‌بندی:</b> عامراندیش از نظر فناوری نزدیک‌ترین شرکت داخلی به ماست، ولی کاربرد منابع انسانی اعلام نکرده. فهرست سنجه‌هایش یک چک‌لیست آماده برای داشبورد ماست.</div>
+
+    <h2 id="sitak">سیتاک — کنترل کیفیت تماس با هوش مصنوعی</h2>
+    <p class="small">وب‌سایت: <span class="en">sitak.co</span></p>
+    <div class="box ok"><b>چرا شبیه ماست:</b> زنجیره کارش (ضبط دوکاناله ← متن ← خلاصه ← کلمات حساس ← هشدار) قدم‌به‌قدم همان زنجیره تحلیل تماس ماست.</div>
+    <h3>چطور کار می‌کند (طبق راهنمای خودشان)</h3>
+    <ol>
+      <li>ضبط <b>دوکاناله</b> صدا (اپراتور و مشتری جدا).</li>
+      <li>ارسال به سامانه هوش مصنوعی و تبدیل گفتار به متن.</li>
+      <li>تحلیل متن و ساختن پنج خروجی: <b>خلاصه</b> برای پرونده مشتری؛ پیدا کردن <b>کلمات حساس</b> (شکایت، تهدید، نام رقیب)؛ سنجش رضایت، لحن، ادب و رعایت جمله‌های شروع و پایان؛ کشف فرایندهای پرهزینه؛ و <b>هشدار تماس بحرانی</b> (تنش، توهین، درخواست مدیر).</li>
+    </ol>
+    <h3>ما امروز چه داریم</h3>
+    <p>ضبط دوکاناله، تبدیل گفتار به متن، خلاصه، کلمات نامناسب هر طرف و احساس را داریم. فهرست «کلمات حساس قابل تعریف توسط مشتری» و هشدار برای یک تماس را نداریم.</p>
+    <h3>چطور بسازیم</h3>
+    <ol>
+      <li><b>فهرست کلمات حساس قابل ویرایش:</b> کارشناس منابع انسانی فهرستی تعریف کند (مثل «آزار»، «تبعیض»، «حادثه») و تماس‌های دارای این موضوع برچسب بخورند. بهتر است مدل زبانی «موضوع» را تشخیص دهد نه فقط خود کلمه را. <span class="tag t-ok">آسان</span></li>
+      <li><b>هشدار تماس بحرانی</b> با همان قاعده بالا و ارسال فقط به نقش مجاز. <span class="tag t-ok">آسان</span></li>
+    </ol>
+
+    <h2 id="asr">عصر گویش پرداز — گفتار فارسی، تلفن گویا و تشخیص هویت با صدا</h2>
+    <p class="small">وب‌سایت: <span class="en">asr-gooyesh.com</span> · حدود دو دهه سابقه</p>
+    <div class="box ok"><b>چرا شبیه ماست:</b> تلفن گویای هوشمند و ربات صوتی فارسی می‌سازد؛ همان لایه‌ای که تلفن‌گوی ما رویش ایستاده (گفتار به متن، متن به گفتار).</div>
+    <h3>چه ساخته‌اند</h3>
+    <ul>
+      <li><b>نیوشا:</b> تلفن گویای هوشمند که حرف را می‌فهمد.</li>
+      <li><b>رومند:</b> ربات صوتی.</li>
+      <li><b>نویسا:</b> تبدیل گفتار فارسی به متن.</li>
+      <li><b>شناسا:</b> تشخیص هویت از روی صدا؛ <b>رمزآوا:</b> رمز صوتی؛ <b>آریانا:</b> تبدیل متن به گفتار.</li>
+    </ul>
+    <h3>الهام برای ما</h3>
+    <ul>
+      <li><b>تشخیص هویت با صدا</b> برای کارهای شخصی در میز خدمت (مثل «فیش حقوقی‌ام را بفرست»): به جای ساختن، از شریک استفاده کنیم. <span class="tag t-bad">سخت</span> اگر خودمان بسازیم.</li>
+      <li><b>محک کیفیت:</b> دقت تبدیل گفتار به متن خودمان را روی صدای واقعی کارکنان با نویسا و آوانگار مقایسه کنیم تا عدد قابل دفاع داشته باشیم. <span class="tag t-ok">آسان</span></li>
+    </ul>
+
+    <h2 id="part">پارت (ویرا) — زیرساخت هوش مصنوعی فارسی</h2>
+    <p class="small">مرکز تحقیقات هوش مصنوعی پارت · محصولات: آوانگار، آواشو، دانیار، درنا</p>
+    <div class="box ok"><b>چرا شبیه ماست:</b> همان سه موتور پایه ما را به فارسی دارد: گفتار به متن، متن به گفتار، و مدل زبانی برای گفت‌وگو.</div>
+    <ul>
+      <li><b>آوانگار:</b> تبدیل گفتار محاوره‌ای به متن، با ادعای مقاومت در برابر نویز و لهجه.</li>
+      <li><b>آواشو:</b> تبدیل متن به گفتار با صدای دلخواه.</li>
+      <li><b>دانیار و درنا:</b> چت‌بات و مدل زبانی فارسی.</li>
+    </ul>
+    <h3>الهام برای ما</h3>
+    <ul>
+      <li><b>صدای اختصاصی سازمان:</b> دستیار تلفنی با صدای ثابت و آشنا («صدای همراه اول برای کارکنان»). اگر موتور گفتار ما صدای سفارشی را پشتیبانی کند <span class="tag t-warn">متوسط</span>، وگرنه از شریک.</li>
+      <li><b>موتور جایگزین:</b> نگه داشتن یک موتور گفتار دوم آماده برای روزی که موتور اصلی مشکل پیدا کند.</li>
+    </ul>
+
+    <h2 id="poshtyar">پشتیار — منشی تلفنی برای کسب‌وکار کوچک</h2>
+    <div class="box ok"><b>چرا شبیه ماست:</b> دستیار صوتی فارسی روی تلفن که ۲۴ ساعته جواب می‌دهد — همان تلفن‌گوی ما، در مقیاس کوچک.</div>
+    <p>منشی تلفنی ۲۴ ساعته با هوش مصنوعی صوتی فارسی. نکته جالب برای ما <b>سادگی راه‌اندازی</b> است: کسب‌وکار کوچک بدون مهندس، خط خود را راه می‌اندازد. الهام: «ساخت یک خط تازه» (مثلاً مصاحبه خروج) برای کارشناس منابع انسانی باید در حد پر کردن یک فرم باشد. <span class="tag t-warn">متوسط</span></p>
+
+    <h2 id="chargoon">چارگون (دیدگاه) — نرم‌افزار منابع انسانی</h2>
+    <div class="box ok"><b>چرا شبیه ماست:</b> چت‌بات پاسخ به سؤالات منابع انسانی (مثل مغز گفت‌وگو و بانک دانش ما) و پرسش زبان طبیعی روی داده (مثل پرسش از داده ما)؛ و مشتری‌اش همان واحد منابع انسانی است.</div>
+    <h3>چه ساخته‌اند</h3>
+    <ul>
+      <li>۴۴ بخش منابع انسانی، از جذب تا بازنشستگی؛ سلف‌سرویس کارکنان (فیش، مرخصی، ویرایش اطلاعات)؛ چت‌بات پاسخ به سؤالات منابع انسانی؛ مدیریت هوشمند شیفت.</li>
+      <li>پرسش زبان طبیعی روی داده سازمان، در حال آزمایش داخل آوات و دیدگاه (طبق خبر ری‌برند آبان ۱۴۰۴).</li>
+      <li><b>درگاه برنامه‌نویسی باز</b> برای اتصال شرکت‌های دیگر.</li>
+    </ul>
+    <h3>الهام برای ما</h3>
+    <ul>
+      <li><b>اتصال، نه رقابت:</b> درگاه باز چارگون راه گرفتن ساختار سازمانی و مانده مرخصی است، اگر مشتری روی دیدگاه باشد. <span class="tag t-warn">متوسط</span> (به همکاری چارگون وابسته)</li>
+      <li><b>محتوای پرتقاضا:</b> پربازدیدترین مطالب وبلاگ چارگون «مالیات حقوق ۱۴۰۵» و «حق سنوات» است. بانک دانش آماده «قانون کار و حقوق» برای میز خدمت ما همین‌جا تقاضا دارد. <span class="tag t-ok">آسان</span></li>
+      <li><b>آزمون خرید:</b> راهنمای انتخاب نرم‌افزار چارگون همان چیزی است که خریدار از ما می‌پرسد (پوشش داده‌شده در «بسته پاسخ»).</li>
+    </ul>
+    <p class="small">یادداشت: ادعای «پلتفرم هوش مصنوعی با مدل زبانی آفلاین» در پرونده قبلی به مقاله‌ای ارجاع داده شده بود که چنین چیزی نمی‌گوید؛ تا تأیید، فقط «در حال آزمایش» را مبنا بگیرید.</p>
+
+    <h2 id="porsline">پرس‌لاین — نظرسنجی تجربه کارکنان</h2>
+    <div class="box ok"><b>چرا شبیه ماست:</b> همان هدف پایلوت ما را دنبال می‌کند — شنیدن صدای کارکنان و ناشناس نگه داشتن آن‌ها — فقط با فرم متنی به جای گفت‌وگوی تلفنی.</div>
+    <h3>چه ساخته‌اند</h3>
+    <ul>
+      <li>سنجش وفاداری کارکنان (سؤال «چقدر این سازمان را به دوستتان پیشنهاد می‌کنید؟») و اشتیاق شغلی.</li>
+      <li><b>ورود با کد پرسنلی، ولی بی‌نام در نتیجه:</b> فقط کارکنان مجاز پاسخ می‌دهند، اما پاسخ به نام کسی ثبت نمی‌شود.</li>
+      <li>گزارش نموداری به تفکیک واحد، و دستیار هوش مصنوعی برای ساخت فرم و تحلیل داده.</li>
+    </ul>
+    <h3>الهام برای ما</h3>
+    <ul>
+      <li><b>همان سازوکار ناشناس ماندن برای تلفن:</b> شماره تلفن فقط برای اجازه ورود بررسی شود و در تحلیل جای آن یک شناسه بی‌معنی بنشیند. این دقیقاً نیاز پایلوت است. <span class="tag t-warn">متوسط</span></li>
+      <li><b>کمک در طراحی سؤال:</b> دستیاری که از روی هدف («می‌خواهم دلیل ترک خدمت را بفهمم») سؤال‌ها و سؤال‌های تکمیلی را پیشنهاد کند. <span class="tag t-ok">آسان</span></li>
+    </ul>
+
+    <!-- ================= بخش: منابع الهام خارجی ================= -->
+    <section class="part">
+      <div class="num">بخش دوم</div>
+      <div class="ttl">منابع الهام خارجی</div>
+      <div class="desc">این شرکت‌ها رقیب ما نیستند. از وبلاگ و مستنداتشان یاد می‌گیریم که ویژگی‌های کلیدی را دقیقاً چطور ساخته‌اند. مرتب‌شده بر اساس چهار بخش Phoenix.</div>
+    </section>
+
+    <h2 id="listen">شنیدن صدای کارکنان</h2>
+
+    <h3>Perceptyx — گفت‌وگو به جای نظرسنجی</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> دقیقاً ایده پایلوت ما، فقط با چت به جای تلفن: کارمند حرف می‌زند، دستیار سؤال تکمیلی می‌پرسد، نظرها تحلیل می‌شوند و مدیر از نظرها سؤال می‌پرسد.</div>
+    <p><b>چه ساخته‌اند:</b> کارمند به جای پر کردن فرم، در یک گفت‌وگوی چت‌مانند حرفش را می‌زند. دستیار در لحظه‌های مهم (مثل پایان دوره آزمایشی) گفت‌وگو را شروع می‌کند و بر اساس حرف همان شخص سؤال تکمیلی می‌پرسد.</p>
+    <p><b>چطور نظرها را تحلیل می‌کنند (از سند فنی خودشان، بهمن ۱۴۰۴):</b></p>
+    <table>
+      <thead><tr><th style="width: 24%">کار</th><th>روش</th></tr></thead>
+      <tr><td>پیدا کردن موضوع</td><td>سه روش با هم: مدلی که با نمونه‌های برچسب‌خورده آموزش دیده، فهرست کلیدواژه‌ها، و روشی که <b>موضوع‌های تازه را خودش کشف می‌کند</b>.</td></tr>
+      <tr><td>نیت گوینده</td><td>هر نظر در یکی از این دسته‌ها: تحسین، خواسته و ترجیح، پیشنهاد («باید…»)، نیاز و نگرانی.</td></tr>
+      <tr><td>احساس</td><td>سه سطح: مثبت، خنثی، منفی.</td></tr>
+      <tr><td>هیجان</td><td>شش حالت: خشم، ترس، علاقه، شادی، غم، شگفتی.</td></tr>
+      <tr><td>حریم خصوصی</td><td><b>پیش از فرستادن هر نظر به مدل زبانی خارجی، نام افراد با یک مدل تشخیص نام پوشانده می‌شود.</b> داده مشتری برای آموزش مدل استفاده نمی‌شود. هر ویژگی هوش مصنوعی برچسب دارد و مشتری می‌تواند خاموشش کند.</td></tr>
+    </table>
+    <p><b>مدل احساس:</b> ۱٬۰۰۰ نظر واقعی را چهار روان‌شناس سازمانی با یک دستورالعمل مشترک برچسب زدند؛ خود این چهار نفر در ۷٪ موارد با هم اختلاف داشتند (یعنی دقت ۱۰۰٪ ممکن نیست). یک مدل کوچک تنظیم‌شده به دقت ۸۹٫۴٪ رسید، تقریباً برابر مدل بزرگ با دستور دقیق (۸۹٫۳٪) ولی ارزان‌تر و سریع‌تر. نظرهای «دوگانه» («مدیرم خوب است ولی کار زیاد است») جداگانه بررسی شدند.</p>
+    <p><b>ما امروز چه داریم:</b> موضوع و زیرموضوع، احساس، هیجان و ستون «پیشنهادها» را داریم. کشف موضوع تازه، پوشاندن نام، و محک دقت <b>نداریم</b>.</p>
+    <p><b>چطور بسازیم:</b></p>
+    <ol>
+      <li><b>پوشاندن نام و شماره پیش از ذخیره و تحلیل</b>: قاعده برای شماره‌ها (تلفن، کد پرسنلی) + مدل زبانی یا مدل تشخیص نام برای اسم‌ها. <span class="tag t-ok">آسان</span></li>
+      <li><b>ستون «نیت»</b> کنار احساس؛ فقط یک دستور تازه برای مدل زبانی که الان تحلیل می‌کند. <span class="tag t-ok">آسان</span></li>
+      <li><b>کشف موضوع تازه:</b> نظرهایی که در هیچ موضوع موجودی جا نمی‌گیرند جمع شوند، بر اساس شباهت معنایی گروه‌بندی شوند و هر گروه بزرگ‌شونده به کارشناس پیشنهاد شود («موضوع تازه: سرویس رفت‌وآمد شیفت شب»). <span class="tag t-warn">متوسط</span></li>
+      <li><b>محک احساس فارسی:</b> ۱٬۰۰۰ قطعه بی‌نام از تماس‌های پایلوت، سه برچسب‌زن، یک دستورالعمل. <span class="tag t-ok">آسان</span></li>
+    </ol>
+
+    <h3>Qualtrics — سؤال تکمیلی هوشمند وسط نظرسنجی</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> همان کاری که ردیف CON-04 توافق از ما می‌خواهد: وقتی جواب مبهم است، یک سؤال تکمیلی هدفمند.</div>
+    <p><b>چطور کار می‌کند:</b> وقتی کارمند به سؤال باز جواب داد، هوش مصنوعی جواب را می‌خواند و اگر کلی یا مبهم بود، یک سؤال تکمیلی هدفمند درباره همان حرف می‌پرسد. در آزمایش‌هایشان حدود <b>۴۰٪</b> پاسخ‌دهندگان جوابشان را گسترش دادند. یافته مهم دیگرشان: فقط <b>۴۸٪</b> کارکنان می‌گویند اثر بازخوردشان را دیده‌اند؛ و هر جا سازمان بیشتر شنید، اشتیاق نزدیک دو برابر شد.</p>
+    <p><b>ما امروز چه داریم:</b> شاخه «سؤال تکمیلی» در مغز گفت‌وگو هست و کار می‌کند. سقف تعداد سؤال تکمیلی و اعلام نتیجه به کارکنان نیست.</p>
+    <p><b>چطور بسازیم:</b> (۱) سقف و قاعده سؤال تکمیلی برای هر سؤال <span class="tag t-ok">آسان</span>؛ (۲) «شنیدیم، انجام دادیم»: پس از هر دوره، پیام صوتی یا پیامک به همان واحد درباره کاری که انجام شد <span class="tag t-ok">آسان</span>.</p>
+
+    <h3>Listen Labs — مصاحبه هوش مصنوعی در مقیاس</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> یک دستیار با صدها نفر هم‌زمان گفت‌وگو می‌کند و خودش جمع‌بندی می‌کند — همان کاری که خط صدای کارکنان ما می‌کند.</div>
+    <p><b>چطور کار می‌کند (از مستنداتشان):</b></p>
+    <ol>
+      <li>پژوهشگر هدف را به زبان ساده می‌نویسد؛ سیستم <b>راهنمای مصاحبه</b> (فهرست سؤال‌ها) و سؤال‌های غربالگری را می‌سازد.</li>
+      <li>برای <b>هر سؤال</b> عمق سؤال تکمیلی انتخاب می‌شود: هیچ، فقط وقتی جواب کوتاه بود، یک بار، یا دو تا سه بار.</li>
+      <li>برای هر سؤال می‌شود «دستور کاوش» نوشت: دقیقاً دنبال چه جنبه‌ای بگردد.</li>
+      <li>سیستم مدت تقریبی مصاحبه را حساب می‌کند تا طولانی نشود.</li>
+      <li>صدها مصاحبه هم‌زمان اجرا می‌شود؛ تحلیل خودکار، یافته‌ها، موضوع‌ها و گزارش آماده را در کمتر از یک روز می‌دهد.</li>
+    </ol>
+    <p><b>چطور بسازیم — «طرح گفت‌وگو» برای هر خط:</b> هر خط (پالس، مصاحبه خروج، پیگیری نیروی جدید) یک فهرست سؤال داشته باشد که برای هر سؤال عمق سؤال تکمیلی و دستور کاوش تعیین شده باشد؛ مغز گفت‌وگو از روی همین طرح جلو برود. همان کمبودی که در توافق پایلوت (سقف سؤال تکمیلی) آمده را هم حل می‌کند. <span class="tag t-warn">متوسط</span></p>
+
+    <h3>Culture Amp — مراقب «شنیدن پنهان» باشید</h3>
+    <p>تحلیل پنهان پیام‌ها و ایمیل‌های کارکنان را «هیاهو» می‌دانند: فقط ۲۴٪ کارشناسان منابع انسانی روش شنیدن سازمانشان را توصیه می‌کنند، و آزمایش خودشان روی پیام‌های کاری نشان داد بعضی گروه‌ها (بر اساس منطقه، جنسیت، سابقه) کمتر دیده می‌شوند. <b>نتیجه برای ما:</b> فقط کانال داوطلبانه و آگاهانه.</p>
+
+    <h2 id="quality" class="pb">تحلیل و ارزیابی تماس</h2>
+    <h3>Observe.AI، Level AI و Calabrio — ارزیابی خودکار همه تماس‌ها</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> همه تماس‌ها را خودکار به متن و نمره تبدیل می‌کنند — همان کار تحلیل تماس ما — و برای هر نتیجه شاهد و درجه اطمینان می‌دهند (ردیف AI-14 توافق).</div>
+    <p><b>چه ساخته‌اند:</b> به جای اینکه کارشناس کیفیت از هر صد تماس یکی دو تا را گوش کند، سیستم <b>همه</b> تماس‌ها را با یک فرم ارزیابی نمره می‌دهد و برای هر جواب <b>شاهد</b> (بخش مربوط از گفت‌وگو و زمانش) و <b>دلیل</b> می‌آورد. ادعا: ارزیابی پنج برابر سریع‌تر.</p>
+    <p><b>قواعد نوشتن فرم ارزیابی (از راهنمای Calabrio):</b></p>
+    <ol>
+      <li>سؤال را با «آیا کارشناس …؟» بنویسید و درباره <b>رفتار قابل مشاهده</b> بپرسید.</li>
+      <li>بیشتر سؤال‌ها <b>بله/خیر</b> باشند؛ دقیق‌ترین نتیجه را می‌دهند.</li>
+      <li>هر سؤال فقط <b>یک</b> رفتار را بسنجد.</li>
+      <li>برای هر سؤال توضیح بنویسید که دقیقاً دنبال چه بگردد؛ برای هر گزینه هم شرط دقیق و یک <b>نمونه گفت‌وگو</b>.</li>
+      <li>امتیاز: بله = ۱۰۰، خیر = ۰، «مربوط نیست» = از محاسبه حذف. مقیاس حداکثر پنج درجه با فاصله برابر (۱۰۰، ۷۵، ۵۰، ۲۵، ۰).</li>
+      <li>«مربوط نیست» وقتی است که آن رفتار در آن تماس معنی نداشته (مثلاً تماس منتقل شده).</li>
+    </ol>
+    <p>Level AI می‌گوید سیستمش لازم نیست با فهرست جمله آموزش ببیند؛ منظور هر سؤال را می‌فهمد و برای هر جواب شاهد و استدلال می‌دهد. Observe.AI نمره هر بخش فرم و «رد خودکار» برای خطاهای جدی را نشان می‌دهد.</p>
+    <p><b>ما امروز چه داریم:</b> کارنامه کارشناس و برچسب‌های تحلیلی هر تماس. موتور «فرم ارزیابی قابل تعریف» نداریم.</p>
+    <p><b>چطور بسازیم — موتور فرم ارزیابی:</b></p>
+    <ol>
+      <li>کارشناس فرم می‌سازد: سؤال، توضیح، گزینه‌ها با شرط و نمونه.</li>
+      <li>برای هر تماس و هر سؤال، مدل زبانی متن گفت‌وگو را می‌خواند و برمی‌گرداند: جواب، جمله شاهد، زمان آن در تماس، دلیل کوتاه.</li>
+      <li>امتیاز با همان قاعده بالا حساب می‌شود؛ تماس‌هایی که مدل مطمئن نیست برای بازبینی انسان علامت می‌خورند.</li>
+      <li>کارشناس هر جواب را می‌تواند اصلاح کند و این اصلاح‌ها برای سنجش دقت جمع می‌شوند.</li>
+    </ol>
+    <div class="box ok"><b>کاربرد دوگانه برای ما:</b> همین موتور (الف) کیفیت <b>دستیار تلفنی خودمان</b> را می‌سنجد («آیا دستیار سؤال تکمیلی بجا پرسید؟»، «آیا پایان تماس روشن بود؟») و (ب) کیفیت کارشناسان میز خدمت منابع انسانی را. <span class="tag t-warn">متوسط</span></div>
+
+    <h2 id="helpdesk" class="pb">دستیار کارکنان و میز خدمت</h2>
+    <h3>Leena AI — دستیار منابع انسانی صوتی و متنی</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> دستیار صوتی که از بانک دانش منابع انسانی جواب می‌دهد و اگر نتوانست به انسان می‌سپارد — همان تلفن‌گو، مغز گفت‌وگو و بانک دانش ما.</div>
+    <p><b>چه ساخته‌اند:</b> «همکار هوش مصنوعی» آماده برای منابع انسانی (پذیرش نیروی جدید، مرخصی، سؤال حقوق، مزایا)، صوتی و ۲۴ ساعته به بیش از ۱۰۰ زبان، با اتصال آماده به ۲۰۰+ سامانه و ابزاری که فرایند را با جمله ساده تعریف می‌کند. ادعا: <b>۷۰٪+ درخواست‌ها بدون انسان حل می‌شود</b>، راه‌اندازی در ۴۵ روز.</p>
+    <p><b>درس راه‌اندازی برای ۵۱ هزار کارمند یک بیمارستان زنجیره‌ای:</b></p>
+    <ol>
+      <li>سال اول صرف <b>مرتب کردن محتوا</b>، امنیت و هماهنگی داخلی شد؛ سخت‌ترین بخش هماهنگی داخلی بود.</li>
+      <li>کارهای اول: مانده و درخواست مرخصی، سؤالات آیین‌نامه، راهنمای فرایندها، پر کردن فرم.</li>
+      <li>مؤثرترین راه جذب کاربر: معرفی دستیار در <b>جلسه معارفه نیروی جدید</b>؛ و بازی و نمایش حضوری به جای اطلاعیه.</li>
+      <li>شاخص‌ها: اولین استفاده، استفاده دوباره، رضایت از درستی جواب.</li>
+      <li>«انجام دادن کار» (نه فقط جواب دادن) ضروری بود.</li>
+    </ol>
+
+    <h3>HiBob و Perk — ترتیب درست ساختن میز خدمت</h3>
+    <p>شرکت Perk «با هوش مصنوعی شروع نکرد». ترتیب: (۱) همه درخواست‌ها در یک درگاه جمع شد؛ (۲) از <b>سؤالات واقعی</b> بانک دانش ساخته شد؛ (۳) کارهای تکراری خودکار شد؛ (۴) آخر سر هوش مصنوعی اضافه شد. نتیجه: ۶۰٪ درخواست‌ها بدون انسان، ۴۰٪ کاهش زمان اولین پاسخ.</p>
+
+    <h3>Moveworks — دستیاری که حدس نمی‌زند</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> دستیار کارکنان با همان الگوی ما: فهمیدن منظور، سؤال در صورت ابهام، ابزار، ارجاع به انسان.</div>
+    <p><b>مشکل:</b> مدل زبانی وقتی شماره پرونده یا کد لازم دارد، چیزی «شبیه درست» می‌سازد. <b>راه‌حل آن‌ها:</b></p>
+    <ol>
+      <li>هر مقدار لازم (نوع مرخصی، تاریخ، کد) یک «جای خالی» تعریف‌شده است.</li>
+      <li>گزینه‌ها از <b>سامانه مرجع</b> خوانده می‌شوند، نه از ذهن مدل؛ مدل فقط از میان آن‌ها انتخاب می‌کند.</li>
+      <li>مقدار انتخاب‌شده قفل می‌شود و بقیه گفت‌وگو از همان استفاده می‌کند.</li>
+      <li>فقط وقتی ابهام هست سؤال می‌پرسد؛ برای هر جای خالی تعیین می‌شود «همیشه بپرس»، «اگر معلوم است استنتاج کن» یا «همیشه استنتاج کن».</li>
+    </ol>
+    <p><b>تعریف درست «حل بدون انسان»:</b> رویدادها جدا ثبت شوند: منظور فهمیده شد، حل شد، کار خودکار انجام شد، به انسان ارجاع شد، <b>رها شد و بعداً از راه دیگر پیگیری شد</b>. اگر کاربر خسته شد و رفت، «حل‌شده» حساب نشود.</p>
+    <p><b>چطور بسازیم:</b> برای کارهای شخصی میز خدمت، شاخه سؤال تکمیلی فعلی را به «جای خالی + خواندن از سامانه مرجع + تأیید شفاهی» ارتقا دهیم («مرخصی استحقاقی، شنبه ۱۲ مهر؛ درست است؟») <span class="tag t-warn">متوسط</span>. شمارش «حل بدون انسان»: اگر همان شماره تا ۷۲ ساعت دوباره زنگ زد، حل‌نشده <span class="tag t-ok">آسان</span>.</p>
+
+    <h3>UKG و SAP — صوت برای کارکنان خط مقدم</h3>
+    <p>UKG دستیار صوتی‌اش را با فقط <b>۱۲ کار</b> عرضه کرد: «برنامه شیفت این هفته‌ام؟»، «امروز کجا کار می‌کنم؟»، «کارت ساعتم مشکل دارد؟»، «مرخصی کافی برای هفته بعد دارم؟»، تغییر حساب حقوق. SAP صدای دستیارش را روی <b>LiveKit</b> ساخت — همان زیرساختی که تلفن‌گوی ما رویش است. <b>الهام:</b> فاز اول میز خدمت صوتی ما هم ۱۰ تا ۱۲ کار پرتکرار داشته باشد، هر کدام با آزمون جدا.</p>
+
+    <h3>Paradox — تماس و یادآوری</h3>
+    <p>از ۲۵ میلیون نوبت مصاحبه: یادآوری به‌موقع و تغییر آسان زمان، غیبت را <b>۴۰٪</b> کم کرد؛ <b>۹۳٪</b> تغییر زمان‌ها را خود سازمان شروع کرده بود نه متقاضی. <b>الهام برای تماس خروجی ما</b> (مصاحبه خروج، پیگیری نیروی جدید): پیامک یادآوری + «برای تغییر زمان با همین شماره تماس بگیرید» + تغییر آسان از طرف منابع انسانی. <span class="tag t-warn">متوسط</span></p>
+
+    <h2 id="data" class="pb">پرسش از داده</h2>
+    <h3>Rippling — جوابی که کارش را نشان می‌دهد</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> سؤال به زبان عادی ← ساختن پرس‌وجو روی داده ← جواب و گزارش؛ همان کار دستیار پرسش از داده ما.</div>
+    <ol>
+      <li>یک دستیار اصلی سؤال را می‌گیرد و به یکی از ۵ تا ۷ دستیار تخصصی می‌دهد: خواندن داده، جست‌وجو در متن آیین‌نامه‌ها، یا انجام کار.</li>
+      <li>دستیار فقط داده‌ای را می‌بیند که <b>خود کاربر</b> اجازه دیدنش را دارد.</li>
+      <li>جواب همراه با پرس‌وجو و گزارش زیرینش نمایش داده می‌شود تا قابل بررسی باشد.</li>
+      <li>هر تغییری اول برای تأیید صف می‌شود و از همان مسیر تأیید سازمان می‌گذرد.</li>
+      <li>آزمون در چهار لایه: روی هر تغییر کد، بعد از ادغام (۳۰۰ تا ۴۰۰ سؤال)، <b>حدود ۱۰ سناریوی حیاتی که انتشار را متوقف می‌کنند</b>، و پایش روزانه.</li>
+    </ol>
+    <p><b>ما امروز چه داریم:</b> دستیار پرسش از داده (AQA) پرس‌وجو می‌سازد و تنها بخش ما با آزمون خودکار است. <b>چطور بسازیم:</b> پرس‌وجو و تعداد ردیف کنار هر نمودار نمایش داده شود؛ نقش کاربر به پرس‌وجو منتقل شود؛ برای مدیر واحد فقط نمای بی‌نام. <span class="tag t-ok">آسان</span></p>
+
+    <h3>Lattice — گزارشی که هر جمله‌اش شاهد دارد</h3>
+    <div class="box ok"><b>چرا شبیه ماست:</b> از گفت‌وگوها و بازخوردها خلاصه می‌سازد؛ همان کاری که خلاصه هر تماس و گزارش ماهانه ما می‌کند (ردیف AI-03: خلاصه مبتنی بر واقعیت).</div>
+    <p>پیش‌نویس ارزیابی عملکرد را از یادداشت‌ها و بازخوردهای واقعی می‌سازد؛ <b>هر جمله به منبع مشخصش لینک است</b>؛ اگر داده کم باشد می‌گوید «اطلاعات کافی نیست» به جای جمله کلی؛ دستیار نمره نمی‌دهد و ارسال نمی‌کند — فقط انسان. نتیجه: ۴۷٪ سریع‌تر. <b>الهام:</b> هر موضوع در گزارش ماهانه ما به چند نقل‌قول بی‌نام و شماره تماس ارجاع دهد؛ زیر حد نصاب افراد بنویسد «داده کافی نیست». <span class="tag t-ok">آسان</span></p>
+
+    <!-- ================= بخش: فهرست ویژگی‌ها ================= -->
+    <section class="part">
+      <div class="num">بخش سوم</div>
+      <div class="ttl">فهرست ویژگی‌ها برای توسعه، به ترتیب نسخه</div>
+      <div class="desc">نسخه ۱ فقط نیازهای توافق UAT همراه اول است و هر ردیف شماره ردیف توافقش را دارد. ایده‌هایی که در توافق نیستند به نسخه ۲ و ۳ می‌روند.</div>
+    </section>
+
+    <h2 id="v1">نسخه ۱ — نیازهای توافق UAT همراه اول</h2>
+    <p>
+      این ۱۹ ویژگی، کمبودهای توافق پایلوت را می‌پوشانند. ستون «الهام از»
+      می‌گوید روش ساختن را از کجا یاد بگیریم؛ ستون «امروز» وضعیت کد ماست. ردیف‌هایی
+      از توافق که امروز کامل کار می‌کنند (مثل شروع آزاد گفت‌وگو، روند موضوع‌ها،
+      فیلتر زمانی) اینجا تکرار نشده‌اند.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 5%">#</th>
+          <th style="width: 20%">ویژگی</th>
+          <th style="width: 13%">ردیف توافق</th>
+          <th style="width: 14%">الهام از</th>
+          <th style="width: 9%">امروز</th>
+          <th>چطور بسازیم</th>
+          <th style="width: 8%">شدنی</th>
+        </tr>
+      </thead>
+      <tr><td class="c-num">۱</td><td><b>پوشاندن نام و شماره پیش از ذخیره و در خروجی‌ها</b></td><td class="en">PRV-01، PRV-09</td><td>Perceptyx</td><td><span class="tag t-gap">نداریم</span></td><td>قاعده برای شماره‌ها (تلفن، کد پرسنلی) + تشخیص نام با مدل؛ در مسیر ورود داده، یک بار برای همه بخش‌ها.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۲</td><td><b>ورود فقط برای کارکنان مجاز و پیام برای شماره غیرمجاز</b></td><td class="en">VIA-02، VIA-03، SEG-06، TEC-06</td><td>پرس‌لاین</td><td><span class="tag t-warn">ناقص</span></td><td>بررسی شماره در لحظه تماس (نه فقط در حافظه)؛ پیام کوتاه و قطع بدون ساختن رکورد تحلیلی.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۳</td><td><b>جدا کردن هویت از تحلیل</b></td><td class="en">SEG-03، PRV-02، PRV-04</td><td>پرس‌لاین، Perceptyx</td><td><span class="tag t-warn">ناقص</span></td><td>شماره در تحلیل با شناسه بی‌معنی عوض شود؛ فقط مدیر سامانه به هویت دسترسی داشته باشد؛ مدیران فقط آمار تجمیعی ببینند.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۴</td><td><b>حد نصاب گروه (کمتر از k نفر نمایش داده نشود)</b></td><td class="en">PRV-05، AN-06</td><td>Perceptyx، Qualtrics، پرس‌لاین</td><td><span class="tag t-gap">نداریم</span></td><td>یک شرط در لایه گزارش و پرسش از داده؛ عدد k را EX تعیین می‌کند.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۵</td><td><b>ثبت هر دسترسی به هویت و صوت؛ صوت فقط برای نقش مجاز</b></td><td class="en">PRV-06، PRV-03، PRV-11</td><td>Leena (ردپای کارها)، HiBob</td><td><span class="tag t-gap">نداریم</span></td><td>یک لایه مشترک ثبت دسترسی: چه کسی، کی، به چه چیزی؛ بررسی مالکیت پیش از پخش صوت.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۶</td><td><b>تشخیص و جدا کردن صدای حساس، با شدت و هشدار</b></td><td class="en">PRV-10، AI-15، AN-09</td><td>سیتاک، سخن (کوالکس)</td><td><span class="tag t-warn">ناقص</span></td><td>فهرست موضوع‌های حساس قابل ویرایش + تشخیص با مدل؛ شدت قابل تنظیم به جای «همیشه زیاد»؛ اطلاع فقط به نقش مجاز.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۷</td><td><b>سقف و قاعده سؤال تکمیلی؛ تشخیص حرف کامل</b></td><td class="en">CON-04، CON-06، CON-07</td><td>Listen Labs، Qualtrics</td><td><span class="tag t-warn">ناقص</span></td><td>برای هر خط: حداکثر تعداد سؤال تکمیلی و شرط پرسیدن («فقط اگر جواب کوتاه یا مبهم بود») به‌صورت تنظیم.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۸</td><td><b>تأیید خلاصه در پایان تماس</b></td><td class="en">CON-08</td><td>Moveworks (تأیید شفاهی)</td><td><span class="tag t-warn">ناقص</span></td><td>دستیار در پایان، خلاصه یک‌جمله‌ای را می‌خواند: «درست فهمیدم که…؟» و اصلاح را ثبت می‌کند.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۹</td><td><b>ثبت اطلاعات تماس و مدیریت تماس ناقص یا قطع‌شده</b></td><td class="en">VIA-06، VIA-07</td><td>عامراندیش (سنجه‌های تماس)</td><td><span class="tag t-warn">ناقص</span></td><td>شناسه، زمان، مدت و وضعیت کامل/ناقص هر تماس؛ برای تماس ناقص خلاصه ساختگی ساخته نشود.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۰</td><td><b>نوع حرف (شکایت، پیشنهاد، تحسین، نگرانی) و نشانه‌های مثبت</b></td><td class="en">AI-05، AI-09، AN-05</td><td>Perceptyx (نیت گوینده)</td><td><span class="tag t-warn">ناقص</span></td><td>یک دستور تازه در تحلیل موجود؛ ستون «پیشنهادها» پایه آن است؛ فیلتر مثبت/منفی در داشبورد.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۱</td><td><b>گروه‌بندی حرف‌های مشابه و کشف موضوع تازه</b></td><td class="en">AI-12، AI-13</td><td>Perceptyx (کشف خودکار موضوع)</td><td><span class="tag t-gap">نداریم</span></td><td>حرف‌هایی که در موضوع موجود جا نمی‌گیرند بر اساس شباهت معنایی گروه شوند؛ گروه رو به رشد به کارشناس پیشنهاد شود.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۱۲</td><td><b>اعلام عدم اطمینان مدل و برچسب «نیاز به بازبینی»</b></td><td class="en">AI-14</td><td>Level AI، Observe.AI، Lattice</td><td><span class="tag t-warn">ناقص</span></td><td>مدل کنار هر برچسب درجه اطمینان بدهد؛ زیر آستانه، برای بازبینی انسان علامت بخورد.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۳</td><td><b>خلاصه مبتنی بر واقعیت با شاهد</b></td><td class="en">AI-03، AN-08</td><td>Lattice، Level AI</td><td><span class="tag t-warn">ناقص</span></td><td>هر نکته خلاصه به جمله اصلی گفت‌وگو اشاره کند؛ در گزارش، هر موضوع با چند نقل‌قول بی‌نام.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۴</td><td><b>محک دقت گفتار به متن، موضوع و احساس</b></td><td class="en">AI-01، AI-06، AI-07، AI-08</td><td>Perceptyx؛ نویسا و آوانگار برای مقایسه</td><td><span class="tag t-gap">نداریم</span></td><td>نمونه بی‌نام با برچسب انسانی؛ اندازه‌گیری خطای کلمه، دقت موضوع و احساس سه‌سطحی؛ عدد برای معیار پذیرش.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۵</td><td><b>آزمون خودکار با سناریوهای طلایی</b></td><td class="en">TEC-08، TEC-10، TEC-11</td><td>Rippling</td><td><span class="tag t-warn">ناقص</span></td><td>الگوی آزمون موجود در پرسش از داده به تلفن‌گو و مغز گفت‌وگو؛ اجرای دوباره پس از هر اصلاح.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۱۶</td><td><b>ثبت سؤالات بی‌جواب و سؤالات پرتکرار</b></td><td class="en">KB-05، KB-07، KB-08</td><td>HiBob و Perk (دانش از سؤال واقعی)</td><td><span class="tag t-warn">ناقص</span></td><td>هر «نمی‌دانم» ثبت شود؛ فهرست هفتگی سؤالات بی‌جواب و پرتکرار برای تکمیل بانک دانش توسط EX.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۷</td><td><b>پیامک لینک یا اطلاعات، با محدودیت ارسال</b></td><td class="en">KB-06</td><td>Paradox (پیامک یادآوری)</td><td><span class="tag t-ok">داریم</span></td><td>ابزار پیامک هست؛ سقف تعداد ارسال و سناریوهای مجاز EX اضافه شود.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۸</td><td><b>پرسش از داده بدون راه به هویت</b></td><td class="en">AN-12، PRV-02</td><td>Rippling</td><td><span class="tag t-warn">ناقص</span></td><td>نمایش پرس‌وجو و تعداد ردیف کنار نمودار؛ پرس‌وجو فقط روی نمای بی‌هویت.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۱۹</td><td><b>ورود فایل کارکنان و ساختار سازمانی با گزارش خطا</b></td><td class="en">SEG-01، SEG-02، SEG-04، SEG-05، VIA-04، VIA-05</td><td>چارگون (یکپارچگی داده)</td><td><span class="tag t-warn">ناقص</span></td><td>قالب فایل ثابت، بررسی خودکار هنگام بارگذاری، برچسب «نگاشت‌نشده» برای شماره‌های بدون واحد.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+    </table>
+    <div class="box warn">
+      <b>ترتیب پیشنهادی ساخت در نسخه ۱:</b> اول حریم خصوصی (ردیف‌های ۱ تا ۶)،
+      چون بدون آن‌ها آزمون پذیرش رد می‌شود؛ بعد گفت‌وگو و تحلیل (۷ تا ۱۳)؛ بعد
+      سنجش و آزمون (۱۴ و ۱۵) که عدد معیار پذیرش را می‌دهد؛ و در کنار همه،
+      بانک دانش و ورود داده (۱۶ تا ۱۹). زمان هر کار به‌صورت «T + n روز کاری پس
+      از دریافت ورودی EX» تعهد شود.
+    </div>
+
+    <h2 id="v2">نسخه ۲ — محصول دوم برای همان مشتری</h2>
+    <p>بعد از پذیرش پایلوت. همه روی همان موتور ساخته می‌شوند.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 5%">#</th><th style="width: 26%">ویژگی</th><th style="width: 22%">الهام از</th><th>چطور بسازیم</th><th style="width: 9%">شدنی</th></tr>
+      </thead>
+      <tr><td class="c-num">۲۰</td><td><b>خلاصه هفتگی برای مدیر و «شنیدیم، انجام دادیم»</b></td><td>سخن (بازخورد روزانه)، Qualtrics، Perceptyx</td><td>از داده روند موجود + پیامک؛ ثبت اقدام مدیر و اعلام به همان واحد.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۲۱</td><td><b>موتور فرم ارزیابی تماس</b></td><td>Observe.AI، Level AI، Calabrio، کوالکس</td><td>فرم قابل تعریف؛ برای هر سؤال: جواب، شاهد، زمان و دلیل؛ برای دستیار خودمان و کارشناسان.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۲۲</td><td><b>سنجه‌های عددی کامل هر تماس</b></td><td>عامراندیش</td><td>از زمان‌بندی دو کانال: زمان صحبت هر طرف، سکوت، هم‌زمان حرف زدن، تعداد نوبت.</td><td><span class="tag t-ok">آسان</span></td></tr>
+      <tr><td class="c-num">۲۳</td><td><b>طرح گفت‌وگو کامل برای هر خط</b></td><td>Listen Labs</td><td>فهرست سؤال + عمق + دستور کاوش؛ پایه مصاحبه خروج و پیگیری نیروی جدید.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۲۴</td><td><b>تماس خروجی با یادآوری و تغییر زمان آسان</b></td><td>Paradox</td><td>زمان‌بندی تماس، پیامک یادآوری، تغییر زمان از هر دو طرف؛ آزمون بار پیش از شروع.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۲۵</td><td><b>میز خدمت صوتی با ۱۰–۱۲ کار پرتکرار و بسته «قانون کار و حقوق»</b></td><td>UKG، Leena، چارگون (محتوای پرتقاضا)</td><td>بانک دانش از سؤالات واقعی؛ معرفی در جلسه معارفه؛ شمارش درست «حل بدون انسان».</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۲۶</td><td><b>اتصال مستقیم به SAP همراه اول</b></td><td>ردیف SEG-07 توافق (فاز دوم)</td><td>اتصال فقط‌خواندنی پشت یک لایه مستقل از فروشنده.</td><td><span class="tag t-bad">سخت</span></td></tr>
+    </table>
+
+    <h2 id="v3">نسخه ۳ — گسترش</h2>
+    <p>بعد از اثبات بازار و وقتی مشتری مشخصی آن را بخواهد.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 5%">#</th><th style="width: 26%">ویژگی</th><th style="width: 22%">الهام از</th><th>چطور بسازیم</th><th style="width: 9%">شدنی</th></tr>
+      </thead>
+      <tr><td class="c-num">۲۷</td><td><b>«حدس نزن» برای کارهای شخصی (ثبت مرخصی و…)</b></td><td>Moveworks</td><td>جای خالی + خواندن از سامانه مرجع + تأیید شفاهی پیش از ثبت.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۲۸</td><td><b>ساخت خط تازه با یک فرم</b></td><td>پشتیار، پرس‌لاین</td><td>کارشناس منابع انسانی خط تازه را بدون مهندس می‌سازد و با تماس آزمایشی امتحان می‌کند.</td><td><span class="tag t-bad">سخت</span></td></tr>
+      <tr><td class="c-num">۲۹</td><td><b>دستیار زنده کارشناس</b></td><td>سخن (یارکس)</td><td>خلاصه و جواب پیشنهادی روی صفحه کارشناس هنگام انتقال تماس.</td><td><span class="tag t-bad">سخت</span></td></tr>
+      <tr><td class="c-num">۳۰</td><td><b>پیام‌رسان‌های داخلی</b></td><td>سخن (تیکابات)</td><td>روشن کردن اتصال روبیکا و بله؛ یکی کردن گفت‌وگو بین کانال‌ها.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+      <tr><td class="c-num">۳۱</td><td><b>تشخیص هویت با صدا</b></td><td>عصر گویش پرداز (شناسا)</td><td>با شریک؛ فقط برای کارهای شخصی.</td><td><span class="tag t-bad">سخت</span></td></tr>
+      <tr><td class="c-num">۳۲</td><td><b>صدای اختصاصی سازمان</b></td><td>پارت (آواشو)</td><td>صدای ثابت برای دستیار؛ با موتور خودمان یا شریک.</td><td><span class="tag t-warn">متوسط</span></td></tr>
+    </table>
+
+    <h2 id="summary">جمع‌بندی: محصول کامل چه شکلی است</h2>
+    <ol>
+      <li><b>نسخه ۱ یعنی اعتماد و دقت:</b> بیشتر کمبودهای توافق درباره حریم خصوصی و اندازه‌گیری است، نه هوش مصنوعی تازه. هر شرکت موفق این حوزه (Perceptyx، پرس‌لاین، Leena) این پایه‌ها را دارد.</li>
+      <li><b>گفت‌وگوی بهتر از فرم:</b> سقف و قاعده سؤال تکمیلی و تأیید خلاصه، خط ما را از نظرسنجی متنی و منوی تلفن گویا جدا می‌کند.</li>
+      <li><b>از شنیدن به عمل:</b> هشدار حساس در نسخه ۱، و خلاصه برای مدیر و «شنیدیم، انجام دادیم» در نسخه ۲.</li>
+      <li><b>محصول دوم با همان موتور:</b> ارزیابی تماس، میز خدمت صوتی و تماس خروجی در نسخه ۲.</li>
+    </ol>
+    <div class="box ok">
+      <b>نکته اصلی:</b> سخن و عامراندیش مرکز تماس هوشمند دارند ولی منابع انسانی
+      نه؛ چارگون و پرس‌لاین منابع انسانی دارند ولی صوت نه. Phoenix در محل اتصال
+      این دو است: تلفن فارسی + گفت‌وگوی هوشمند + شنیدن صدای کارکنان + حفظ حریم
+      خصوصی + اجرا داخل سازمان. نسخه ۱ این ترکیب را برای همراه اول قابل اعتماد
+      می‌کند؛ نسخه‌های بعد آن را کامل می‌کنند.
+    </div>
+
+    <h2 id="sources">منابع</h2>
+    <table>
+      <thead><tr><th style="width: 24%">شرکت</th><th>لینک</th></tr></thead>
+      <tr><td>سخن</td><td class="en"><code>https://cx.sokhan.ai/</code> · <code>https://cx.sokhan.ai/کوالکس-کنترل-کیفیت-هوش-مصنوعی/</code></td></tr>
+      <tr><td>عامراندیش</td><td class="en"><code>https://amerandish.com/hooshtel/</code> · <code>https://amerandish.com/analytics/</code> · <code>https://virgool.io/Amerandish</code> (سایپا و ایران‌خودرو)</td></tr>
+      <tr><td>سیتاک</td><td class="en"><code>https://sitak.co/sitak-tutorials/ai-qc/</code></td></tr>
+      <tr><td>عصر گویش پرداز</td><td class="en"><code>https://asr-gooyesh.com/fa/introduction/</code></td></tr>
+      <tr><td>پارت (ویرا)</td><td class="en"><code>https://www.zoomit.ir/tech-iran/429541-ivira-ai-persian-part/</code></td></tr>
+      <tr><td>پشتیار</td><td class="en"><code>https://poshtyar.com/</code></td></tr>
+      <tr><td>چارگون</td><td class="en"><code>https://chargoon.com/blog/</code> · <code>https://www.zoomit.ir/tech-iran/450754-chargoon-rebranded/</code></td></tr>
+      <tr><td>پرس‌لاین</td><td class="en"><code>https://porsline.ir</code></td></tr>
+      <tr><td>Perceptyx</td><td class="en"><code>https://go.perceptyx.com/platform/ai-agents/conversational-listening</code> · <code>https://go.perceptyx.com/hubfs/trust-center/Perceptyx%20AI%20Capabilities%20-%20White%20Paper%20-%20Feb%202026.pdf</code> · <code>https://blog.perceptyx.com/perceptyx-built-the-most-accurate-employee-feedback-sentiment-model</code></td></tr>
+      <tr><td>Qualtrics</td><td class="en"><code>https://www.qualtrics.com/news/new-ex-capabilities-x4-2026/</code></td></tr>
+      <tr><td>Listen Labs</td><td class="en"><code>https://docs.listenlabs.com/setup-to-launch/study-design-101</code></td></tr>
+      <tr><td>Culture Amp</td><td class="en"><code>https://www.cultureamp.com/blog/passive-listening</code></td></tr>
+      <tr><td>Observe.AI، Level AI، Calabrio</td><td class="en"><code>https://observe.ai/platform/auto-qa</code> · <code>https://thelevel.ai/blog/the-future-of-qa-is-here-meet-qa-gpt</code> · <code>https://help.calabrio.com/doc/Content/user-guides/evaluations/ai-evaluation-guidelines.htm</code></td></tr>
+      <tr><td>Leena AI</td><td class="en"><code>https://leena.ai</code> · <code>https://leena.ai/blog/christus-health-hr-ai-rollout</code></td></tr>
+      <tr><td>HiBob و Perk</td><td class="en"><code>https://www.hibob.com/blog/perk-employee-service-bob-zendesk/</code></td></tr>
+      <tr><td>Moveworks</td><td class="en"><code>https://www.moveworks.com/us/en/resources/blog/slots-deep-dive</code> · <code>https://www.moveworks.com/us/en/resources/blog/ai-ticket-deflection-tool-evaluation-checklist</code></td></tr>
+      <tr><td>UKG و SAP</td><td class="en"><code>https://www.ukg.com/company/newsroom/ukg-deepens-workforce-operating-platform-ai-built-help-chros-improve-frontline-work</code> · <code>https://livekit.com/blog/livekit-partners-with-sap-to-deliver-intelligent-voice-for-joule</code></td></tr>
+      <tr><td>Paradox</td><td class="en"><code>https://www.paradox.ai/blog/what-i-learned-from-scheduling-25-million-interviews</code></td></tr>
+      <tr><td>Rippling</td><td class="en"><code>https://www.langchain.com/blog/how-rippling-went-ai-native-across-every-product-in-6-months-with-deep-agents-and-langsmith</code></td></tr>
+      <tr><td>Lattice</td><td class="en"><code>https://lattice.com/blog/introducing-evidence-based-review-drafts</code></td></tr>
+    </table>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>
