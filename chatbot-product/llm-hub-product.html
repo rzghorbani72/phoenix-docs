@@ -1,0 +1,794 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LLM Hub سازمانی</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3; --surface:#ffffff; --surface-2:#f1efea; --border:#e2dfd8;
+  --text:#1d1c1a; --muted:#6b6862; --accent:#2f5bd3; --accent-soft:#e6ecfb;
+  --ok:#1f7a4d; --ok-soft:#e3f3ea; --warn:#a15c00; --warn-soft:#fbefdc;
+  --bad:#b4322a; --bad-soft:#fae5e3; --info:#5b4bc4; --info-soft:#ece9fb; --on-accent:#ffffff;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 4px 16px rgba(0,0,0,.04);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#121212; --surface:#1b1b1d; --surface-2:#232326; --border:#303035;
+    --text:#ecebe8; --muted:#a19e98; --accent:#7ea2ff; --accent-soft:#1f2a45;
+    --ok:#5fcf95; --ok-soft:#173226; --warn:#f0b35a; --warn-soft:#3a2c14;
+    --bad:#ff8a80; --bad-soft:#3d1c1a; --info:#b3a8ff; --info-soft:#28234a; --on-accent:#111111;
+    --shadow:none;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121212; --surface:#1b1b1d; --surface-2:#232326; --border:#303035;
+  --text:#ecebe8; --muted:#a19e98; --accent:#7ea2ff; --accent-soft:#1f2a45;
+  --ok:#5fcf95; --ok-soft:#173226; --warn:#f0b35a; --warn-soft:#3a2c14;
+  --bad:#ff8a80; --bad-soft:#3d1c1a; --info:#b3a8ff; --info-soft:#28234a; --on-accent:#111111;
+  --shadow:none;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Vazirmatn,system-ui,sans-serif;font-size:15.5px;line-height:1.85;-webkit-font-smoothing:antialiased}
+code,pre,.mono{font-family:"JetBrains Mono",ui-monospace,monospace;font-size:.86em}
+code{background:var(--surface-2);border:1px solid var(--border);padding:1px 6px;border-radius:5px;direction:ltr;unicode-bidi:isolate}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* top nav */
+.topbar{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--border)}
+.topbar-inner{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;gap:14px;align-items:center}
+.brand{font-weight:800;white-space:nowrap}
+.nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1}
+.nav::-webkit-scrollbar{display:none}
+.nav a{color:var(--muted);padding:5px 11px;border-radius:999px;white-space:nowrap;font-size:14px}
+.nav a:hover,.nav a.active{background:var(--accent-soft);color:var(--accent);text-decoration:none}
+.theme-btn{border:1px solid var(--border);background:var(--surface);color:var(--text);border-radius:8px;padding:4px 10px;cursor:pointer;font:inherit;font-size:13px}
+
+main{max-width:1120px;margin:0 auto;padding:0 16px 80px}
+.hero{padding:48px 0 24px}
+.hero h1{font-size:clamp(28px,4vw,40px);line-height:1.3;margin:0 0 8px;font-weight:800}
+.hero p{color:var(--muted);margin:0;max-width:760px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:3px 10px;border-radius:999px;background:var(--surface);border:1px solid var(--border);color:var(--muted)}
+
+section.doc{margin-top:56px}
+section.doc > h2{font-size:26px;margin:0 0 4px;font-weight:800;display:flex;align-items:center;gap:10px}
+section.doc > h2 .num{font-size:13px;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 8px;font-weight:700}
+.lead{color:var(--muted);margin:0 0 20px}
+h3{font-size:20px;margin:32px 0 10px}
+.card h3{font-size:16.5px;margin:0 0 6px;font-weight:700}
+
+.card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+.callout{border-radius:12px;padding:12px 16px;margin:14px 0;border:1px solid}
+.callout.warn{background:var(--warn-soft);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+.callout.info{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+.callout.bad{background:var(--bad-soft);border-color:color-mix(in srgb,var(--bad) 30%,transparent)}
+.callout strong:first-child{margin-left:4px}
+
+.table-wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface);margin:12px 0}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14.5px}
+th,td{padding:10px 14px;text-align:right;vertical-align:top;border-bottom:1px solid var(--border)}
+th{background:var(--surface-2);font-weight:700;font-size:13.5px;color:var(--muted);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td.tbd{color:var(--muted)}
+
+pre.diagram{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px;overflow-x:auto;direction:ltr;text-align:left;line-height:1.55;margin:12px 0;font-size:13px}
+
+.grid{display:grid;gap:14px}
+.grid.cols-2{grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.grid.cols-3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+
+.badge{display:inline-block;font-size:12px;font-weight:700;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.b-S,.b-high,.b-mit{background:var(--ok-soft);color:var(--ok)}
+.b-M,.b-med{background:var(--warn-soft);color:var(--warn)}
+.b-L,.b-XL,.b-low,.b-open{background:var(--bad-soft);color:var(--bad)}
+.b-accepted{background:var(--info-soft);color:var(--info)}
+.b-now{background:var(--ok-soft);color:var(--ok)}
+.b-next{background:var(--warn-soft);color:var(--warn)}
+.b-later{background:var(--surface-2);color:var(--muted)}
+
+.feas .card h3{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
+.feas dl{margin:8px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:14.5px}
+.feas dt{color:var(--muted);font-weight:500;white-space:nowrap}
+.feas dd{margin:0}
+.feas p{margin:10px 0 0;font-size:14.5px;color:var(--muted)}
+
+.tier h3{display:flex;align-items:center;gap:8px}
+.tier ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
+.tier li{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.tier li b{display:inline}
+.tier .ref{color:var(--muted);font-size:13px}
+
+.inout{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(320px,1fr))}
+.inout ul{margin:0;padding-inline-start:18px}
+.inout li{margin:6px 0;font-size:14.5px}
+.hyp{font-size:17px;font-weight:500;line-height:1.9}
+
+/* roadmap timeline */
+.gantt{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin:16px 0;overflow-x:auto}
+.gantt-grid{display:grid;grid-template-columns:110px repeat(24,minmax(22px,1fr));gap:4px 0;min-width:720px;direction:ltr}
+.gantt-grid .mlabel{grid-column:span 4;font-size:12px;color:var(--muted);border-left:1px dashed var(--border);padding-left:6px}
+.gantt-grid .rlabel{font-size:13px;font-weight:700;direction:rtl;text-align:right;padding-right:6px;align-self:center}
+.bar{height:26px;border-radius:7px;background:var(--accent);color:var(--on-accent);font-size:12px;display:flex;align-items:center;padding:0 8px;white-space:nowrap;overflow:hidden}
+.bar.gate{background:var(--warn)}
+.bar.ga{background:var(--ok)}
+.milestone{margin:14px 0}
+.milestone .card{display:grid;gap:6px}
+.milestone .head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;align-items:baseline}
+.milestone .head h3{font-size:17px}
+.milestone .date{font-size:13px;color:var(--accent);font-weight:700}
+.milestone .row{font-size:14.5px}
+.milestone .row b{color:var(--muted);font-weight:500;margin-left:4px}
+.gate-note{background:var(--warn-soft);border-radius:10px;padding:10px 14px;font-weight:700;font-size:14.5px}
+
+/* corner cases */
+.cc-filter{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 14px}
+.cc-filter button{border:1px solid var(--border);background:var(--surface);color:var(--muted);border-radius:999px;padding:3px 12px;font:inherit;font-size:13.5px;cursor:pointer}
+.cc-filter button.on{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.cc .card{display:grid;gap:6px}
+.cc .card h3{display:flex;gap:8px;align-items:baseline;justify-content:space-between}
+.cc .card h3 .id{color:var(--accent);font-family:"JetBrains Mono",monospace;font-size:13px;margin-left:6px}
+.cc .row{font-size:14.5px}
+.cc .row b{color:var(--muted);font-weight:500;margin-left:4px}
+.cc .area{font-size:12px;color:var(--muted)}
+
+.sources li{margin:4px 0;font-size:14.5px;direction:ltr;text-align:left}
+footer{margin-top:64px;color:var(--muted);font-size:13px;border-top:1px solid var(--border);padding-top:16px}
+
+@media (max-width:640px){
+  body{font-size:15px}
+  .brand{display:none}
+  section.doc > h2{font-size:22px}
+  .feas dl{grid-template-columns:1fr}
+}
+@media print{
+  .topbar,.cc-filter,.theme-btn{display:none}
+  .card,.table-wrap{break-inside:avoid;box-shadow:none}
+  body{background:#fff}
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <span class="brand">LLM Hub</span>
+    <nav class="nav" id="nav">
+      <a href="#discovery">Discovery</a>
+      <a href="#feasibility">امکان‌سنجی</a>
+      <a href="#features">فیچرها</a>
+      <a href="#mvp">MVP</a>
+      <a href="#roadmap">نقشه راه</a>
+      <a href="#corner">Corner Cases</a>
+      <a href="#sources">منابع</a>
+    </nav>
+    <button class="theme-btn" id="themeBtn" type="button" aria-label="تغییر تم">◐</button>
+  </div>
+</header>
+
+<main>
+
+<div class="hero">
+  <h1>LLM Hub سازمانی — تحقیق محصول و نقشه راه</h1>
+  <p>یک چت‌بات و درگاه AI برای همه‌ی کارمندان سازمان: دسترسی به مدل‌های مختلف با لاگین سازمانی، نمایش مصرف و اعتبار در پروفایل، داشبورد مدیریتی با نقش‌ها و دسترسی‌ها، حسابداری و بودجه، Guardrail، Trace و کلید API سازگار با OpenAI برای توسعه‌دهنده‌ها.</p>
+  <div class="meta">
+    <span class="chip">به‌روزرسانی: 2026-10-27</span>
+    <span class="chip">وضعیت: پیش از Discovery</span>
+    <span class="chip">GA هدف: 2027-04-20</span>
+  </div>
+</div>
+
+<!-- ============ DISCOVERY ============ -->
+<section class="doc" id="discovery">
+  <h2><span class="num">۰۱</span> Product Discovery</h2>
+  <p class="lead">ورودی‌ها: وایت‌برد «LLM Hub Features»، Product Brief قبلی، کد فعلی این ریپو و تحقیق رقبا.</p>
+
+  <div class="callout warn"><strong>هشدار شواهد:</strong> تا امروز <b>۰ مصاحبه‌ی کاربر</b> انجام شده. هر چیزی که «فرض» علامت خورده، نظر ذی‌نفعان است نه شواهد. بخش «برنامه‌ی Discovery» برنامه‌ی جمع‌کردن شواهد است.</div>
+
+  <h3>۱. Outcome (نه راه‌حل)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>Outcome</th><th>شاخص</th><th>Baseline</th><th>هدف ۹۰ روزه بعد از GA</th></tr></thead>
+    <tbody>
+      <tr><td>کارمندان از ابزار داخلی استفاده کنند، نه اکانت شخصی</td><td>WAU / کل کارمندان هدف</td><td class="tbd">نامعلوم — اندازه بگیرید</td><td><b>۴۰٪</b></td></tr>
+      <tr><td>ترافیک Shadow AI کم شود</td><td>ترافیک پروکسی به chatgpt.com، claude.ai، gemini</td><td class="tbd">نامعلوم — قبل از لانچ بگیرید</td><td><b>−۵۰٪</b></td></tr>
+      <tr><td>هزینه‌ی AI قابل‌پیش‌بینی و قابل‌تخصیص باشد</td><td>٪ هزینه که به یک کاربر/واحد نسبت داده شده</td><td>۰٪</td><td><b>۱۰۰٪</b></td></tr>
+      <tr><td>دید امنیتی روی داده‌ی خروجی</td><td>٪ درخواست‌ها با trace + برچسب guardrail</td><td>۰٪</td><td><b>۱۰۰٪</b></td></tr>
+      <tr><td>توسعه‌دهنده‌ها از کلید سازمانی در IDE استفاده کنند</td><td>dev فعال هفتگی با API key</td><td>۰</td><td><b>۶۰٪ dev‌ها</b></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>۲. سگمنت‌ها و Job-to-be-Done</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>سگمنت</th><th>JTBD (فرض)</th><th>درد فعلی (فرض)</th></tr></thead>
+    <tbody>
+      <tr><td><b>کارمند عمومی</b> (حقوقی، مالی، فروش، HR)</td><td>«وقتی متن/سند دارم، می‌خواهم سریع خلاصه/بازنویسی/تحلیل کنم»</td><td>VPN + اکانت شخصی، محدودیت رایگان، نگرانی امنیتی</td></tr>
+      <tr><td><b>توسعه‌دهنده</b></td><td>«وقتی در VS Code کد می‌زنم، می‌خواهم بهترین مدل کد در ابزار خودم کار کند»</td><td>پرداخت شخصی Cursor/Copilot، کلید شخصی، تحریم پرداخت</td></tr>
+      <tr><td><b>مدیر واحد / صاحب بودجه</b></td><td>«می‌خواهم بدانم تیمم چقدر خرج می‌کند و سقف بگذارم»</td><td>هیچ دیدی ندارد</td></tr>
+      <tr><td><b>امنیت / CISO</b></td><td>«می‌خواهم بدانم چه داده‌ای بیرون می‌رود و جلوی موارد حساس را بگیرم»</td><td>Shadow AI کاملاً کور است</td></tr>
+      <tr><td><b>ادمین پلتفرم / IT</b></td><td>«می‌خواهم کاربر، مدل، سهمیه و policy را بدون کد مدیریت کنم»</td><td>—</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>۳. Opportunity Solution Tree</h3>
+<pre class="diagram">OUTCOME: 40% WAU  &amp;  −50% Shadow AI
+│
+├─ O1: Quality must match personal ChatGPT/Claude
+│    ├─ Access to top models (multi-provider)        ← whiteboard: Provider
+│    ├─ Model picker like Cursor + Auto mode          ← whiteboard: Model Selection
+│    └─ Files / images / audio in chat                ← whiteboard: File process / storage
+│
+├─ O2: Users must see their quota (trust)
+│    ├─ Usage page in profile (Cursor/OpenRouter)     ← whiteboard: Usage, Home stats
+│    └─ 80% / 100% quota alerts
+│
+├─ O3: Developers must work in their own tools
+│    ├─ Self-service OpenAI-compatible API key        ← whiteboard: OpenAI API (incl. Files)
+│    └─ Guides for Continue / Cline / Roo Code
+│
+├─ O4: Managers must control spend
+│    ├─ Budget per user / org unit / period           ← whiteboard: Accounting
+│    └─ RBAC + dashboard
+│
+└─ O5: Security must see and control
+     ├─ Trace with search/filter and TTFT             ← whiteboard: Trace
+     ├─ Local multimodal guardrail, admin-editable    ← whiteboard: GuardRail
+     └─ Session management</pre>
+  <div class="callout info"><strong>نکته‌ی coaching:</strong> همه‌ی آیتم‌های وایت‌برد به یک Opportunity وصل شدند، ولی O1 و O2 مستقیماً Outcome اصلی (پذیرش) را حرکت می‌دهند و O4/O5 فقط <b>بعد از پذیرش</b> ارزش دارند. ترتیب نقشه‌ی راه از همین می‌آید.</div>
+
+  <h3>۴. تحلیل رقبا و Build vs Buy</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>محصول</th><th>نوع</th><th>از آن چه یاد بگیریم</th><th>محدودیت برای ما</th></tr></thead>
+    <tbody>
+      <tr><td><b>Cursor</b> (Team dashboard)</td><td>مرجع UX</td><td>usage per member، spend limit، لیست مدل + Auto</td><td>SaaS، پرداخت از ایران</td></tr>
+      <tr><td><b>OpenRouter</b></td><td>مرجع UX + upstream</td><td>صفحه‌ی Activity، کلید با limit، کاتالوگ مدل</td><td>شخص ثالث داده را می‌بیند</td></tr>
+      <tr><td><b>LiteLLM Proxy</b></td><td>موتور gateway (OSS)</td><td>virtual key، بودجه user/team با duration، spend log، OpenAI API، hook برای guardrail</td><td>SSO ادمین‌UI بالای ۵ کاربر و audit log نیاز به لایسنس دارند</td></tr>
+      <tr><td><b>Langfuse</b></td><td>Trace (OSS)</td><td>trace/span، latency، فیلتر؛ هسته MIT</td><td>RBAC پروژه‌ای، audit log، masking سمت سرور = Enterprise</td></tr>
+      <tr><td><b>Open WebUI</b></td><td>چت (OSS)</td><td>RBAC گروهی، دسترسی مدل per-group</td><td>از v0.6.6 تغییر برند بالای ۵۰ کاربر لایسنس می‌خواهد؛ بودجه ندارد</td></tr>
+      <tr><td><b>LibreChat</b></td><td>چت (OSS)</td><td>balance توکن و auto-refill</td><td>balance سراسری است، per-user فقط با اسکریپت</td></tr>
+      <tr><td><b>Portkey / TrueFoundry / Kong AI GW</b></td><td>Gateway تجاری</td><td>governance آماده</td><td>هزینه، وابستگی، دسترسی</td></tr>
+      <tr><td><b>ChatGPT Enterprise / Claude Enterprise</b></td><td>خرید کامل</td><td>معیار کیفیت</td><td>احتمالاً به‌دلیل تحریم/قرارداد در دسترس نیست</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>تصمیم پیشنهادی: «Compose, don't vibe-code the core»</h3>
+  <p>وایت‌برد عنوان «vibe coded» دارد. برای <b>چت UI و داشبورد</b> این خوب است. برای <b>حسابداری توکن، مدیریت کلید و احراز هویت</b> خطرناک است: باگ در این‌ها یعنی پول سوخته یا کلید لو رفته.</p>
+<pre class="diagram">                ┌──────────── Keycloak (OIDC on AD) ─────────────┐
+                │   ← this is the "Auth API used by product too"  │
+Browser (React) ─► Hub API (Python/FastAPI — our code)            │
+VS Code ────────►   • SSO, RBAC, sessions                          │
+                    • Accounting: org hierarchy, budgets, periods  │
+                    • API key issuing (wrapper over virtual keys)   │
+                    • Guardrail (local model, prompt from DB)       │
+                    • Files: MinIO + parsing                        │
+                    └─► LiteLLM Proxy (engine) ─► OpenRouter / direct / vLLM
+                              └─► OTel → Langfuse (trace, TTFT)
+                    Postgres (state) + ClickHouse (usage/trace)</pre>
+  <div class="grid cols-3">
+    <div class="card"><h3>چرا Hub API خودمان جلوی LiteLLM؟</h3><p style="margin:0;font-size:14.5px">SSO، RBAC، audit و سلسله‌مراتب واحد را خودمان می‌سازیم ← لایسنس Enterprise LiteLLM لازم نیست و اگر روزی LiteLLM را عوض کردیم، فقط موتور عوض می‌شود.</p></div>
+    <div class="card"><h3>چرا Keycloak به‌جای Auth API خودساخته؟</h3><p style="margin:0;font-size:14.5px">محصولات دیگر سازمان هم با OIDC استاندارد وصل می‌شوند؛ نوشتن IdP از صفر یکی از پرریسک‌ترین کارهای ممکن است.</p></div>
+    <div class="card"><h3>چرا Open WebUI نه؟</h3><p style="margin:0;font-size:14.5px">فرانت React خودتان را دارید؛ fork از Open WebUI هم با مشکل لایسنس برند و هم با بودجه‌ی ناموجود روبه‌رو است.</p></div>
+  </div>
+
+  <h3>۵. فرض‌های پرریسک (قابل ابطال)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>#</th><th>فرض</th><th>تست</th><th>معیار موفقیت</th><th>نتیجه</th></tr></thead>
+    <tbody>
+      <tr><td>A1</td><td>دسترسی پایدار و مجاز به مدل‌های جهانی داریم</td><td>استعلام حقوقی + اسکریپت uptime ۱۴ روزه روی ۲ مسیر</td><td>تأیید مکتوب + uptime ≥ ۹۹٪</td><td class="tbd">TBD</td></tr>
+      <tr><td>A2</td><td>کارمندان با کیفیت برابر، ابزار شخصی را رها می‌کنند</td><td>پایلوت ۳۰ نفر ۷ روز + مقایسه ترافیک پروکسی</td><td>≥ ۷۰٪ «دیگر نیاز ندارم» و −۳۰٪ ترافیک خارجی آن‌ها</td><td class="tbd">TBD</td></tr>
+      <tr><td>A3</td><td>دیدن usage/سهمیه در پروفایل اعتماد می‌سازد و مصرف بی‌رویه را کم می‌کند</td><td>A/B در پایلوت: با/بدون صفحه‌ی Usage</td><td>≥ ۱۵٪ کمتر سهمیه‌ی تمام‌شده در گروه با صفحه</td><td class="tbd">TBD</td></tr>
+      <tr><td>A4</td><td>dev‌ها کلید سازمانی را در VS Code جایگزین ابزار پولی شخصی می‌کنند</td><td>۱۰ dev، ۲ هفته، Continue/Cline با کلید Hub</td><td>≥ ۷/۱۰ بعد از ۲ هفته هنوز فعال</td><td class="tbd">TBD</td></tr>
+      <tr><td>A5</td><td>اگر کارمند بداند prompt‌هایش trace می‌شود، استفاده کم نمی‌شود</td><td>نظرسنجی ناشناس (n ≥ ۱۰۰) با دو متن اطلاع‌رسانی</td><td>≥ ۸۰٪ «همچنان استفاده می‌کنم» با متن «فقط امنیت، با لاگ دسترسی»</td><td class="tbd">TBD</td></tr>
+      <tr><td>A6</td><td>Guardrail محلی ≤ ۳۰۰ms و ≥ ۹۵٪ recall روی داده‌ی حساس</td><td>۵۰۰ پرامپت برچسب‌خورده</td><td>p95 ≤ ۳۰۰ms، recall ≥ ۹۵٪، FP ≤ ۵٪</td><td class="tbd">TBD</td></tr>
+      <tr><td>A7</td><td>بودجه‌ی per-user ماهانه X دلار برای ۹۰٪ کاربران کافی است</td><td>دو هفته پایلوت بدون سقف، اندازه‌گیری توزیع مصرف</td><td>p90 مصرف ≤ X</td><td class="tbd">TBD</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>۶. برنامه‌ی Discovery (هفته‌ی ۱–۳، موازی با Foundation)</h3>
+  <div class="table-wrap"><table>
+    <thead><tr><th>سگمنت</th><th>حداقل مصاحبه</th><th>سؤال کلیدی</th></tr></thead>
+    <tbody>
+      <tr><td>کارمند عمومی (۳ واحد)</td><td>۶</td><td>«آخرین باری که از ChatGPT برای کار استفاده کردی را تعریف کن»</td></tr>
+      <tr><td>توسعه‌دهنده</td><td>۶</td><td>«الان در IDE از چه ابزار AI استفاده می‌کنی و چطور پولش را می‌دهی؟»</td></tr>
+      <tr><td>مدیر واحد</td><td>۵</td><td>«اگر تیمت ماهی X خرج AI کند، چه چیزی را باید ببینی؟»</td></tr>
+      <tr><td>CISO / امنیت</td><td>۵</td><td>«کدام نوع داده اگر بیرون برود فاجعه است؟ کدام قابل قبول؟»</td></tr>
+      <tr><td>ادمین IT</td><td>۵</td><td>«ساخت کاربر و تغییر دسترسی الان چطور انجام می‌شود؟»</td></tr>
+    </tbody>
+  </table></div>
+  <p><b>داده‌ی کمّی موازی:</b> baseline ترافیک پروکسی به سرویس‌های AI (۲ هفته) + نظرسنجی ۱۰ سؤالی (n ≥ ۲۰۰).<br>
+  <b>قانون:</b> هیچ آیتم Next/Later بدون حداقل ۵ مصاحبه در سگمنت مربوط به Now منتقل نمی‌شود.</p>
+</section>
+
+<!-- ============ FEASIBILITY ============ -->
+<section class="doc feas" id="feasibility">
+  <h2><span class="num">۰۲</span> Feasibility Assessment</h2>
+  <div class="callout info"><strong>وضعیت کد امروز:</strong> ریپو فقط یک فرانت React 19 + Vite است (<code>src/lib/api.ts</code>، <code>src/hooks/useConversations.ts</code>). بک‌اند نداریم، تاریخچه در <code>localStorage</code> است و کلید API در bundle مرورگر (<code>VITE_API_KEY</code>) قرار دارد. پس هر effort پایین «بک‌اند از صفر» را فرض می‌کند، با یک تیم ۳ تا ۴ نفره (فرض).</div>
+  <p class="lead">مقیاس: <span class="badge b-S">S</span> ≤ ۱ هفته · <span class="badge b-M">M</span> = ۲–۳ هفته · <span class="badge b-L">L</span> = ۱–۲ ماه · <span class="badge b-XL">XL</span> &gt; ۲ ماه (یک نفر تمام‌وقت)</p>
+
+  <div class="grid cols-2">
+    <div class="card">
+      <h3>Auth + SSO + سشن‌ها <span><span class="badge b-M">M</span> <span class="badge b-high">High</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>M — با Keycloak روی AD موجود. اگر Auth API از صفر نوشته شود: XL.</dd>
+        <dt>Impact</dt><dd>پیش‌نیاز همه‌چیز. بدون هویت، نه usage داریم نه بودجه و نه trace.</dd>
+        <dt>Risk</dt><dd>مدیریت refresh token و revoke سشن. یک IdP خودساخته = ریسک امنیتی بالا.</dd>
+      </dl>
+      <p>مدیریت سشن (لیست و revoke) در Keycloak آماده است. فقط باید در داشبورد نمایش داده شود.</p>
+    </div>
+
+    <div class="card">
+      <h3>Gateway چندمدلی + لیست مدل (مثل Cursor) <span><span class="badge b-S">S–M</span> <span class="badge b-high">High</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>S تا M — LiteLLM به‌عنوان موتور. لیست مدل per-role در Hub API.</dd>
+        <dt>Impact</dt><dd>مستقیماً O1 (کیفیت = پذیرش).</dd>
+        <dt>Risk</dt><dd>وابستگی به A1 (دسترسی به ارائه‌دهنده). ترجمه‌ی tool-calling بین فرمت‌ها برای مدل‌های غیر OpenAI ناقص است.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>Accounting: CRUD کاربر + بودجه per-user / per-واحد / per-دوره <span><span class="badge b-L">L</span> <span class="badge b-med">Medium</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>L — CRUD ساده است، ولی <b>سلسله‌مراتب واحد سازمانی</b> (سازمان ← معاونت ← واحد ← کاربر) و دوره‌ها (روزانه/ماهانه) در نسخه‌ی رایگان LiteLLM نیست. budget روی user/team/key با <code>budget_duration</code> هست، ولی org hierarchy و admin سازمانی Enterprise است. پس سلسله‌مراتب را در Hub API می‌سازیم و در LiteLLM به team/user نگاشت می‌کنیم.</dd>
+        <dt>Impact</dt><dd>O4. بدون آن، روشن کردن مدل‌های گران برای ۱۰ هزار نفر از نظر مالی ریسک است.</dd>
+        <dt>Risk</dt><dd>Race condition در کسر بودجه در درخواست‌های همزمان streaming (C1). کاربری که واحدش عوض می‌شود (C3).</dd>
+      </dl>
+      <p>Confidence متوسط — رفتار دقیق LiteLLM در overspend همزمان باید تست شود.</p>
+    </div>
+
+    <div class="card">
+      <h3>صفحه‌ی Usage در پروفایل + Home Stats <span><span class="badge b-M">M</span> <span class="badge b-high">High</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>M — LiteLLM spend log دارد. aggregation در ClickHouse/Postgres و UI در React.</dd>
+        <dt>Impact</dt><dd>O2. فرض A3: دیدن سهمیه اعتماد می‌سازد.</dd>
+        <dt>Risk</dt><dd>کم. عدد «توکن باقی‌مانده» برای مدل‌های مختلف بی‌معنی است. <b>به‌جای آن «اعتبار» (credit یا ریال) نشان دهید</b>، مثل Cursor و OpenRouter.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>API key سلف‌سرویس OpenAI-compatible برای VS Code <span><span class="badge b-S">S–M</span> <span class="badge b-high">High</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>S تا M — virtual key در LiteLLM. Hub API فقط صدور، نمایش یک‌باره، revoke، expiry و budget per-key را مدیریت می‌کند.</dd>
+        <dt>Impact</dt><dd>O3. dev‌ها پرمصرف‌ترین و پرریسک‌ترین کاربرها از نظر نشت کد هستند.</dd>
+        <dt>Risk</dt><dd>نشت کلید در git. ایجنت‌های IDE (Cline/Roo) ۱۰ تا ۱۰۰ برابر چت توکن مصرف می‌کنند و بودجه را می‌ترکانند.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>OpenAI Files API <span><span class="badge b-L">L</span> <span class="badge b-med">Medium</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>L — LiteLLM پاس‌ترو دارد، ولی <code>file_id</code> مخصوص هر ارائه‌دهنده است. فایلی که برای OpenAI آپلود شده با Claude کار نمی‌کند. برای جدا شدن از ارائه‌دهنده باید فایل در MinIO خودمان ذخیره و هنگام فراخوانی به فرمت هر ارائه‌دهنده تبدیل شود.</dd>
+        <dt>Impact</dt><dd>متوسط. dev‌ها کمتر از Files API مستقیم استفاده می‌کنند. چت با فایل (O1) مهم‌تر است.</dd>
+        <dt>Risk</dt><dd>پیچیدگی سازگاری. هزینه‌ی ذخیره‌سازی.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>File process + File storage (چت) <span><span class="badge b-M">M</span> <span class="badge b-high">High</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>M — MinIO، استخراج متن PDF/DOCX (pdfjs در فرانت فعلی هست؛ سمت سرور Docling یا Unstructured)، تصویر به مدل vision.</dd>
+        <dt>Impact</dt><dd>O1. حجم زیادی از کار کارمندان عمومی سند است.</dd>
+        <dt>Risk</dt><dd>فایل‌های بزرگ از context window بیشتر می‌شوند. اسکن بدافزار.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>Trace (search + filter، custom span با TTFT) <span><span class="badge b-M">M</span> <span class="badge b-med">Medium</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>M — OTel GenAI conventions به Langfuse (هسته MIT). TTFT را در Hub API اندازه بگیرید، از لحظه‌ی دریافت تا اولین chunk SSE، و به‌عنوان span attribute بفرستید.</dd>
+        <dt>Impact</dt><dd>O5 و عملیات (دیباگ latency).</dd>
+        <dt>Risk</dt><dd><b>حریم خصوصی.</b> اگر مدیران بتوانند متن پرامپت کارمندان را بخوانند، فرض A5 می‌شکند. RBAC پروژه‌ای و masking در Langfuse لایسنس می‌خواهند، پس کنترل دسترسی به محتوا را در Hub API انجام دهید و در Langfuse فقط metadata یا محتوای ماسک‌شده بفرستید.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>Guardrail (local، multimodal، prompt قابل‌تغییر توسط ادمین) <span><span class="badge b-L">L</span> <span class="badge b-med">Medium</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>L — متن: مدل guard محلی روی vLLM (Gemma فعلی یا یک guard model) + regex، با policy prompt در DB، قابل ویرایش و نسخه‌دار. تصویر: OCR + vision guard. صوت: Whisper محلی برای transcribe، بعد guard متنی.</dd>
+        <dt>Impact</dt><dd>O5. ولی اگر زود و سخت‌گیرانه فعال شود، با false positive، O1 را می‌کشد.</dd>
+        <dt>Risk</dt><dd>latency اضافه، false positive، fail-open/fail-closed. <b>ادمینی که prompt guard را عوض کند می‌تواند ناخواسته همه‌چیز را باز یا بسته کند.</b> پس نسخه‌بندی، تست روی دیتاست ثابت قبل از publish و rollback لازم است.</dd>
+      </dl>
+      <p>Confidence متوسط — بسته به A6.</p>
+    </div>
+
+    <div class="card">
+      <h3>Auto routing (Jev / Gemma) <span><span class="badge b-M">M</span> <span class="badge b-low">Low</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>M — طراحی‌اش قبلاً انجام شده (guided choice + logprobs).</dd>
+        <dt>Impact</dt><dd>هزینه −۳۰ تا −۵۰٪ (تخمین). کیفیت باید ثابت بماند.</dd>
+        <dt>Risk</dt><dd>routing اشتباه = افت کیفیت حس‌شده. داده‌ی برچسب‌خورده نداریم.</dd>
+      </dl>
+    </div>
+
+    <div class="card">
+      <h3>Agent library / Memory <span><span class="badge b-XL">XL</span> <span class="badge b-low">Low</span></span></h3>
+      <dl>
+        <dt>Effort</dt><dd>XL</dd>
+        <dt>Impact</dt><dd>نامعلوم. شواهدی از کاربران نداریم.</dd>
+      </dl>
+      <p>سمت راست وایت‌برد، ناخوانا. Later تا بعد از Discovery.</p>
+    </div>
+  </div>
+  <p class="lead" style="margin-top:12px">برچسب دوم هر کارت = Confidence (میزان اطمینان به تخمین).</p>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="doc tier" id="features">
+  <h2><span class="num">۰۳</span> Feature List</h2>
+  <p class="lead">منطق اصلی: <b>اول پذیرش (O1/O2/O3)، بعد کنترل (O4/O5).</b></p>
+
+  <h3><span class="badge b-now">Now</span> MVP — تا Internal Alpha / Dev Beta</h3>
+  <ul>
+    <li><b>SSO با Keycloak + لاگین اجباری</b> — پیش‌نیاز همه‌چیز. کلید از مرورگر حذف می‌شود.</li>
+    <li><b>Hub API + LiteLLM + ۳ ارائه‌دهنده با fallback</b> — کیفیت = پذیرش. <span class="ref">ref: LiteLLM, OpenRouter</span></li>
+    <li><b>انتخاب مدل از لیست مجاز per-role</b> — مثل Cursor. <span class="ref">ref: Cursor model picker</span></li>
+    <li><b>تاریخچه‌ی چت سمت سرور</b> — <code>localStorage</code> برای سازمان قابل قبول نیست.</li>
+    <li><b>آپلود فایل/تصویر در چت + MinIO</b> — بیشتر کار کارمندان عمومی با سند است.</li>
+    <li><b>بودجه‌ی ماهانه per-user (flat) + per-team</b> — جلوی سوختن پول در پایلوت را می‌گیرد.</li>
+    <li><b>صفحه‌ی Usage در پروفایل</b> — اعتبار مصرف‌شده و باقی‌مانده، به تفکیک مدل و روز. هشدار ۸۰٪. <span class="ref">ref: Cursor dashboard, OpenRouter Activity</span></li>
+    <li><b>API key سلف‌سرویس OpenAI-compatible</b> — پیشوند قابل اسکن (<code>hub-sk-</code>)، expiry، budget per-key، rate limit، راهنمای Continue/Cline. <span class="ref">ref: OpenRouter keys</span></li>
+    <li><b>Trace پایه + TTFT</b> — هر درخواست با user، model، tokens، cost، TTFT و latency. فقط metadata.</li>
+    <li><b>Guardrail در حالت Shadow (فقط متن)</b> — برچسب می‌زند، چیزی را مسدود نمی‌کند. داده برای فاز enforce جمع می‌شود.</li>
+    <li><b>👍/👎 روی هر پاسخ</b> — تنها معیار «افت کیفیت».</li>
+  </ul>
+
+  <h3><span class="badge b-next">Next</span> بعد از ۵+ مصاحبه در هر سگمنت مرتبط</h3>
+  <ul>
+    <li><b>داشبورد ادمین با RBAC کامل</b> (نقش‌ها: Employee، Developer، Team Manager، Security Auditor، Platform Admin) — مسدود است تا مصاحبه با مدیران واحد مشخص کند چه چیزی واقعاً لازم است.</li>
+    <li><b>سلسله‌مراتب واحد سازمانی + بودجه per-واحد/per-دوره + sync از AD</b> — مسدود روی دسترسی به ساختار سازمانی در AD.</li>
+    <li><b>Trace search/filter + دسترسی محتوا با break-glass</b> — اول باید سیاست حریم خصوصی تصویب شود (A5).</li>
+    <li><b>مدیریت سشن‌ها در داشبورد</b> (لیست و revoke) — روی Keycloak.</li>
+    <li><b>Guardrail enforce برای متن + prompt قابل‌ویرایش ادمین با نسخه‌بندی و تست</b> — مسدود روی نتیجه‌ی A6.</li>
+    <li><b>Home stats</b> (WAU، هزینه، top models، top واحدها).</li>
+    <li><b>Auto routing</b> (Gemma یا Jev) — مسدود روی دیتاست ۵۰۰ پرامپت برچسب‌خورده.</li>
+    <li><b>OpenAI Files API مستقل از ارائه‌دهنده</b>.</li>
+  </ul>
+
+  <h3><span class="badge b-later">Later</span></h3>
+  <ul>
+    <li><b>Guardrail تصویر و صوت</b> (OCR + vision guard، Whisper) — حجم تصویر/صوت حساس باید اول از trace دیده شود.</li>
+    <li><b>Auth API برای محصولات دیگر</b> — با Keycloak در عمل رایگان است. کار اصلی onboarding محصولات است.</li>
+    <li><b>Self-hosted routing برای داده‌ی حساس</b> (سناریو ۲).</li>
+    <li><b>Agent library، Memory، RAG روی اسناد داخلی</b> — آیتم‌های سمت راست وایت‌برد. هیچ شواهدی هنوز نداریم.</li>
+    <li><b>کارت سازمانی / پرداخت</b> (سمت راست وایت‌برد، ناخوانا) — باید روشن شود منظور چیست.</li>
+  </ul>
+</section>
+
+<!-- ============ MVP ============ -->
+<section class="doc" id="mvp">
+  <h2><span class="num">۰۴</span> MVP Scope</h2>
+  <div class="card">
+    <h3 style="color:var(--muted);font-weight:500">Hypothesis</h3>
+    <p class="hyp" style="margin:0">اگر کارمندان با لاگین سازمانی به مدل‌های جهانی با کیفیت برابر دسترسی داشته باشند و سهمیه‌شان را شفاف ببینند، <b>≥ ۷۰٪ از ۱۰۰ کاربر پایلوت</b> بعد از ۴ هفته هنوز هفتگی فعال‌اند و ترافیک آن‌ها به سرویس‌های AI خارجی <b>≥ ۳۰٪</b> کم می‌شود. همچنین <b>≥ ۷ از ۱۰ dev</b> پایلوت کلید Hub را در IDE نگه می‌دارند.</p>
+  </div>
+
+  <div class="inout" style="margin-top:14px">
+    <div class="card">
+      <h3 style="color:var(--ok)">✓ In scope</h3>
+      <ul>
+        <li><b>SSO + لاگین اجباری</b> — بدون هویت، فرضیه قابل اندازه‌گیری نیست.</li>
+        <li><b>چت با ۳ ارائه‌دهنده + انتخاب مدل</b> — بخش «کیفیت برابر» فرضیه.</li>
+        <li><b>تاریخچه‌ی سرور + آپلود فایل</b> — بدون این‌ها کیفیت حس‌شده پایین‌تر از ChatGPT است.</li>
+        <li><b>بودجه‌ی flat per-user + صفحه‌ی Usage</b> — بخش «سهمیه‌ی شفاف» فرضیه + محافظ مالی پایلوت.</li>
+        <li><b>API key برای dev</b> — بخش dev فرضیه.</li>
+        <li><b>Trace metadata + TTFT + 👍/👎</b> — ابزار اندازه‌گیری خود فرضیه.</li>
+        <li><b>Guardrail shadow (متن)</b> — هزینه‌اش کم است و داده‌ای جمع می‌کند که بعداً با هیچ قیمتی نمی‌شود خرید.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--bad)">✕ Explicitly cut</h3>
+      <ul>
+        <li><b>سلسله‌مراتب واحد سازمانی</b> — ۱۰۰ نفر پایلوت را با team flat مدیریت می‌کنیم. فرضیه به آن وابسته نیست.</li>
+        <li><b>داشبورد ادمین کامل</b> — در پایلوت، ادمین UI داخلی LiteLLM یا اسکریپت کافی است.</li>
+        <li><b>Guardrail enforce و چندرسانه‌ای</b> — enforce روی پایلوت فقط با false positive فرضیه‌ی کیفیت را آلوده می‌کند.</li>
+        <li><b>Files API برای dev</b> — dev‌های پایلوت با chat completions کار می‌کنند.</li>
+        <li><b>Auth API برای محصولات دیگر، Agents، Memory، Auto routing</b> — هیچ‌کدام برای جواب دادن به فرضیه لازم نیستند.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>What "done" looks like</h3>
+  <ul>
+    <li>۱۰۰ کاربر از ۳ واحد + ۱۰ dev، ۴ هفته.</li>
+    <li>داشبورد (حتی یک کوئری SQL) که WAU هفتگی، نرخ 👍، p95 TTFT و مصرف per-user را نشان دهد.</li>
+    <li>مقایسه‌ی ترافیک پروکسی همان ۱۰۰ نفر، قبل و بعد.</li>
+  </ul>
+  <div class="grid cols-2">
+    <div class="callout info" style="margin:0"><strong>Go:</strong> WAU ≥ ۷۰٪ و 👍 ≥ ۸۵٪ ← GA.</div>
+    <div class="callout warn" style="margin:0"><strong>Pivot:</strong> اگر 👍 پایین است، مشکل کیفیت یا مدل است، نه فیچر.</div>
+  </div>
+</section>
+
+<!-- ============ ROADMAP ============ -->
+<section class="doc" id="roadmap">
+  <h2><span class="num">۰۵</span> Roadmap</h2>
+  <div class="callout warn"><strong>فرض‌های پایه برای همه‌ی تاریخ‌ها:</strong> تیم ۳ تا ۴ مهندس (۱ فرانت، ۲ بک‌اند/پلتفرم، ۰.۵ DevOps) + ۱ PM یا PO پاره‌وقت. Keycloak یا AD در دسترس است. A1 (دسترسی به ارائه‌دهنده‌ها) تا پایان M0 تأیید می‌شود. <b>اگر هر کدام از این‌ها غلط باشد، همه‌ی تاریخ‌ها جابه‌جا می‌شوند.</b></div>
+
+  <div class="gantt" aria-label="Timeline">
+    <div class="gantt-grid">
+      <div></div>
+      <div class="mlabel">Nov '26</div><div class="mlabel">Dec</div><div class="mlabel">Jan '27</div><div class="mlabel">Feb</div><div class="mlabel">Mar</div><div class="mlabel">Apr</div>
+
+      <div class="rlabel">M0 Discovery</div>
+      <div class="bar" style="grid-column:2 / span 3">3w</div>
+      <div style="grid-column:5 / span 21"></div>
+
+      <div class="rlabel">M1 Alpha</div>
+      <div style="grid-column:2 / span 3"></div>
+      <div class="bar" style="grid-column:5 / span 4">50 users</div>
+      <div style="grid-column:9 / span 17"></div>
+
+      <div class="rlabel">M2 Pilot</div>
+      <div style="grid-column:2 / span 7"></div>
+      <div class="bar gate" style="grid-column:9 / span 4">100 + 10 dev 🚦</div>
+      <div style="grid-column:13 / span 13"></div>
+
+      <div class="rlabel">M3 Admin</div>
+      <div style="grid-column:2 / span 11"></div>
+      <div class="bar" style="grid-column:13 / span 6">Governance</div>
+      <div style="grid-column:19 / span 7"></div>
+
+      <div class="rlabel">M4 Guardrail</div>
+      <div style="grid-column:2 / span 17"></div>
+      <div class="bar" style="grid-column:19 / span 4">Enforce</div>
+      <div style="grid-column:23 / span 3"></div>
+
+      <div class="rlabel">M5 GA</div>
+      <div style="grid-column:2 / span 20"></div>
+      <div class="bar ga" style="grid-column:22 / span 4">GA</div>
+    </div>
+  </div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M0 — Discovery + Foundation</h3><span class="date">2026-11-17 · ۳ هفته</span></div>
+    <div class="row"><b>وابستگی:</b> دسترسی به ۲۷ نفر برای مصاحبه، لاگ پروکسی سازمان، استعلام حقوقی.</div>
+    <div class="row"><b>Scope:</b> ۲۷ مصاحبه + baseline ترافیک Shadow AI · تصمیم معماری (ADR): Hub API (FastAPI) + LiteLLM + Keycloak + Postgres + MinIO + Langfuse · اسکلت Hub API + Keycloak + LiteLLM در docker-compose · حذف <code>VITE_API_KEY</code> از فرانت · CI، محیط staging، secret management.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> جواب منفی یا معلق برای A1. Keycloak به AD وصل نشود.</div>
+  </div></div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M1 — Internal Alpha (۵۰ نفر، واحد فنی)</h3><span class="date">2026-12-15 · ۴ هفته</span></div>
+    <div class="row"><b>وابستگی:</b> M0. نتیجه‌ی مصاحبه‌ها لیست مدل‌ها و سقف بودجه را تأیید کند.</div>
+    <div class="row"><b>Scope:</b> SSO اجباری · چت چندمدلی با انتخاب مدل · تاریخچه‌ی سرور · آپلود فایل/تصویر · بودجه‌ی flat per-user · صفحه‌ی Usage · trace metadata + TTFT · 👍/👎 · guardrail shadow متنی.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> streaming از مسیر Hub API و LiteLLM latency قابل‌قبولی ندهد (p95 TTFT &gt; ۲s). مهاجرت تاریخچه از <code>localStorage</code>.</div>
+  </div></div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M2 — Pilot + Dev Beta (۱۰۰ نفر از ۳ واحد + ۱۰ dev)</h3><span class="date">2027-01-12 · ۴ هفته</span></div>
+    <div class="row"><b>وابستگی:</b> M1 پایدار (بدون P0 در ۲ هفته‌ی آخر).</div>
+    <div class="row"><b>Scope:</b> API key سلف‌سرویس (پیشوند، expiry، budget و rate limit per-key) · راهنمای VS Code (Continue/Cline) · هشدار ۸۰٪ و ۱۰۰٪ · اجرای تست‌های A2، A3، A4 و A7.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> ایجنت‌های IDE بودجه را در روزهای اول تمام کنند ← باید rate limit و سقف per-key از روز اول باشد.</div>
+    <div class="gate-note">🚦 Go/No-Go در 2027-01-12 (۲۲ دی ۱۴۰۵) بر اساس معیارهای MVP.</div>
+  </div></div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M3 — Admin &amp; Governance</h3><span class="date">2027-02-23 · ۶ هفته</span></div>
+    <div class="row"><b>وابستگی:</b> Go از M2. ۵+ مصاحبه با مدیران و امنیت. <b>سیاست حریم خصوصی trace تصویب شده.</b></div>
+    <div class="row"><b>Scope:</b> داشبورد ادمین · RBAC پنج‌نقشی · سلسله‌مراتب واحد + sync از AD · بودجه per-واحد/per-دوره · مدیریت سشن‌ها · trace search/filter با دسترسی محتوای break-glass و لاگ‌شده · Home stats.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> ساختار واحدها در AD تمیز نباشد (معمولاً نیست). تصویب سیاست حریم خصوصی طول بکشد.</div>
+  </div></div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M4 — Guardrail Enforce</h3><span class="date">2027-03-23 · ۴ هفته</span></div>
+    <div class="row"><b>وابستگی:</b> ۸+ هفته داده‌ی shadow. A6 پاس شده باشد.</div>
+    <div class="row"><b>Scope:</b> guardrail متنی در حالت enforce (مسدود، ماسک یا هشدار) · ویرایش prompt توسط ادمین با نسخه‌بندی، تست روی دیتاست ثابت و rollback · گزارش امنیتی هفتگی.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> false positive &gt; ۵٪. مدل guard محلی latency بیش از ۳۰۰ms داشته باشد.</div>
+  </div></div>
+
+  <div class="milestone"><div class="card">
+    <div class="head"><h3>M5 — GA سازمانی</h3><span class="date">2027-04-20 · ۴ هفته (شامل نوروز)</span></div>
+    <div class="row"><b>وابستگی:</b> M3 و M4. ظرفیت سرور برای کل سازمان (load test).</div>
+    <div class="row"><b>Scope:</b> rollout تدریجی واحد به واحد · ورک‌شاپ‌ها · Auto routing (اگر دیتاست آماده باشد) · OpenAI Files API.</div>
+    <div class="row"><b>چه چیزی تاریخ را می‌شکند:</b> نوروز (≈ 2027-03-20 تا 2027-04-02) دو هفته‌ی کاری را می‌گیرد. این در تاریخ لحاظ شده ولی buffer دیگری نیست.</div>
+  </div></div>
+
+  <div class="callout info"><strong>Later (بعد از GA، بر اساس شواهد):</strong> Guardrail تصویر و صوت · مسیر self-hosted برای داده‌ی حساس · Agents / Memory / RAG · Auth برای محصولات دیگر.</div>
+</section>
+
+<!-- ============ CORNER CASES ============ -->
+<section class="doc cc" id="corner">
+  <h2><span class="num">۰۶</span> Corner Cases</h2>
+  <p class="lead">۱۵ سناریوی خرابی مشخص از trace کد، تحقیق رقبا و الگوهای شناخته‌شده.</p>
+  <div class="cc-filter" id="ccFilter">
+    <button type="button" class="on" data-f="all">همه</button>
+    <button type="button" data-f="acc">Accounting</button>
+    <button type="button" data-f="dev">API Key / Dev</button>
+    <button type="button" data-f="priv">Trace / Privacy</button>
+    <button type="button" data-f="guard">Guardrail</button>
+    <button type="button" data-f="auth">Auth / Session</button>
+  </div>
+
+  <div class="grid cols-2" id="ccGrid">
+    <div class="card" data-a="acc">
+      <h3><span><span class="id">C1</span>Overspend همزمان</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Accounting / بودجه</span>
+      <div class="row"><b>سناریو:</b> کاربر با $0.10 بودجه‌ی باقی‌مانده، ۵ درخواست streaming همزمان (مثلاً ایجنت IDE) می‌فرستد. هر کدام موقع شروع بودجه را چک می‌کند و همه رد می‌شوند.</div>
+      <div class="row"><b>اثر:</b> هزینه‌ی واقعی چند برابر بودجه می‌شود، چون هزینه بعد از پایان stream محاسبه می‌شود.</div>
+      <div class="row"><b>منبع:</b> الگوی شناخته‌شده‌ی metering بعد از مصرف.</div>
+      <div class="row"><b>راه‌حل:</b> رزرو بودجه قبل از درخواست (بر اساس max_tokens تخمینی) + تسویه بعد از پایان + سقف concurrency per-key.</div>
+    </div>
+
+    <div class="card" data-a="acc">
+      <h3><span><span class="id">C2</span>Stream قطع‌شده</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Accounting / بودجه</span>
+      <div class="row"><b>سناریو:</b> کاربر وسط پاسخ تب را می‌بندد یا Stop می‌زند.</div>
+      <div class="row"><b>اثر:</b> ارائه‌دهنده توکن تولیدشده را حساب می‌کند ولی usage chunk آخر هرگز نمی‌رسد. اختلاف بین حساب ما و صورتحساب ارائه‌دهنده.</div>
+      <div class="row"><b>منبع:</b> رفتار SSE. فرانت فعلی <code>src/lib/api.ts</code> abort دارد.</div>
+      <div class="row"><b>راه‌حل:</b> <code>stream_options.include_usage</code>. در abort، توکن‌ها را از متن دریافت‌شده تخمین بزنید. reconcile ماهانه با صورتحساب.</div>
+    </div>
+
+    <div class="card" data-a="acc">
+      <h3><span><span class="id">C3</span>جابه‌جایی کاربر بین واحدها وسط دوره</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Accounting / بودجه</span>
+      <div class="row"><b>سناریو:</b> کاربر روز ۱۵ ماه از واحد A به B می‌رود (sync از AD).</div>
+      <div class="row"><b>اثر:</b> هزینه‌ی نیمه‌ی اول ماه به حساب B می‌رود یا بودجه‌اش reset می‌شود.</div>
+      <div class="row"><b>منبع:</b> مدل داده‌ی سلسله‌مراتبی.</div>
+      <div class="row"><b>راه‌حل:</b> هزینه را در لحظه‌ی تراکنش با <code>org_unit_id</code> ثبت کنید، نه با join روی وضعیت فعلی کاربر.</div>
+    </div>
+
+    <div class="card" data-a="acc">
+      <h3><span><span class="id">C4</span>«توکن باقی‌مانده» گمراه‌کننده است</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Accounting / بودجه</span>
+      <div class="row"><b>سناریو:</b> کاربر «۱M توکن باقی‌مانده» می‌بیند. با Opus، این مقدار ۲۰ برابر سریع‌تر از Haiku تمام می‌شود.</div>
+      <div class="row"><b>اثر:</b> کاربر غافلگیر و عصبانی می‌شود و اعتماد از بین می‌رود (O2).</div>
+      <div class="row"><b>منبع:</b> دلیل اینکه Cursor و OpenRouter اعتبار پولی نشان می‌دهند، نه توکن.</div>
+      <div class="row"><b>راه‌حل:</b> واحد نمایش را «اعتبار» بگذارید. توکن فقط در جزئیات نمایش داده شود.</div>
+    </div>
+
+    <div class="card" data-a="dev">
+      <h3><span><span class="id">C5</span>نشت کلید در git</span><span class="badge b-open">Open</span></h3>
+      <span class="area">API Key / Developer</span>
+      <div class="row"><b>سناریو:</b> dev کلید را در <code>settings.json</code> یا <code>.env</code> کامیت می‌کند.</div>
+      <div class="row"><b>اثر:</b> هر کسی که به ریپو دسترسی دارد با سهمیه‌ی آن dev مصرف می‌کند.</div>
+      <div class="row"><b>منبع:</b> الگوی رایج. GitHub/GitLab secret scanning بر اساس پیشوند کار می‌کند.</div>
+      <div class="row"><b>راه‌حل:</b> پیشوند یکتا <code>hub-sk-</code> + قانون در GitLab secret detection داخلی + expiry پیش‌فرض ۹۰ روز + IP allowlist اختیاری.</div>
+    </div>
+
+    <div class="card" data-a="dev">
+      <h3><span><span class="id">C6</span>ایجنت IDE در حلقه</span><span class="badge b-open">Open</span></h3>
+      <span class="area">API Key / Developer</span>
+      <div class="row"><b>سناریو:</b> Cline یا Roo در یک loop خطا ۲۰۰ درخواست ۱۰۰k توکنی می‌فرستد.</div>
+      <div class="row"><b>اثر:</b> بودجه‌ی ماه در ۱ ساعت تمام می‌شود.</div>
+      <div class="row"><b>منبع:</b> رفتار شناخته‌شده‌ی ایجنت‌های کدنویسی.</div>
+      <div class="row"><b>راه‌حل:</b> rate limit (RPM و TPM) per-key + سقف روزانه علاوه بر ماهانه.</div>
+    </div>
+
+    <div class="card" data-a="dev">
+      <h3><span><span class="id">C7</span>ناسازگاری tool calling</span><span class="badge b-open">Open</span></h3>
+      <span class="area">API Key / Developer</span>
+      <div class="row"><b>سناریو:</b> dev مدل Claude را از مسیر OpenAI-compatible با tool calling موازی صدا می‌زند.</div>
+      <div class="row"><b>اثر:</b> فرمت tool call‌ها یا stream بعد از ترجمه کمی متفاوت است و برخی افزونه‌های IDE می‌شکنند.</div>
+      <div class="row"><b>منبع:</b> لایه‌ی ترجمه‌ی LiteLLM و OpenRouter.</div>
+      <div class="row"><b>راه‌حل:</b> یک suite تست با Continue و Cline روی هر مدل مجاز، قبل از اضافه کردن آن به لیست dev.</div>
+    </div>
+
+    <div class="card" data-a="dev">
+      <h3><span><span class="id">C8</span><code>file_id</code> بین ارائه‌دهنده‌ها</span><span class="badge b-open">Open</span></h3>
+      <span class="area">API Key / Developer</span>
+      <div class="row"><b>سناریو:</b> dev فایل را از Files API آپلود می‌کند و بعد با مدل دیگری به آن ارجاع می‌دهد.</div>
+      <div class="row"><b>اثر:</b> خطای 404 یا رفتار متفاوت.</div>
+      <div class="row"><b>منبع:</b> Files API مخصوص هر ارائه‌دهنده است.</div>
+      <div class="row"><b>راه‌حل:</b> ذخیره‌سازی مستقل در MinIO و <code>file_id</code> خودمان.</div>
+    </div>
+
+    <div class="card" data-a="priv">
+      <h3><span><span class="id">C9</span>مدیر پرامپت کارمند را می‌خواند</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Trace / Privacy</span>
+      <div class="row"><b>سناریو:</b> مدیر واحد در trace متن پرامپت‌های یک کارمند را باز می‌کند، مثلاً سؤال پزشکی یا شخصی.</div>
+      <div class="row"><b>اثر:</b> شایعه پخش می‌شود، استفاده سقوط می‌کند و کارمندان به ابزار شخصی برمی‌گردند. Outcome اصلی می‌شکند. ریسک حقوقی هم دارد.</div>
+      <div class="row"><b>منبع:</b> فرض A5. ویژگی‌های RBAC و masking در Langfuse self-hosted پولی است.</div>
+      <div class="row"><b>راه‌حل:</b> پیش‌فرض: مدیران فقط metadata می‌بینند. محتوا فقط برای نقش Security Auditor با دلیل ثبت‌شده و لاگ دسترسی. سیاست را قبل از لانچ به کارمندان اعلام کنید.</div>
+    </div>
+
+    <div class="card" data-a="priv">
+      <h3><span><span class="id">C10</span>Trace خودش نشت داده است</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Trace / Privacy</span>
+      <div class="row"><b>سناریو:</b> Langfuse یا ClickHouse همه‌ی پرامپت‌ها را خام نگه می‌دارد، از جمله داده‌ی حساس.</div>
+      <div class="row"><b>اثر:</b> بزرگ‌ترین مخزن داده‌ی حساس سازمان بدون retention.</div>
+      <div class="row"><b>منبع:</b> طراحی.</div>
+      <div class="row"><b>راه‌حل:</b> retention (مثلاً ۹۰ روز برای محتوا، ۲ سال برای metadata) + رمزنگاری at-rest + ماسک قبل از ذخیره.</div>
+    </div>
+
+    <div class="card" data-a="guard">
+      <h3><span><span class="id">C11</span>Guardrail down است</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Guardrail</span>
+      <div class="row"><b>سناریو:</b> سرور vLLM مدل guard ری‌استارت می‌شود.</div>
+      <div class="row"><b>اثر:</b> fail-closed یعنی کل سازمان بدون چت. fail-open یعنی بدون محافظت.</div>
+      <div class="row"><b>منبع:</b> طراحی.</div>
+      <div class="row"><b>راه‌حل:</b> در shadow حالت fail-open. در enforce، regex همیشه اجرا شود و مدل guard با timeout ۳۰۰ms fail-open + alert.</div>
+    </div>
+
+    <div class="card" data-a="guard">
+      <h3><span><span class="id">C12</span>ادمین prompt guard را خراب می‌کند</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Guardrail</span>
+      <div class="row"><b>سناریو:</b> ادمین policy prompt را ویرایش می‌کند و ناخواسته همه‌ی پرامپت‌ها «حساس» می‌شوند.</div>
+      <div class="row"><b>اثر:</b> کل سازمان مسدود یا ماسک‌شده.</div>
+      <div class="row"><b>منبع:</b> وایت‌برد («prompt change by Admin»).</div>
+      <div class="row"><b>راه‌حل:</b> نسخه‌بندی + اجرای خودکار روی دیتاست ثابت قبل از publish (اگر FP &gt; ۵٪ باشد، بلاک شود) + rollback یک‌کلیکی + canary روی ۵٪ ترافیک.</div>
+    </div>
+
+    <div class="card" data-a="guard">
+      <h3><span><span class="id">C13</span>دور زدن guardrail با تصویر یا فایل</span><span class="badge b-accepted">Accepted risk</span></h3>
+      <span class="area">Guardrail</span>
+      <div class="row"><b>سناریو:</b> کاربر متن محرمانه را اسکرین‌شات می‌گیرد یا داخل PDF آپلود می‌کند.</div>
+      <div class="row"><b>اثر:</b> guard متنی آن را نمی‌بیند.</div>
+      <div class="row"><b>منبع:</b> وایت‌برد (multimodal).</div>
+      <div class="row"><b>راه‌حل:</b> ریسک پذیرفته‌شده تا M4 — در Later با OCR بسته می‌شود. فعلاً در trace علامت <code>has_attachment</code> بخورد.</div>
+    </div>
+
+    <div class="card" data-a="auth">
+      <h3><span><span class="id">C14</span>کارمند جداشده</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Auth / Session</span>
+      <div class="row"><b>سناریو:</b> کارمند از سازمان می‌رود. حساب AD غیرفعال می‌شود ولی API key‌اش فعال است.</div>
+      <div class="row"><b>اثر:</b> دسترسی ادامه‌دار از بیرون سازمان.</div>
+      <div class="row"><b>منبع:</b> الگوی رایج. کلیدها به سشن SSO وابسته نیستند.</div>
+      <div class="row"><b>راه‌حل:</b> sync روزانه از AD: کاربر غیرفعال ← revoke همه‌ی کلیدها و سشن‌ها.</div>
+    </div>
+
+    <div class="card" data-a="auth">
+      <h3><span><span class="id">C15</span>تاریخچه‌ی قدیمی در localStorage</span><span class="badge b-open">Open</span></h3>
+      <span class="area">Auth / Session</span>
+      <div class="row"><b>سناریو:</b> کاربران فعلی تاریخچه‌ی چت را در <code>localStorage</code> دارند (<code>src/hooks/useConversations.ts</code>).</div>
+      <div class="row"><b>اثر:</b> بعد از لاگین، تاریخچه گم‌شده به نظر می‌رسد.</div>
+      <div class="row"><b>منبع:</b> کد فعلی.</div>
+      <div class="row"><b>راه‌حل:</b> یک بار import خودکار به سرور بعد از اولین لاگین.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SOURCES ============ -->
+<section class="doc" id="sources">
+  <h2><span class="num">۰۷</span> منابع</h2>
+  <ul class="sources">
+    <li><a href="https://docs.litellm.ai/docs/enterprise">LiteLLM Enterprise</a></li>
+    <li><a href="https://docs.openwebui.com/license/">Open WebUI License</a></li>
+    <li><a href="https://langfuse.com/docs/open-source">Langfuse Open Source</a> · <a href="https://langfuse.com/self-hosting/license-key">Langfuse License Key</a></li>
+    <li><a href="https://www.librechat.ai/docs/configuration/librechat_yaml/object_structure/balance">LibreChat Balance config</a></li>
+    <li><a href="https://portkey.ai/blog/openwebui-vs-librechat/">Open WebUI vs LibreChat (Portkey, vendor)</a> · <a href="https://www.truefoundry.com/blog/librechat-vs-open-webui">TrueFoundry comparison (vendor)</a></li>
+    <li><a href="https://openrouter.ai/docs/guides/routing/routers/jev-router">OpenRouter Jev Router</a></li>
+  </ul>
+  <div class="callout warn">جزئیات لایسنس‌ها از docs و خلاصه‌های ثانویه است؛ قبل از تصمیم نهایی، متن لایسنس را با واحد حقوقی چک کنید.</div>
+</section>
+
+<footer>LLM Hub سازمانی · Product Discovery &amp; Roadmap · 2026-10-27</footer>
+</main>
+
+<script>
+(function(){
+  var root=document.documentElement, btn=document.getElementById('themeBtn');
+  try{var t=localStorage.getItem('hub-theme'); if(t) root.setAttribute('data-theme',t);}catch(e){}
+  btn.addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('hub-theme',next);}catch(e){}
+  });
+
+  var f=document.getElementById('ccFilter');
+  f.addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    f.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
+    var v=b.dataset.f;
+    document.querySelectorAll('#ccGrid .card').forEach(function(c){
+      c.style.display=(v==='all'||c.dataset.a===v)?'':'none';
+    });
+  });
+
+  var links=[].slice.call(document.querySelectorAll('#nav a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'))});
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        var i=secs.indexOf(en.target);
+        links.forEach(function(l,j){l.classList.toggle('active',i===j)});
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  secs.forEach(function(s){ if(s) io.observe(s) });
+})();
+</script>
+</body>
+</html>
