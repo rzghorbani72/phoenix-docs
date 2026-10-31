@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <title>کاتالوگ قابلیت‌های Phoenix EX</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <div class="cover">
+      <h1>کاتالوگ کامل قابلیت‌های Phoenix EX</h1>
+      <p><b>محصول:</b> پلتفرم هوش مصنوعی تجربه کارکنان (EX) برای منابع انسانی. کارکنان با صدا (IVA، تلفن) و متن (چت‌بات) با آن گفت‌وگو می‌کنند. محصول جواب می‌دهد، درخواست ثبت می‌کند و هر گفت‌وگو را به تگ، دسته‌بندی و بینش برای HR تبدیل می‌کند.</p>
+<p><b>مخاطب:</b> TPM، CTO، سرپرستان فنی. این فهرست اصلی است: ردیف اضافه کنید، اولویت‌ها را عوض کنید و شناسه‌های Fit-Gap را به آن لینک بدهید.</p>
+<p><b>تاریخ:</b> 2026-10-17 · <b>مبنای کد:</b> مخزن در <code>cb570a50b</code> (به <code>product/README.md</code> و پرونده‌ها نگاه کنید) · <b>مبنای رقبا:</b> پرونده محصول §25 (منابع G1 تا G31 و R1 تا R*) + پژوهش تازه‌ای که در <a href="#sources">منابع</a> آمده است.</p>
+<p class="box">این نسخه فارسی ترجمه <a href="FEATURE_CATALOG.html">نسخه انگلیسی</a> است. متن مرجع همان نسخه انگلیسی است؛ پس از هر تغییر در <code>FEATURE_CATALOG.md</code>، این نسخه باید به‌روز شود. شناسه‌ها، نام شرکت‌ها و نام اجزای کد به همان شکل اصلی آمده‌اند.</p>
+      <p class="small">تولیدشده از <code>product-management/FEATURE_CATALOG_FA.md</code>. فایل Markdown را ویرایش کنید، سپس <code>source/build.sh</code> را اجرا کنید.</p>
+    </div>
+<h2 id="how-to-read-this">نحوه خواندن</h2>
+<table>
+<thead><tr><th>ستون</th><th>معنی</th></tr></thead>
+<tbody>
+<tr><td><b>نیاز</b></td><td>مسئله‌ای که قابلیت حل می‌کند، در یک خط</td></tr>
+<tr><td><b>گزینه‌های راه‌حل</b></td><td>راه‌های ساخت؛ گزینه <b>پررنگ</b> پیشنهاد من است</td></tr>
+<tr><td><b>دیگران چه می‌کنند</b></td><td>رهبران جهانی چطور حل کرده‌اند (منبع در کروشه)</td></tr>
+<tr><td><b>Phoenix امروز</b></td><td>✅ داریم · 🟡 ناقص · ❌ نداریم — از روی کد، نه ادعا</td></tr>
+<tr><td><b>اولویت</b></td><td><b>P0</b> = برای اعتماد پایلوت / UAT لازم است · <b>P1</b> = برای فروش و تمدید لازم است · <b>P2</b> = تمایزدهنده یا بعداً</td></tr>
+<tr><td><b>تلاش</b></td><td>تلاش برای تیم فعلی (حدود ۱۰ نفر): <b>S</b> ≤ ۱ هفته · <b>M</b> ۲ تا ۴ هفته · <b>L</b> &gt; ۱ ماه</td></tr>
+</tbody></table>
+<p>تلاش و اولویت قضاوت من هستند (INFERENCE). پیش از تعهد دادن تاریخ، آن‌ها را با ردیاب Fit-Gap دوباره بررسی کنید.</p>
+<h2 id="toc">فهرست مطالب</h2>
+<ol>
+<li><a href="#1-product-shape-users-and-the-four-jobs">شکل محصول: کاربران و چهار کار</a></li>
+<li><a href="#2-channels-and-access">کانال‌ها و دسترسی</a></li>
+<li><a href="#3-identity-consent-and-anonymity">هویت، رضایت و ناشناسی</a></li>
+<li><a href="#4-voice-experience-iva">تجربه صوتی (IVA)</a></li>
+<li><a href="#5-conversation-brain-understand-and-answer">مغز گفت‌وگو (فهم و پاسخ)</a></li>
+<li><a href="#6-knowledge-management">مدیریت دانش</a></li>
+<li><a href="#7-actions-and-transactions">اقدام و تراکنش</a></li>
+<li><a href="#8-requests-cases-and-ticketing">درخواست، پرونده و تیکت</a></li>
+<li><a href="#9-conversation-analytics-tags-categories-enrichment">تحلیل گفت‌وگو: تگ، دسته‌بندی، غنی‌سازی</a></li>
+<li><a href="#10-insights-dashboards-and-reporting">بینش، داشبورد و گزارش</a></li>
+<li><a href="#11-closing-the-loop-action-on-insights">بستن حلقه: اقدام روی بینش</a></li>
+<li><a href="#12-proactive-listening-outbound-and-programs">شنیدن پیش‌دستانه (تماس خروجی و برنامه‌ها)</a></li>
+<li><a href="#13-privacy-security-and-compliance">حریم خصوصی، امنیت و انطباق</a></li>
+<li><a href="#14-org-data-and-integrations">داده سازمانی و یکپارچه‌سازی</a></li>
+<li><a href="#15-admin-and-configuration-studio">مدیریت و استودیوی پیکربندی</a></li>
+<li><a href="#16-ai-quality-evaluation-and-ai-ops">کیفیت AI، ارزیابی و AI ops</a></li>
+<li><a href="#17-platform-operations-and-cost">پلتفرم، عملیات و هزینه</a></li>
+<li><a href="#18-commercial-and-customer-success">تجاری و موفقیت مشتری</a>
+<ul>
+<li><a href="#18b-recruiting-from-interview-scheduling-to-the-candidates-status">18b. استخدام: از زمان‌بندی مصاحبه تا وضعیت کارجو</a></li>
+</ul></li>
+<li><a href="#19-key-judgments">قضاوت‌های اصلی</a></li>
+<li><a href="#20-suggested-release-cut">پیشنهاد برش انتشار</a></li>
+<li><a href="#21-red-lines-what-not-to-build">خط قرمزها: چه چیزی نسازیم</a></li>
+<li><a href="#sources">منابع</a></li>
+</ol>
+<h2 id="1-product-shape-users-and-the-four-jobs">1. شکل محصول: کاربران و چهار کار</h2>
+<p>هر قابلیت زیر به یکی از چهار کار خدمت می‌کند. اگر قابلیت پیشنهادی به هیچ‌کدام خدمت نکند، آن را زیر سؤال ببرید.</p>
+<table>
+<thead><tr><th>کار</th><th>چه کسی</th><th>مثال</th></tr></thead>
+<tbody>
+<tr><td><b>J1 — کمک بگیرد</b></td><td>کارمند</td><td>«چند روز مرخصی دارم؟» «غذای رستوران اداره دوباره سرد بود.»</td></tr>
+<tr><td><b>J2 — کارش انجام شود</b></td><td>کارمند ← تیم مالک</td><td>«می‌خواهم حقوقم بازنگری شود.» «کولر طبقه ۳ را درست کنید.»</td></tr>
+<tr><td><b>J3 — شنیده شود</b></td><td>کارمند ← سازمان</td><td>شکایت ناشناس درباره حجم کار، بازخورد درباره یک سیاست جدید</td></tr>
+<tr><td><b>J4 — بفهمد و اقدام کند</b></td><td>HR، تحلیلگر EX، مدیران</td><td>«پنج مشکل اصلی منطقه تهران در این ماه چیست و چیز تازه‌ای هست؟»</td></tr>
+</tbody></table>
+<p><b>نقش‌هایی که باید برایشان طراحی کنیم</b> (هرکدام نما و مجوز جدا می‌خواهد):</p>
+<table>
+<thead><tr><th>نقش</th><th>نیازها</th></tr></thead>
+<tbody>
+<tr><td>کارمند</td><td>جواب سریع، پیگیری ساده درخواست، اطمینان از اینکه آنچه می‌گوید امن است</td></tr>
+<tr><td>مالک پرونده / تیم خدمت (HR، تسهیلات، IT، پیمانکار رستوران)</td><td>صف، زمینه، SLA، راهی برای پاسخ دادن</td></tr>
+<tr><td>مدیر مستقیم</td><td>درخواست‌های تیمش (مسیر شغلی، تأییدها)، بینش سطح تیم (آستانه k)</td></tr>
+<tr><td>مدیر واحد (معاونت / اداره کل / اداره)</td><td>بینش فقط برای حوزه و زیرواحدهای خودش</td></tr>
+<tr><td>تحلیلگر EX / HR</td><td>بینش کل سازمان، طبقه‌بندی (Taxonomy)، گزارش، برنامه اقدام</td></tr>
+<tr><td>صاحب دانش</td><td>ویرایش بخش خودش از KB، دیدن سؤال‌های بی‌جواب حوزه خودش</td></tr>
+<tr><td>بررسی‌کننده موارد حساس</td><td>صف محدود؛ هر باز کردن در لاگ ثبت می‌شود</td></tr>
+<tr><td>مدیر سامانه</td><td>پیکربندی، کاربران، نقش‌ها؛ باز کردن اضطراری هویت زیر کنترل</td></tr>
+<tr><td>مسئول حریم خصوصی / امنیت</td><td>لاگ ممیزی، نگهداری، بازبینی دسترسی</td></tr>
+<tr><td>مدیر فنی</td><td>زیرساخت، پایش، بدون دسترسی به محتوا</td></tr>
+</tbody></table>
+<h2 id="2-channels-and-access">2. کانال‌ها و دسترسی</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>CH-01</td><td>خط تلفن ورودی (IVA صوتی)</td><td>کارکنان بدون میز و میدانی تلفن دارند، لپ‌تاپ ندارند</td><td><b>SIP trunk ← LiveKit ← voice agent</b> (فعلی)؛ CPaaS میزبانی‌شده</td><td>UKG Bryte Voice از طریق Siri/Google کار می‌کند، نه تماس تلفنی؛ Paradox برای کارجو تلفن/صوت دارد [G24, G27]</td><td>✅ <code>chatbot-iva-agent</code></td><td>P0</td><td>—</td></tr>
+<tr><td>CH-02</td><td>ویجت چت وب</td><td>کارکنان اداری متن را ترجیح می‌دهند</td><td><b>ویجت قابل‌تعبیه + SSO</b>؛ صفحه اینترانت</td><td>همه Agentهای HR (Leena، Moveworks، Workday Assistant)</td><td>✅ چت <code>adcs</code></td><td>P0</td><td>—</td></tr>
+<tr><td>CH-03</td><td>صوت در مرورگر / اپ</td><td>صوت بدون خط تلفن، مثلاً در کیوسک</td><td><b>WebRTC (websocall)</b></td><td>Leena صوت به بیش از ۱۰۰ زبان تبلیغ می‌کند [G28]</td><td>✅ <code>golang/websocall</code></td><td>P1</td><td>—</td></tr>
+<tr><td>CH-04</td><td>کانال‌های پیام‌رسان (بله، ایتا، روبیکا، تلگرام)</td><td>جایی که کارکنان ایرانی همین حالا هستند</td><td><b>یک adapter کانال برای هر پیام‌رسان روی همان API چت</b>؛ اول فقط ارسال</td><td>Moveworks / Workday داخل Slack و Teams هستند؛ در ایران معادلش پیام‌رسان‌های داخلی است</td><td>🟡 ابزار ارسال روبیکا هست، غیرفعال</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-05</td><td>SMS ورودی/خروجی</td><td>تأییدیه، کد پیگیری، افراد با گوشی ساده</td><td><b>SMS خروجی برای تأییدیه‌ها از حالا</b>؛ «با کد پاسخ بدهید» ورودی بعداً</td><td>Paradox روی SMS کار می‌کند [G27]</td><td>🟡 <code>send_sms</code> (فقط خروجی، بدون محدودیت نرخ)</td><td>P0</td><td>S</td></tr>
+<tr><td>CH-06</td><td>Microsoft Teams / Slack</td><td>مشتریان خارج از ایران یا شرکت‌های فناوری</td><td>adapter با bot framework</td><td>Workday برای Teams/Slack؛ Moveworks</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-07</td><td>دریافت ایمیل</td><td>درخواست‌های رسمی، پیوست</td><td>صندوق ورودی ← درخواست (§8)</td><td>Workday Help و Oracle پرونده را با ایمیل می‌پذیرند [W-WD2, W-OR1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-08</td><td>حالت کیوسک / دستگاه مشترک</td><td>کارخانه‌ها و فروشگاه‌ها بدون دستگاه شخصی</td><td>ورود کیوسک با کد پرسنلی + OTP؛ خروج خودکار</td><td>رایج در HCM خط مقدم (UKG)</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-09</td><td>پیوستگی بین کانال‌ها</td><td>شروع با تلفن، ادامه در چت، پیگیری با SMS</td><td><b>یک <code>conversation_id</code> و یک <code>request_id</code> در همه کانال‌ها؛ کد پیگیری همه‌جا کار کند</b></td><td>ServiceNow Employee Center: یک درگاه برای همه کانال‌ها [W-SN1]</td><td>❌ (نشست‌ها برای هر کانال جداست)</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-10</td><td>ساعات کاری و حالت جایگزین</td><td>ساعت ۲ بامداد یا روز تعطیل چه می‌شود</td><td>تقویم ساعات با فهرست تعطیلات شمسی؛ پیام خارج از ساعت، درخواست تماس برگشتی</td><td>استاندارد در همه پلتفرم‌های مرکز تماس</td><td>🟡 سلام قابل تنظیم است، تقویم ندارد</td><td>P1</td><td>S</td></tr>
+<tr><td>CH-11</td><td>دسترس‌پذیری</td><td>کارکنان کم‌شنوا یا کم‌بینا، سواد پایین</td><td>صوت ↔ متن دوطرفه، گزینه TTS آهسته، منوی DTMF جایگزین</td><td>WCAG برای وب؛ صوت برای سواد پایین</td><td>🟡</td><td>P2</td><td>S</td></tr>
+<tr><td>CH-12</td><td>ظرفیت و کنترل پذیرش</td><td>در اوج بار (مثلاً روز حقوق) تماس رها نشود</td><td><b>سقف هم‌زمانی + پیام صف + تماس برگشتی</b>؛ autoscale workerها</td><td>کنترل پذیرش تماس (CAC) در مرکز تماس</td><td>🟡 یک job برای هر تماس؛ صف ندارد</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-13</td><td><b>پیام صوتی (یادداشت صوتی ناهم‌زمان)</b> — کارمند انتخاب می‌کند: تماس زنده، چت متنی، یا فقط یک پیام صوتی بگذارد</td><td>کارکنان بدون میز حرف زدن را بر تایپ ترجیح می‌دهند ولی گفت‌وگوی زنده نمی‌خواهند (سروصدا، وقت نداشتن، خجالت، خارج از ساعت)؛ پیام یک‌طرفه برای موضوع حساس امن‌تر است</td><td><b>یک مسیر پیام صوتی برای سه نقطه ورود:</b> (الف) دکمه میکروفون در چت وب/اپ، (ب) خط تلفن «پیام بگذارید» شبیه پیام‌گیر، روی گوشی ساده هم کار می‌کند و جایگزین IVA خارج از ساعت است، (ج) یادداشت صوتی در پیام‌رسان‌ها (بله، ایتا، روبیکا). جریان: آپلود ← ASR ← همان مسیر تگ‌زنی تماس‌ها ← پاسخ با متن/SMS/TTS. حالت ناشناس: فقط transcript را نگه دار و بعد از ASR صوت را حذف کن، یا صدا را تغییر بده</td><td>SpeakUp: پیام صوتی با امکان تغییر صدا، کد ناشناس برای دیدن پاسخ [W-SU1]؛ FaceUp: یادداشت صوتی ناشناس‌شده [W-FU1]؛ Whistlelink: گزارش شفاهی با تغییر صدا [W-WL1]؛ AWS: یادداشت صوتی WhatsApp + Transcribe برای کارکنان میدانی [W-AWS4]؛ Medallia: بازخورد صوتی/تصویری در مقیاس [W-MD1]. محصولات HR ایرانی: ندیدیم</td><td>🟡 endpoint ASR در <code>adcs</code> یک کلیپ صوتی آپلودشده را به متن تبدیل می‌کند (فقط WAV، حداکثر ۱۰MB، صوت ذخیره نمی‌شود، بدون احراز هویت: <code>adcs/chat/views/audio.py</code>)؛ خط پیام‌گیر، دریافت از پیام‌رسان و پشتیبانی OGG/Opus/WebM/AMR ندارد</td><td>P1</td><td>S (میکروفون چت) / M (خط تلفن، پیام‌رسان‌ها)</td></tr>
+</tbody></table>
+<p><b>نکات طراحی CH-13.</b> طول پیام را محدود کنید (مثلاً ۳ دقیقه) و پیش از ضبط بگویید. فرمت‌های تلفن و پیام‌رسان (OGG/Opus از بله و تلگرام، WebM از مرورگر، AMR/M4A از گوشی) را پیش از ASR به WAV تبدیل کنید. اگر اطمینان ASR کم بود، حدس نزنید؛ بنویسید «متوجه نشدم، لطفاً دوباره بفرستید یا تایپ کنید». یک پیام ممکن است چند موضوع داشته باشد: تگ را در سطح segment بزنید (AN-07). اینکه چه کسی اجازه شنیدن صوت را دارد در سطح داده ۴ است (SC-02) و هر پخش در لاگ ثبت می‌شود (SC-03). در حالت ناشناس، خود صدا گوینده را لو می‌دهد، پس پیش‌فرض فقط transcript است. پیام صوتی می‌تواند مثل یک تماس، آیتم صف تگ یا درخواست بسازد (§8).</p>
+<h2 id="3-identity-consent-and-anonymity">3. هویت، رضایت و ناشناسی</h2>
+<p>این قلب اعتماد است. محصولات شنیدن (J3) ناشناسی می‌خواهند؛ درخواست‌ها (J2) هویت می‌خواهند. <b>هر دو در یک محصول‌اند، پس حالت باید در هر گفت‌وگو صریح باشد.</b></p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>ID-01</td><td>سه حالت گفت‌وگو: <b>ناشناس / محرمانه / شناخته‌شده</b></td><td>یک کانال هم بازخورد را پوشش می‌دهد هم درخواست را</td><td><b>حالت در شروع انتخاب یا با رضایت عوض می‌شود؛ روی هر رکورد ذخیره می‌شود</b>؛ تحلیل فقط از داده بدون هویت استفاده می‌کند</td><td>AllVoices و Deel: گزارش ناشناس با پیگیری دوطرفه [W-AV1, W-DL1]؛ Qualtrics/Glint: نظرسنجی محرمانه با آستانه k</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>ID-02</td><td>شناسایی تماس‌گیرنده</td><td>بدانیم چه کسی زنگ می‌زند، برای درخواست‌ها</td><td><b>تلفن ← ChannelKey ← Person (هش‌شده)</b>؛ کد پرسنلی + OTP برای اقدام‌های حساس</td><td>Moveworks/Workday هویت SSO را استفاده می‌کنند؛ کانال‌های تلفنی ANI + PIN/OTP</td><td>🟡 شماره تلفن مستقیم استفاده می‌شود</td><td>P0</td><td>M</td></tr>
+<tr><td>ID-03</td><td>تأیید هویت مرحله‌ای (OTP)</td><td>پیش از نمایش فیش حقوقی یا ساخت درخواست شناخته‌شده</td><td><b>OTP پیامکی یا یک سؤال با کد پرسنلی</b>؛ بیومتریک صوتی بعداً</td><td>بانک‌ها و اپراتورها: ANI + OTP؛ Leena: SSO</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>ID-04</td><td>درخواست رضایت صریح</td><td>حقوقی و اعتماد: «برای پیگیری باید بدانیم شما کی هستید»</td><td><b>نوبت رضایت اسکریپت‌شده + رکورد رضایت (چه کسی، کی، برای چه)</b></td><td>AllVoices: ناشناس تا وقتی گزارش‌دهنده خودش هویت را آشکار کند [W-AV1]</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-05</td><td>کنترل پذیرش / فهرست مجاز</td><td>پایلوت به بعضی کارکنان محدود است</td><td><b>اعمال در SBC/مسیریابی + کنترل در اپ</b></td><td>—</td><td>🟡 Whitelist فقط جلوی حافظه را می‌گیرد، نه پذیرش را (یافته ۹)</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-06</td><td>حافظه بلندمدت با رضایت</td><td>شخصی‌سازی در برابر ردیابی</td><td><b>در حالت ناشناس خاموش؛ در حالت شناخته‌شده opt-in؛ قابل‌مشاهده و قابل‌حذف</b></td><td>—</td><td>🟡 حافظه برای هر شماره، همیشه روشن (یافته ۱۱)</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-07</td><td>پیگیری دوطرفه ناشناس</td><td>HR باید بدون آشکار شدن هویت بیشتر بپرسد</td><td><b>شناسه پرونده ناشناس + PIN؛ کارمند تماس برمی‌گرداند یا از چت می‌بیند</b></td><td>AllVoices، Deel، NAVEX [W-AV1, W-DL1, G15]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>ID-08</td><td>باز کردن اضطراری هویت (break-glass)</td><td>شرایط اضطراری (تهدید ایمنی) هویت تماس‌گیرنده را لازم دارد</td><td><b>مجوز زمان‌دار + ثبت دلیل + تأییدکننده دوم + ممیزی</b></td><td>Glint/Peakon: هرگز هویت نمی‌دهند؛ NAVEX: فقط از مسیر حقوقی</td><td>❌ (و <code>expires_at</code> اجرا نمی‌شود)</td><td>P0</td><td>M</td></tr>
+</tbody></table>
+<h2 id="4-voice-experience-iva">4. تجربه صوتی (IVA)</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>VX-01</td><td>STT فارسی روی صدای تلفنی ۸kHz</td><td>فهمیدن اولین نقطه شکست است</td><td><b>STT فعلی + WER اندازه‌گیری‌شده برای هر لهجه و سطح نویز</b>؛ fine-tune روی تماس‌های خودمان</td><td>فروشندگان داخلی (پارت، عصر گویش پرداز، عامراندیش) [پرونده §25.4]</td><td>✅ STT هست، ولی WER اندازه‌گیری نمی‌شود</td><td>P0</td><td>M (برای اندازه‌گیری)</td></tr>
+<tr><td>VX-02</td><td>پوشش گویش و لهجه</td><td>کارکنان همه استان‌ها؛ فارسی با لهجه ترکی و کردی</td><td><b>مجموعه ارزیابی برای هر منطقه</b>؛ نوبت‌های کم‌اطمینان را به سؤال تکمیلی بفرست</td><td>—</td><td>🟡 <code>transcript_confidence</code> ذخیره می‌شود، استفاده نمی‌شود</td><td>P1</td><td>M</td></tr>
+<tr><td>VX-03</td><td>تقویت واژگان تخصصی</td><td>اصطلاحات HR، نام واحدها، کدهای پرسنلی</td><td><b>واژگان سفارشی / hot-word از درخت سازمان و KB</b></td><td>«phrase hints» در ASR مراکز تماس (Google، AWS)</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>VX-04</td><td>صدای TTS طبیعی</td><td>اعتماد و درک</td><td>TTS فعلی؛ صدای برندشده برای مشتری</td><td>PolyAI به صداهای طبیعی معروف است [W-PA1]</td><td>✅</td><td>P1</td><td>—</td></tr>
+<tr><td>VX-05</td><td>تأخیر کم (زمان تا اولین صدا)</td><td>سکوت بیش از ۱٫۵ ثانیه خراب به نظر می‌رسد</td><td><b>TTS جمله‌به‌جمله (انجام شده)، endpointing تنظیم‌شده، صدای «در حال فکر»، LLM سریع برای جمله اول</b></td><td>همه پلتفرم‌های voice agent روی این بهینه می‌کنند</td><td>✅ streaming؛ endpointing قابل تنظیم</td><td>P0</td><td>S</td></tr>
+<tr><td>VX-06</td><td>تشخیص نوبت و barge-in</td><td>حرف مردم را قطع نکن؛ بگذار قطع کنند</td><td><b>مدل پایان نوبت LLM/معنایی (commit اخیر)</b> + VAD</td><td>PolyAI «مناسب قطع‌کردن» [W-PA1]</td><td>✅ مدل MCI / تشخیص نوبت با LLM، barge-in ۰٫۴ ثانیه</td><td>P0</td><td>—</td></tr>
+<tr><td>VX-07</td><td>مدیریت سکوت و نویز</td><td>نویز کارخانه، کاربر ساکت می‌شود</td><td>پیام کاربر-غایب؛ حذف نویز</td><td>استاندارد</td><td>✅ user-away (به‌صورت پیش‌فرض خاموش)</td><td>P1</td><td>S</td></tr>
+<tr><td>VX-08</td><td>تکرار و تأیید</td><td>صوت صفحه ندارد: عدد و نام اشتباه شنیده می‌شود</td><td><b>پیش از اقدام، slotهای حیاتی (تاریخ، مبلغ، کد) را تأیید کن</b></td><td>الگوی «slot» در Moveworks برای داده ساختاریافته [R4]</td><td>❌ (قاعده‌ای برایش نیست)</td><td>P0</td><td>S</td></tr>
+<tr><td>VX-09</td><td>جایگزین DTMF</td><td>وقتی STT دو بار شکست خورد، مثلاً وارد کردن کد پرسنلی</td><td><b>ورودی کیپد برای کد و انتخاب منو</b></td><td>IVR کلاسیک</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>VX-10</td><td>انتقال گرم به انسان</td><td>بعضی نیازها انسان می‌خواهند</td><td><b>انتقال SIP + خلاصه روی صفحه کارشناس</b></td><td>استاندارد مرکز تماس؛ Cognigy/NICE با زمینه منتقل می‌کنند</td><td>🟡 انتقال کار می‌کند (SIP MESSAGE به 6040)؛ زمینه منتقل نمی‌شود</td><td>P1</td><td>M</td></tr>
+<tr><td>VX-11</td><td>تماس برگشتی به‌جای انتظار</td><td>انسان آزاد نیست، یا خارج از ساعت</td><td>تماس برگشتی زمان‌بندی‌شده که به‌صورت درخواست ساخته می‌شود</td><td>virtual hold در مرکز تماس</td><td>🟡 مکانیزم شماره‌گیری هست (dobby)؛ زمان‌بندی و لینک به درخواست ندارد</td><td>P2</td><td>M</td></tr>
+<tr><td>VX-12</td><td>ضبط تماس با اعلان</td><td>کیفیت و ممیزی، ولی حریم خصوصی</td><td><b>ضبط اعلام‌شده؛ trackهای جدا؛ سیاست نگهداری</b></td><td>—</td><td>✅ egress به MinIO؛ نگهداری هست</td><td>P0</td><td>—</td></tr>
+<tr><td>VX-13</td><td>پایان مؤدبانه تماس</td><td>بستن روشن، بدون قول اشتباه</td><td><b>اسکریپت پایان بر اساس حالت (CON-09: در MVP قول پیگیری نیست)</b></td><td>—</td><td>✅ ابزار exit</td><td>P0</td><td>—</td></tr>
+</tbody></table>
+<h2 id="5-conversation-brain-understand-and-answer">5. مغز گفت‌وگو (فهم و پاسخ)</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>BR-01</td><td>تریاژ نیت به چهار کار (کمک / انجام / شنیده شدن / حساس)</td><td>مسیر را در همان یک یا دو نوبت اول تعیین کن</td><td><b>طبقه‌بند LLM با schema ثابت نیت + قاعده‌هایی که برای نیت‌های حساس بر آن غلبه می‌کنند</b></td><td>Moveworks/Leena: نیت ← جواب، تیکت یا workflow</td><td>🟡 classify و branchهای نیت هست؛ schema مخصوص HR نیست</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-02</td><td>جواب مبتنی بر KB (RAG)</td><td>جواب درست و مبتنی بر سیاست</td><td><b>بازیابی با فیلتر واحد و نقش کارمند؛ جواب با ذکر منبع؛ زیر آستانه بگو «نمی‌دانم»</b></td><td>Leena: برای هر گروه فقط از دانش مجاز جواب می‌دهد؛ ServiceNow: مجوز خواندن برای هر KB [MARKET_ALIGNMENT §5ج]</td><td>🟡 RAG با top-10 و امتیاز ≥ ۰٫۵؛ فیلتر حوزه ندارد؛ ارجاع ندارد</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-03</td><td>سؤال تکمیلی</td><td>درخواست‌های مبهم</td><td>branch روشن‌سازی</td><td>—</td><td>✅ branch clarifying (بدون feature flag)</td><td>P0</td><td>—</td></tr>
+<tr><td>BR-04</td><td>پر کردن slot برای درخواست‌ها</td><td>فیلدهای لازم هر درخواست را جمع کن</td><td><b>schema دسته ← slotهای الزامی ← LLM مقادیر ناقص را می‌پرسد ← تأیید</b></td><td>slotهای Moveworks و فرم کاتالوگ داخل چت [R4, W-MW1]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-05</td><td>Guardrail</td><td>خارج از موضوع، توهین، prompt injection، مشاوره حقوقی</td><td><b>branch guardrail (هست) + فهرست موضوعات سیاست HR + فیلتر خروجی</b></td><td>همه فروشندگان؛ Kore.ai «governance» می‌فروشد [W-KO1]</td><td>✅ branch guardrail با نمونه</td><td>P0</td><td>—</td></tr>
+<tr><td>BR-06</td><td>هرگز نتیجه را قول نده</td><td>«افزایش حقوقت تأیید شد» فاجعه است</td><td><b>قاعده خروجی + آزمون ارزیابی: تعهدی درباره حقوق، ارتقا یا تصمیم‌ها نباشد</b></td><td>قاعده رایج در ربات‌های HR</td><td>❌ (آزمون نشده)</td><td>P0</td><td>S</td></tr>
+<tr><td>BR-07</td><td>تشخیص موضوع حساس</td><td>آزار، آسیب به خود، ایمنی، تقلب نباید جواب چت‌بات بگیرند</td><td><b>Detector (کلیدواژه + LLM) ← اسکریپت امن ثابت ← پرونده محدود (CS-09)</b></td><td>Peakon: دسته‌های حساس ثابت؛ NAVEX/SpeakUp: دریافت با AI [پرونده §25]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-08</td><td>شخصی‌سازی بر اساس زمینه کارمند</td><td>جواب بر اساس واحد، رتبه، نوع قرارداد و محل فرق می‌کند</td><td><b>ویژگی‌های Person (از sync HR) را به بازیابی و prompt بده</b></td><td>Workday/SAP/HiBob با داده HR جواب می‌دهند [G20, G25, G30]</td><td>❌ (داده سازمانی نداریم)</td><td>P1</td><td>M</td></tr>
+<tr><td>BR-09</td><td>مدیریت چند نیت</td><td>«فیش حقوقی می‌خواهم و رستوران بد است»</td><td>یکی‌یکی رسیدگی کن؛ دو رکورد بساز</td><td>Moveworks چند درخواست را مدیریت می‌کند</td><td>🟡</td><td>P1</td><td>S</td></tr>
+<tr><td>BR-10</td><td>ارجاع به انسان</td><td>ربات نمی‌تواند کمک کند، یا کاربر انسان می‌خواهد</td><td><b>نیت صریح «با یک نفر صحبت کنم» + آستانه اطمینان ← انتقال یا درخواست</b></td><td>همگانی</td><td>🟡 نیت redirect هست</td><td>P0</td><td>S</td></tr>
+<tr><td>BR-11</td><td>لحن و شخصیت</td><td>فارسی محترمانه، کوتاه، ساده</td><td>prompt + ارزیابی سبک؛ تنظیم رسمی/غیررسمی</td><td>—</td><td>✅ promptها قابل ویرایش‌اند</td><td>P1</td><td>S</td></tr>
+<tr><td>BR-12</td><td>مسیریابی مدل و fallback</td><td>هزینه، تأخیر، قطعی</td><td><b>هفت نقش LLM از قبل قابل تنظیم است؛ مدل fallback هنگام خطا اضافه شود</b></td><td>—</td><td>🟡 نقش‌ها قابل تنظیم؛ fallback نیست</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="6-knowledge-management">6. مدیریت دانش</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>KB-A</td><td>CRUD و import/export برای KB</td><td>مدیریت محتوای پایه</td><td>—</td><td>—</td><td>✅ <code>adcs-knowledgebase</code></td><td>P0</td><td>—</td></tr>
+<tr><td>KB-B</td><td>دریافت سند (سیاست‌های PDF/Word)</td><td>HR آیین‌نامه دارد، نه جفت سؤال و جواب</td><td><b>سند را chunk و embed کن؛ پیش‌نویس Q&amp;A برای بازبینی بساز</b></td><td>Deel از اسناد سیاست Agent می‌سازد [G22]</td><td>🟡 summarise هست؛ pipeline سند نیست</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-C</td><td>فضاهای دانش چندمالکی</td><td>HR، رفاه، IT، تسهیلات هرکدام بخش خودشان را دارند</td><td><b>فضای دانش با مالک، ویرایشگر، خواننده بر اساس حوزه</b></td><td>ServiceNow: مالک برای هر KB، منع بر اجازه غلبه دارد [MARKET_ALIGNMENT §5ج]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-D</td><td>حوزه بر اساس مخاطب</td><td>قاعده‌ها بر اساس منطقه، واحد، نوع قرارداد فرق می‌کنند</td><td><b>برچسب مخاطب روی هر ورودی، فیلتر در بازیابی</b></td><td>Leena: دانش برای هر گروه کارمند</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-E</td><td>تاریخ اعتبار و نسخه‌گذاری</td><td>سیاست در یک فروردین عوض می‌شود</td><td><b>valid_from / valid_to + تاریخچه نسخه + rollback</b></td><td>KM استاندارد</td><td>🟡 <code>start_time</code> / <code>end_time</code> / <code>is_active</code> روی هر QA؛ یک job سلری (پیش‌فرض هر ۳۰۰ ثانیه) ورودی‌ها را وقتی شروع می‌شوند به Qdrant اضافه و وقتی تمام می‌شوند حذف می‌کند (<code>adcs_kb/knowledgebase/models/qa.py</code>، <code>handlers/qdrant/sync.py</code>، <code>config.py:40</code>). تاریخچه نسخه و rollback نیست</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-F</td><td>بازبینی و تأیید پیش از انتشار</td><td>هیچ سیاست غلطی منتشر نشود</td><td>workflow پیش‌نویس ← بازبینی ← انتشار</td><td>workflow در KM سرویس‌ناو</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-G</td><td><b>تشخیص خلأ دانش</b></td><td>بدانیم کارکنان چه می‌پرسند که جوابش را نداریم</td><td><b>نوبت‌های بی‌جواب و کم‌اطمینان را لاگ کن ← خوشه‌بندی ← فهرست رتبه‌بندی‌شده «این را بنویسید» برای هر مالک</b></td><td>Moveworks Knowledge Studio: پیشنهاد «Knowledge Gap» و «Knowledge Update»، پیش‌نویس مقاله [W-MW3]</td><td>❌ (سؤال‌های بی‌جواب لاگ نمی‌شود)</td><td><b>P0</b></td><td>S–M</td></tr>
+<tr><td>KB-H</td><td>تشخیص محتوای کهنه</td><td>جواب‌های قدیمی غلط می‌مانند</td><td>ورودی‌های بعد از تاریخ بازبینی، یا ورودی‌هایی که مدام درخواست می‌سازند را علامت بزن</td><td>Moveworks «Knowledge Update» [W-MW3]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>KB-I</td><td>میز آزمون جواب</td><td>پیش از انتشار جواب‌ها را بررسی کن</td><td>یک مجموعه سؤال را روی KB پیش‌نویس اجرا کن؛ تفاوت جواب‌ها را ببین</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-J</td><td><b>اطلاعیه‌های زمان‌دار</b> («چرا پارکینگ امروز بسته است؟»، «چرا رستوران تعطیل است؟»)</td><td>شرایط موقت هر روز عوض می‌شود؛ تماس‌گیرندگان تمام روز همین را می‌پرسند، و فردا ممکن است دلیل فرق کند</td><td><b>اطلاعیه = یک ورودی کوتاه KB با شروع، پایان (الزامی)، حوزه (ساختمان / سایت / واحد) و مالک.</b> تا وقتی فعال است بر جواب ثابت غلبه می‌کند، با زمانش گفته می‌شود («از ساعت ۱۰:۳۰ امروز…»)، در سلام به تماس‌گیرندگان آن حوزه اشاره می‌شود و خودکار منقضی می‌شود. یک فرم سریع (پنل یا SMS) به مالک تسهیلات اجازه می‌دهد بدون مدیر KB اطلاعیه بگذارد. جهش تماس درباره یک موضوع به مالک پیشنهاد می‌دهد «اطلاعیه بگذاریم؟» (IN-05). تماس‌گیرنده می‌تواند بگوید «وقتی درست شد خبر بده» ← SMS/تماس هنگام رفع مشکل</td><td>اعلان‌های ServiceNow Employee Center: زمان‌بندی شروع/پایان + هدف‌گیری مخاطب [W-SN3]؛ API در Moveworks: پیام پیش‌دستانه به کارکنان بر اساس رویداد [W-MW4]؛ پلتفرم‌های IVR: اعلان زمان‌بندی‌شده پیش از منو با تاریخ شروع و پایان [W-VX1]. محصولات HR ایرانی: ندیدیم</td><td>🟡 ورودی‌های زمان‌دار KB همین حالا کار می‌کنند (KB-E). نیست: حوزه بر اساس ساختمان/واحد، اولویت بر جواب ثابت، زمان در جواب گفتاری، اشاره در سلام، فرم سریع مالک، پیشنهاد اطلاعیه از جهش، «خبرم کن وقتی درست شد»</td><td>P1</td><td>S–M</td></tr>
+<tr><td>KB-K</td><td><b>لایه آگاهی لحظه‌ای</b> — ربات بداند همین حالا چه می‌گذرد</td><td>جواب باید رویدادها و داده زنده امروز را نشان بدهد، نه KB ماه پیش را</td><td><b>چهار لایه:</b> (۱) دانش ثابت در KB؛ (۲) رویدادهای امروز به‌صورت اطلاعیه زمان‌دار (KB-J)، که مالک‌ها می‌گذارند یا سامانه‌ها با webhook رویداد می‌فرستند؛ (۳) داده زنده که هنگام جواب با ابزار/MCP گرفته می‌شود و هرگز کپی نمی‌شود (مانده‌ها، منوی غذاخوری، وضعیت درخواست)؛ (۴) سیگنال جمعی: جهش تماس درباره یک موضوع هشدار لحظه‌ای می‌دهد و اطلاعیه پیشنهاد می‌کند. قاعده: آنچه کند عوض می‌شود را کپی کن، آنچه تند عوض می‌شود را زنده بپرس، آنچه برای خیلی‌ها مهم است را اعلام کن. هر جواب زمان واقعیتش را دارد؛ اگر منبع قطع یا کهنه بود، حدس نزن و بگو «اطلاعات فعلی ندارم». منابع زنده را بر اساس لاگ سؤال‌های بی‌جواب (KB-G) انتخاب کن</td><td>Moveworks، Workday، SAP، HiBob هنگام جواب از سامانه زنده می‌خوانند (HiBob با MCP) [§25.5b, G25]؛ اعلان زمان‌دار ServiceNow [W-SN3]؛ پیام رویدادمحور Moveworks [W-MW4]</td><td>🟡 لایه ۱ ✅؛ لایه ۲ KB زمان‌دار ✅ ولی تغییر KB فقط هر ۳۰۰ ثانیه به ربات می‌رسد (Celery beat، <code>adcs_kb/settings.py:191-194</code>)، sync فوری هنگام ذخیره نیست، دریافت رویداد نیست؛ لایه ۳ مکانیزم ابزار + MCP ✅ (<code>dobby</code> با <code>gold_price</code> زنده)، اتصال به سامانه‌های شرکت نیست؛ لایه ۴ روندها و هشدارها دوره‌ای‌اند، لحظه‌ای نیستند</td><td>P1 (لایه ۱ و ۲) / P2 (لایه ۳ و ۴)</td><td>S (sync فوری، تازگی) · S–M (webhook رویداد) · M برای هر منبع زنده</td></tr>
+</tbody></table>
+<h2 id="7-actions-and-transactions">7. اقدام و تراکنش</h2>
+<p>جواب دادن دارد کالا می‌شود؛ <b>انجام دادن</b> جایی است که Agentهای HR امروز رقابت می‌کنند (پرونده §25.5b الگوی ۲).</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>AC-01</td><td>چارچوب ابزار</td><td>Agent بتواند کار انجام دهد</td><td><b>ReAct + tool registry (هست) + MCP client</b></td><td>Oracle Agent Studio، Leena AOP، HiBob MCP [G31, G28, G25]</td><td>✅ tool registry، MCP client</td><td>P0</td><td>—</td></tr>
+<tr><td>AC-02</td><td>جست‌وجوی فقط‌خواندنی HR</td><td>مانده مرخصی، فیش حقوقی، وضعیت بیمه</td><td><b>اول اتصال فقط‌خواندنی به HRIS؛ OTP پیش از داده شخصی</b></td><td>Workday، SAP، UKG، ADP همه این را دارند [§25.5b]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AC-03</td><td>توضیح فیش حقوقی</td><td>«چرا حقوقم کمتر شده؟» از پرتکرارترین سؤال‌های HR است</td><td><b>اقلام فیش را بخوان + تفاوت با ماه قبل را توضیح بده</b></td><td>SAP Payroll Agent، UKG Agentic Pay، ADP [G30, G24, G23]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AC-04</td><td>تراکنش نوشتنی با تأیید</td><td>ثبت مرخصی، تغییر نشانی</td><td><b>فقط بعد از OTP + تکرار + «بله» صریح بنویس؛ idempotent؛ ممیزی</b></td><td>Rippling AI، ADP Assist [G19, G23]</td><td>❌</td><td>P2</td><td>L</td></tr>
+<tr><td>AC-05</td><td>یادآوری و اعلان</td><td>«ضرب‌الاجل بیمه را یادآوری کن»</td><td>—</td><td>—</td><td>✅ <code>set_reminder</code>، <code>read_reminders</code></td><td>P2</td><td>—</td></tr>
+<tr><td>AC-06</td><td>نامه و گواهی</td><td>گواهی اشتغال، نامه حقوق</td><td>قالب + داده HR ← PDF ← لینک SMS</td><td>خدمت‌رسانی خودکار رایج HR</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>AC-07</td><td>لایه ایمنی اقدام</td><td>یک فراخوانی غلط ابزار می‌تواند آسیب بزند</td><td><b>فهرست مجاز برای هر حالت و نقش، سقف نرخ، dry-run، ممیزی هر فراخوانی ابزار</b></td><td>مسیر ممیزی Leena [پرونده §25.5b الگوی ۷]</td><td>❌ (SMS سقف نرخ ندارد)</td><td>P0</td><td>S</td></tr>
+</tbody></table>
+<h2 id="8-requests-cases-and-ticketing">8. درخواست، پرونده و تیکت</h2>
+<p>استدلال کامل در بحث قبلی است. خلاصه: <b>LLM یک ابزار داخلی (<code>create_request</code>) را صدا می‌زند؛ کد پلتفرم مسیریابی می‌کند، SLA اعمال می‌کند و sync می‌کند؛ کارمند همیشه درخواست را از طریق Phoenix پیگیری می‌کند.</b></p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>CS-01</td><td>رکورد درخواست («دفتر کل»)</td><td>هر نیاز J2 را یک‌جا پیگیری کن</td><td><b><code>Request</code> + خط زمانی <code>RequestEvent</code>: نوع، دسته، درخواست‌دهنده، مسیر واحد سازمانی در لحظه ساخت، تیم مالک، مسئول، وضعیت، اولویت، موعد SLA، محرمانگی، کانال، گفت‌وگوی مبدأ، external_ref</b></td><td>Workday Help، Oracle HR Help Desk، SAP ECSC، helpdesk لینا همه رکورد پرونده خودشان را نگه می‌دارند [W-WD1, W-OR1, W-SAP1, W-LE2]</td><td>❌ (برنامه <code>tickets</code> تحلیل تیکت‌های واردشده است، بدون مسئول یا SLA)</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-02</td><td>ابزارهای Agent: <code>create_request</code>، <code>get_request_status</code>، <code>add_request_comment</code>، <code>cancel_request</code></td><td>صوت/چت ایجاد و پیگیری کند</td><td><b>به <code>aiva/tools/registry.py</code> اضافه شود (همان الگوی <code>set_reminder</code>)</b></td><td>Moveworks در چت تیکت می‌سازد، نظر می‌گذارد و وضعیت را چک می‌کند [W-MW2]</td><td>❌</td><td>P1*</td><td>S</td></tr>
+<tr><td>CS-03</td><td>کاتالوگ درخواست (دسته + schema)</td><td>هر دسته فیلد و مالک متفاوت می‌خواهد</td><td><b>دسته تعریف‌شده توسط ادمین: slotهای الزامی، قاعده مالک، SLA، محرمانگی، حالت‌های مجاز</b></td><td>ServiceNow HR services / catalog items؛ انواع پرونده Workday [W-SN2, W-WD2]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-04</td><td>قواعد مسیریابی</td><td>تیم درست، واحد درست</td><td><b>دسته × حوزه سازمانی ← تیم خدمت؛ صف جایگزین؛ تخصیص بر اساس بار</b></td><td>قواعد مسیریابی Workday برای هر دسته؛ تخصیص بر اساس بار در Darwinbox [W-WD2, W-DB1]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-05</td><td>میز کار داخلی (inbox)</td><td>مشتریانی که سامانه تیکت ندارند</td><td><b>صف سبک: تخصیص، پاسخ، یادداشت داخلی، وضعیت، تایمر SLA، ادغام تکراری‌ها</b></td><td>میز کار پرونده Workday Help؛ Oracle؛ SAP ECSC [W-WD1, W-OR1, W-SAP1]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-06</td><td>لینک مالک بدون ورود</td><td>پیمانکار رستوران، مدیر ساختمان بدون حساب</td><td><b>magic link امضاشده با SMS/ایمیل: دیدن، پاسخ، علامت انجام‌شد</b></td><td>— (INFERENCE: خلأ در مجموعه‌های بزرگ)</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-07</td><td>اتصال به تیکتینگ بیرونی</td><td>مشتری از قبل Jira SM / ServiceNow / Zendesk / سامانه تیکت داخلی دارد</td><td><b>interface اتصال (ایجاد، نظر، webhook وضعیت)؛ Phoenix یک آینه نگه می‌دارد؛ فقط یک سامانه مالک وضعیت است</b></td><td>Leena: ServiceNow، Freshservice، Jira SM، Zendesk…؛ Moveworks: ServiceNow [W-LE1, W-MW2]</td><td>❌ (سامانه TT همراه اول هست، <code>tt_code</code>)</td><td>P2</td><td>M برای هر اتصال</td></tr>
+<tr><td>CS-08</td><td>جایگزین ایمیل-به-تیکت</td><td>هر helpdesk که ایمیل بپذیرد</td><td>ایمیل قالب‌دار با شناسه درخواست بفرست؛ پاسخ‌ها را تحلیل کن</td><td>Workday پرونده را با ایمیل می‌پذیرد [W-WD2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>CS-09</td><td>پرونده‌های محرمانه</td><td>آزار، پزشکی، اخلاق</td><td><b>صف محدود؛ هرگز به بیرون sync نمی‌شود؛ دسترسی ثبت می‌شود؛ پیگیری ناشناس (ID-07)</b></td><td>Workday: پرونده محرمانه فقط به تیم‌های مجاز؛ Oracle: پرونده برای آزار [W-WD2, W-OR2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>CS-10</td><td>درخواست‌های مسیر شغلی (افزایش حقوق، ارتقا، ارتقای سطح)</td><td>تیکت helpdesk نیست: تصمیم مدیر است</td><td><b>به‌صورت «درخواست گفت‌وگوی شغلی» به مدیر مستقیم + HRBP برود؛ قول نتیجه نیست؛ وضعیت = زمان‌بندی‌شده / بحث‌شده / بسته</b></td><td>Workday: تغییر جبران به‌صورت فرایند کسب‌وکار از طرف مدیر شروع می‌شود، نه پرونده helpdesk (INFERENCE از مدل محصول)</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>CS-11</td><td>سیاست SLA با ساعات کاری</td><td>قول بده و زمان پاسخ را اندازه بگیر</td><td><b>SLA برای هر دسته، هفته کاری ایران + تعطیلات شمسی؛ توقف در «منتظر کارمند»</b></td><td>SLA در Workday برای هر تیم خدمت، بر اساس زمان ساخت پرونده [W-WD2]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-12</td><td>اعلان وضعیت به کارمند</td><td>تماس «درخواستم کجاست؟» ظرفیت را هدر می‌دهد</td><td><b>SMS در هر تغییر وضعیت + وضعیت صوتی با کد پیگیری</b></td><td>اعلان «تیکت ورودی از کاربر می‌خواهد» در Moveworks [W-MW2]</td><td>🟡 ابزار SMS هست</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-13</td><td>گروه‌بندی تکراری و مشکل جمعی</td><td>۲۰۰ نفر کولر خراب را گزارش می‌کنند</td><td><b>درخواست‌های مشابه را به یک «مشکل» والد وصل کن؛ هنگام رفع همه را خبر کن</b></td><td>Oracle: یک پرونده به چند درخواست خدمت وصل می‌شود [W-OR1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CS-14</td><td>رضایت از درخواست (CSAT)</td><td>کیفیت خدمت را اندازه بگیر</td><td>نظرسنجی یک‌سؤاله SMS/صوتی هنگام بستن</td><td>ITSM استاندارد</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<p>\* <b>P1 با تغییر قرارداد:</b> CON-09 در توافق MVP قول پیگیری فردی را منع کرده است. درخواست‌ها بیرون از پایلوت‌اند، مگر EX با تغییر آن موافقت کند.</p>
+<h3 id="scope-fence-how-much-ticketing-to-build">مرز تیکتینگ: چقدر بسازیم</h3>
+<p><b>موضع:</b> «ما سامانه تیکتینگ نیستیم. درخواست را ثبت می‌کنیم، به مالک می‌رسانیم و می‌گذاریم کارمند پیگیری کند. اگر سامانه تیکتینگ یا اتوماسیون اداری دارید، به آن وصل می‌شویم.» این حدود ۵٪ یک سامانه تیکتینگ است: ثبت، تحویل، پیگیری.</p>
+<p><b>چرا «یا وصل شو یا هیچ» کافی نیست:</b></p>
+<ol>
+<li>IVA به کارمند قول می‌دهد. گم‌شدن یک درخواست اعتماد به کانال <i>ما</i> را می‌کشد، و مشارکت همان چیزی است که می‌فروشیم.</li>
+<li>بیشتر سازمان‌های ایرانی اتوماسیون اداری دارند (چارگون Didgah، راهکاران، همکاران سیستم)، نه ابزار تیکتینگ HR (INFERENCE، با بازار تأیید شود). «فقط اتصال» بیشتر مشتریان داخلی را بدون پیگیری می‌گذارد.</li>
+<li>پرونده‌های حساس هرگز نباید به صف بیرونی بروند، پس به هر حال یک صف داخلی کوچک لازم است.</li>
+<li>نزدیک‌ترین مشابه خارجی، Leena AI (لایه دستیار، نه HRIS)، یک helpdesk سبک داخلی به‌علاوه اتصال‌ها عرضه می‌کند [W-LE1, W-LE2]. Moveworks فقط به ServiceNow وصل می‌شود [W-MW2]، ولی به شرکت‌های بزرگی می‌فروشد که همه ServiceNow دارند و اکنون بخشی از ServiceNow است [G11].</li>
+</ol>
+<table>
+<thead><tr><th>بسازیم (≈ ۳ تا ۵ هفته، INFERENCE)</th><th>هرگز نسازیم</th></tr></thead>
+<tbody>
+<tr><td>رکورد درخواست (CS-01)، ابزارهای LLM (CS-02)، تحویل با اتصال / ایمیل / لینک SMS بدون ورود (CS-06/07/08)، پیگیری کارمند با SMS و IVA (CS-12)، صف محرمانه (CS-09)</td><td>میز کار کامل کارشناس (ماکرو، ادغام پیشرفته، چندصفی، escalation چندلایه)، ماتریس escalation چندسطحی و workflow تأیید چندمرحله‌ای، مدیریت دارایی / ITSM / KB کارشناس، گزارش کامل عملکرد کارشناس</td></tr>
+</tbody></table>
+<p><b>قاعده تصمیم:</b> وقتی مشتری چیزی از ستون «هرگز» می‌خواهد، جواب این است: «برای آن به سامانه تیکتینگ یا اتوماسیون اداری شما وصل می‌شویم.» قاعده وصل-یا-هیچ برای قابلیت‌های پیشرفته است، نه برای خود پیگیری.</p>
+<p><b>چرا هم‌راستا با استراتژی است:</b> محصول اصلی «شنیدن کارکنان و تبدیل آن به اقدام» است. نتیجه درخواست‌ها داده بینش است (مثلاً ۲۰۰ درخواست کیفیت غذاخوری، ۱۵۰ بسته، ۵۰ مورد ماه‌ها باز). فقط وقتی از استراتژی خارج می‌شویم که کار کارشناسان را مدیریت کنیم.</p>
+<p><b>صف پیگیری مبتنی بر تگ (گام اول پایلوت).</b> تگ «نیاز به اقدام» روی تماس (با دسته و واحد)، صف فیلترشده در داشبورد COA، وضعیت سه‌حالته (جدید / در بررسی / بسته)، صف محدود برای تگ‌های حساس، و recall اندازه‌گیری‌شده تگ. این همان کاری است که تیکت‌های closed-loop در Qualtrics و قاعده + task در Amazon Contact Lens می‌کنند [W-QT3, W-AWS2]، و با CON-09 تضاد ندارد. محدودیت‌ها: کارمند کد پیگیری نمی‌بیند، تگ‌نخوردن یعنی تماس دیده نمی‌شود (پس recall را اندازه بگیر و تگ دستی را مجاز کن)، و حالت ناشناس فقط اقدام جمعی را مجاز می‌کند. در انتشار R2 ابزار <code>create_request</code> اضافه می‌شود و صف تگ برای تماس‌هایی که IVA درخواست نساخته، شبکه ایمنی می‌ماند.</p>
+<p><b>برنامه:</b> پایلوت = بدون تیکت (CON-09)؛ نتیجه را با «نیاز به اقدام» همراه دسته و واحد تگ کن، که شاهدی برای فروش بعدی می‌شود. R2 = مرز ۵٪ بالا؛ اولین اتصال‌ها: ایمیل، webhook، کارتابل Didgah، سپس سامانه TT همراه اول (<code>tt_code</code>).</p>
+<h3 id="outbound-calls-we-call-the-employee">تماس خروجی: ما به کارمند زنگ می‌زنیم</h3>
+<p><b>گفته (QUOTE، علی سلیمی):</b> تماس گرفتن با کاربر از طرف ما ممکن است و امکان‌سنجی شده است. <i>متن دقیق و تاریخ هنوز در این سند ثبت نشده؛ اینجا اضافه کنید: <code>&lt;نقل‌قول دقیق، تاریخ، منبع&gt;</code>.</i></p>
+<p><b>شاهد در کد:</b> <code>golang/dobby/internal/tools/call_reminder.go:98-140</code> (dobby v0.1.0، commit <code>9d0b9ef07</code>، 2026-09-27). ابزار MCP به نام <code>call_reminder</code> یادآوری را ذخیره می‌کند، بعد با LiveKit SIP به شماره خود کاربر زنگ می‌زند (<code>CreateSIPParticipant</code> روی trunk تنظیم‌شده، <code>WaitUntilAnswered</code>)، در اتاقی به نام <code>outbound_&lt;number&gt;_&lt;random&gt;</code>؛ voice agent یادآوری را از روی شناسه‌اش می‌خواند.</p>
+<p><b>هنوز اثبات‌نشده:</b></p>
+<ol>
+<li>فقط از روی کد خوانده شده؛ چیزی اجرا نشده، و trunk خروجی، SBC و مجوز شماره‌ها در همراه اول بیرون از این مخزن است (TELECOM).</li>
+<li>امروز فقط یک یادآوری را می‌خواند؛ گفت‌وگو نیست.</li>
+<li>اینکه agent پایتونی اتاق‌های <code>outbound_</code> را مدیریت می‌کند در یک کامنت Go ادعا شده، ولی رشته <code>outbound_</code> را در <code>chatbot-iva-agent/src</code> پیدا نکردم. پیش از قول دادن آزمون کنید (INFERENCE).</li>
+<li>قواعد تماس نیست: رضایت (فلگ «می‌تواند تماس بگیرد» روی Person)، ساعات سکوت، سقف دفعات، opt-out (PL-04).</li>
+</ol>
+<p><b>چه چیزی را باز می‌کند:</b> تماس پیگیری برای آیتم‌های صف تگ (با رضایت)، تماس برگشتی به‌جای انتظار (VX-11)، تماس‌های نبض چرخه عمر (PL-01/02)، تماس «گفتید، انجام دادیم» (LP-04). گام کم‌ریسک اول: تماس برگشتی برای کسانی که در تماس موافقت کرده‌اند، نه تماس سرد.</p>
+<h2 id="9-conversation-analytics-tags-categories-enrichment">9. تحلیل گفت‌وگو: تگ، دسته‌بندی، غنی‌سازی</h2>
+<p>هر گفت‌وگو را به داده ساختاریافته و قابل‌اعتماد تبدیل کن.</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>AN-01</td><td>Transcript هر دو طرف، با زمان</td><td>داده پایه</td><td>—</td><td>—</td><td>✅ utterance + اطمینان در خلاصه Kafka</td><td>P0</td><td>—</td></tr>
+<tr><td>AN-02</td><td>حذف اطلاعات شخصی (PII) پیش از ذخیره</td><td>نام، شماره تلفن و کد ملی در متن</td><td><b>در pipeline پیش از ClickHouse حذف کن؛ نسخه خام فقط در انبار محدود بماند</b></td><td>Contact Lens و Google حذف PII را به‌صورت استاندارد دارند</td><td>❌ (transcriptها خام ذخیره می‌شوند، یافته ۲)</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-03</td><td>خلاصه گفت‌وگو</td><td>تحلیلگر نمی‌تواند همه تماس‌ها را بخواند</td><td><b>خلاصه LLM با قالب ثابت؛ محافظ حداقل مدت (VIA-07)</b></td><td>خلاصه‌های gen-AI در Contact Lens چند ثانیه بعد از تماس [W-AWS1]</td><td>✅ خلاصه (coa-ai، منجمد)</td><td>P0</td><td>S (محافظ)</td></tr>
+<tr><td>AN-04</td><td><b>طبقه‌بندی مدیریت‌شده HR</b> (دسته ← زیردسته ← موضوع)</td><td>دسته‌های یکدست در طول زمان</td><td><b>طبقه‌بندی ثابت از بالا به پایین، متعلق به EX، نسخه‌دار، قابل ویرایش توسط مشتری</b></td><td>Qualtrics Text iQ: بالا-پایین + پایین-بالا + خودکار، تکراری [W-QT1]</td><td>🟡 دسته/زیردسته هست (مناسب مرکز تماس)</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-05</td><td><b>کشف خودکار موضوع</b></td><td>چیزی را که نمی‌دانستی باید دنبالش بگردی پیدا کن</td><td><b>embedding گفت‌وگوهای جدید را خوشه‌بندی کن ← LLM به خوشه‌ها نام بدهد ← «موضوع‌های پیشنهادی» تا EX بپذیرد و وارد طبقه‌بندی کند</b></td><td>مدل موضوع Google CCAI با Gemini طبقه‌بندی می‌سازد [W-GO1]؛ تشخیص تم در Contact Lens [W-AWS2]؛ موضوع‌های پیشنهادی Qualtrics [W-QT1]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-06</td><td>چندبرچسبی برای هر گفت‌وگو</td><td>یک تماس چند مسئله دارد</td><td><b>حداکثر N موضوع برای هر گفت‌وگو، هرکدام با شاهد (بازه نقل‌قول) و اطمینان</b></td><td>Qualtrics: چند موضوع برای هر نظر [W-QT1]</td><td>🟡 فهرست topics</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-07</td><td>تگ در سطح segment، نه فقط تماس</td><td>شکایت رستوران ۲۰ ثانیه از یک تماس ۵ دقیقه‌ای است</td><td><b>هر segment مسئله را تگ کن؛ برای هر تماس تجمیع کن</b></td><td>Text iQ در سطح جمله تگ می‌زند</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-08</td><td>احساس (فقط تجمیعی)</td><td>لحن برای هر موضوع و واحد</td><td><b>احساس هر موضوع، فقط تجمیعی و بالای آستانه k نمایش داده شود</b></td><td>Perceptyx مدل احساس بازخورد خودش را ساخته [R7]؛ Contact Lens از ۵- تا ۵+ [W-AWS3]</td><td>✅ sentiment</td><td>P0</td><td>—</td></tr>
+<tr><td>AN-09</td><td>تشخیص هیجان</td><td>—</td><td><b>روی کارکنان استفاده نشود (خط قرمز، EU AI Act ماده ۵)</b></td><td>—</td><td>⚠️ تگ <code>emotions</code> هست: برای EX خاموش شود</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-10</td><td>استخراج موجودیت</td><td>کدام دفتر، رستوران، مدیر، سیاست، تاریخ</td><td><b>NER به‌علاوه نگاشت به درخت سازمان و فهرست تسهیلات</b></td><td>تحلیل متن استاندارد</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-11</td><td>علامت فوریت و ریسک</td><td>ایمنی، حقوقی، آسیب به خود، تقلب</td><td><b>قاعده + طبقه‌بند LLM ← هشدار + صف محدود (CS-09)</b></td><td>قاعده Contact Lens ← هشدار یا task [W-AWS2]؛ دسته‌های حساس Peakon</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-12</td><td>تگ قابل‌اقدام بودن / «پیشنهاد»</td><td>شکایت را از پیشنهاد مشخص جدا کن</td><td>طبقه‌بند: شکایت / پیشنهاد / سؤال / تحسین</td><td>—</td><td>🟡 <code>suggestions</code> هست</td><td>P1</td><td>S</td></tr>
+<tr><td>AN-13</td><td>دسته‌های قاعده‌محور</td><td>کسب‌وکار قاعده دقیق می‌خواهد («اضافه‌کاری را ذکر کرده و منفی است»)</td><td><b>قاعده روی کلیدواژه + تگ + metadata ← دسته، هشدار یا درخواست</b></td><td>قاعده‌های Contact Lens [W-AWS2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-14</td><td>بازبینی انسانی و برچسب‌گذاری مجدد</td><td>تحلیلگر باید AI را اصلاح کند</td><td><b>ویرایش تگ ← ذخیره به‌عنوان gold label ← استفاده در ارزیابی و few-shot</b></td><td>کالیبراسیون Google Quality AI با جواب مورد انتظار [W-GO2]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-15</td><td>مهاجرت طبقه‌بندی</td><td>موضوع‌ها تغییر نام می‌دهند و ادغام می‌شوند</td><td><b>نسخه‌های طبقه‌بندی + جدول نگاشت؛ تاریخچه در پس‌زمینه دوباره تگ شود</b></td><td>—</td><td>🟡 <code>sync_canonical_mappings</code></td><td>P1</td><td>M</td></tr>
+<tr><td>AN-16</td><td>امتیازدهی کیفیت ربات</td><td>آیا IVA درست و مؤدبانه جواب داد؟</td><td><b>هر گفت‌وگو را با کارنامه امتیاز بده (پاسخ داده شد، دقیق بود، درست ارجاع داد)</b></td><td>Google Quality AI ۱۰۰٪ گفت‌وگوها را امتیاز می‌دهد [W-GO2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-17</td><td>تگ مهارشدن و نتیجه</td><td>آیا نیاز کارمند برآورده شد؟</td><td>نتیجه = پاسخ داده شد / درخواست ساخته شد / به انسان رفت / رها شد</td><td>شاخص‌های deflection در Moveworks [R5]</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-18</td><td>بازسازی موتور تحلیل</td><td><code>coa-ai</code> از 2025-07 منجمد است</td><td><b>تگ‌زنی را به pipeline LLM متعلق به تیم ببر؛ promptهای نسخه‌دار، دروازه‌دار با ارزیابی</b></td><td>—</td><td>❌ (ریسک)</td><td>P0</td><td>M</td></tr>
+</tbody></table>
+<h2 id="10-insights-dashboards-and-reporting">10. بینش، داشبورد و گزارش</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>IN-01</td><td>داشبورد نمای کلی</td><td>حجم، موضوع‌های اصلی، احساس، نتیجه‌ها</td><td>—</td><td>همه فروشندگان شنیدن</td><td>✅ داشبوردهای coa-api (سراسری، بدون حوزه)</td><td>P0</td><td>—</td></tr>
+<tr><td>IN-02</td><td>فیلتر بر اساس حوزه سازمانی</td><td>مدیر واحد فقط حوزه خودش را می‌بیند</td><td><b>یک <code>apply_scope(qs, user)</code> در همه جا، شامل خروجی‌ها و AQA</b></td><td>دسترسی مبتنی بر سلسله‌مراتب در Qualtrics/Medallia [MARKET_ALIGNMENT §6]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>IN-03</td><td>آستانه k-anonymity</td><td>گروه‌های کوچک هویت را لو می‌دهند</td><td><b>گروه‌های زیر k را سرکوب یا تجمیع کن (مثلاً ۵ برای عدد، ۱۰ برای متن)</b></td><td>Glint، Peakon، Culture Amp همه حداقل تعیین کرده‌اند [MARKET_ALIGNMENT §5ب]</td><td>❌ (PRV-05)</td><td>P0</td><td>S</td></tr>
+<tr><td>IN-04</td><td>روند و ناهنجاری</td><td>«آیا دارد بالا می‌رود؟»</td><td>—</td><td>—</td><td>✅ روند با baseline و امتیاز</td><td>P0</td><td>—</td></tr>
+<tr><td>IN-05</td><td>هشدار موضوع نوظهور</td><td>مشکل‌های تازه را زود ببین</td><td><b>جهش روی خوشه کشف‌شده ← هشدار به مالک</b></td><td>تشخیص تم Contact Lens؛ موتور کشف CCAI [W-AWS2, W-GO1]</td><td>🟡 هشدار روند؛ شدت ثابت</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-06</td><td>رفتن تا شاهد</td><td>به عددها اعتماد کن</td><td><b>کلیک روی موضوع ← نقل‌قول و خلاصه بدون هویت (با آستانه k)</b></td><td>ویجت Comment Summaries در Qualtrics [W-QT2]</td><td>🟡</td><td>P0</td><td>S</td></tr>
+<tr><td>IN-07</td><td>خلاصه AI نظرات برای هر موضوع و واحد</td><td>مدیران ۵ خط می‌خوانند، نه ۵۰۰ تماس</td><td><b>خلاصه LLM روی مجموعه فیلترشده، با ارجاع به نقل‌قول</b></td><td>خلاصه‌های AI در Peakon، Copilot در Glint [G5, G7]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-08</td><td>پرسش زبان طبیعی روی داده</td><td>«کدام استان بیشتر درباره اضافه‌کاری شکایت کرد؟»</td><td><b>AQA، با امنیت سطح ردیف در DB و آستانه k</b></td><td>Glint Copilot، Agentهای Perceptyx [G7, G3]</td><td>✅ AQA (بدون حوزه، یافته ۱۳)</td><td>P1</td><td>M (امنیت)</td></tr>
+<tr><td>IN-09</td><td>گزارش زمان‌بندی‌شده</td><td>بسته گزارش ماهانه مدیریت</td><td>PDF/Excel با ایمیل، متناسب با حوزه هر گیرنده</td><td>استاندارد</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-10</td><td>مقایسه بین واحدها</td><td>مناطق را منصفانه مقایسه کن</td><td>بر اساس تعداد نفرات نرمال کن؛ با آستانه k</td><td>بنچمارک Culture Amp</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>IN-11</td><td>تحلیل میز خدمت</td><td>حجم درخواست، نقض SLA، backlog به تفکیک تیم</td><td>از خط زمانی CS-01</td><td>گزارش‌های SLA در ServiceNow / Workday</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-12</td><td>داشبورد ROI و KPI</td><td>خریدار با عدد تمدید می‌کند</td><td><b>نرخ مهار، ساعت صرفه‌جویی‌شده، درخواست برای هر موضوع، زمان تا حل، پذیرش</b></td><td>Leena و Deel «ساعت صرفه‌جویی‌شده» گزارش می‌دهند [پرونده §25]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-13</td><td>خروجی با حاکمیت</td><td>تحلیلگران Excel می‌خواهند</td><td>خروجی با حوزه، بدون ستون هویت، لاگ‌شده</td><td>—</td><td>🟡 خروجی هست، حوزه ندارد</td><td>P0</td><td>S</td></tr>
+</tbody></table>
+<h2 id="11-closing-the-loop-action-on-insights">11. بستن حلقه: اقدام روی بینش</h2>
+<p>شنیدن بدون اقدام مشارکت را می‌کشد. هر رهبر شنیدن این را می‌فروشد، و Phoenix هیچ‌کدام را ندارد.</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>LP-01</td><td>مالکیت موضوع</td><td>هر مسئله اصلی مالک دارد</td><td>یک موضوع طبقه‌بندی را به یک تیم بسپار (همان مدل CS-04)</td><td>Medallia و Qualtrics بینش را به مالک‌ها مسیریابی می‌کنند</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>LP-02</td><td>برنامه اقدام</td><td>پیگیری کاری که درباره یک موضوع شد</td><td><b>آیتم اقدام: موضوع، مالک، موعد، وضعیت، شاهد مرتبط</b></td><td>برنامه اقدام در Qualtrics، Culture Amp، Glint</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>LP-03</td><td>یادآوری به مدیر</td><td>مدیران داشبورد باز نمی‌کنند</td><td>خلاصه هفتگی + یک اقدام پیشنهادی برای هر مدیر (با آستانه k)</td><td>Culture Amp AI Coach، Agentهای Perceptyx [G8, G3]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>LP-04</td><td>اعلام «گفتید، انجام دادیم»</td><td>به کارمندان نشان بده حرف زدن اثر دارد</td><td><b>IVA موضوع‌های حل‌شده را در سلام یا پایان تماس می‌گوید؛ پست SMS/اینترانت</b></td><td>بهترین رویه رایج EX</td><td>❌ (API مدیریت سلام تازه اضافه شده)</td><td>P1</td><td>S</td></tr>
+<tr><td>LP-05</td><td>حاشیه‌نویسی روی روندها</td><td>جهش‌ها را توضیح بده (مثلاً «پیمانکار جدید غذاخوری»)</td><td>—</td><td>—</td><td>✅ <code>TrendAnnotation</code></td><td>P1</td><td>—</td></tr>
+<tr><td>LP-06</td><td>سنجش اثر</td><td>آیا اقدام موضوع را حل کرد؟</td><td>روند قبل/بعد برای هر برنامه اقدام</td><td>—</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="12-proactive-listening-outbound-and-programs">12. شنیدن پیش‌دستانه (تماس خروجی و برنامه‌ها)</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>PL-01</td><td>تماس نبض خروجی</td><td>از کسانی که هرگز زنگ نمی‌زنند بشنو</td><td><b>نظرسنجی صوتی کوتاه تطبیقی (۳ تا ۵ سؤال + یک سؤال تکمیلی باز)</b></td><td>بازخورد گفت‌وگومحور Qualtrics [G1]؛ مصاحبه‌های AI در Listen Labs / Outset [G18]</td><td>🟡 شماره‌گیری خروجی در <code>golang/dobby</code> هست (<code>call_reminder</code>، <code>CreateSIPParticipant</code> در LiveKit)؛ جریان نظرسنجی و قواعد تماس نیست؛ روی trunk واقعی همراه اول آزمون نشده</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-02</td><td>لحظه‌های چرخه عمر</td><td>روز ۳۰ ورود، مصاحبه خروج، بعد از جابه‌جایی</td><td><b>با رویدادهای sync از HR فعال می‌شود ← تماس خروجی یا لینک SMS</b></td><td>رویدادهای چرخه عمر ServiceNow؛ Agentهای مصاحبه خروج Exid/Lyzr [W-SN2, G18]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-03</td><td>کمپین</td><td>بازخورد درباره یک سیاست جدید برای ۲ هفته</td><td>کمپین = موضوع + مخاطب + کانال + بازه تاریخ</td><td>—</td><td>🟡 ابزار <code>campaign_rank</code> (غیرفعال، نامرتبط)</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-04</td><td>اجازه تماس و ساعات سکوت</td><td>شب یا خلاف میل افراد زنگ نزن</td><td>فهرست opt-out، بازه‌های زمانی، سقف دفعات</td><td>رویه انطباق تلفنی‌فروشی</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="13-privacy-security-and-compliance">13. حریم خصوصی، امنیت و انطباق</h2>
+<p>یافته پرونده: <b>موتور ساخته شده؛ اعتماد نه.</b> بیشتر P0ها اینجاست.</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>SC-01</td><td>احراز هویت در هر API</td><td>APIهای چت در سطح برنامه باز هستند</td><td><b>بررسی JWT در هر سرویس، نه فقط در gateway</b></td><td>—</td><td>❌ (یافته ۱۲)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-02</td><td>ماتریس نقش × سطح داده</td><td>چه کسی عدد، خلاصه، متن، صوت، هویت را ببیند</td><td><b>ScopeGrant + سطح داده (MARKET_ALIGNMENT §6ب)</b></td><td>سطح‌بندی نقش در Glint/Peakon</td><td>🟡 RBAC هست</td><td>P0</td><td>M</td></tr>
+<tr><td>SC-03</td><td>لاگ ممیزی</td><td>چه کسی چه چیزی را کی دید</td><td><b>لاگ فقط‌افزودنی از خواندن متن، صوت، هویت، خروجی‌ها و تغییرات پیکربندی</b></td><td>مسیر ممیزی Leena؛ Trust Center در HiBob [G25]</td><td>❌ (یافته ۳)</td><td>P0</td><td>M</td></tr>
+<tr><td>SC-04</td><td>کنترل مالکیت صوت (رفع IDOR)</td><td>هر کاربر با <code>view_calls</code> می‌تواند هر صوتی را بگیرد</td><td>کنترل مالکیت/حوزه روی دسترسی به فایل</td><td>—</td><td>❌ (یافته ۱)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-05</td><td>رازها خارج از لاگ</td><td>توکن Bearer لاگ می‌شود</td><td>فهرست مجاز header در middleware</td><td>—</td><td>❌ (یافته ۳)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-06</td><td>اجرای انقضای نقش</td><td>مجوزهای موقت باید تمام شوند</td><td><code>expires_at</code> را در سازنده JWT فیلتر کن</td><td>—</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-07</td><td>نگهداری و حذف</td><td>فقط تا وقتی لازم است نگه دار</td><td>نگهداری به‌ازای نوع داده؛ حذف بنا به درخواست</td><td>—</td><td>✅ job آرشیو؛ 🟡 سیاست به‌ازای نوع نیست</td><td>P1</td><td>S</td></tr>
+<tr><td>SC-08</td><td>اقامت داده / on-prem</td><td>خریداران دولتی ایران؛ تحریم</td><td><b>استقرار خصوصی با LLM محلی (مدل فعلی)</b></td><td>SaaS خارجی نمی‌تواند به این بازار خدمت دهد [پرونده §25.2]</td><td>✅</td><td>P0</td><td>—</td></tr>
+<tr><td>SC-09</td><td>حقوق داده کارمند</td><td>حافظه و درخواست‌هایم را ببینم و حذف کنم</td><td>«چه چیزی درباره من می‌دانید» به‌صورت self-service با OTP</td><td>رویه GDPR</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>SC-10</td><td>اعلان شفافیت AI</td><td>کارکنان باید بدانند AI است و داده چطور استفاده می‌شود</td><td>اعلام صوتی در شروع تماس + صفحه سیاست مکتوب</td><td>الزام شفافیت EU AI Act</td><td>🟡</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-11</td><td>بسته اعتماد برای خریداران</td><td>خریدار مدرک می‌خواهد</td><td>صفحه امنیت و حریم خصوصی، معماری، نتایج آزمون</td><td>AI Trust Center در HiBob [G25]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>SC-12</td><td>آزمون نفوذ و گواهی</td><td>خریداران دولتی</td><td>pen-test بیرونی؛ گواهی در صورت نیاز</td><td>—</td><td>❌</td><td>P1</td><td>L</td></tr>
+</tbody></table>
+<h2 id="14-org-data-and-integrations">14. داده سازمانی و یکپارچه‌سازی</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>IG-01</td><td>مدل درخت سازمان (OrgLevel، OrgUnit با path، Person، ChannelKey، ScopeGrant)</td><td>حوزه، مسیریابی و شخصی‌سازی همه به آن وابسته‌اند</td><td><b>مدل MARKET_ALIGNMENT §6الف؛ مسیر سازمانی هنگام ساخت روی هر رکورد ذخیره شود</b></td><td>Medallia و Qualtrics سلسله‌مراتب را در لحظه پاسخ ذخیره می‌کنند [W4, W12]</td><td>❌</td><td><b>P0</b></td><td>M</td></tr>
+<tr><td>IG-02</td><td>sync داده HR</td><td>Excel دستی کهنه می‌شود</td><td><b>یک قالب استاندارد؛ Excel، SFTP و SAP فقط راه‌های تحویل آن هستند</b></td><td>Culture Amp: اتصال‌ها، SFTP روزانه یا بارگذاری دستی [W14]</td><td>❌ (SEG-07)</td><td>P0 (Excel) / P1 (SAP)</td><td>S / M</td></tr>
+<tr><td>IG-03</td><td>SSO (LDAP/AD، OIDC)</td><td>کارکنان به چت و پنل وارد می‌شوند</td><td>OIDC/LDAP در adcs-auth</td><td>استاندارد</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>IG-04</td><td>اتصال به تیکتینگ</td><td>CS-07 را ببینید</td><td>—</td><td>—</td><td>❌</td><td>P2</td><td>M برای هر کدام</td></tr>
+<tr><td>IG-05</td><td>webhook خروجی / جریان رویداد</td><td>اتوماسیون مشتری</td><td><b>رویدادها: request.created، request.status_changed، alert.raised، topic.emerging</b></td><td>Contact Lens ← EventBridge [W-AWS2]</td><td>🟡 webhook روند</td><td>P1</td><td>S</td></tr>
+<tr><td>IG-06</td><td>API عمومی</td><td>مشتریان روی Phoenix می‌سازند</td><td>REST API نسخه‌دار با API key و scope</td><td>—</td><td>🟡 APIهای داخلی</td><td>P2</td><td>M</td></tr>
+<tr><td>IG-07</td><td>Phoenix به‌عنوان MCP server</td><td>بینش بدون هویت را به دستیارهای HR محلی (راهکاران، Didgah) بده</td><td>MCP server روی APIهای بینش، با آستانه k</td><td>HiBob MCP؛ Darwinbox [G25, G14]</td><td>❌ (فقط MCP client)</td><td>P2</td><td>M</td></tr>
+<tr><td>IG-08</td><td>درگاه‌های پیام‌رسان و SMS داخلی</td><td>کانال‌های تحویل</td><td>adapter برای هر درگاه</td><td>—</td><td>✅ Resan SMS</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="15-admin-and-configuration-studio">15. مدیریت و استودیوی پیکربندی</h2>
+<p>محصول بودن، نه پروژه بودن، یعنی مشتری بدون انتشار نسخه بتواند چیزها را عوض کند.</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>AD-01</td><td>پیام سلام و پایان</td><td>برای هر کانال، کمپین و حالت</td><td>—</td><td>—</td><td>✅ API مدیریت سلام (commit اخیر)</td><td>P0</td><td>—</td></tr>
+<tr><td>AD-02</td><td>تنظیم prompt و شخصیت با نسخه</td><td>تغییر امن</td><td>prompt نسخه‌دار، ارزیابی پیش از انتشار، rollback</td><td>—</td><td>🟡 در AQA قابل ویرایش است؛ نسخه‌دار نیست</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-03</td><td>ویرایشگر دسته / طبقه‌بندی</td><td>EX مالک طبقه‌بندی است</td><td>رابط برای AN-04 / CS-03</td><td>ویرایشگر موضوع Qualtrics</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AD-04</td><td>ویرایشگر مسیریابی، SLA و تقویم</td><td>عملیات مالک مسیریابی است</td><td>رابط برای CS-04 / CS-11 / CH-10</td><td>قواعد ادمین Workday</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AD-05</td><td>ویرایشگر قاعده هشدار</td><td>آستانه‌ها برای هر مشتری</td><td>رابط برای AN-13 / IN-05</td><td>رابط قاعده Contact Lens</td><td>❌ (AN-09، CON-06)</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-06</td><td>استودیوی سناریو (flow بدون کد)</td><td>خط جدید، مثلاً «خدمات رفاهی»، در یک روز</td><td><b>اسناد سیاست + چند قاعده + انتخاب ابزار ← دستیار جدید</b></td><td>Oracle Agent Studio، Leena AOP Studio، Deel [G31, G28, G22]</td><td>❌</td><td>P2</td><td>L</td></tr>
+<tr><td>AD-07</td><td>feature flag برای هر مشتری</td><td>روشن/خاموش کردن branchها به‌صورت امن</td><td>flagهای پیکربندی (classify/clarify امروز ندارند)</td><td>—</td><td>🟡</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-08</td><td>سندباکس / تماس آزمایشی</td><td>پیش از زنده شدن تغییرات را امتحان کن</td><td>شماره آزمایشی یا صوت وب که به پیکربندی staging اشاره می‌کند</td><td>—</td><td>🟡 websocall</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="16-ai-quality-evaluation-and-ai-ops">16. کیفیت AI، ارزیابی و AI ops</h2>
+<p>بدون عدد، معیار پذیرش نداریم (یافته ۵ پرونده).</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>QA-01</td><td>مجموعه‌های ارزیابی طلایی</td><td>ایمنی در برابر پسرفت</td><td><b>برای هر حوزه: STT (WER)، نیت، وفاداری جواب، دقت تگ، recall حساس</b></td><td>مجموعه‌های کالیبراسیون Google Quality AI [W-GO2]</td><td>🟡 فقط AQA endpoint ارزیابی دارد</td><td>P0</td><td>M</td></tr>
+<tr><td>QA-02</td><td>ارزیابی در CI</td><td>پسرفت منتشر نکن</td><td>با هر تغییر prompt، مدل و KB ارزیابی اجرا کن؛ زیر آستانه مسدود کن</td><td>—</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-03</td><td>تماس‌گیرنده شبیه‌سازی‌شده</td><td>صوت را سرتاسر در مقیاس آزمون کن</td><td>شخصیت‌های تماس‌گیرنده با LLM + TTS ← pipeline واقعی</td><td>پلتفرم‌های voice agent آزمون شبیه‌سازی دارند</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-04</td><td>بررسی توهم و استناد</td><td>جواب سیاست‌ها باید از KB باشد</td><td>بررسی وفاداری جواب‌ها؛ جواب‌های بدون پشتوانه را لاگ کن</td><td>—</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-05</td><td>دریافت بازخورد</td><td>از کاربران یاد بگیر</td><td>«آیا مفید بود؟» با صوت/SMS؛ thumbs-down تحلیلگر با دلیل</td><td>همگانی</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-06</td><td>نمونه‌گیری برای بازبینی انسانی</td><td>تصمیم‌های AI را وارسی کن</td><td>N٪ گفت‌وگوها و همه موارد حساس را برای بازبینی نمونه بگیر</td><td>قواعد نمونه‌گیری Quality AI [W-GO2]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-07</td><td>رجیستری مدل و prompt</td><td>بدانی کدام نسخه کدام تگ را ساخته</td><td>مدل، نسخه prompt و نسخه طبقه‌بندی را روی هر خروجی ذخیره کن</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-08</td><td>پایش drift</td><td>ترکیب موضوع‌ها یا کیفیت STT تغییر می‌کند</td><td>شاخص‌های هفتگی اطمینان، نرخ ناشناخته، نمونه WER</td><td>—</td><td>🟡 شاخص‌های Prometheus</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="17-platform-operations-and-cost">17. پلتفرم، عملیات و هزینه</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>OP-01</td><td>استقرار تکرارپذیر برای مشتری</td><td>مشتری دوم در یک هفته</td><td><b>پروفایل Helm/Ansible برای هر مشتری؛ پیکربندی، نه fork</b></td><td>—</td><td>🟡 Helm/Ansible؛ forkهای ربات برای هر مشتری هست</td><td>P1</td><td>M</td></tr>
+<tr><td>OP-02</td><td>چندمستاجری (Multi-tenancy)</td><td>اقتصاد SaaS در آینده</td><td>شناسه tenant در داده + پیکربندی؛ استقرار خصوصی برای دولت بماند</td><td>—</td><td>❌ (مفهوم tenant نیست)</td><td>P2</td><td>L</td></tr>
+<tr><td>OP-03</td><td>دسترس‌پذیری بالا و failover</td><td>تماس‌ها با node خودشان می‌میرند</td><td>چند worker و zone؛ drain هنگام استقرار</td><td>—</td><td>🟡 timeout برای drain</td><td>P1</td><td>M</td></tr>
+<tr><td>OP-04</td><td>مشاهده‌پذیری در هر لایه</td><td>لایه خراب را سریع پیدا کن</td><td>داشبورد شبکه ← SIP ← برنامه ← AI، ردیابی درخواست</td><td>—</td><td>🟡 Prometheus + APM</td><td>P1</td><td>S</td></tr>
+<tr><td>OP-05</td><td>هزینه هر گفت‌وگو</td><td>اقتصاد واحد و قیمت‌گذاری</td><td><b>مصرف توکن و صوت هر تماس (در خلاصه هست) ← داشبورد هزینه</b></td><td>—</td><td>🟡 داده هست</td><td>P1</td><td>S</td></tr>
+<tr><td>OP-06</td><td>تاب‌آوری در برابر قطعی اینترنت</td><td>قطعی‌های ایران</td><td>همه مدل‌ها محلی؛ وابستگی خارجی نیست</td><td>چارگون درباره این ریسک می‌نویسد [B9]</td><td>✅ عمدتاً</td><td>P0</td><td>—</td></tr>
+<tr><td>OP-07</td><td>آزمون بار با SIP واقعی</td><td>اوج‌های روز حقوق</td><td>تولیدکننده بار SIP (مثلاً SIPp) از طریق SBC</td><td>—</td><td>❌ (فقط WebSocket)</td><td>P0</td><td>S</td></tr>
+<tr><td>OP-08</td><td>تاب‌آوری Kafka و DLQ</td><td>داده گم نشود</td><td>—</td><td>—</td><td>✅ DLQ در grogu؛ 🟡 خطای تولید تیکت coa فقط لاگ می‌شود</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="18-commercial-and-customer-success">18. تجاری و موفقیت مشتری</h2>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>CM-01</td><td>بسته راه‌اندازی</td><td>سریع زنده شو</td><td>قالب داده سازمانی، طبقه‌بندی اولیه، KB اولیه، اسکریپت‌ها</td><td>Leena راهنمای استقرار منتشر می‌کند (نمونه CHRISTUS) [R3]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CM-02</td><td>بسته‌های محتوای HR آماده</td><td>ارزش از روز اول</td><td>قالب Q&amp;A سیاست‌های HR فارسی (قانون کار، بیمه، مرخصی)</td><td>موضوع‌های EX آماده Qualtrics [W-QT1]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>CM-03</td><td>اندازه‌گیری مصرف</td><td>قیمت بر اساس کارمند، گفت‌وگو یا دقیقه</td><td>از OP-05</td><td>—</td><td>🟡</td><td>P2</td><td>S</td></tr>
+<tr><td>CM-04</td><td>فرآیند پشتیبانی و SLA</td><td>سؤال ۹ راهنمای خریدار</td><td>فرآیند تیکت، زمان پاسخ، on-call</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CM-05</td><td>کمپین پذیرش</td><td>کارکنان باید بدانند خط وجود دارد</td><td>پوستر، SMS، اینترانت؛ برد هر واحد را اندازه بگیر</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="18b-recruiting-from-interview-scheduling-to-the-candidates-status">18b. استخدام: از زمان‌بندی مصاحبه تا وضعیت کارجو</h2>
+<p>خریدار متفاوت (جذب استعداد)، کاربر متفاوت (یک <b>کارجو</b>، نه کارمند) و ریسک بالاتر (AI در استخدام طبق پیوست III قانون AI اتحادیه اروپا <b>پرریسک</b> است؛ قانون محلی ۱۴۴ شهر نیویورک ممیزی سوگیری مستقل سالانه و اطلاع‌رسانی به کارجو را می‌خواهد) [W-LAW1, W-LAW2]. پرونده §25.2 آن را فضای خالی ایران می‌داند: مصاحبه صوتی فارسی ندیدیم.</p>
+<p><b>مرز محدوده (همان ایده تیکتینگ):</b> ما <b>لایه صوت و پیام‌رسانی</b> مسیر کارجو هستیم، نه ATS. زمان‌بندی می‌کنیم، یادآوری می‌کنیم، زمان را عوض می‌کنیم، یک پیش‌مصاحبه تلفنی ساختاریافته و کوتاه انجام می‌دهیم، بازخورد مصاحبه‌گر را جمع می‌کنیم و وضعیت را به کارجو می‌گوییم. ATS (جاب‌ویژن، جابینجا، سامانه HR مشتری یا یک فهرست ساده کارجو در Phoenix) رکورد اصلی می‌ماند. <b>AI هرگز تصمیم نمی‌گیرد</b>: پیشنهاد می‌دهد، یک انسان تصمیم می‌گیرد و دلیل را ثبت می‌کند.</p>
+<table>
+<thead><tr><th>#</th><th>قابلیت</th><th>نیاز</th><th>گزینه‌های راه‌حل</th><th>دیگران چه می‌کنند</th><th>Phoenix امروز</th><th>اولویت</th><th>تلاش</th></tr></thead>
+<tbody>
+<tr><td>RC-01</td><td>رکورد کارجو و مراحل pipeline</td><td>بدانیم هر کارجو کجاست</td><td><b>رکورد نازک: کارجو، شغل، مرحله (ثبت‌نام ← پیش‌مصاحبه ← مصاحبه ← بازخورد ← تصمیم ← اطلاع‌رسانی)، مالک، تاریخچه؛ آینه ATS وقتی وجود دارد</b></td><td>Paradox با Workday، SuccessFactors و ATSهای دیگر sync می‌شود [W-PX1]؛ جابینجا هر مرحله بررسی را به کارجو نشان می‌دهد [W-JI1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-02</td><td>زمان‌بندی خودکار مصاحبه</td><td>رفت‌وبرگشت تلفنی وقت جذب‌کننده را هدر می‌دهد</td><td><b>بازه‌های آزاد مصاحبه‌گر ← کارجو با لینک SMS، چت یا صوت انتخاب می‌کند ← دعوت برای همه؛ تقویم شمسی و تعطیلات ایران</b></td><td>Paradox: sync تقویم، انتخاب بازه توسط کارجو در چت، دعوت برای همه، پنل و چند مکان [W-PX1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-03</td><td>یادآوری و کاهش غیبت</td><td>غیبت بازه‌های مصاحبه را هدر می‌دهد</td><td><b>SMS + تماس خروجی ۲۴ ساعت و ۱ ساعت قبل؛ «برای تأیید ۱ را بفرستید»</b></td><td>یادآوری Paradox ۲۴ ساعت و ۱ ساعت قبل [W-PX1]</td><td>🟡 SMS، <code>set_reminder</code>، <code>call_reminder</code> خروجی هست (dobby)</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-04</td><td>تغییر زمان و لغو با صوت یا SMS</td><td>برنامه‌ها عوض می‌شود</td><td>کارجو یا مصاحبه‌گر می‌گوید «نمی‌توانم بیایم» ← بازه‌های جدید پیشنهاد شود</td><td>Paradox برای هر دو طرف زمان را عوض می‌کند [W-PX1]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-05</td><td>پیش‌مصاحبه تلفنی ساختاریافته</td><td>نقش‌های پرحجم (مرکز تماس، فروشگاه، میدانی) فیلتر اول سریع می‌خواهند</td><td><b>مجموعه سؤال کوتاه و ثابت (در دسترس بودن، محل، شیفت، حقوق مورد انتظار، گواهینامه الزامی)؛ همان سؤال‌ها برای همه؛ transcript + خلاصه برای جذب‌کننده؛ حذف فقط بر اساس حقایق عینی که خود کارجو می‌گوید</b></td><td>Paradox، UKG Rapid Hire، HeyMilo، Ribbon، Alex [پرونده §25.3]</td><td>🟡 IVA، تماس خروجی، transcript، خلاصه هست؛ جریان غربالگری نیست</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-06</td><td>مصاحبه ساختاریافته دور اول با AI</td><td>صدها مصاحبه هم‌زمان</td><td>سؤال‌های شایستگی با rubric؛ AI <b>با نقل‌قول شاهد</b> امتیاز می‌دهد، انسان هر گزارش را بازبینی می‌کند</td><td>Eightfold AI Interviewer، Alex، HeyMilo [پرونده §25.3]</td><td>❌</td><td>P2 (شرط‌بندی)</td><td>L</td></tr>
+<tr><td>RC-07</td><td>جمع‌آوری بازخورد مصاحبه‌گر</td><td>بازخورد دیر یا ناقص می‌رسد و تصمیم‌ها متوقف می‌شود</td><td>لینک کارنامه با SMS بلافاصله پس از مصاحبه؛ تا پر شدن یادآوری؛ AI از کارنامه و یادداشت‌ها خلاصه می‌نویسد</td><td>Paradox «ratings &amp; feedback» را فهرست کرده است [W-PX2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-08</td><td>تصمیم انسانی با دلیل ثبت‌شده</td><td>انصاف، اعتراض، ممیزی</td><td><b>تصمیم فقط توسط انسان؛ دلیل الزامی؛ پیشنهاد AI جدا نمایش و لاگ می‌شود</b></td><td>مدل رایج: AI غربال می‌کند، انسان تصمیم می‌گیرد [W-LAW3]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-09</td><td>اعلام وضعیت کارجو و «وضعیت من چیست؟»</td><td>سکوت بزرگ‌ترین شکایت کارجوهاست</td><td><b>SMS در هر تغییر مرحله؛ کارجو به IVA زنگ می‌زند و با کد وضعیتش را می‌شنود</b></td><td>جابینجا در هر مرحله کارجو را مطلع می‌کند [W-JI1]؛ جاب‌ویژن: کارفرما برای هماهنگی مصاحبه با کارجو تماس می‌گیرد [W-JV1]</td><td>🟡 SMS + IVA هست</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-10</td><td>اطلاع و رضایت کارجو</td><td>حقوقی و اعتماد: کارجو باید بداند AI صحبت و ضبط می‌کند</td><td>اعلام صوتی در شروع تماس؛ رکورد رضایت؛ جایگزین انسانی در صورت درخواست</td><td>NYC LL144: اطلاع ۱۰ روز کاری پیش از استفاده [W-LAW2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-11</td><td>پایش انصاف</td><td>خطای STT با لهجه فرق می‌کند، پس امتیازها ممکن است بر اساس منطقه ناعادلانه باشند</td><td><b>نرخ انتخاب به تفکیک گروه (قاعده چهارپنجم)، WER بر اساس لهجه در تماس‌های غربالگری، بازبینی rubric</b></td><td>ممیزی سوگیری با نسبت اثر (impact ratio) [W-LAW3]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-12</td><td>نگهداری داده کارجو</td><td>صوت کارجوهای ردشده نباید برای همیشه بماند</td><td>نگهداری کوتاه برای صوت، transcript طبق سیاست؛ حذف بنا به درخواست</td><td>الزام لاگ در GDPR / قانون AI [W-LAW1]</td><td>🟡 job نگهداری برای تماس‌ها هست</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<p><b>قضاوت:</b> تا وقتی پایلوت EX اثبات نشده P2 بماند: خریدار تازه و حرکت فروش تازه است. بخش ارزان و کم‌ریسک (RC-02/03/04/07/09: زمان‌بندی، یادآوری، تغییر زمان، پیگیری بازخورد، اعلام وضعیت) از آنچه ساخته شده (تماس خروجی، SMS، یادآوری، IVA) استفاده می‌کند و قضاوت استخدامی نمی‌کند. RC-05 گام طبیعی بعدی است. RC-06 (مصاحبه‌گر AI) شرط‌بندی است که ابتدا کار انصاف (RC-11) می‌خواهد، چون کیفیت STT فارسی با لهجه فرق می‌کند.</p>
+<h2 id="19-key-judgments">19. قضاوت‌های اصلی</h2>
+<ol>
+<li><b>جواب دادن کالا است؛ کانال، زبان و اعتماد سنگر است.</b> هر ۱۳ فروشنده HCM اکنون Agent خدمات HR دارند (پرونده §25.5b). هیچ‌کدام صوت فارسی روی تلفن با مدل‌های on-prem ندارند. روی CH-01، VX-*، SC-08 و بلوک حریم خصوصی رقابت کن، نه روی «ربات ما بهتر جواب می‌دهد».</li>
+<li><b>اعتماد P0 است، نه قابلیت‌ها.</b> SC-01 تا SC-06، ID-01، IN-02/03 و AN-02 کارهای کوچک‌اند، بیشتر S و M. بدون آن‌ها آزمون خریدار رد می‌شود، AI هرچقدر هم خوب باشد.</li>
+<li><b>درخت سازمان (IG-01) وابستگی پنهان است.</b> حوزه، آستانه k، مسیریابی، شخصی‌سازی و تحلیل بخش‌ها همه به آن وابسته‌اند. پیش از همه آن‌ها بسازش.</li>
+<li><b>طبقه‌بندی = از بالا به پایین + کشف‌شده + اصلاح انسانی.</b> هر رهبر (Qualtrics، Google، AWS) طبقه‌بندی مدیریت‌شده را با کشف خودکار ترکیب می‌کند. دسته‌های ثابت تنها مشکل‌های تازه را از دست می‌دهد؛ کشف تنها داشبورد ناپایدار می‌دهد. AN-04 + AN-06 + AN-14 را الان انجام بده و AN-05 را بعد.</li>
+<li><b>ثبت خلأ دانش (KB-G) ارزان‌ترین قابلیت پرارزش است.</b> چند روز کار است. هر هفته ربات را بهتر می‌کند و به EX گزارش عینی می‌دهد («کارکنان ۳۴۰ بار درباره X پرسیدند و جوابی نداشتیم»).</li>
+<li><b>درخواست‌ها اول تصمیم قراردادی می‌خواهند.</b> از نظر فنی یک ابزار به‌علاوه یک دفتر کل است (S–M). از نظر سیاسی CON-09 می‌گوید در MVP پیگیری نیست و کانال شنیدن ناشناسی قول می‌دهد. پیش از ساخت CS-*، حالت‌ها (ID-01) را با EX توافق کن.</li>
+<li><b>افزایش حقوق و ارتقا تیکت نیستند.</b> آن‌ها را به‌صورت گفت‌وگوی مدیر مسیریابی کن (CS-10). صف «افزایش حقوق می‌خواهم» انتظاری می‌سازد که HR نمی‌تواند برآورده کند و محصول را مقصر می‌کند.</li>
+<li><b>حلقه را ببند وگرنه مشارکت می‌میرد.</b> LP-02 و LP-04 باعث می‌شوند کارکنان بار دوم زنگ بزنند. ارزان‌اند؛ درست بعد از اینکه پایلوت حجم را اثبات کرد زمان‌بندی‌شان کن.</li>
+<li><b>مالکیت موتور تحلیل را دوباره بگیر (AN-18).</b> تگ‌هایی که HR محصول را بر اساس آن‌ها قضاوت می‌کند از <code>coa-ai</code> می‌آید، که ۱۴ ماه دست نخورده و برای مرکز تماس مشتریان ساخته شده. انتقال غنی‌سازی به pipeline LLM دروازه‌دار با ارزیابی یک مورد ریسک P0 است، نه refactor.</li>
+</ol>
+<h2 id="20-suggested-release-cut">20. پیشنهاد برش انتشار</h2>
+<p>ددلاین‌ها از قاعده README پیروی می‌کنند: <b>T + n روز کاری از یک ورودی مشخص</b>، هرگز تاریخ تقویمی.</p>
+<table>
+<thead><tr><th>انتشار</th><th>هدف</th><th>قابلیت‌ها</th></tr></thead>
+<tbody>
+<tr><td><b>R0 — اعتماد (دروازه پایلوت)</b></td><td>آزمون حریم خصوصی خریدار را رد کن</td><td>SC-01/03/04/05/06/10، ID-01/04/05/06/08، IN-02/03/13، AN-02/09، BR-06/07، AC-07، OP-07، IG-01، IG-02 (Excel)</td></tr>
+<tr><td><b>R1 — اثبات پایلوت</b></td><td>ارزش قابل‌اندازه‌گیری نشان بده</td><td>KB-G، AN-04/06/14/17/18، BR-01/02/04/10، VX-08، IN-06/07/12، QA-01/05</td></tr>
+<tr><td><b>R2 — فروش دوم</b></td><td>درخواست + اقدام</td><td>CS-01..06، CS-09/11/12، LP-01/02/04، IN-05/09/11، AN-05/10/11/13، CH-04، CH-13، KB-J، KB-K گام ۱، ID-03/07</td></tr>
+<tr><td><b>R3 — محصولی‌سازی</b></td><td>مشتری دوم در یک هفته</td><td>AD-*، OP-01/03/05، QA-02/03، CM-01/02، IG-03/05، KB-B/C/D/E/F</td></tr>
+<tr><td><b>R4 — شرط‌بندی‌ها</b></td><td>تمایز بیشتر</td><td>AC-02/03/04، PL-*، CS-07/10/13، IG-07، AD-06، OP-02، RC-01..05/07..12 (لایه صوتی استخدام)، RC-06 بعداً</td></tr>
+</tbody></table>
+<h2 id="21-red-lines-what-not-to-build">21. خط قرمزها: چه چیزی نسازیم</h2>
+<p>از پرونده §25.8، به‌علاوه حوزه‌های تازه:</p>
+<ul>
+<li><b>تشخیص هیجان فردی روی کارکنان ممنوع</b> (EU AI Act ماده ۵): هیجان فقط تجمیعی، یا خاموش.</li>
+<li><b>امتیاز ریسک ترک خدمت فردی ممنوع.</b> فقط سطح گروه، با آستانه k.</li>
+<li><b>شنیدن منفعل</b> ایمیل، چت یا تماس‌های کاری ممنوع؛ فقط کانال‌های داوطلبانه.</li>
+<li><b>تصمیم خودکار HR ممنوع</b> (حقوق، ارتقا، انضباط). AI پیشنهاد می‌دهد و مسیریابی می‌کند؛ انسان تصمیم می‌گیرد.</li>
+<li><b>موتور کامل ITSM یا BPM ممنوع.</b> میز را سبک نگه دار و برای بقیه یکپارچه شو.</li>
+<li><b>محصول کامل گزارش تخلف ممنوع.</b> فقط صف خصوصی (CS-09).</li>
+<li><b>حافظه در حالت ناشناس، هرگز.</b></li>
+</ul>
+<h2 id="sources">منابع</h2>
+<p><b>از قبل در مخزن:</b> پرونده §25.9 (G1 تا G31، R1 تا R*، B1 تا B12، سری W در MARKET_ALIGNMENT) — <code>product/source/product_dossier_fa.html</code>، <code>product/source/market_alignment_fa.html</code>.</p>
+<p><b>تازه برای این کاتالوگ:</b></p>
+<table>
+<thead><tr><th>کد</th><th>موضوع</th><th>لینک</th></tr></thead>
+<tbody>
+<tr><td>W-WD1</td><td>مدیریت پرونده Workday Help</td><td>https://doc.workday.com/admin-guide/en-us/human-capital-management/hcm-innovation-services/workday-help/case-management/hot1559060224551.html</td></tr>
+<tr><td>W-WD2</td><td>Workday Help: مسیریابی، محرمانه، SLA، دریافت از ایمیل/Teams/Slack</td><td>https://doc.workday.com/admin-guide/en-us/human-capital-management/hcm-innovation-services/workday-help/case-management/syz1562672658215.html</td></tr>
+<tr><td>W-OR1</td><td>Oracle HR Help Desk</td><td>https://www.oracle.com/human-capital-management/hr-help-desk/</td></tr>
+<tr><td>W-OR2</td><td>مدیریت پرونده HR در Oracle</td><td>https://blogs.oracle.com/fusioninsider/newhr-case-management-for-hcm-help-desk-available-now</td></tr>
+<tr><td>W-SAP1</td><td>SAP Employee Central Service Center</td><td>https://sap.com/africa/products/hcm/employee-central-service-center.html</td></tr>
+<tr><td>W-SAP2</td><td>SAP ESM در برابر ECSC/HRSD</td><td>https://www.pentos.com/insights/events-and-webinars/recorded-webinars/HR-Service-Delivery</td></tr>
+<tr><td>W-SN1</td><td>ServiceNow + Workday، Employee Center</td><td>https://blog.vsoftconsulting.com/blog/elevate-hr-with-a-servicenow-and-workday-integration</td></tr>
+<tr><td>W-SN2</td><td>رویدادهای چرخه عمر ServiceNow HRSD</td><td>https://docs.servicenow.com/bundle/orlando-hr-service-delivery/page/product/human-resources/concept/hr-lifecycle-event-configuration.html</td></tr>
+<tr><td>W-MW1</td><td>Moveworks برای HR</td><td>https://help.moveworks.com/docs/moveworks-for-hr</td></tr>
+<tr><td>W-MW2</td><td>تیکتینگ ServiceNow در Moveworks</td><td>https://help.moveworks.com/docs/servicenow-ticketing-integration-overview</td></tr>
+<tr><td>W-MW3</td><td>پیشنهادهای Knowledge Studio در Moveworks</td><td>https://help.moveworks.com/service-management/knowledge-studio/ai-powered-recommendations</td></tr>
+<tr><td>W-LE1</td><td>اتصال‌های Leena AI</td><td>https://leena.ai/integrations</td></tr>
+<tr><td>W-LE2</td><td>helpdesk در Leena AI</td><td>https://docs.leena.ai/docs/helpdesk-overview</td></tr>
+<tr><td>W-DB1</td><td>فهرست helpdesk در Darwinbox</td><td>https://platform.softwareone.com/product/employee-helpdesk/PCP-5387-7166</td></tr>
+<tr><td>W-AV1</td><td>پیام‌رسانی دوطرفه ناشناس AllVoices</td><td>https://support.allvoices.co/hc/en-us/articles/8497429800091-How-can-an-employer-properly-investigate-a-report-if-it-is-anonymous</td></tr>
+<tr><td>W-DL1</td><td>گزارش ناشناس Deel</td><td>https://www.deel.com/solutions/anonymous-reporting/</td></tr>
+<tr><td>W-AWS1</td><td>خلاصه‌های gen-AI در Contact Lens</td><td>https://aws.amazon.com/about-aws/whats-new/2024/07/amazon-connect-contact-lens-ai-powered-summaries/</td></tr>
+<tr><td>W-AWS2</td><td>قاعده و تشخیص تم در Contact Lens</td><td>https://docs.aws.amazon.com/connect/latest/adminguide/build-rules-for-contact-lens.html · https://aws.amazon.com/about-aws/whats-new/2023/05/amazon-connect-contact-lens-theme-detection/</td></tr>
+<tr><td>W-AWS3</td><td>احساس در Contact Lens</td><td>https://aws.amazon.com/blogs/contact-center/announcing-contact-lens-for-amazon-connect-preview/</td></tr>
+<tr><td>W-GO1</td><td>مدل موضوع Google CX Insights</td><td>https://docs.cloud.google.com/contact-center/insights/docs/release-notes</td></tr>
+<tr><td>W-GO2</td><td>Google Quality AI</td><td>https://docs.cloud.google.com/contact-center/insights/docs/qai-setup-guide</td></tr>
+<tr><td>W-QT1</td><td>Qualtrics Text iQ</td><td>https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/text-iq/text-iq-functionality/</td></tr>
+<tr><td>W-QT2</td><td>Comment Summaries در Qualtrics EX</td><td>https://qualtrics.com/support/employee-experience/creating-ee-project/dashboards-tab/widgets-ee/analysis-widgets-ee/comment-summaries-widget-ex</td></tr>
+<tr><td>W-KO1</td><td>مقایسه Cognigy / Kore.ai / Parloa</td><td>https://fin.ai/learn/cognigy-vs-kore-ai-vs-parloa</td></tr>
+<tr><td>W-PA1</td><td>مقایسه Cognigy و PolyAI</td><td>https://aiagentrank.io/compare/cognigy-vs-polyai</td></tr>
+<tr><td>W-QT3</td><td>closed loop / task تیکت در Qualtrics</td><td>https://www.qualtrics.com/support/vocalize/common-use-cases-voc/closing-the-loop/ · https://dxtraining.iowa.gov/digital-services/qualtrics/understanding-qualtrics-cx/closed-loop-ticket-system</td></tr>
+<tr><td>W-SU1</td><td>پیام صوتی SpeakUp با تغییر صدا (سیاست RIPE NCC)</td><td>https://www.RIPE.net/documents/3151/Whistleblower_Policy_2024.pdf</td></tr>
+<tr><td>W-FU1</td><td>یادداشت صوتی ناشناس‌شده FaceUp</td><td>https://faceup.com/en/compare/speakup-alternative</td></tr>
+<tr><td>W-WL1</td><td>گزارش شفاهی Whistlelink با تغییر صدا</td><td>https://www.whistlelink.com/product-news/january-2024/</td></tr>
+<tr><td>W-AWS4</td><td>یادداشت صوتی WhatsApp + Transcribe در AWS</td><td>https://cpaasintel.rsunga.people.aws.dev/articles/94ac33693b9d</td></tr>
+<tr><td>W-MD1</td><td>بازخورد صوتی/تصویری Medallia (مقایسه شخص ثالث)</td><td>https://www.enterpret.com/comparisons/qualtrics-vs-medallia</td></tr>
+<tr><td>W-SN3</td><td>اعلان Employee Center در ServiceNow (زمان‌بندی + مخاطب)</td><td>https://www.servicenow.com/docs/r/SogDT~k7ktsbe1ZYegnaLg/dtd_XHDQWqpVhDwveChZkQ</td></tr>
+<tr><td>W-MW4</td><td>API پیام پیش‌دستانه Moveworks</td><td>https://moveworks.com/us/en/company/news/press-releases/moveworks-announces-api-proactively-prevent-issues</td></tr>
+<tr><td>W-VX1</td><td>اعلان‌های زمان‌بندی‌شده IVR (Voxo)</td><td>https://docs.voxo.co/pharmacy/announcements</td></tr>
+<tr><td>W-PX1</td><td>زمان‌بندی گفت‌وگومحور Paradox</td><td>https://paradox.ai/products/scheduling</td></tr>
+<tr><td>W-PX2</td><td>فهرست قابلیت‌های Paradox (ratings &amp; feedback)</td><td>https://www.paradox.ai/franchise/kfc</td></tr>
+<tr><td>W-JI1</td><td>پنل کارفرمای جابینجا: مراحل، جزئیات مصاحبه</td><td>https://jobinja.ir/how-to</td></tr>
+<tr><td>W-JV1</td><td>پرسش‌های متداول جاب‌ویژن: کارفرما مصاحبه را هماهنگ می‌کند</td><td>https://jobvision.ir/faq</td></tr>
+<tr><td>W-LAW1</td><td>قانون AI اروپا و استخدام (پرریسک، زمان‌بندی محل بحث)</td><td>https://resources.rework.com/libraries/ai-for-hr/ai-hiring-laws</td></tr>
+<tr><td>W-LAW2</td><td>قانون محلی ۱۴۴ نیویورک (ممیزی سوگیری، اطلاع‌رسانی)</td><td>https://www.pivotpointsecurity.com/what-is-nycs-ai-bias-law-and-how-does-it-impact-firms-using-hr-automation/</td></tr>
+<tr><td>W-LAW3</td><td>ممیزی سوگیری مصاحبه AI در ۲۰۲۶ (قاعده چهارپنجم، بازبینی انسانی)</td><td>https://humanly.io/blog/ai-interview-bias-audit-2026</td></tr>
+<tr><td>W-TD1</td><td>ارقام حل tier-0 در HR (ادعای فروشنده، تأییدنشده)</td><td>https://www.infosys.com/newsroom/documents/robust-hr-service-delivery-solution.pdf · https://www.applaudhr.com/blog/artificial-intelligence/hr-meets-ai-enhancing-service-delivery-with-artificial-intelligence</td></tr>
+</tbody></table>
+<p>منابع شخص ثالث و بازاریابی فروشنده (W-KO1، W-PA1، W-DB1، W-TD1) ضعیف‌ترند. پیش از نقل برای خریدار، آن‌ها را بررسی کنید.</p>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

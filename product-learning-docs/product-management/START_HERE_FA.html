@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>راهنمای اسناد Phoenix HR</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: فهرست چسبان + ستون اصلی؛ هر بخش جواب یک سؤال مدیر محصول است و به سند مرجع لینک می‌دهد. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#14202b; --muted:#5b6b7a; --line:#dde3ea;
+  --accent:#0b6e8a; --accent-soft:#e1f1f5;
+  --ok:#17794a; --ok-soft:#e2f4ea; --warn:#9a5b00; --warn-soft:#fdf0d8; --risk:#b3261e; --risk-soft:#fbe5e3;
+  --code:#eef1f5;
+  --font:"Vazirmatn",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.85;
+  padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:32px}
+@media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
+nav{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:2px;font-size:13px}
+@media(max-width:860px){nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px}}
+nav a{color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+nav a:hover{background:var(--accent-soft);color:var(--accent)}
+main{min-width:0;display:flex;flex-direction:column;gap:28px}
+h1{font-size:28px;line-height:1.4;margin:0;font-weight:800;text-wrap:balance}
+h2{font-size:20px;margin:0;font-weight:700;text-wrap:balance}
+h3{font-size:15px;margin:0;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+section{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.callout{border-radius:8px;padding:10px 14px;background:var(--accent-soft);border-inline-start:3px solid var(--accent)}
+.callout.warn{background:var(--warn-soft);border-color:var(--warn)}
+.callout.risk{background:var(--risk-soft);border-color:var(--risk)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
+th,td{text-align:start;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.02em;white-space:nowrap}
+td:first-child{font-weight:500}
+code{font-family:var(--mono);font-size:12.5px;background:var(--code);padding:1px 6px;border-radius:4px;direction:ltr;unicode-bidi:isolate}
+.id{font-family:var(--mono);font-size:12px;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;padding:1px 9px;border-radius:99px;white-space:nowrap}
+.have{background:var(--ok-soft);color:var(--ok)}
+.part{background:var(--warn-soft);color:var(--warn)}
+.miss{background:var(--risk-soft);color:var(--risk)}
+.prop{background:var(--code);color:var(--muted)}
+.router{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.router a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.router a:hover{border-color:var(--accent);background:var(--accent-soft)}
+.router b{font-weight:700}
+.router span{font-size:12.5px;color:var(--muted)}
+ol.order{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.step{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.step .when{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.step ul{margin:0;padding-inline-start:18px}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.wcard{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.wcard header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.wcard dl{margin:0;display:grid;grid-template-columns:72px minmax(0,1fr);gap:6px 10px;font-size:14px}
+.wcard dt{color:var(--muted);font-size:12px;padding-top:3px}
+.wcard dd{margin:0}
+.wcard ul{margin:0;padding-inline-start:18px}
+.wcard .src{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+.wgroup{font-size:13px;color:var(--muted);letter-spacing:.02em;margin-top:6px}
+footer{color:var(--muted);font-size:12.5px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="فهرست">
+  <a href="#router">از کجا شروع کنم</a>
+  <a href="#key">بخش‌های کلیدی پرونده</a>
+  <a href="#docs">نقشه اسناد</a>
+  <a href="#pipeline">نیازمندی‌ها در پایپلاین</a>
+  <a href="#sensitive">تماس حساس و اضطراری</a>
+  <a href="#world">راه‌حل‌های جهانی</a>
+  <a href="#models">مدل‌ها و اهرم‌ها</a>
+  <a href="#gate">دروازه پایلوت</a>
+</nav>
+
+<main>
+<header style="display:flex;flex-direction:column;gap:10px">
+  <h1>راهنمای اسناد Phoenix HR</h1>
+  <p class="lead">نقطه شروع پوشه <code>product-management</code>. هر بخش به یک سؤال مدیر محصول فنی جواب کوتاه می‌دهد و به سندی لینک می‌دهد که جزئیات آنجاست. شناسه‌هایی مثل <span class="id">BR-07</span> از <a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a>، شناسه‌هایی مثل <span class="id">PRV-10</span> از توافق Fit-Gap، و شناسه‌هایی مثل <span class="id">SEN-01</span> از سند نیازمندی پرامپت هستند.</p>
+  <p class="callout warn">این صفحه محتوای تازه‌ای نمی‌سازد؛ خلاصه‌ای از اسناد همین پوشه و پوشه <code>technical</code> است. هر جا نوشته شده <span class="pill prop">پیشنهاد</span>، نظر من است و در هیچ سندی تصمیم‌گیری نشده.</p>
+</header>
+
+<!-- ۱ -->
+<section id="router">
+  <h2>از کجا شروع کنم؟ سؤالت را پیدا کن</h2>
+  <div class="router">
+    <a href="FIT_GAP_TRACKER_FA.html#rows"><b>قرارداد HR دقیقاً چه می‌خواهد؟</b><span>۸۷ ردیف توافق UAT، وضعیت هر کدام در کد، مالک و ددلاین ← ردیاب Fit-Gap</span></a>
+    <a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html"><b>ایجنت صوتی چه رفتاری باید داشته باشد؟</b><span>حدود ۷۰ نیازمندی قابل‌آزمون، ۲۵ سناریوی آزمون، دروازه انتشار ← PRD پرامپت</span></a>
+    <a href="#sensitive"><b>تعرض، آزار و موارد اضطراری را چطور هندل کنیم؟</b><span>جریان مرحله‌به‌مرحله و مسئولیت هر لایه ← همین صفحه</span></a>
+    <a href="FEATURE_CATALOG_FA.html"><b>کل قابلیت‌ها و اولویت‌ها چیست؟</b><span>حدود ۱۸۰ قابلیت در ۱۸ حوزه، با P0/P1/P2، کار رقبا و وضعیت ما ← کاتالوگ قابلیت‌ها</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25"><b>رقبای جهانی و ایرانی چه کرده‌اند؟</b><span>هشت دسته رقیب، ۱۳ HCM، ماتریس قابلیت، خط قرمزها ← پرونده محصول §۲۵</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6"><b>چه بسازیم و چطور؟</b><span>سبد ایده‌ها (الف، ب، ج) و رویکردهای ساخت ← پرونده محصول §۲۵.۶ و §۲۵.۶ب</span></a>
+    <a href="INSPIRATION_PLAYBOOK_FA.html#listen"><b>محصولات «شنیدن صدای کارکنان» چطور کار می‌کنند؟</b><span>Perceptyx، Qualtrics، Listen Labs، Culture Amp و شرکت‌های ایرانی ← الهام از بازار</span></a>
+    <a href="MARKET_ALIGNMENT_FA.html"><b>دسترسی معاونت/اداره و حداقل تعداد نفر؟</b><span>نُه بلوک محصول، ماتریس نقش × سطح داده، موارد حساس رقبا (§۵ج، §۶) ← هم‌راستایی بازار</span></a>
+    <a href="ROADMAP_FA.html"><b>به چه ترتیبی بسازیم؟</b><span>اصول تصمیم، موج‌ها، شاخص‌ها، بیست روز اول ← نقشه راه</span></a>
+    <a href="HR_TECH_CHECKLIST_FA.html"><b>از نظر فنی چه چیزهایی را باید بلد باشم؟</b><span>مدل‌ها، ASR، aiva، COA و سؤال‌هایی که باید از تیم بپرسی ← چک‌لیست فنی</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s5"><b>بحرانی‌ترین مشکلات امروز کد کدام‌اند؟</b><span>IDOR صوت، API بدون احراز هویت، لاگ توکن و غیره ← پرونده محصول §۵</span></a>
+    <a href="ANSWER_PACK_FA.html"><b>در جلسه با خریدار چه بگویم؟</b><span>معیارهای انتخاب، سناریوی نمایش، ده پرسش جلسه ← بسته پاسخ؛ همچنین <span class="id">§10</span> پرونده محصول</span></a>
+    <a href="../technical/IVA_COA_PIPELINES.html"><b>یک تماس از کجا تا کجا می‌رود؟</b><span>نمودار IVA و COA از روی کد ← پوشه technical</span></a>
+  </div>
+  <h3>ترتیب خواندن برای کسی که تازه وارد پروژه شده</h3>
+  <ol class="order">
+    <li>همین صفحه، تا آخر.</li>
+    <li><a href="HR_TECH_CHECKLIST_FA.html">چک‌لیست فنی</a> برای تصویر کلی سیستم و مدل‌ها.</li>
+    <li><a href="FIT_GAP_TRACKER_FA.html">ردیاب Fit-Gap</a>، فقط ردیف‌های «نیازمند توسعه» و «بررسی فنی».</li>
+    <li><a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html">PRD پرامپت</a>، فصل‌های خط قرمزها، سناریوها و تصمیم‌های باز.</li>
+    <li><a href="FEATURE_CATALOG_FA.html">کاتالوگ</a>، بخش‌های ۱۹ تا ۲۱ (قضاوت‌ها، Release cut، خط قرمزها).</li>
+    <li><a href="ROADMAP_FA.html">نقشه راه</a> و <a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار</a>.</li>
+    <li><a href="PRODUCT_DOSSIER_FA.html">پرونده محصول</a> را به‌عنوان مرجع نگه دار، نه برای خواندن یکجا.</li>
+  </ol>
+</section>
+
+<!-- لینک مستقیم به بخش‌های مهم پرونده محصول -->
+<section id="key">
+  <h2>لینک مستقیم به مهم‌ترین بخش‌های پرونده محصول</h2>
+  <p>این هفت لینک مستقیماً روی همان عنوان در <a href="PRODUCT_DOSSIER_FA.html#s25">پرونده محصول §۲۵</a> باز می‌شوند. به‌ترتیب خواندن چیده شده‌اند: اول «ما کجا ایستاده‌ایم»، بعد «چه بسازیم»، بعد «چطور بسازیم».</p>
+  <div class="router">
+    <a href="PRODUCT_DOSSIER_FA.html#s25-5b"><b>۲۵.۵ب · استخراج Feature از ۱۳ HCM/HRIS</b><span>ما کجا ایستاده‌ایم؛ مقایسه با ۱۳ نرم‌افزار HCM/HRIS</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-5b-patterns"><b>هفت الگوی تکرارشونده و پاسخ ما</b><span>الگوهایی که در همه ۱۳ محصول تکرار می‌شوند و جواب Phoenix به هرکدام (داخل ۲۵.۵ب)</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6"><b>۲۵.۶ · سبد ایده‌ها — چه بسازیم</b><span>فهرست ایده‌ها با اولویت و تلاش (S، M، L) و آنچه از Code فعلی دوباره استفاده می‌شود</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6a"><b>۲۵.۶ الف · قابل ساخت روی Featureهای فعلی</b><span>بیشتر پیکربندی و Domain؛ ارزان‌ترین ایده‌ها</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6b-new-dev"><b>۲۵.۶ ب · نیازمند توسعه جدید</b><span>ایده‌هایی که Code تازه می‌خواهند</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6c"><b>۲۵.۶ ج · ایده‌های برگرفته از استخراج ۲۵.۵ب</b><span>ایده‌هایی که از مقایسه با ۱۳ HCM/HRIS بیرون آمده‌اند</span></a>
+    <a href="PRODUCT_DOSSIER_FA.html#s25-6-approaches"><b>۲۵.۶ب · رویکردهای برگرفته از بلاگ رقبا — چطور بسازیم</b><span>بخش‌های قبل می‌گویند چه بسازیم؛ این بخش می‌گوید چطور، با گره به Code فعلی و ایده‌های ۲۵.۶</span></a>
+  </div>
+</section>
+
+<!-- ۲ -->
+<section id="docs">
+  <h2>نقشه اسناد: هر فایل برای چیست</h2>
+  <p>فایل‌های PDF همان محتوای HTML هم‌نام هستند. نسخه HTML را باز کن، چون لینک‌های داخلی دارد.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>سند</th><th>جواب چه سؤالی است</th><th>مخاطب</th><th>کی سراغش برو</th></tr></thead>
+    <tbody>
+      <tr><td><a href="FIT_GAP_TRACKER_FA.html">ردیاب Fit-Gap</a><br><small>+ <a href="FIT_GAP_TRACKER.xlsx">xlsx</a></small></td><td>۸۷ نیازمندی قرارداد در ۸ بلوک: شاهد در کد، اطمینان، مالک، ددلاین شرطی</td><td>خودت (برای پر کردن)</td><td>هر هفته؛ مرجع اصلی تعهدات</td></tr>
+      <tr><td><a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html">PRD پرامپت ایجنت EX</a></td><td>رفتار ایجنت صوتی؛ نیازمندی‌های INT تا SEC، قرارداد ابزارها، سناریوهای آزمون، دروازه انتشار، تصمیم‌های باز Q1 تا Q8</td><td>تیم پرامپت، تیم IVA، واحد EX</td><td>قبل از هر جلسه با تیم پرامپت یا EX</td></tr>
+      <tr><td><a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a></td><td>فهرست اصلی همه قابلیت‌های محصول EX؛ برای هر کدام: نیاز، گزینه‌ها، کار رقبا، وضعیت ما، اولویت، تلاش</td><td>TPM، CTO، سرپرست‌های فنی</td><td>اولویت‌بندی و برآورد</td></tr>
+      <tr><td><a href="PRODUCT_DOSSIER_FA.html">پرونده محصول</a></td><td>کاتالوگ کامل از کد، یافته‌های بحرانی، ریسک‌ها، هزینه هر تماس، Scope، رقبا (§۲۵)، قابلیت‌های EX (§۲۷)</td><td>TPM، ذی‌نفعان</td><td>مرجع؛ با فهرست بالای صفحه برو سراغ فصل لازم</td></tr>
+      <tr><td><a href="ROADMAP_FA.html">نقشه راه</a></td><td>اصول تصمیم، سه لایه قابلیت، موج‌ها، ساختار تیم، درخت شاخص‌ها، بیست روز اول</td><td>TPM، CTO</td><td>برنامه‌ریزی و گزارش به مدیریت</td></tr>
+      <tr><td><a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار</a></td><td>نیازهای همراه اول به زبان بازار؛ مدل دسترسی معاونت/اداره؛ موارد حساس و اتصال HR در رقبا</td><td>TPM، CTO</td><td>طراحی دسترسی و داده</td></tr>
+      <tr><td><a href="INSPIRATION_PLAYBOOK_FA.html">الهام از بازار</a></td><td>شرکت‌های ایرانی و خارجی شبیه ما، هر قابلیت چطور کار می‌کند و ما چطور بسازیم؛ نسخه‌بندی v1 تا v3</td><td>TPM، توسعه‌دهندگان</td><td>وقتی دنبال ایده یا الگوی پیاده‌سازی هستی</td></tr>
+      <tr><td><a href="ANSWER_PACK_FA.html">بسته پاسخ</a></td><td>جواب به راهنمای انتخاب نرم‌افزار HR چارگون: معیارها، سناریوی نمایش، ورودی‌های لازم، ساختار مالی</td><td>واحد EX و کمیته ارزیابی</td><td>قبل از جلسه نمایش یا قرارداد</td></tr>
+      <tr><td><a href="HR_TECH_CHECKLIST_FA.html">چک‌لیست فنی</a></td><td>مدل‌ها، ASR، aiva، COA، بهبودها، سؤال برای تیم؛ با تیک پیشرفت</td><td>خودت</td><td>یادگیری فنی</td></tr>
+      <tr><td><a href="../technical/IVA_COA_PIPELINES.html">پایپلاین IVA و COA</a></td><td>نمودار مسیر تماس زنده و تحلیل، embedding، پایان تماس، شکاف‌ها</td><td>همه</td><td>وقتی می‌خواهی بدانی یک داده از کجا می‌آید</td></tr>
+      <tr><td><a href="../technical/TECHNICAL_DOSSIER_FA.html">پرونده فنی</a></td><td>فصل‌های ۱۱ تا ۲۴: معماری، agentlib، aiva، IVA، CCA، AQA، Auth، Config، بدهی فنی</td><td>توسعه‌دهندگان، CTO</td><td>بررسی برآورد یا Review کد</td></tr>
+      <tr><td><a href="../technical/AI_LEARNING_GUIDE_FA.html">راهنمای یادگیری AI</a></td><td>مفاهیم، کارت مدل Hugging Face، بنچمارک‌ها، WER/CER فارسی، MOS، روال هفتگی</td><td>همه</td><td>انتخاب یا مقایسه مدل</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ۳ -->
+<section id="pipeline">
+  <h2>نیازمندی‌های HR در هر مرحله پایپلاین</h2>
+  <p>مسیر یک تماس از ورود تا اقدام انسانی، در ۱۳ مرحله. برای هر مرحله: چه چیزی آنجا اجرا می‌شود، کدام نیازمندی‌ها مال آن مرحله‌اند، و برای بهبود چه چیزی را باید اندازه بگیری.</p>
+  <p><span class="pill have">موجود</span> <span class="pill part">ناقص</span> <span class="pill miss">ناموجود</span> وضعیت طبق کاتالوگ و پرونده محصول است، نه آزمون زنده.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>مرحله</th><th>چه چیزی اجرا می‌شود</th><th>نیازمندی‌ها</th><th>وضعیت</th><th>چه بدانی و بسنجی</th></tr></thead>
+    <tbody>
+      <tr><td>۱. ورود و دسترسی</td><td>SBC/Kamailio، LiveKit SIP، تطبیق شماره</td><td>Whitelist کارکنان <span class="id">VIA-02</span>، <span class="id">ID-05</span>؛ حالت‌های ناشناس/محرمانه/شناخته‌شده <span class="id">ID-01</span>؛ اعلام هوش مصنوعی و ضبط <span class="id">SC-10</span>، <span class="id">ID-04</span></td><td><span class="pill part">ناقص</span></td><td>Whitelist امروز فقط جلوی حافظه را می‌گیرد، نه ورود را؛ و به‌طور پیش‌فرض بایپس است (<code>BYPASS_WHITELIST=True</code>).</td></tr>
+      <tr><td>۲. صدا و نوبت</td><td>Silero VAD، endpointing ۰٫۵ تا ۳ ثانیه، تشخیص نوبت، barge-in</td><td><span class="id">VX-05</span> تأخیر کم، <span class="id">VX-06</span> نوبت، <span class="id">VOX-05</span></td><td><span class="pill have">موجود</span></td><td>زمان تا اولین صدا؛ تعداد قطع‌شدن حرف کارمند. کارمندی که درباره آزار حرف می‌زند مکث طولانی دارد؛ endpointing کوتاه حرفش را قطع می‌کند.</td></tr>
+      <tr><td>۳. ASR زنده</td><td>مدل ASR روی Triton، پشت <code>neurobox-gateway</code>؛ نام مدل در اسناد نیست</td><td><span class="id">VX-01</span> فارسی ۸kHz، <span class="id">VOX-04</span> ورودی نامفهوم</td><td><span class="pill part">ناقص</span></td><td>WER هرگز اندازه‌گیری نشده. WER را جدا روی جمله‌های حساس بسنج؛ اگر «آزار» اشتباه شنیده شود، همه لایه‌های بعدی کور می‌شوند.</td></tr>
+      <tr><td>۴. فهم و تریاژ</td><td>aiva: branch طبقه‌بندی، guardrail، clarifying (موازی)</td><td><span class="id">BR-01</span> تریاژ به چهار کار، <span class="id">BR-07</span> تشخیص حساس، <span class="id">BR-10</span> انتقال به انسان</td><td><span class="pill miss">ناموجود</span></td><td>طبقه‌بندی وجود دارد ولی schema مخصوص HR و تشخیص حساس ندارد. classification و clarifying هنوز feature flag ندارند.</td></tr>
+      <tr><td>۵. دانش (RAG)</td><td>Qdrant، embedding <code>text-embedding-3-large</code> یا Hakim، MAX_SIM، top 10، امتیاز ≥ ۰٫۵</td><td><span class="id">BR-02</span>، <span class="id">KB-01</span> تا <span class="id">KB-04</span>، ثبت سؤال‌های بی‌جواب (KB-G)</td><td><span class="pill part">ناقص</span></td><td>نرخ «اطلاعات کافی ندارم»، دقت بازیابی روی سؤال‌های واقعی. کاتالوگ ثبت سؤال‌های بی‌جواب را ارزان‌ترین قابلیت پرارزش می‌داند.</td></tr>
+      <tr><td>۶. پاسخ و رفتار</td><td>ReAct در aiva با <code>gemma-4-31B-it</code> / <code>gpt-oss-120b</code>؛ پرامپت EX</td><td>همه PRD: <span class="id">GRD</span>، <span class="id">SEN</span>، <span class="id">EMO</span>، <span class="id">MDT</span>؛ <span class="id">BR-06</span> قول ندادن</td><td><span class="pill miss">ناموجود</span></td><td>پرامپت EX هنوز نوشته نشده. خطای حیاتی در ۲۵ سناریو × ۳ گونه × ۵ اجرا باید صفر باشد.</td></tr>
+      <tr><td>۷. ابزار و اقدام</td><td>Tool registry در aiva؛ <code>exit_tool</code>، <code>redirect_to_human_agent</code></td><td><code>mark_sensitive_voice</code>، <code>search_knowledge_base</code>، <span class="id">AC-07</span> لایه ایمنی ابزار</td><td><span class="pill miss">ناموجود</span></td><td>ابزار ثبت حساس وجود ندارد. ابزارهای نمایشی (<code>tell_joke</code>، <code>get_gold_price</code>) برای HR خاموش شوند. <code>send_sms</code> محدودیت نرخ ندارد.</td></tr>
+      <tr><td>۸. TTS</td><td>کلاینت OpenAI-compatible، پیش‌فرض <code>tts-1</code>؛ در تولید روی Triton</td><td><span class="id">VOX-01</span> تا <span class="id">VOX-03</span></td><td><span class="pill part">ناقص</span></td><td>جداکننده جمله فقط «. » است؛ «؟» و «،» جمله را جدا نمی‌کنند و پخش دیرتر شروع می‌شود.</td></tr>
+      <tr><td>۹. پایان تماس</td><td>خلاصه جلسه روی Kafka <code>chatbot-mci-iva</code>؛ ضبط در MinIO؛ بازنویسی حافظه کاربر</td><td><span class="id">ID-06</span> حافظه با رضایت، <span class="id">CLO</span></td><td><span class="pill part">ناقص</span></td><td>حافظه برای هر شماره همیشه روشن است. پیام Kafka ممکن است زودتر از رسیدن فایل ضبط برسد.</td></tr>
+      <tr><td>۱۰. تحلیل پس از تماس</td><td><code>grogu</code>، ASR آفلاین روی MP3 استریو، <code>coa-ai</code> (تگ با LLM)، ClickHouse</td><td><span class="id">AN-02</span> حذف اطلاعات شخصی، <span class="id">AN-04</span> طبقه‌بندی HR، <span class="id">AN-11</span> علامت خطر، <span class="id">AN-18</span> بازسازی موتور تحلیل، بلوک AI Analysis در Fit-Gap</td><td><span class="pill miss">ناموجود</span></td><td><code>coa-ai</code> از ۱۳ ژوئیه ۲۰۲۵ تغییر نکرده و برای مرکز تماس مشتری ساخته شده. خروجی MP3 فشرده‌سازی دوم است؛ PCM/FLAC ۱۶kHz را تست کن.</td></tr>
+      <tr><td>۱۱. ذخیره، دسترسی، داشبورد</td><td><code>coa-api</code> (Django)، Postgres، ClickHouse، <code>coa-ui</code></td><td><span class="id">SC-01</span> تا <span class="id">SC-06</span>، <span class="id">IN-02</span> فیلتر واحد سازمانی، <span class="id">IN-03</span> حداقل تعداد نفر، <span class="id">PRV-10</span> جداسازی حساس</td><td><span class="pill miss">ناموجود</span></td><td>IDOR در پخش صوت، API چت بدون احراز هویت در سطح برنامه، بدون لاگ ممیزی، تاریخ انقضای نقش اجرا نمی‌شود.</td></tr>
+      <tr><td>۱۲. اقدام انسانی</td><td>بیرون از محصول: واحد EX، بررسی‌کننده موارد حساس</td><td><span class="id">CS-09</span> صف محرمانه، <span class="id">ID-08</span> دسترسی اضطراری به هویت، <span class="id">LP-02</span>، <span class="id">LP-04</span> بستن حلقه</td><td><span class="pill miss">ناموجود</span></td><td>چه کسی هشدار را می‌خواند، در چند ساعت. بدون «گفتید، انجام دادیم» کارمندان بار دوم تماس نمی‌گیرند.</td></tr>
+      <tr><td>۱۳. کیفیت و ارزیابی (همه مراحل)</td><td>فقط AQA endpoint ارزیابی دارد؛ Arize Phoenix برای trace استفاده نشده</td><td><span class="id">QA-01</span> مجموعه طلایی، <span class="id">QA-06</span> بازبینی انسانی همه موارد حساس، <span class="id">QA-07</span> ثبت نسخه مدل و پرامپت</td><td><span class="pill miss">ناموجود</span></td><td>برای هر مرحله یک عدد: WER، دقت تریاژ، وفاداری پاسخ به KB، دقت تگ، recall حساس.</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ۴ -->
+<section id="sensitive">
+  <h2>تماس حساس و اضطراری: کجا، کی و چطور</h2>
+  <p>دو مسیر را از هم جدا کن. <b>موضوع حساس</b> (آزار، تعرض، تبعیض، تهدید، تخلف) باید با دقت ثبت و به بررسی‌کننده مشخص برسد. <b>موقعیت اضطراری</b> (خطر فوری جانی، تهدید به خشونت، آسیب به خود) زمان‌حساس است و نمی‌تواند تا بعد از تماس منتظر بماند.</p>
+  <p class="callout risk">قاعده اصلی از اسناد: جا انداختن یک مورد آزار آسیب جدی است و علامت زدن بیش از حد قابل‌تحمل‌تر است. هدف تشخیص در آزمون ۱۰۰٪ است (PRD، بخش ریسک‌ها). یعنی تشخیص را نباید فقط به یک لایه سپرد.</p>
+
+  <h3>کار هر لایه</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>لایه</th><th>مسئولیت</th><th>مالک</th><th>وضعیت</th></tr></thead>
+    <tbody>
+      <tr><td>طبقه‌بندی (Taxonomy)</td><td>فهرست رسمی دسته‌های حساس و اضطراری، با دو مثال برای هر کدام</td><td>واحد EX</td><td><span class="pill miss">ناموجود</span> تصمیم باز Q2</td></tr>
+      <tr><td>پرامپت</td><td>تشخیص در گفت‌وگو؛ گوش دادن بدون قضاوت؛ فقط سؤال لازم؛ بدون پیش‌بینی نتیجه؛ گفتن جمله ثبت فقط اگر ابزار تأیید کرد</td><td>تیم پرامپت</td><td><span class="pill part">در PRD نوشته شده</span> <span class="id">SEN-01..05</span></td></tr>
+      <tr><td><span class="id">Sensitive Detector</span></td><td>Keyword Rules + LLM Classifier که موازی با مدل اصلی اجرا می‌شود و برای موارد حساس بر آن غلبه می‌کند</td><td>تیم aiva</td><td><span class="pill miss">ناموجود</span> <span class="id">BR-01</span>، <span class="id">BR-07</span></td></tr>
+      <tr><td>ابزار</td><td><code>mark_sensitive_voice(category, reason)</code>؛ یک بار در هر تماس حساس</td><td>تیم IVA</td><td><span class="pill miss">ناموجود</span></td></tr>
+      <tr><td>بک‌اند هشدار</td><td>ارسال هشدار به مسئول تعیین‌شده؛ نام و شماره مسئول فقط در تنظیمات بک‌اند، هرگز در پرامپت</td><td>تیم فنی</td><td><span class="pill miss">ناموجود</span></td></tr>
+      <tr><td>بانک دانش</td><td>فقط واقعیت‌های تأییدشده: سیاست ضبط و محرمانگی، مرجع اضطراری، مسیر رسمی شکایت. KB برای تشخیص نیست</td><td>واحد EX + حقوقی</td><td><span class="pill miss">ناموجود</span> Q4، Q7</td></tr>
+      <tr><td>تحلیل پس از تماس</td><td>شبکه دوم: علامت خطر روی متن کامل تماس، برای پیدا کردن مواردی که در تماس زنده جا ماندند</td><td>تیم COA</td><td><span class="pill miss">ناموجود</span> <span class="id">AN-11</span></td></tr>
+      <tr><td>دسترسی و داده</td><td>جدا از داشبورد عادی؛ صف محدود؛ هر باز کردن در لاگ؛ بدون حافظه بلندمدت</td><td>تیم COA + Auth</td><td><span class="pill miss">ناموجود</span> <span class="id">PRV-10</span>، <span class="id">CS-09</span>، <span class="id">SC-03</span></td></tr>
+      <tr><td>فرآیند انسانی</td><td>بررسی‌کننده، ساعات پوشش، زمان واکنش، اختیار دسترسی اضطراری</td><td>واحد EX</td><td><span class="pill miss">تعریف نشده</span></td></tr>
+      <tr><td>آزمون</td><td>سناریوی S11 با گونه‌های مختلف، سناریوی اضطراری، آزمون سر به سر «تماس آزمایشی ← هشدار رسید»</td><td>تیم پرامپت + QA</td><td><span class="pill part">در PRD طراحی شده</span></td></tr>
+    </tbody></table></div>
+
+  <h3>موضوع حساس، مرحله به مرحله</h3>
+  <div class="flow">
+    <div class="step"><span class="when">قبل از پایلوت</span><h3>آماده‌سازی</h3>
+      <ul><li>Taxonomy از EX</li><li>جمله تأییدشده محرمانگی در KB (Q4)</li><li>تعیین بررسی‌کننده و زمان واکنش</li><li>بستن IDOR و احراز هویت API</li></ul></div>
+    <div class="step"><span class="when">در تماس، هنگام تشخیص</span><h3>تشخیص دولایه</h3>
+      <ul><li>مدل اصلی طبق پرامپت</li><li><span class="id">Sensitive Detector</span> موازی <span class="pill prop">پیشنهاد</span></li><li>اگر یکی بگوید حساس، حساس است</li></ul></div>
+    <div class="step"><span class="when">در تماس، بعد از تشخیص</span><h3>رفتار</h3>
+      <ul><li>بدون قضاوت، بدون قطع کردن</li><li>جزئیات بدنی یا هویتی غیرلازم پرسیده نشود</li><li>صدا زدن ابزار، بعد جمله «ثبت شد»</li><li>بدون قول و پیش‌بینی نتیجه</li></ul></div>
+    <div class="step"><span class="when">پایان تماس</span><h3>ثبت</h3>
+      <ul><li>علامت حساس روی خلاصه Kafka</li><li>حافظه بلندمدت ساخته نشود <span class="pill prop">پیشنهاد</span></li><li>هشدار به بررسی‌کننده</li></ul></div>
+    <div class="step"><span class="when">بعد از تماس</span><h3>بررسی</h3>
+      <ul><li>صف محدود جدا از داشبورد</li><li>بازبینی انسانی همه موارد حساس (<span class="id">QA-06</span>)</li><li>تحلیل COA به‌عنوان شبکه دوم</li><li>پیگیری ناشناس دوطرفه (<span class="id">ID-07</span>، P1)</li></ul></div>
+  </div>
+
+  <h3>موقعیت اضطراری: چه چیزی فرق می‌کند</h3>
+  <p class="callout warn">PRD این را تصمیم باز Q7 گذاشته و هیچ سندی هنوز جوابش را نداده. موارد زیر پیشنهاد من است و باید با EX و واحد حقوقی تصمیم گرفته شود.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>موضوع</th><th>موضوع حساس</th><th>موقعیت اضطراری <span class="pill prop">پیشنهاد</span></th></tr></thead>
+    <tbody>
+      <tr><td>زمان هشدار</td><td>بعد از تماس (طبق PRD)</td><td>همان لحظه، وسط تماس</td></tr>
+      <tr><td>گفتار ایجنت</td><td>جمله پایه ثبت حساس</td><td>جمله و مرجع اضطراری تأییدشده از KB؛ ایجنت شماره یا مرجعی از خودش نمی‌سازد</td></tr>
+      <tr><td>انتقال به انسان</td><td>لازم نیست</td><td>اگر خط انسانی زنده وجود دارد، با <code>redirect_to_human_agent</code> (این ابزار در کد هست)</td></tr>
+      <tr><td>هویت تماس‌گیرنده</td><td>طبق حالت تماس؛ در حالت ناشناس آشکار نمی‌شود</td><td>دسترسی اضطراری موقت با دلیل، تأیید نفر دوم و لاگ (<span class="id">ID-08</span>)</td></tr>
+      <tr><td>پایان تماس</td><td>عادی</td><td>ایجنت تماس را خودش نمی‌بندد؛ قاعده <span class="id">EMO-01</span> سخت‌تر اجرا شود</td></tr>
+    </tbody></table></div>
+  <p>خط قرمز کاتالوگ: محصول کامل گزارش تخلف (مثل NAVEX) نمی‌سازیم؛ فقط صف خصوصی. تشخیص احساسات فردی کارکنان هم ممنوع است و فقط تجمیعی مجاز است.</p>
+</section>
+
+<!-- ۵ -->
+<section id="world">
+  <h2>نیازهایی که محصولات جهانی حل کرده‌اند و ما هم لازم داریم</h2>
+  <p>هر کارت یک نیاز است: مسئله به زبان ساده، چه کسی آن را حل کرده، دقیقاً چطور کار می‌کند، و برای ما در کدام لایه و چه شکلی پیاده می‌شود. پایین هر کارت آمده که جزئیات در کدام سند است.</p>
+  <p class="callout warn">همه این توضیح‌ها از اسناد همین پوشه آمده‌اند و آن اسناد هم از وب‌سایت و مستندات خود شرکت‌ها برداشته‌اند. یعنی این‌ها ادعای خود شرکت‌هاست. من آن‌ها را دوباره در وب بررسی نکرده‌ام؛ پیش از استناد در جلسه، لینک منبع را در همان سند باز کن.</p>
+
+  <p class="wgroup">اعتماد و ناشناس ماندن</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>ناشناس بماند ولی بشود پیگیری کرد</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>کارمندی که آزار را گزارش می‌دهد نمی‌خواهد شناخته شود، ولی بررسی‌کننده برای رسیدگی سؤال دارد.</dd>
+        <dt>چه کسی</dt><dd>AllVoices و Deel (پلتفرم‌های گزارش ناشناس کارکنان)</dd>
+        <dt>چطور</dt><dd>کارمند ناشناس گزارش می‌دهد. HR می‌تواند در همان پرونده به او پیام بدهد و کارمند جواب بدهد، بدون اینکه هویتش معلوم شود. هویت فقط وقتی آشکار می‌شود که خود کارمند تصمیم بگیرد.</dd>
+        <dt>برای ما</dt><dd>لایه داده و کانال: هر تماس یکی از سه حالت ناشناس، محرمانه یا شناخته‌شده را دارد و این حالت روی رکورد ذخیره می‌شود. برای پیگیری، کارمند یک کد پرونده و PIN می‌گیرد و با همان دوباره تماس می‌گیرد. در حالت ناشناس حافظه بلندمدت ساخته نمی‌شود.</dd>
+      </dl>
+      <p class="src"><span class="id">ID-01, ID-04, ID-06, ID-07</span> · <a href="FEATURE_CATALOG_FA.html#3-identity-consent-and-anonymity">کاتالوگ §3</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>گزارش تخلف با دستیار صوتی</h3><span class="pill part">ما: معماری داریم، محصول نه</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>گزارش‌دهنده با زبان خودش حرف می‌زند، ولی بررسی‌کننده یک پرونده منظم لازم دارد.</dd>
+        <dt>چه کسی</dt><dd>NAVEX (سامانه EthicsPoint، از پراستفاده‌ترین خطوط گزارش تخلف)، SpeakUp (آمستردام، بیش از ۷۰۰ مشتری مثل IKEA و BMW)، FaceUp (چک)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>NAVEX Nira (۱ سپتامبر ۲۰۲۶): گفت‌وگوی هدایت‌شده دوطرفه که بین روایت آزاد و فیلدهای لازم پرونده تعادل برقرار می‌کند؛ چندزبانه؛ تنظیم ناشناسی بر اساس قانون هر کشور؛ انتقال فوری به اپراتور انسانی.</li>
+          <li>SpeakUp: دستیار صوتی Sienna AI گزارش صوتی را می‌گیرد و از آن پرونده ساختاریافته می‌سازد؛ پیام صوتی در بیش از ۷۵ زبان؛ چت ناشناس دوطرفه.</li>
+          <li>FaceUp: خط ۲۴ ساعته AI که گفت‌وگو می‌کند، زمینه را می‌پرسد و پرونده را خودکار می‌نویسد.</li></ul></dd>
+        <dt>برای ما</dt><dd>این نزدیک‌ترین الگو به IVA ماست (سؤال تکمیلی + انتقال به انسان). طبق خط قرمز کاتالوگ محصول کامل گزارش تخلف نمی‌سازیم؛ فقط صف خصوصی. ولی سه چیز را برداریم: پرونده ساختاریافته از روایت آزاد، انتقال فوری به انسان در موارد اضطراری، و پیگیری ناشناس. در ایران بازیگر جدی در این حوزه دیده نشده.</dd>
+      </dl>
+      <p class="src"><span class="id">CS-09, BR-10</span> · <a href="PRODUCT_DOSSIER_FA.html#s25">پرونده محصول §25.2 و §25.3</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>شفافیت درباره AI و داده</h3><span class="pill part">ما: ناقص</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>کارمند باید بداند با ماشین حرف می‌زند و داده‌اش چه می‌شود؛ خریدار دولتی هم مدرک می‌خواهد.</dd>
+        <dt>چه کسی</dt><dd>قانون AI اتحادیه اروپا؛ HiBob (نرم‌افزار HR)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>قانون AI اروپا: اعلام AI بودن الزامی است. ماده ۵ تشخیص احساس در محیط کار را از فوریه ۲۰۲۵ ممنوع کرده. AI در استخدام و ارزیابی کارکنان «پرریسک» است (پیوست III).</li>
+          <li>HiBob یک «مرکز اعتماد AI» منتشر کرده: داده مشتری برای آموزش مدل استفاده نمی‌شود و داده هر مشتری جداست.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه پرامپت: جمله آغاز تماس که AI بودن را می‌گوید (موجود در <span class="id">INT-01</span>). لایه تحلیل: احساس فقط تجمیعی، هرگز روی پروفایل کارمند. لایه فروش: یک صفحه اعتماد برای خریدار. توجه: تصمیم فعلی PRD (<span class="id">INT-03</span>) اعلام ضبط را از آغاز تماس حذف کرده.</dd>
+      </dl>
+      <p class="src"><span class="id">SC-10, SC-11</span> · <a href="PRODUCT_DOSSIER_FA.html#s25">پرونده محصول §25.8</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>فقط شنیدن داوطلبانه</h3><span class="pill have">ما: رعایت شده</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>وسوسه تحلیل پنهان ایمیل و چت کارکنان برای «شنیدن» بیشتر.</dd>
+        <dt>چه کسی</dt><dd>Culture Amp (پلتفرم تجربه کارکنان، ملبورن)</dd>
+        <dt>چطور</dt><dd>تحلیل پنهان پیام‌ها را «هیاهو» می‌دانند: فقط ۲۴٪ کارشناسان HR روش شنیدن سازمانشان را توصیه می‌کنند، و آزمایش خودشان نشان داد در تحلیل پیام‌های کاری بعضی گروه‌ها (بر اساس منطقه، جنسیت، سابقه) کمتر دیده می‌شوند.</dd>
+        <dt>برای ما</dt><dd>خط قرمز محصول: فقط کانال داوطلبانه و آگاهانه. هیچ پایش ایمیل، چت یا تماس کاری.</dd>
+      </dl>
+      <p class="src"><a href="INSPIRATION_PLAYBOOK_FA.html#listen">الهام از بازار، شنیدن صدای کارکنان</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">موارد حساس و دسترسی</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>دسته‌های حساس و مجوز جدا برای دیدن</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>نظر درباره آزار یا خشونت نباید در داشبورد عادی کنار بقیه بیاید.</dd>
+        <dt>چه کسی</dt><dd>Workday Peakon و Microsoft Viva Glint (نظرسنجی و تحلیل نظر کارکنان)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Peakon: یک فهرست کلمه و چند دسته ثابت دارد: خشونت، ایمنی، اخلاق و درستکاری، رفتار ناپسند، و دسته‌های دلخواه سازمان. دو مجوز جدا: «خواندن نظر حساس» و «علامت زدن نظر حساس». کنار هر نظر نشان می‌دهد کدام مدیرها آن را می‌بینند.</li>
+          <li>Glint: مجوز جدا برای مدیریت نظرات حساس. مایکروسافت هشدار می‌دهد اگر کسی دو نقش داشته باشد، دسترسی‌ها جمع می‌شوند و ممکن است نظر لو برود.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه طبقه‌بندی: Taxonomy حساس از واحد EX. لایه تشخیص: <span class="id">Sensitive Detector</span> (Keyword List + LLM Classifier). لایه دسترسی: نقش «بررسی‌کننده موارد حساس» که فقط صف حساس را می‌بیند و هر باز کردن در لاگ ثبت می‌شود.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-07, PRV-10, SC-02</span> · <a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار §5الف و §5ج</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>پرونده محرمانه</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>پرونده آزار، پزشکی یا اخلاقی نباید به تیم‌های عادی پشتیبانی HR برسد.</dd>
+        <dt>چه کسی</dt><dd>Workday Help و Oracle HR Case Management (میز خدمت HR در دو HCM بزرگ)</dd>
+        <dt>چطور</dt><dd>نوع پرونده «محرمانه» تعریف می‌شود. این پرونده‌ها فقط به تیم مجاز مسیریابی می‌شوند و بقیه حتی وجودشان را نمی‌بینند. مسیریابی و SLA هم برای هر نوع جدا تنظیم می‌شود.</dd>
+        <dt>برای ما</dt><dd>لایه داده و دسترسی: صف محرمانه جدا. هرگز به سامانه بیرونی همگام نمی‌شود. هر دسترسی در لاگ ثبت می‌شود. پیگیری ناشناس از کارت «ناشناس بماند» استفاده می‌کند.</dd>
+      </dl>
+      <p class="src"><span class="id">CS-09, SC-03</span> · <a href="FEATURE_CATALOG_FA.html#8-requests-cases-and-ticketing">کاتالوگ §8</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>حداقل تعداد نفر در گزارش</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>اگر مدیر نتیجه یک گروه سه‌نفره را ببیند، می‌تواند حدس بزند چه کسی چه گفته.</dd>
+        <dt>چه کسی</dt><dd>Viva Glint، Culture Amp، Workday Peakon</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Glint: عدد و نمودار از ۵ نفر به بالا (قابل کاهش تا ۳)؛ متن نظرات از ۱۰ نفر. اگر یک گروه مخفی شد، گروه کنارش را هم مخفی می‌کند تا با تفریق نشود حدس زد.</li>
+          <li>Culture Amp: حداقل ۵ نفر. فیلتری که گروه را زیر حداقل ببرد اعمال نمی‌شود، حتی اگر با فیلتر دیگری ترکیب شود.</li>
+          <li>Peakon: ۵ نفر مختلف در یک سال؛ وقتی دو گروه روی هم می‌افتند، افراد مختلف را می‌شمارد.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه API گزارش در <code>coa-api</code>. پیشنهاد سند هم‌راستایی: ۵ کارمند مختلف برای عدد، ۱۰ کارمند مختلف برای خلاصه. نکته مخصوص تلفن: یک نفر ممکن است ده بار زنگ بزند؛ باید کارمند شمرده شود، نه تماس. رقبای نظرسنجی‌محور این مشکل را ندارند.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-03, PRV-05</span> · <a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار §5ب</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>هر مدیر فقط زیرمجموعه خودش</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>مدیر یک اداره نباید داده اداره دیگر را ببیند، و بعد از تغییر ساختار سازمان داده قبلی نباید جابه‌جا شود.</dd>
+        <dt>چه کسی</dt><dd>Qualtrics EX، Medallia، NICE CXone</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Qualtrics: مدیر داشبورد را باز می‌کند و خودکار فقط زیرمجموعه خودش را می‌بیند. درخت سازمان خودکار از سامانه HR به‌روز می‌شود. داده‌های قبلی با ساختار همان زمان نمایش داده می‌شوند.</li>
+          <li>Medallia: یک واحد می‌تواند هم‌زمان در چند درخت باشد (جغرافیایی و کسب‌وکار).</li>
+          <li>NICE CXone (مرکز تماس): مجوز جدا برای پخش صدا، دانلود صدا، دیدن متن و خروجی گرفتن؛ حذف اطلاعات حساس از متن و صدا؛ لاگ برای هر جست‌وجو و پخش.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه داده: جدول‌های OrgUnit (با مسیر کامل مثل <code>1.4.17</code>)، Person با کد مخفی، و ScopeGrant برای دسترسی هر کاربر. روی هر پیام، واحد کارمند در لحظه تماس ذخیره شود. لایه امنیت: رفع IDOR صوت و مجوز جدا برای صدا.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-02, SC-02, SC-04, AN-02</span> · <a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار §5الف و §6</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">تحلیل و هشدار</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>قاعده روی متن تماس، بعد هشدار</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>موردی که در تماس زنده جا ماند باید بعداً پیدا شود، و موضوع مهم باید به مسئول برسد.</dd>
+        <dt>چه کسی</dt><dd>Amazon Connect Contact Lens (تحلیل تماس AWS)؛ Qualtrics</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Contact Lens: مدیر قاعده تعریف می‌کند (کلمه یا عبارت، احساس، دسته). اگر متن تماس با قاعده جور شد، تماس دسته‌بندی می‌شود و یک کار (Task) یا هشدار ساخته می‌شود. جدا از آن، موضوع‌های تازه را خودکار کشف می‌کند.</li>
+          <li>Qualtrics: از پاسخ‌هایی که شرط مشخصی دارند تیکت می‌سازد و به مسئول می‌فرستد.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه تحلیل پس از تماس در COA: قاعده + LLM روی متن کامل تماس. این شبکه دوم تشخیص حساس است. اگر موردی پیدا شد که در تماس علامت نخورده بود، به صف حساس برود.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-11, IN-05</span> · <a href="FEATURE_CATALOG_FA.html#9-conversation-analytics-tags-categories-enrichment">کاتالوگ §9</a>؛ <a href="PRODUCT_DOSSIER_FA.html#s27">پرونده محصول §27.3ج</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>تحلیل دقیق نظر کارکنان</h3><span class="pill part">ما: ناقص</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>از متن آزاد، موضوع، نیت و احساس قابل اعتماد بیرون بیاید، بدون نشت نام افراد.</dd>
+        <dt>چه کسی</dt><dd>Perceptyx (پلتفرم شنیدن صدای کارکنان)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>موضوع با سه روش هم‌زمان: مدل آموزش‌دیده با نمونه برچسب‌خورده، فهرست کلیدواژه، و کشف خودکار موضوع تازه.</li>
+          <li>نیت هر نظر: تحسین، خواسته، پیشنهاد، نیاز یا نگرانی.</li>
+          <li>پیش از فرستادن به مدل زبانی، نام افراد با مدل تشخیص نام پوشانده می‌شود.</li>
+          <li>محک دقت: ۱٬۰۰۰ نظر را چهار روان‌شناس سازمانی برچسب زدند و خودشان در ۷٪ موارد اختلاف داشتند. یک مدل کوچک تنظیم‌شده به دقت ۸۹٫۴٪ رسید، تقریباً برابر مدل بزرگ ولی ارزان‌تر.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه تحلیل COA: پوشاندن نام و شماره پیش از ذخیره، ستون نیت کنار احساس، کشف موضوع تازه، و یک محک فارسی با ۱٬۰۰۰ قطعه بی‌نام از تماس‌های پایلوت.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-02, AN-04, AN-05, AN-14</span> · <a href="INSPIRATION_PLAYBOOK_FA.html#listen">الهام از بازار، Perceptyx</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>ارزیابی خودکار همه تماس‌ها</h3><span class="pill part">ما: ناقص</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>بدون عدد نمی‌شود گفت دستیار درست کار می‌کند؛ گوش دادن دستی به چند تماس کافی نیست.</dd>
+        <dt>چه کسی</dt><dd>Google Quality AI، Observe.AI، Level AI، Calabrio (ارزیابی کیفیت مرکز تماس)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>همه تماس‌ها با یک فرم ارزیابی نمره می‌گیرند، نه نمونه‌ای از آن‌ها. برای هر جواب، جمله شاهد، زمانش در تماس و دلیل کوتاه آورده می‌شود.</li>
+          <li>Google مجموعه‌های کالیبراسیون و قاعده نمونه‌گیری برای بازبینی انسانی دارد.</li>
+          <li>قاعده فرم (Calabrio): سؤال‌ها بله/خیر، هر سؤال یک رفتار قابل مشاهده، با توضیح و نمونه برای هر گزینه.</li>
+          <li>تماس‌هایی که مدل درباره‌شان مطمئن نیست برای بازبینی انسان علامت می‌خورند.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه ارزیابی: همین موتور کیفیت دستیار خودمان را می‌سنجد («آیا سؤال تکمیلی بجا بود؟»، «آیا قولی داد؟»). همه تماس‌های حساس بازبینی انسانی می‌شوند. سناریوهای PRD مجموعه طلایی اول هستند.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-16, QA-01, QA-06</span> · <a href="INSPIRATION_PLAYBOOK_FA.html#quality">الهام از بازار، ارزیابی تماس</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">کیفیت گفت‌وگو</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>سؤال تکمیلی هدفمند، نه فرم</h3><span class="pill part">ما: در کد هست، قواعدش نه</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>جواب کلی مثل «اوضاع بد است» قابل استفاده نیست، ولی سؤال زیاد کارمند را خسته می‌کند.</dd>
+        <dt>چه کسی</dt><dd>Qualtrics، Perceptyx، Listen Labs (مصاحبه AI در مقیاس)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Qualtrics: AI جواب باز را می‌خواند و اگر مبهم بود یک سؤال تکمیلی درباره همان حرف می‌پرسد. حدود ۴۰٪ پاسخ‌دهندگان جوابشان را گسترش دادند.</li>
+          <li>Perceptyx: به‌جای فرم، گفت‌وگو؛ دستیار در لحظه‌های مهم (مثل پایان دوره آزمایشی) خودش شروع می‌کند.</li>
+          <li>Listen Labs: برای هر سؤال عمق سؤال تکمیلی تعیین می‌شود (هیچ، فقط اگر جواب کوتاه بود، یک بار، دو تا سه بار) و یک «دستور کاوش» که دقیقاً دنبال چه بگردد.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه پرامپت: قواعد <span class="id">FUP</span> و <span class="id">INF</span> در PRD. لایه aiva: branch clarifying موجود است؛ پیشنهاد سند الهام این است که هر خط (پایلوت، مصاحبه خروج) یک «طرح گفت‌وگو» با عمق سؤال برای هر موضوع داشته باشد.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-03</span> · <a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html#fup">PRD، سؤال تکمیلی</a>؛ <a href="INSPIRATION_PLAYBOOK_FA.html#listen">الهام از بازار</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>دستیاری که حدس نمی‌زند</h3><span class="pill part">ما: ناقص</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>مدل زبانی وقتی کد، تاریخ یا شماره لازم دارد، چیزی «شبیه درست» می‌سازد.</dd>
+        <dt>چه کسی</dt><dd>Moveworks (دستیار کارکنان، اکنون همراه ServiceNow)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>هر مقدار لازم یک «جای خالی» تعریف‌شده است. گزینه‌ها از سامانه مرجع خوانده می‌شوند و مدل فقط از میان آن‌ها انتخاب می‌کند. مقدار انتخاب‌شده قفل می‌شود.</li>
+          <li>فقط وقتی ابهام هست سؤال می‌پرسد.</li>
+          <li>«حل‌شده» با رویدادهای جدا شمرده می‌شود؛ اگر کاربر خسته شد و رفت، حل‌شده نیست.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه پرامپت: <span class="id">KB-01</span> و <span class="id">KB-04</span> (فقط از بانک دانش). لایه ابزار: برای کارهای شخصی، جای خالی + خواندن از سامانه + تأیید شفاهی («مرخصی استحقاقی، شنبه ۱۲ مهر؛ درست است؟»). لایه سنجش: اگر همان شماره تا ۷۲ ساعت دوباره زنگ زد، حل‌نشده حساب شود.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-02, BR-04, VX-08, QA-04</span> · <a href="INSPIRATION_PLAYBOOK_FA.html#helpdesk">الهام از بازار، Moveworks</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>گزارشی که هر جمله‌اش شاهد دارد</h3><span class="pill part">ما: ناقص</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>مدیر به خلاصه AI اعتماد نمی‌کند اگر نتواند ببیند از کجا آمده.</dd>
+        <dt>چه کسی</dt><dd>Lattice (مدیریت عملکرد)؛ Rippling (پلتفرم HR)</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Lattice: هر جمله گزارش به منبع مشخصش لینک دارد. اگر داده کم باشد، می‌نویسد «اطلاعات کافی نیست» به‌جای جمله کلی. تصمیم و ارسال فقط با انسان است.</li>
+          <li>Rippling: جواب همراه با پرس‌وجوی زیرینش نشان داده می‌شود. دستیار فقط داده‌ای را می‌بیند که خود کاربر اجازه دیدنش را دارد.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه داشبورد: هر موضوع در گزارش ماهانه به چند نقل‌قول بی‌نام ارجاع دهد؛ زیر حد نصاب بنویسد «داده کافی نیست». لایه AQA: پرس‌وجو و تعداد ردیف کنار هر نمودار؛ نقش کاربر به پرس‌وجو منتقل شود.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-06</span> · <a href="INSPIRATION_PLAYBOOK_FA.html#data">الهام از بازار، پرسش از داده</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>بستن حلقه: «گفتید، انجام دادیم»</h3><span class="pill miss">ما: ناموجود</span></header>
+      <dl>
+        <dt>مسئله</dt><dd>اگر کارمند نبیند حرفش اثری داشته، بار دوم تماس نمی‌گیرد.</dd>
+        <dt>چه کسی</dt><dd>Qualtrics، Viva Glint، Culture Amp</dd>
+        <dt>چطور</dt><dd><ul>
+          <li>Qualtrics: فقط ۴۸٪ کارکنان می‌گویند اثر بازخوردشان را دیده‌اند؛ هر جا سازمان بیشتر شنید و عمل کرد، اشتیاق نزدیک دو برابر شد.</li>
+          <li>Glint و Culture Amp: برنامه اقدام برای هر موضوع با مالک و موعد. Culture Amp یک AI Coach برای مدیر دارد که برای گفت‌وگوی دشوار و تفسیر نتایج کمک می‌کند.</li></ul></dd>
+        <dt>برای ما</dt><dd>لایه محصول و فرآیند: هر موضوع اصلی یک مالک دارد؛ برنامه اقدام با موعد و وضعیت؛ پس از هر دوره، IVA در سلام یا پایان تماس یا با پیامک می‌گوید چه کاری انجام شد. این ایجنت را وادار به قول دادن نمی‌کند، چون اقدام را سازمان اعلام می‌کند.</dd>
+      </dl>
+      <p class="src"><span class="id">LP-01, LP-02, LP-04</span> · <a href="FEATURE_CATALOG_FA.html#11-closing-the-loop-action-on-insights">کاتالوگ §11</a></p>
+    </article>
+  </div>
+</section>
+
+<!-- ۶ -->
+<section id="models">
+  <h2>مدل‌های AI و اهرم بهبود هر کدام</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>جزء</th><th>مدل امروز</th><th>معیار سنجش</th><th>اهرم بهبود</th></tr></thead>
+    <tbody>
+      <tr><td>VAD</td><td>Silero (ONNX)</td><td>قطع‌شدن حرف، سکوت‌های نادیده</td><td>آستانه و حداقل سکوت در <code>config.py</code></td></tr>
+      <tr><td>تشخیص نوبت</td><td>endpointing ثابت؛ حالت <code>mci</code> و <code>openai</code> خاموش</td><td>تأخیر پاسخ، قطع حرف</td><td>روشن کردن تشخیص معنایی</td></tr>
+      <tr><td>ASR</td><td><b>نام در اسناد نیست</b>؛ Triton</td><td>WER و CER فارسی تلفنی، جدا برای واژه‌های حساس</td><td>مجموعه طلایی، فرمت ۱۶kHz بدون فشرده‌سازی دوم، واژه‌نامه سازمانی، استفاده از <code>transcript_confidence</code></td></tr>
+      <tr><td>Embedding</td><td><code>text-embedding-3-large</code> یا Hakim</td><td>دقت بازیابی روی سؤال‌های واقعی</td><td>پارافریزهای بیشتر در KB، آستانه امتیاز</td></tr>
+      <tr><td>LLM گفت‌وگو</td><td><code>gemma-4-31B-it</code>، <code>gpt-oss-120b</code>؛ هفت نقش جدا</td><td>خطای حیاتی PRD، وفاداری به KB، تأخیر</td><td>مدل کوچک برای طبقه‌بندی و بزرگ برای پاسخ؛ پرامپت زیر ۲٬۵۰۰ توکن؛ دمای پایین</td></tr>
+      <tr><td>TTS</td><td>پیش‌فرض <code>tts-1</code>؛ تولید روی Triton</td><td>MOS، خواندن درست عدد</td><td>جداکننده جمله فارسی، chunk اول کوتاه</td></tr>
+      <tr><td>تگ‌زنی COA</td><td>LLM پشت <code>coa-ai</code>؛ مدل و پرامپت در اسناد نیست</td><td>دقت تگ با برچسب انسانی</td><td>بازسازی موتور با ارزیابی (<span class="id">AN-18</span>)</td></tr>
+      <tr><td>Emotion و Gender</td><td>روی Triton در دسترس</td><td>—</td><td>فقط تجمیعی؛ تشخیص احساس فردی خط قرمز است</td></tr>
+    </tbody></table></div>
+  <p>جزئیات بیشتر در <a href="HR_TECH_CHECKLIST_FA.html#models">چک‌لیست فنی</a> و <a href="../technical/AI_LEARNING_GUIDE_FA.html#voice">فصل صوت راهنمای یادگیری AI</a>.</p>
+</section>
+
+<!-- ۷ -->
+<section id="gate">
+  <h2>دروازه پایلوت: چیزهایی که قبل از اولین تماس واقعی کارمند لازم است</h2>
+  <p>از Release R0 کاتالوگ و دروازه انتشار PRD. کاتالوگ ۵۴ قابلیت P0 دارد؛ این‌ها مستقیماً به HR و اعتماد مربوط‌اند.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>گروه</th><th>موارد</th><th>منبع</th></tr></thead>
+    <tbody>
+      <tr><td>امنیت</td><td>احراز هویت در هر API، ممیزی، رفع IDOR صوت، حذف توکن از لاگ، اجرای انقضای نقش</td><td class="id">SC-01, 03, 04, 05, 06</td></tr>
+      <tr><td>هویت و رضایت</td><td>حالت‌های تماس، رضایت صریح، کنترل ورود، حافظه با رضایت، دسترسی اضطراری</td><td class="id">ID-01, 04, 05, 06, 08</td></tr>
+      <tr><td>داده و گزارش</td><td>فیلتر واحد سازمانی، حداقل تعداد نفر، خروجی کنترل‌شده، حذف اطلاعات شخصی</td><td class="id">IN-02, 03, 13 · AN-02</td></tr>
+      <tr><td>رفتار ایجنت</td><td>قول ندادن، تشخیص حساس، ایمنی ابزار</td><td class="id">BR-06, BR-07, AC-07</td></tr>
+      <tr><td>دروازه PRD</td><td>صفر خطای حیاتی؛ آزمون صوتی ۱۰ سناریو؛ تأیید کتبی EX روی ۲۰ متن؛ بسته شدن تصمیم‌های باز؛ آزمون سر به سر هشدار حساس</td><td><a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html#accept">PRD، دروازه انتشار</a></td></tr>
+      <tr><td>تصمیم‌های EX</td><td>Taxonomy (Q2)، جمله محرمانگی (Q4)، مسیر اضطراری (Q7)، اعلام ضبط در شروع تماس (INT-03)</td><td><a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html#open">PRD، تصمیم‌های باز</a></td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>
+  ساخته‌شده از اسناد همین پوشه و پوشه <code>technical</code>، ۹ آبان ۱۴۰۵. مبنای کد در اسناد: commit <code>cb570a50b</code> (۱۴ مهر ۱۴۰۵). وقتی سند تازه‌ای به پوشه اضافه شد، یک ردیف به «نقشه اسناد» اضافه کن.
+</footer>
+</main>
+</div>
+</body>
+</html>

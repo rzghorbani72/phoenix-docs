@@ -1,0 +1,1132 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Phoenix EX Feature Catalog</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 980px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <div class="cover">
+      <h1>Phoenix EX — Complete Feature Catalog</h1>
+      <p><b>Product:</b> an AI employee-experience (EX) HR platform. Employees talk to it by voice (IVA, phone) and text (chatbot). It answers, takes requests, and analyses every conversation into tags, categories and insights for HR.</p>
+<p><b>Audience:</b> TPM, CTO, tech leads. Use this as the master list: add rows, change priorities, link Fit-Gap IDs.</p>
+<p><b>Date:</b> 2026-10-17 · <b>Code basis:</b> repo at <code>cb570a50b</code> (see <code>product/README.md</code> and the dossiers) · <b>Competitor basis:</b> dossier §25 (sources G1–G31, R1–R*) + new research listed in <a href="#sources">Sources</a>.</p>
+      <p class="small">Generated from <code>product-management/FEATURE_CATALOG.md</code>. Edit the Markdown, then run <code>source/build.sh</code>.</p>
+    </div>
+<h2 id="how-to-read-this">How to read this</h2>
+<table>
+<thead><tr><th>Column</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><b>Need</b></td><td>The problem the feature solves, in one line</td></tr>
+<tr><td><b>Solution options</b></td><td>Ways to build it; the <b>bold</b> one is my recommendation</td></tr>
+<tr><td><b>What others do</b></td><td>How world leaders solve it (source in brackets)</td></tr>
+<tr><td><b>Phoenix today</b></td><td>✅ have · 🟡 partial · ❌ missing — from code, not from claims</td></tr>
+<tr><td><b>Pri</b></td><td><b>P0</b> = needed for pilot trust / UAT · <b>P1</b> = needed to sell and renew · <b>P2</b> = differentiator or later</td></tr>
+<tr><td><b>Eff</b></td><td>Effort for the current team (~10 people): <b>S</b> ≤ 1 week · <b>M</b> 2–4 weeks · <b>L</b> &gt; 1 month</td></tr>
+</tbody></table>
+<p>Effort and priority are my judgment (INFERENCE). Re-check them against the Fit-Gap tracker before committing dates.</p>
+<h2 id="toc">Contents</h2>
+<ol>
+<li><a href="#1-product-shape-users-and-the-four-jobs">Product shape: users and the four jobs</a></li>
+<li><a href="#2-channels-and-access">Channels and access</a></li>
+<li><a href="#3-identity-consent-and-anonymity">Identity, consent and anonymity</a></li>
+<li><a href="#4-voice-experience-iva">Voice experience (IVA)</a></li>
+<li><a href="#5-conversation-brain-understand-and-answer">Conversation brain (understand and answer)</a></li>
+<li><a href="#6-knowledge-management">Knowledge management</a></li>
+<li><a href="#7-actions-and-transactions">Actions and transactions</a></li>
+<li><a href="#8-requests-cases-and-ticketing">Requests, cases and ticketing</a></li>
+<li><a href="#9-conversation-analytics-tags-categories-enrichment">Conversation analytics: tags, categories, enrichment</a></li>
+<li><a href="#10-insights-dashboards-and-reporting">Insights, dashboards and reporting</a></li>
+<li><a href="#11-closing-the-loop-action-on-insights">Closing the loop: action on insights</a></li>
+<li><a href="#12-proactive-listening-outbound-and-programs">Proactive listening (outbound and programs)</a></li>
+<li><a href="#13-privacy-security-and-compliance">Privacy, security and compliance</a></li>
+<li><a href="#14-org-data-and-integrations">Org data and integrations</a></li>
+<li><a href="#15-admin-and-configuration-studio">Admin and configuration studio</a></li>
+<li><a href="#16-ai-quality-evaluation-and-ai-ops">AI quality, evaluation and AI ops</a></li>
+<li><a href="#17-platform-operations-and-cost">Platform, operations and cost</a></li>
+<li><a href="#18-commercial-and-customer-success">Commercial and customer success</a>
+<ul>
+<li><a href="#18b-recruiting-from-interview-scheduling-to-the-candidates-status">18b. Recruiting: from interview scheduling to the candidate's status</a></li>
+</ul></li>
+<li><a href="#19-key-judgments">Key judgments</a></li>
+<li><a href="#20-suggested-release-cut">Suggested release cut</a></li>
+<li><a href="#21-red-lines-what-not-to-build">Red lines: what not to build</a></li>
+<li><a href="#sources">Sources</a></li>
+</ol>
+<h2 id="1-product-shape-users-and-the-four-jobs">1. Product shape: users and the four jobs</h2>
+<p>Every feature below serves one of four jobs. If a proposed feature serves none of them, question it.</p>
+<table>
+<thead><tr><th>Job</th><th>Who</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><b>J1 — Get help</b></td><td>Employee</td><td>"How many leave days do I have?" "The office restaurant food was cold again."</td></tr>
+<tr><td><b>J2 — Get it done</b></td><td>Employee → owner team</td><td>"I want a salary review." "Fix the AC on floor 3."</td></tr>
+<tr><td><b>J3 — Be heard</b></td><td>Employee → organisation</td><td>Anonymous complaint about workload, feedback on a new policy</td></tr>
+<tr><td><b>J4 — Understand and act</b></td><td>HR, EX analyst, managers</td><td>"What are the top 5 issues in the Tehran region this month, and is anything new?"</td></tr>
+</tbody></table>
+<p><b>Roles to design for</b> (each needs its own view and permissions):</p>
+<table>
+<thead><tr><th>Role</th><th>Needs</th></tr></thead>
+<tbody>
+<tr><td>Employee</td><td>Fast answers, simple request tracking, trust that what they say is safe</td></tr>
+<tr><td>Case owner / service team (HR, facilities, IT, restaurant vendor)</td><td>A queue, context, SLA, a way to reply</td></tr>
+<tr><td>Line manager</td><td>Requests from their team (career, approvals), team-level insights (k-threshold)</td></tr>
+<tr><td>Unit head (معاونت / اداره کل / اداره)</td><td>Insights for their scope and sub-units only</td></tr>
+<tr><td>EX analyst / HR</td><td>Org-wide insights, taxonomy, reports, action plans</td></tr>
+<tr><td>Knowledge owner</td><td>Edit their part of the KB, see unanswered questions in their area</td></tr>
+<tr><td>Sensitive-case reviewer</td><td>A restricted queue; every open is logged</td></tr>
+<tr><td>System admin</td><td>Config, users, roles; emergency identity resolution under control</td></tr>
+<tr><td>Privacy / security officer</td><td>Audit log, retention, access reviews</td></tr>
+<tr><td>Tech admin</td><td>Infra, monitoring, no access to content</td></tr>
+</tbody></table>
+<h2 id="2-channels-and-access">2. Channels and access</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>CH-01</td><td>Inbound phone line (voice IVA)</td><td>Deskless and field staff have a phone, not a laptop</td><td><b>SIP trunk → LiveKit → voice agent</b> (current); hosted CPaaS</td><td>UKG Bryte Voice works through Siri/Google, not phone calls; Paradox offers phone/voice for candidates [G24, G27]</td><td>✅ <code>chatbot-iva-agent</code></td><td>P0</td><td>—</td></tr>
+<tr><td>CH-02</td><td>Web chat widget</td><td>Office staff prefer text</td><td><b>Embeddable widget + SSO</b>; intranet page</td><td>Every HR agent (Leena, Moveworks, Workday Assistant)</td><td>✅ <code>adcs</code> chat</td><td>P0</td><td>—</td></tr>
+<tr><td>CH-03</td><td>Voice in browser / app</td><td>Voice without a phone line, e.g. at a kiosk</td><td><b>WebRTC (websocall)</b></td><td>Leena advertises voice in 100+ languages [G28]</td><td>✅ <code>golang/websocall</code></td><td>P1</td><td>—</td></tr>
+<tr><td>CH-04</td><td>Messenger channels (Bale, Eitaa, Rubika, Telegram)</td><td>Where Iranian employees already are</td><td><b>One channel adapter per messenger over the same chat API</b>; send-only first</td><td>Moveworks / Workday live inside Slack and Teams; in Iran the equivalents are local messengers</td><td>🟡 Rubika send tool exists, disabled</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-05</td><td>SMS in/out</td><td>Confirmations, tracking codes, people with basic phones</td><td><b>Outbound SMS for confirmations now</b>; inbound "reply with code" later</td><td>Paradox runs on SMS [G27]</td><td>🟡 <code>send_sms</code> (outbound only, no rate limit)</td><td>P0</td><td>S</td></tr>
+<tr><td>CH-06</td><td>Microsoft Teams / Slack</td><td>Customers outside Iran or tech companies</td><td>Bot-framework adapter</td><td>Workday for Teams/Slack; Moveworks</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-07</td><td>Email intake</td><td>Formal requests, attachments</td><td>Inbound mailbox → request (§8)</td><td>Workday Help and Oracle accept cases by email [W-WD2, W-OR1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-08</td><td>Kiosk / shared device mode</td><td>Factories and stores with no personal device</td><td>Kiosk login with personnel code + OTP; auto-logout</td><td>Common in frontline HCM (UKG)</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CH-09</td><td>Cross-channel continuity</td><td>Start by phone, continue in chat, track via SMS</td><td><b>One <code>conversation_id</code> + one <code>request_id</code> across channels; tracking code works everywhere</b></td><td>ServiceNow Employee Center: one portal for every channel [W-SN1]</td><td>❌ (sessions are per channel)</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-10</td><td>Business hours and fallback</td><td>What happens at 2 am or on holidays</td><td>Hours calendar with the Jalali holiday list; after-hours message, callback request</td><td>Standard in every contact-centre platform</td><td>🟡 greeting is configurable, no calendar</td><td>P1</td><td>S</td></tr>
+<tr><td>CH-11</td><td>Accessibility</td><td>Hearing or vision impaired staff, low literacy</td><td>Voice ↔ text both ways, slow-TTS option, DTMF menu fallback</td><td>WCAG for the web; voice for low literacy</td><td>🟡</td><td>P2</td><td>S</td></tr>
+<tr><td>CH-12</td><td>Capacity and admission control</td><td>Do not drop calls at peak (e.g. payday)</td><td><b>Concurrency cap + queue message + callback</b>; autoscale workers</td><td>Contact-centre call admission control (CAC)</td><td>🟡 one job per call; no queue</td><td>P1</td><td>M</td></tr>
+<tr><td>CH-13</td><td><b>Voice message (async voice note)</b> — the employee chooses: live call, text chat, or just leave a voice message</td><td>Deskless staff prefer speaking to typing but don't want a live conversation (noise, no time, shyness, after hours); a one-way message feels safer for sensitive topics</td><td><b>One voice-message pipeline for three entry points:</b> (a) mic button in web/app chat, (b) "leave a message" phone line, voicemail-style, works on basic phones, also the IVA after-hours fallback, (c) voice notes in messengers (Bale, Eitaa, Rubika). Flow: upload → ASR → same tagging pipeline as calls → reply by text/SMS/TTS. Anonymous mode: keep the transcript only and delete the audio after ASR, or distort the voice</td><td>SpeakUp: voice message with optional voice distortion, anonymous code to check replies [W-SU1]; FaceUp: anonymised voice notes [W-FU1]; Whistlelink: oral reports with voice distortion [W-WL1]; AWS: WhatsApp voice notes + Transcribe for field workers [W-AWS4]; Medallia: voice/video feedback at scale [W-MD1]. Iranian HR products: not seen</td><td>🟡 <code>adcs</code> ASR endpoint transcribes an uploaded voice clip to text (WAV only, ≤ 10 MB, audio not stored, no auth: <code>adcs/chat/views/audio.py</code>); no voicemail line, no messenger intake, no OGG/Opus/WebM/AMR support</td><td>P1</td><td>S (chat mic) / M (phone line, messengers)</td></tr>
+</tbody></table>
+<p><b>CH-13 design notes.</b> Cap length (e.g. 3 minutes) and say so before recording. Convert phone and messenger formats (OGG/Opus from Bale and Telegram, WebM from browsers, AMR/M4A from phones) to WAV before ASR. If ASR confidence is low, reply "I didn't catch that, please resend or type it" instead of guessing. One message may hold several issues: tag at segment level (AN-07). Who may listen to the audio is data tier 4 (SC-02), and every playback is logged (SC-03). In anonymous mode the voice itself identifies the speaker, so the default is transcript-only. A voice message can create a tag-queue item or a request exactly like a call (§8).</p>
+<h2 id="3-identity-consent-and-anonymity">3. Identity, consent and anonymity</h2>
+<p>This is the heart of trust. Listening products (J3) need anonymity; requests (J2) need identity. <b>Both live in the same product, so the mode must be explicit in every conversation.</b></p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>ID-01</td><td>Three conversation modes: <b>Anonymous / Confidential / Identified</b></td><td>One channel serves feedback and requests</td><td><b>Mode is chosen at start or switched with consent; stored on every record</b>; analytics uses only de-identified data</td><td>AllVoices and Deel: anonymous reporting with two-way follow-up [W-AV1, W-DL1]; Qualtrics/Glint: confidential surveys with k-threshold</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>ID-02</td><td>Caller identification</td><td>Know who is calling, for requests</td><td><b>Phone → ChannelKey → Person (hashed)</b>; personnel code + OTP for sensitive actions</td><td>Moveworks/Workday use the SSO identity; phone channels use ANI + PIN/OTP</td><td>🟡 phone number used directly</td><td>P0</td><td>M</td></tr>
+<tr><td>ID-03</td><td>Step-up verification (OTP)</td><td>Before showing a payslip or creating an identified request</td><td><b>SMS OTP or a personnel-code question</b>; voice-biometrics later</td><td>Banks and telcos: ANI + OTP; Leena: SSO</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>ID-04</td><td>Explicit consent prompts</td><td>Legal and trust: "to follow up we must know who you are"</td><td><b>Scripted consent turn + consent record (who, when, what for)</b></td><td>AllVoices: anonymous until the reporter chooses to reveal [W-AV1]</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-05</td><td>Admission control / allow-list</td><td>Pilot limited to some staff</td><td><b>Enforce at SBC/routing + app check</b></td><td>—</td><td>🟡 whitelist gates memory only, not admission (finding 9)</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-06</td><td>Long-term memory with consent</td><td>Personalisation vs tracking</td><td><b>Off in Anonymous mode; opt-in in Identified mode; visible and deletable</b></td><td>—</td><td>🟡 memory per phone, always on (finding 11)</td><td>P0</td><td>S</td></tr>
+<tr><td>ID-07</td><td>Anonymous two-way follow-up</td><td>HR needs to ask more without revealing identity</td><td><b>Anonymous case ID + PIN; employee calls back or checks via chat</b></td><td>AllVoices, Deel, NAVEX [W-AV1, W-DL1, G15]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>ID-08</td><td>Identity-resolution break-glass</td><td>Emergency (safety threat) needs the caller's identity</td><td><b>Time-limited grant + reason + second approver + audit</b></td><td>Glint/Peakon: no identity, ever; NAVEX: only through legal process</td><td>❌ (and <code>expires_at</code> is not enforced)</td><td>P0</td><td>M</td></tr>
+</tbody></table>
+<h2 id="4-voice-experience-iva">4. Voice experience (IVA)</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>VX-01</td><td>Persian STT on 8 kHz phone audio</td><td>Understanding is the first failure point</td><td><b>Current STT + measured WER per accent and noise level</b>; fine-tune on own calls</td><td>Local vendors (Part, Asr Gooyesh, Amerandish) [dossier §25.4]</td><td>✅ STT, but no WER measurement</td><td>P0</td><td>M (to measure)</td></tr>
+<tr><td>VX-02</td><td>Dialect and accent coverage</td><td>Staff in all provinces; Turkish- and Kurdish-accented Persian</td><td><b>Eval set per region</b>; route low-confidence turns to a clarifying question</td><td>—</td><td>🟡 <code>transcript_confidence</code> is stored, not used</td><td>P1</td><td>M</td></tr>
+<tr><td>VX-03</td><td>Domain vocabulary boost</td><td>HR terms, unit names, personnel codes</td><td><b>Custom vocabulary / hot-words from the org tree and KB</b></td><td>Contact-centre ASR "phrase hints" (Google, AWS)</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>VX-04</td><td>Natural TTS voice</td><td>Trust and comprehension</td><td>Current TTS; customer-branded voice</td><td>PolyAI is known for natural voices [W-PA1]</td><td>✅</td><td>P1</td><td>—</td></tr>
+<tr><td>VX-05</td><td>Low latency (time to first audio)</td><td>Silence over 1.5 s feels broken</td><td><b>Sentence-streamed TTS (done), tuned endpointing, thinking sounds, fast LLM for first sentence</b></td><td>Voice-agent platforms all optimise for this</td><td>✅ streaming; endpointing tunable</td><td>P0</td><td>S</td></tr>
+<tr><td>VX-06</td><td>Turn detection and barge-in</td><td>Do not cut people off; let them interrupt</td><td><b>LLM/semantic end-of-turn model (recent commit)</b> + VAD</td><td>PolyAI "interruption friendly" [W-PA1]</td><td>✅ MCI model / LLM turn detection, 0.4 s barge-in</td><td>P0</td><td>—</td></tr>
+<tr><td>VX-07</td><td>Silence and noise handling</td><td>Factory noise, user goes quiet</td><td>User-away prompts; noise suppression</td><td>Standard</td><td>✅ user-away (off by default)</td><td>P1</td><td>S</td></tr>
+<tr><td>VX-08</td><td>Read-back and confirmation</td><td>Voice has no screen: numbers and names get misheard</td><td><b>Confirm critical slots (dates, amounts, codes) before acting</b></td><td>Moveworks "slots" pattern for structured data [R4]</td><td>❌ (no rule for it)</td><td>P0</td><td>S</td></tr>
+<tr><td>VX-09</td><td>DTMF fallback</td><td>When STT fails twice, e.g. entering a personnel code</td><td><b>Keypad input for codes and menu choices</b></td><td>Classic IVR</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>VX-10</td><td>Warm handover to a human</td><td>Some needs require a person</td><td><b>SIP transfer + a summary passed to the agent screen</b></td><td>Contact-centre standard; Cognigy/NICE hand over with context</td><td>🟡 transfer works (SIP MESSAGE to 6040); no context passed</td><td>P1</td><td>M</td></tr>
+<tr><td>VX-11</td><td>Callback instead of waiting</td><td>No human free, or after hours</td><td>Schedule a callback, created as a request</td><td>Contact-centre virtual hold</td><td>🟡 the dialing mechanism exists (dobby); no scheduling or request link</td><td>P2</td><td>M</td></tr>
+<tr><td>VX-12</td><td>Call recording with notice</td><td>Quality and audit, but privacy</td><td><b>Announced recording; separate tracks; retention policy</b></td><td>—</td><td>✅ egress to MinIO; retention exists</td><td>P0</td><td>—</td></tr>
+<tr><td>VX-13</td><td>Graceful end of call</td><td>Clear closing, no false promises</td><td><b>Closing script by mode (CON-09: no follow-up promise in MVP)</b></td><td>—</td><td>✅ exit tool</td><td>P0</td><td>—</td></tr>
+</tbody></table>
+<h2 id="5-conversation-brain-understand-and-answer">5. Conversation brain (understand and answer)</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>BR-01</td><td>Intent triage into the 4 jobs (help / do / be heard / sensitive)</td><td>Decide the path in the first 1–2 turns</td><td><b>LLM classifier with a fixed intent schema + rules that override it for sensitive intents</b></td><td>Moveworks/Leena: intent → answer, ticket or workflow</td><td>🟡 classify + intent branches exist; no HR schema</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-02</td><td>Grounded answers from the KB (RAG)</td><td>Correct, policy-based answers</td><td><b>Retrieval filtered by the employee's unit and role; answer with the source cited; say "I don't know" below a threshold</b></td><td>Leena: answer only from allowed knowledge per group; ServiceNow per-KB read rights [dossier MARKET_ALIGNMENT §5c]</td><td>🟡 RAG top-10 at ≥ 0.5; no scope filter; no citation</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-03</td><td>Clarifying questions</td><td>Vague requests</td><td>Clarify branch</td><td>—</td><td>✅ clarifying branch (no feature flag)</td><td>P0</td><td>—</td></tr>
+<tr><td>BR-04</td><td>Slot filling for requests</td><td>Collect the fields a request needs</td><td><b>Category schema → required slots → the LLM asks for missing ones → confirm</b></td><td>Moveworks slots and in-chat catalog forms [R4, W-MW1]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-05</td><td>Guardrails</td><td>Off-topic, abuse, prompt injection, legal advice</td><td><b>Guardrail branch (exists) + HR policy topics list + output filter</b></td><td>Every vendor; Kore.ai sells "governance" [W-KO1]</td><td>✅ guardrail branch with examples</td><td>P0</td><td>—</td></tr>
+<tr><td>BR-06</td><td>Never promise outcomes</td><td>"Your raise is approved" would be a disaster</td><td><b>Output rule + eval tests: no commitments on pay, promotion or decisions</b></td><td>Common rule in HR bots</td><td>❌ (not tested)</td><td>P0</td><td>S</td></tr>
+<tr><td>BR-07</td><td>Sensitive-topic detection</td><td>Harassment, self-harm, safety, fraud must not get a chatbot answer</td><td><b>Detector (keywords + LLM) → fixed safe script → restricted case (CS-09)</b></td><td>Peakon: fixed sensitive categories; NAVEX/SpeakUp AI intake [dossier §25]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>BR-08</td><td>Personalisation by employee context</td><td>Answers differ by unit, grade, contract type, location</td><td><b>Pass Person attributes (from HR sync) into retrieval and prompt</b></td><td>Workday/SAP/HiBob answer with HR data [G20, G25, G30]</td><td>❌ (no org data)</td><td>P1</td><td>M</td></tr>
+<tr><td>BR-09</td><td>Multi-intent handling</td><td>"I need a payslip and the restaurant is bad"</td><td>Handle one by one; create two records</td><td>Moveworks handles multiple asks</td><td>🟡</td><td>P1</td><td>S</td></tr>
+<tr><td>BR-10</td><td>Escalation to a human</td><td>Bot can't help, or the user asks for a person</td><td><b>Explicit "talk to a person" intent + confidence threshold → handover or request</b></td><td>Universal</td><td>🟡 redirect intent exists</td><td>P0</td><td>S</td></tr>
+<tr><td>BR-11</td><td>Tone and persona</td><td>Respectful, short, plain Persian</td><td>Prompt + style evals; formal/informal setting</td><td>—</td><td>✅ prompts editable</td><td>P1</td><td>S</td></tr>
+<tr><td>BR-12</td><td>Model routing and fallback</td><td>Cost, latency, outage</td><td><b>Seven LLM roles already configurable; add fallback model on error</b></td><td>—</td><td>🟡 roles configurable; no fallback</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="6-knowledge-management">6. Knowledge management</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>KB-A</td><td>KB CRUD, import/export</td><td>Basic content management</td><td>—</td><td>—</td><td>✅ <code>adcs-knowledgebase</code></td><td>P0</td><td>—</td></tr>
+<tr><td>KB-B</td><td>Document ingestion (PDF/Word policies)</td><td>HR has regulations, not Q&amp;A pairs</td><td><b>Chunk + embed documents; generate Q&amp;A drafts for review</b></td><td>Deel builds agents from policy documents [G22]</td><td>🟡 summarise exists; no doc pipeline</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-C</td><td>Multi-owner knowledge spaces</td><td>HR, welfare, IT, facilities each own their part</td><td><b>Knowledge space with owner, editors, readers by scope</b></td><td>ServiceNow: owner per KB, deny beats allow [MARKET_ALIGNMENT §5c]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-D</td><td>Scope by audience</td><td>Rules differ by region, unit, contract type</td><td><b>Audience tags on each entry, filtered at retrieval</b></td><td>Leena: knowledge per employee group</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>KB-E</td><td>Effective dates and versioning</td><td>Policy changes on 1 Farvardin</td><td><b>valid_from / valid_to + version history + rollback</b></td><td>Standard KM</td><td>🟡 <code>start_time</code> / <code>end_time</code> / <code>is_active</code> on every QA; a Celery job (every 300 s by default) adds entries to Qdrant when they start and removes them when they end (<code>adcs_kb/knowledgebase/models/qa.py</code>, <code>handlers/qdrant/sync.py</code>, <code>config.py:40</code>). No version history or rollback</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-F</td><td>Review and approval before publish</td><td>No wrong policy goes live</td><td>Draft → review → publish workflow</td><td>ServiceNow KM workflow</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-G</td><td><b>Knowledge-gap detection</b></td><td>Know what employees ask that we can't answer</td><td><b>Log unanswered and low-confidence turns → cluster → ranked "write this" list per owner</b></td><td>Moveworks Knowledge Studio: "Knowledge Gap" and "Knowledge Update" recommendations, drafts articles [W-MW3]</td><td>❌ (unanswered questions not logged)</td><td><b>P0</b></td><td>S–M</td></tr>
+<tr><td>KB-H</td><td>Stale-content detection</td><td>Old answers stay wrong</td><td>Flag entries past review date, or entries that keep generating requests</td><td>Moveworks "Knowledge Update" [W-MW3]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>KB-I</td><td>Answer test bench</td><td>Check answers before publishing</td><td>Run a question set against the draft KB; diff the answers</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>KB-J</td><td><b>Time-bound notices</b> ("why is the parking closed today?", "why is the restaurant shut?")</td><td>Temporary situations change daily; callers ask the same thing all day, and tomorrow the reason may differ</td><td><b>Notice = a short KB entry with start, end (required), scope (building / site / unit) and owner.</b> It overrides the standing answer while active, is spoken with its time ("as of 10:30 today…"), is mentioned in the greeting to callers in that scope, and expires automatically. A quick form (panel or SMS) lets the facility owner post it without a KB admin. A spike of calls on one topic suggests "publish a notice?" to the owner (IN-05). Callers can ask "tell me when it is fixed" → SMS/callback on resolve</td><td>ServiceNow Employee Center announcements: start/end schedule + audience targeting [W-SN3]; Moveworks API: event-triggered proactive messages to employees [W-MW4]; IVR platforms: scheduled pre-menu announcements with start and end dates [W-VX1]. Iranian HR products: not seen</td><td>🟡 timed KB entries already work (KB-E). Missing: scope by building/unit, priority over the standing answer, time in the spoken answer, greeting mention, quick owner form, spike→notice suggestion, "notify me when fixed"</td><td>P1</td><td>S–M</td></tr>
+<tr><td>KB-K</td><td><b>Real-time awareness layer</b> — the bot knows what is happening right now</td><td>Answers must reflect today's events and live data, not last month's KB</td><td><b>Four layers:</b> (1) static knowledge in the KB; (2) today's events as time-bound notices (KB-J), posted by owners or pushed by systems through an event webhook; (3) live data fetched at answer time via tools/MCP, never copied (HR balances, canteen menu, request status); (4) crowd signal: a burst of calls on one topic raises a real-time alert and suggests a notice. Rule: copy what changes slowly, ask live for what changes fast, announce what matters to many. Every answer carries the time of its fact; if the source is down or stale, say "I don't have current information" rather than guess. Pick which live sources to connect from the unanswered-question log (KB-G)</td><td>Moveworks, Workday, SAP, HiBob read live system data at answer time (HiBob via MCP) [§25.5b, G25]; ServiceNow timed announcements [W-SN3]; Moveworks event-triggered messages [W-MW4]</td><td>🟡 layer 1 ✅; layer 2 timed KB ✅ but KB changes reach the bot only every 300 s (Celery beat, <code>adcs_kb/settings.py:191-194</code>), no instant sync on save, no event intake; layer 3 tool + MCP mechanism ✅ (<code>dobby</code> live <code>gold_price</code>), no company-system connectors; layer 4 trends and alerts are periodic, not real-time</td><td>P1 (layers 1–2) / P2 (3–4)</td><td>S (instant sync, freshness) · S–M (event webhook) · M per live source</td></tr>
+</tbody></table>
+<h2 id="7-actions-and-transactions">7. Actions and transactions</h2>
+<p>Answering is becoming a commodity; <b>doing</b> is where HR agents compete now (dossier §25.5b pattern 2).</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>AC-01</td><td>Tool framework</td><td>Let the agent do things</td><td><b>ReAct + tool registry (exists) + MCP client</b></td><td>Oracle Agent Studio, Leena AOP, HiBob MCP [G31, G28, G25]</td><td>✅ tool registry, MCP client</td><td>P0</td><td>—</td></tr>
+<tr><td>AC-02</td><td>Read-only HR lookups</td><td>Leave balance, payslip, insurance status</td><td><b>Read-only HRIS connector first; OTP before personal data</b></td><td>Workday, SAP, UKG, ADP all do this [§25.5b]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AC-03</td><td>Payslip explanation</td><td>"Why is my salary lower?" is a top HR question</td><td><b>Read the payslip lines + explain the differences vs last month</b></td><td>SAP Payroll Agent, UKG Agentic Pay, ADP [G30, G24, G23]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AC-04</td><td>Write transactions with confirmation</td><td>Submit leave, update an address</td><td><b>Write only after OTP + read-back + explicit "yes"; idempotent; audit</b></td><td>Rippling AI, ADP Assist [G19, G23]</td><td>❌</td><td>P2</td><td>L</td></tr>
+<tr><td>AC-05</td><td>Reminders and notifications</td><td>"Remind me of the insurance deadline"</td><td>—</td><td>—</td><td>✅ <code>set_reminder</code>, <code>read_reminders</code></td><td>P2</td><td>—</td></tr>
+<tr><td>AC-06</td><td>Letters and certificates</td><td>Employment certificate, salary letter</td><td>Template + HR data → PDF → SMS link</td><td>Common HR self-service</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>AC-07</td><td>Action safety layer</td><td>One bad tool call can hurt</td><td><b>Allow-list per mode and role, rate limits, dry-run, audit of every tool call</b></td><td>Leena audit trail [dossier §25.5b pattern 7]</td><td>❌ (SMS has no rate limit)</td><td>P0</td><td>S</td></tr>
+</tbody></table>
+<h2 id="8-requests-cases-and-ticketing">8. Requests, cases and ticketing</h2>
+<p>Full reasoning is in the previous discussion. Short version: <b>the LLM calls one internal tool (<code>create_request</code>); platform code routes, applies SLAs and syncs; the employee always tracks the request through Phoenix.</b></p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>CS-01</td><td>Request record (the "ledger")</td><td>Track every J2 need in one place</td><td><b><code>Request</code> + <code>RequestEvent</code> timeline: type, category, requester, org-unit path at creation, owner team, assignee, status, priority, SLA due, confidentiality, channel, source conversation, external_ref</b></td><td>Workday Help, Oracle HR Help Desk, SAP ECSC, Leena helpdesk all keep their own case record [W-WD1, W-OR1, W-SAP1, W-LE2]</td><td>❌ (<code>tickets</code> app is analytics on imported tickets, with no assignee or SLA)</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-02</td><td>Agent tools: <code>create_request</code>, <code>get_request_status</code>, <code>add_request_comment</code>, <code>cancel_request</code></td><td>Voice/chat create and track</td><td><b>Add to <code>aiva/tools/registry.py</code> (same pattern as <code>set_reminder</code>)</b></td><td>Moveworks files, comments on and checks tickets in chat [W-MW2]</td><td>❌</td><td>P1*</td><td>S</td></tr>
+<tr><td>CS-03</td><td>Request catalog (categories + schemas)</td><td>Each category needs different fields and owners</td><td><b>Admin-defined category: required slots, owner rule, SLA, confidentiality, allowed modes</b></td><td>ServiceNow HR services / catalog items; Workday case types [W-SN2, W-WD2]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-04</td><td>Routing rules</td><td>Right team, right unit</td><td><b>Category × org scope → service team; fallback queue; load-based assignment</b></td><td>Workday routing rules per category; Darwinbox load-based assignment [W-WD2, W-DB1]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-05</td><td>Built-in desk (inbox)</td><td>Customers with no ticketing system</td><td><b>Lightweight queue: assign, reply, internal note, status, SLA timer, merge duplicates</b></td><td>Workday Help case workspace; Oracle; SAP ECSC [W-WD1, W-OR1, W-SAP1]</td><td>❌</td><td>P1*</td><td>M</td></tr>
+<tr><td>CS-06</td><td>No-login owner link</td><td>Restaurant vendor, building manager with no account</td><td><b>Signed magic link by SMS/email: view, reply, mark done</b></td><td>— (INFERENCE: a gap in the big suites)</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-07</td><td>External ticketing connectors</td><td>Customer already has Jira SM / ServiceNow / Zendesk / local TT</td><td><b>Connector interface (create, comment, status webhook); Phoenix keeps a mirror; one system owns status</b></td><td>Leena: ServiceNow, Freshservice, Jira SM, Zendesk…; Moveworks: ServiceNow [W-LE1, W-MW2]</td><td>❌ (MCI's TT system exists, <code>tt_code</code>)</td><td>P2</td><td>M per connector</td></tr>
+<tr><td>CS-08</td><td>Email-to-ticket fallback</td><td>Any helpdesk that accepts email</td><td>Send a formatted email with the request ID; parse replies</td><td>Workday accepts cases by email [W-WD2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>CS-09</td><td>Confidential cases</td><td>Harassment, medical, ethics</td><td><b>Restricted queue; never synced externally; access logged; anonymous follow-up (ID-07)</b></td><td>Workday: confidential cases only to permitted teams; Oracle cases for harassment [W-WD2, W-OR2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>CS-10</td><td>Career requests (raise, promotion, level-up)</td><td>Not a helpdesk ticket: it is a manager decision</td><td><b>Route as a "career conversation request" to the line manager + HRBP; no promise of outcome; status = scheduled / discussed / closed</b></td><td>Workday: compensation changes run as a business process started by the manager, not a help case (INFERENCE from the product model)</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>CS-11</td><td>SLA policies with business hours</td><td>Promise and measure response times</td><td><b>SLA per category, Iranian work week + Jalali holidays; pause on "waiting for employee"</b></td><td>Workday SLA per service team, based on case creation time [W-WD2]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-12</td><td>Status notifications to the employee</td><td>"Where is my request?" calls waste capacity</td><td><b>SMS on every status change + status by voice via the tracking code</b></td><td>Moveworks "ticket needs user input" notifications [W-MW2]</td><td>🟡 SMS tool exists</td><td>P1</td><td>S</td></tr>
+<tr><td>CS-13</td><td>Duplicate and mass-issue grouping</td><td>200 people report the same broken AC</td><td><b>Link similar requests to one parent "problem"; notify all on resolve</b></td><td>Oracle: a case links to several service requests [W-OR1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>CS-14</td><td>Request satisfaction (CSAT)</td><td>Measure the service quality</td><td>One-question SMS/voice survey on close</td><td>Standard ITSM</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<p>\* <b>P1 with a contract change:</b> CON-09 in the MVP agreement forbids promising individual follow-up. Requests are out of the pilot unless EX agrees to change it.</p>
+<h3 id="scope-fence-how-much-ticketing-to-build">Scope fence: how much ticketing to build</h3>
+<p><b>Position:</b> "We are not a ticketing system. We record the request, deliver it to the owner, and let the employee track it. If you have a ticketing or office-automation system, we connect to it." That is about 5% of a ticketing system: record, deliver, track.</p>
+<p><b>Why "connect or nothing" is not enough:</b></p>
+<ol>
+<li>The IVA makes the promise to the employee. A lost request kills trust in <i>our</i> channel, and participation is what we sell.</li>
+<li>Most Iranian organisations have office automation (Chargoon Didgah, Rahkaran, Hamkaran), not an HR ticketing tool (INFERENCE, verify with the market). "Connect only" would leave most local customers with no tracking.</li>
+<li>Sensitive cases must never go to an external queue, so a small internal queue is needed anyway.</li>
+<li>The closest foreign analogue, Leena AI (an assistant layer, not an HRIS), ships a light built-in helpdesk plus connectors [W-LE1, W-LE2]. Moveworks connects only to ServiceNow [W-MW2], but it sells to enterprises that all run ServiceNow and is now part of ServiceNow [G11].</li>
+</ol>
+<table>
+<thead><tr><th>Build (≈ 3–5 weeks, INFERENCE)</th><th>Never build</th></tr></thead>
+<tbody>
+<tr><td>Request record (CS-01), LLM tools (CS-02), delivery by connector / email / no-login SMS link (CS-06/07/08), employee tracking by SMS and IVA (CS-12), confidential queue (CS-09)</td><td>Full agent workspace (macros, advanced merge, multi-queue, tiered escalation), multi-level escalation matrix and multi-step approval workflows, asset management / ITSM / agent knowledge base, full agent-performance reporting</td></tr>
+</tbody></table>
+<p><b>Decision rule:</b> when a customer asks for anything in the "never" column, the answer is "we connect to your ticketing or office-automation system for that". Connect-or-nothing applies to advanced features, not to tracking itself.</p>
+<p><b>Why this is on-strategy:</b> the core product is "hear employees and turn it into action". Request outcomes are insight data (e.g. 200 canteen-quality requests, 150 closed, 50 open for months). We leave the strategy only if we start managing agents' work.</p>
+<p><b>Tag-based follow-up queue (pilot step 1).</b> A "needs action" tag on a call (with category and unit), a filtered queue in the COA dashboard, a three-state status (new / in review / closed), a restricted queue for sensitive tags, and a measured tag recall. This is what Qualtrics closed-loop tickets and Amazon Contact Lens rules + tasks do [W-QT3, W-AWS2], and it does not conflict with CON-09. Limits: the employee does not see a tracking code, a missed tag means a missed call (so measure recall and allow manual tagging), and anonymous mode allows only collective actions. In release R2 the <code>create_request</code> tool is added and the tag queue stays as the safety net for calls where the IVA did not create a request.</p>
+<p><b>Plan:</b> pilot = no tickets (CON-09); tag outcomes as "needs action" with category and unit, which becomes evidence for the next sale. R2 = the 5% fence above; first connectors: email, webhook, Didgah cartable, then MCI's TT system (<code>tt_code</code>).</p>
+<h3 id="outbound-calls-we-call-the-employee">Outbound calls: we call the employee</h3>
+<p><b>Statement (QUOTE, Ali Salimi):</b> calling the user from our side is possible and has been assessed for feasibility. <i>The verbatim text and date are not yet recorded in this document; add them here: <code>&lt;exact quote, date, source&gt;</code>.</i></p>
+<p><b>Code evidence:</b> <code>golang/dobby/internal/tools/call_reminder.go:98-140</code> (dobby v0.1.0, commit <code>9d0b9ef07</code>, 2026-09-27). The <code>call_reminder</code> MCP tool stores a reminder, then dials the user's own number through LiveKit SIP (<code>CreateSIPParticipant</code> on the configured trunk, <code>WaitUntilAnswered</code>), in a room named <code>outbound_&lt;number&gt;_&lt;random&gt;</code>; the voice agent reads the reminder from its id.</p>
+<p><b>Not yet proven:</b></p>
+<ol>
+<li>Read from code only; nothing was run, and the outbound trunk, SBC and number permissions at MCI are outside this repo (TELECOM).</li>
+<li>Today it only reads a reminder; it is not a conversation.</li>
+<li>The Python agent's handling of <code>outbound_</code> rooms is claimed in a Go comment, but I found no <code>outbound_</code> string in <code>chatbot-iva-agent/src</code>. Test before promising (INFERENCE).</li>
+<li>Contact rules are missing: consent (the "may call" flag on Person), quiet hours, frequency caps, opt-out (PL-04).</li>
+</ol>
+<p><b>What it unlocks:</b> follow-up calls for tag-queue items (with consent), callback instead of waiting (VX-11), lifecycle pulse calls (PL-01/02), "you said, we did" calls (LP-04). First low-risk step: callbacks for people who agreed on the call, not cold calls.</p>
+<h2 id="9-conversation-analytics-tags-categories-enrichment">9. Conversation analytics: tags, categories, enrichment</h2>
+<p>Turn every conversation into structured, trustworthy data.</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>AN-01</td><td>Transcripts, both sides, with timestamps</td><td>Base data</td><td>—</td><td>—</td><td>✅ utterances + confidence in the Kafka summary</td><td>P0</td><td>—</td></tr>
+<tr><td>AN-02</td><td>PII redaction before storage</td><td>Names, phone numbers and national IDs in text</td><td><b>Redact in the pipeline before ClickHouse; keep raw only in the restricted store</b></td><td>Contact Lens and Google redact PII as a standard feature</td><td>❌ (transcripts stored raw, finding 2)</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-03</td><td>Conversation summary</td><td>Analysts can't read every call</td><td><b>LLM summary with a fixed template; minimum-duration guard (VIA-07)</b></td><td>Contact Lens gen-AI summaries seconds after a contact [W-AWS1]</td><td>✅ summary (coa-ai, frozen)</td><td>P0</td><td>S (guard)</td></tr>
+<tr><td>AN-04</td><td><b>Managed HR taxonomy</b> (category → subcategory → topic)</td><td>Consistent categories over time</td><td><b>Fixed top-down taxonomy owned by EX, versioned; customer-editable</b></td><td>Qualtrics Text iQ: top-down + bottom-up + automatic, iterative [W-QT1]</td><td>🟡 category/subcategory exist (call-centre oriented)</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-05</td><td><b>Automatic topic discovery</b></td><td>Find what you didn't know to look for</td><td><b>Cluster embeddings of new conversations → LLM names clusters → "suggested topics" for EX to accept into the taxonomy</b></td><td>Google CCAI topic model builds a taxonomy with Gemini [W-GO1]; Contact Lens theme detection [W-AWS2]; Qualtrics recommended topics [W-QT1]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-06</td><td>Multi-label tagging per conversation</td><td>One call has several issues</td><td><b>Up to N topics per conversation, each with evidence (quote span) and confidence</b></td><td>Qualtrics: multiple topics per comment [W-QT1]</td><td>🟡 topics list</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-07</td><td>Tag at the segment level, not only the call</td><td>The restaurant complaint is 20 seconds of a 5-minute call</td><td><b>Tag each issue segment; aggregate per call</b></td><td>Text iQ tags at sentence level</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-08</td><td>Sentiment (aggregate only)</td><td>Tone per topic and unit</td><td><b>Per-topic sentiment, shown only aggregated over the k-threshold</b></td><td>Perceptyx built its own feedback sentiment model [R7]; Contact Lens −5..+5 [W-AWS3]</td><td>✅ sentiment</td><td>P0</td><td>—</td></tr>
+<tr><td>AN-09</td><td>Emotion detection</td><td>—</td><td><b>Do not use on employees (red line, EU AI Act Art. 5)</b></td><td>—</td><td>⚠️ <code>emotions</code> tag exists: switch off for EX</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-10</td><td>Entity extraction</td><td>Which office, restaurant, manager, policy, date</td><td><b>NER plus mapping to the org tree and facilities list</b></td><td>Standard text analytics</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-11</td><td>Urgency and risk flags</td><td>Safety, legal, self-harm, fraud</td><td><b>Rule + LLM classifier → alert + restricted queue (CS-09)</b></td><td>Contact Lens rules → alert or task [W-AWS2]; Peakon sensitive categories</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-12</td><td>Actionability / "suggestion" tag</td><td>Separate complaints from concrete suggestions</td><td>Classifier: complaint / suggestion / question / praise</td><td>—</td><td>🟡 <code>suggestions</code> exists</td><td>P1</td><td>S</td></tr>
+<tr><td>AN-13</td><td>Rule-based categories</td><td>Business needs exact rules ("mentions overtime AND negative")</td><td><b>Rules on keywords + tags + metadata → category, alert or request</b></td><td>Contact Lens rules [W-AWS2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-14</td><td>Human review and relabel</td><td>Analysts must correct the AI</td><td><b>Edit tag → stored as gold label → used for eval and few-shot</b></td><td>Google Quality AI calibration with expected answers [W-GO2]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>AN-15</td><td>Taxonomy migration</td><td>Topics get renamed and merged</td><td><b>Taxonomy versions + mapping table; re-tag history in the background</b></td><td>—</td><td>🟡 <code>sync_canonical_mappings</code></td><td>P1</td><td>M</td></tr>
+<tr><td>AN-16</td><td>Bot quality scoring</td><td>Did the IVA answer correctly and politely?</td><td><b>Auto-score every conversation on a scorecard (answered, accurate, escalated correctly)</b></td><td>Google Quality AI scores 100% of conversations [W-GO2]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AN-17</td><td>Containment and outcome tagging</td><td>Was the employee's need met?</td><td>Outcome = answered / request created / handed over / abandoned</td><td>Moveworks deflection metrics [R5]</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>AN-18</td><td>Re-run analytics engine</td><td><code>coa-ai</code> frozen since 2025-07</td><td><b>Move enrichment to an LLM pipeline the team owns, versioned prompts, eval-gated</b></td><td>—</td><td>❌ (risk)</td><td>P0</td><td>M</td></tr>
+</tbody></table>
+<h2 id="10-insights-dashboards-and-reporting">10. Insights, dashboards and reporting</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>IN-01</td><td>Overview dashboard</td><td>Volume, top topics, sentiment, outcomes</td><td>—</td><td>All listening vendors</td><td>✅ coa-api dashboards (global, not scoped)</td><td>P0</td><td>—</td></tr>
+<tr><td>IN-02</td><td>Org-scope filtering</td><td>A unit head sees only their scope</td><td><b>One <code>apply_scope(qs, user)</code> used everywhere, including exports and AQA</b></td><td>Qualtrics/Medallia hierarchy-based access [MARKET_ALIGNMENT §6]</td><td>❌</td><td>P0</td><td>M</td></tr>
+<tr><td>IN-03</td><td>k-anonymity threshold</td><td>Small groups reveal identity</td><td><b>Suppress or roll up groups under k (e.g. 5 for numbers, 10 for text)</b></td><td>Glint, Peakon, Culture Amp all set minimums [MARKET_ALIGNMENT §5b]</td><td>❌ (PRV-05)</td><td>P0</td><td>S</td></tr>
+<tr><td>IN-04</td><td>Trends and anomalies</td><td>"Is this rising?"</td><td>—</td><td>—</td><td>✅ trends with baseline and score</td><td>P0</td><td>—</td></tr>
+<tr><td>IN-05</td><td>Emerging-topic alerts</td><td>New problems early</td><td><b>Spike on a discovered cluster → alert to the owner</b></td><td>Contact Lens theme detection; CCAI discovery engine [W-AWS2, W-GO1]</td><td>🟡 trend alerts; fixed severity</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-06</td><td>Drill-down to evidence</td><td>Trust the numbers</td><td><b>Click a topic → de-identified quotes and summaries (k-gated)</b></td><td>Qualtrics Comment Summaries widget [W-QT2]</td><td>🟡</td><td>P0</td><td>S</td></tr>
+<tr><td>IN-07</td><td>AI comment summaries per topic and unit</td><td>Executives read 5 lines, not 500 calls</td><td><b>LLM summary over the filtered set, with quote references</b></td><td>Peakon AI summaries, Glint Copilot [G5, G7]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-08</td><td>Natural-language questions on data</td><td>"Which province complained most about overtime?"</td><td><b>AQA, with DB-level row security and the k-threshold</b></td><td>Glint Copilot, Perceptyx agents [G7, G3]</td><td>✅ AQA (no scope, finding 13)</td><td>P1</td><td>M (security)</td></tr>
+<tr><td>IN-09</td><td>Scheduled reports</td><td>Monthly management pack</td><td>PDF/Excel by email, scoped per recipient</td><td>Standard</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-10</td><td>Benchmark across units</td><td>Compare regions fairly</td><td>Normalise per headcount; k-gated</td><td>Culture Amp benchmarks</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>IN-11</td><td>Service desk analytics</td><td>Request volume, SLA breach, backlog by team</td><td>From the CS-01 timeline</td><td>ServiceNow / Workday SLA reports</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-12</td><td>ROI and KPI dashboard</td><td>The buyer renews on numbers</td><td><b>Containment rate, hours saved, requests per topic, time to resolve, adoption</b></td><td>Leena and Deel report "hours saved" [dossier §25]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>IN-13</td><td>Export with governance</td><td>Analysts want Excel</td><td>Scoped export, no identity columns, logged</td><td>—</td><td>🟡 export exists, not scoped</td><td>P0</td><td>S</td></tr>
+</tbody></table>
+<h2 id="11-closing-the-loop-action-on-insights">11. Closing the loop: action on insights</h2>
+<p>Listening without action destroys participation. Every listening leader sells this, and Phoenix has none of it.</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>LP-01</td><td>Topic ownership</td><td>Every top issue has an owner</td><td>Assign a taxonomy topic to a team (same model as CS-04)</td><td>Medallia and Qualtrics route insights to owners</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>LP-02</td><td>Action plans</td><td>Track what was done about a topic</td><td><b>Action item: topic, owner, due date, status, linked evidence</b></td><td>Qualtrics, Culture Amp, Glint action planning</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>LP-03</td><td>Manager nudges</td><td>Managers don't open dashboards</td><td>Weekly digest + one suggested action per manager (k-gated)</td><td>Culture Amp AI Coach, Perceptyx agents [G8, G3]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>LP-04</td><td>"You said, we did" broadcast</td><td>Show employees that speaking up works</td><td><b>IVA mentions resolved topics in greetings or at the end of calls; SMS/intranet post</b></td><td>Common EX best practice</td><td>❌ (greeting management APIs just landed)</td><td>P1</td><td>S</td></tr>
+<tr><td>LP-05</td><td>Annotations on trends</td><td>Explain spikes (e.g. "new canteen contractor")</td><td>—</td><td>—</td><td>✅ <code>TrendAnnotation</code></td><td>P1</td><td>—</td></tr>
+<tr><td>LP-06</td><td>Impact measurement</td><td>Did the action fix the topic?</td><td>Before/after trend per action plan</td><td>—</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="12-proactive-listening-outbound-and-programs">12. Proactive listening (outbound and programs)</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>PL-01</td><td>Outbound pulse calls</td><td>Hear from people who never call</td><td><b>Short adaptive voice survey (3–5 questions + one open follow-up)</b></td><td>Qualtrics conversational feedback [G1]; Listen Labs / Outset AI interviews [G18]</td><td>🟡 outbound dialing exists in <code>golang/dobby</code> (<code>call_reminder</code>, LiveKit <code>CreateSIPParticipant</code>); no survey flow, no contact rules; not tested on the real MCI trunk</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-02</td><td>Lifecycle moments</td><td>Onboarding day 30, exit interview, after a transfer</td><td><b>Triggered by HR-sync events → outbound call or SMS link</b></td><td>ServiceNow lifecycle events; Exid/Lyzr exit-interview agents [W-SN2, G18]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-03</td><td>Campaigns</td><td>Feedback on a new policy for 2 weeks</td><td>Campaign = topic + audience + channel + date range</td><td>—</td><td>🟡 <code>campaign_rank</code> tool (disabled, unrelated)</td><td>P2</td><td>M</td></tr>
+<tr><td>PL-04</td><td>Contact-permission and quiet hours</td><td>Don't call people at night or against their wishes</td><td>Opt-out list, time windows, frequency cap</td><td>Telemarketing compliance practice</td><td>❌</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="13-privacy-security-and-compliance">13. Privacy, security and compliance</h2>
+<p>Dossier finding: <b>the engine is built; trust is not.</b> Most P0s are here.</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>SC-01</td><td>Authentication on every API</td><td>Chat APIs are open at app level</td><td><b>JWT check in each service, not only at the gateway</b></td><td>—</td><td>❌ (finding 12)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-02</td><td>Role × data-tier matrix</td><td>Who sees numbers, summaries, text, audio, identity</td><td><b>ScopeGrant + data tier (MARKET_ALIGNMENT §6b)</b></td><td>Glint/Peakon role tiers</td><td>🟡 RBAC exists</td><td>P0</td><td>M</td></tr>
+<tr><td>SC-03</td><td>Audit log</td><td>Who saw what, when</td><td><b>Append-only log of reads of text, audio, identity, exports and config changes</b></td><td>Leena audit trail; HiBob Trust Center [G25]</td><td>❌ (finding 3)</td><td>P0</td><td>M</td></tr>
+<tr><td>SC-04</td><td>Audio ownership check (IDOR fix)</td><td>Any <code>view_calls</code> user can fetch any audio</td><td>Ownership/scope check on file access</td><td>—</td><td>❌ (finding 1)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-05</td><td>Secrets out of logs</td><td>Bearer tokens are logged</td><td>Header allow-list in the middleware</td><td>—</td><td>❌ (finding 3)</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-06</td><td>Role expiry enforced</td><td>Temporary grants must end</td><td>Filter <code>expires_at</code> in the JWT builder</td><td>—</td><td>❌</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-07</td><td>Retention and deletion</td><td>Keep only as long as needed</td><td>Per-data-type retention; delete on request</td><td>—</td><td>✅ archive job; 🟡 no per-type policy</td><td>P1</td><td>S</td></tr>
+<tr><td>SC-08</td><td>Data residency / on-prem</td><td>Iranian government buyers; sanctions</td><td><b>Private deployment with local LLMs (current model)</b></td><td>Foreign SaaS can't serve this market [dossier §25.2]</td><td>✅</td><td>P0</td><td>—</td></tr>
+<tr><td>SC-09</td><td>Employee data rights</td><td>See and delete my memory and requests</td><td>Self-service "what you know about me" via OTP</td><td>GDPR practice</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>SC-10</td><td>AI transparency notice</td><td>Employees should know it's an AI and how data is used</td><td>Spoken disclosure at call start + a written policy page</td><td>EU AI Act transparency duty</td><td>🟡</td><td>P0</td><td>S</td></tr>
+<tr><td>SC-11</td><td>Trust pack for buyers</td><td>The buyer asks for proof</td><td>Security and privacy page, architecture, test results</td><td>HiBob AI Trust Center [G25]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>SC-12</td><td>Pen-test and certification</td><td>Government buyers</td><td>External pen-test; certification as required</td><td>—</td><td>❌</td><td>P1</td><td>L</td></tr>
+</tbody></table>
+<h2 id="14-org-data-and-integrations">14. Org data and integrations</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>IG-01</td><td>Org tree model (OrgLevel, OrgUnit with path, Person, ChannelKey, ScopeGrant)</td><td>Scope, routing and personalisation all depend on it</td><td><b>Model from MARKET_ALIGNMENT §6a; org path stored on every record at creation time</b></td><td>Medallia and Qualtrics store hierarchy at response time [W4, W12]</td><td>❌</td><td><b>P0</b></td><td>M</td></tr>
+<tr><td>IG-02</td><td>HR data sync</td><td>Manual Excel goes stale</td><td><b>One canonical format; Excel, SFTP and SAP are just ways to deliver it</b></td><td>Culture Amp: connectors, daily SFTP or manual upload [W14]</td><td>❌ (SEG-07)</td><td>P0 (Excel) / P1 (SAP)</td><td>S / M</td></tr>
+<tr><td>IG-03</td><td>SSO (LDAP/AD, OIDC)</td><td>Staff log in to chat and the panel</td><td>OIDC/LDAP in adcs-auth</td><td>Standard</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>IG-04</td><td>Ticketing connectors</td><td>See CS-07</td><td>—</td><td>—</td><td>❌</td><td>P2</td><td>M each</td></tr>
+<tr><td>IG-05</td><td>Outbound webhooks / event stream</td><td>Customer automation</td><td><b>Events: request.created, request.status_changed, alert.raised, topic.emerging</b></td><td>Contact Lens → EventBridge [W-AWS2]</td><td>🟡 trend webhook</td><td>P1</td><td>S</td></tr>
+<tr><td>IG-06</td><td>Public API</td><td>Customers build on Phoenix</td><td>Versioned REST API with API keys and scopes</td><td>—</td><td>🟡 internal APIs</td><td>P2</td><td>M</td></tr>
+<tr><td>IG-07</td><td>Phoenix as an MCP server</td><td>Expose de-identified insights to local HR assistants (Rahkaran, Didgah)</td><td>MCP server over insight APIs, k-gated</td><td>HiBob MCP; Darwinbox [G25, G14]</td><td>❌ (MCP client only)</td><td>P2</td><td>M</td></tr>
+<tr><td>IG-08</td><td>Local messenger and SMS gateways</td><td>Delivery channels</td><td>Adapter per gateway</td><td>—</td><td>✅ Resan SMS</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="15-admin-and-configuration-studio">15. Admin and configuration studio</h2>
+<p>A product, not a project, means the customer can change things without a release.</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>AD-01</td><td>Greeting and closing messages</td><td>Per channel, campaign and mode</td><td>—</td><td>—</td><td>✅ greeting management APIs (recent commit)</td><td>P0</td><td>—</td></tr>
+<tr><td>AD-02</td><td>Prompt and persona settings with versions</td><td>Safe changes</td><td>Versioned prompts, eval before publish, rollback</td><td>—</td><td>🟡 editable in AQA; not versioned</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-03</td><td>Category / taxonomy editor</td><td>EX owns the taxonomy</td><td>UI for AN-04 / CS-03</td><td>Qualtrics topic editor</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AD-04</td><td>Routing, SLA and calendar editor</td><td>Ops owns routing</td><td>UI for CS-04 / CS-11 / CH-10</td><td>Workday admin rules</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>AD-05</td><td>Alert rules editor</td><td>Thresholds per customer</td><td>UI for AN-13 / IN-05</td><td>Contact Lens rules UI</td><td>❌ (AN-09, CON-06)</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-06</td><td>Scenario studio (no-code flows)</td><td>New line, e.g. "welfare services", in a day</td><td><b>Policy docs + a few rules + a tool selection → new assistant</b></td><td>Oracle Agent Studio, Leena AOP Studio, Deel [G31, G28, G22]</td><td>❌</td><td>P2</td><td>L</td></tr>
+<tr><td>AD-07</td><td>Feature flags per customer</td><td>Turn branches on and off safely</td><td>Config flags (classify/clarify have none today)</td><td>—</td><td>🟡</td><td>P1</td><td>S</td></tr>
+<tr><td>AD-08</td><td>Sandbox / test call</td><td>Try changes before going live</td><td>Test number or web voice pointed at a staging config</td><td>—</td><td>🟡 websocall</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="16-ai-quality-evaluation-and-ai-ops">16. AI quality, evaluation and AI ops</h2>
+<p>Without numbers there are no acceptance criteria (dossier finding 5).</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>QA-01</td><td>Golden eval sets</td><td>Regression safety</td><td><b>Per area: STT (WER), intent, answer faithfulness, tagging accuracy, sensitive recall</b></td><td>Google Quality AI calibration sets [W-GO2]</td><td>🟡 only AQA has an eval endpoint</td><td>P0</td><td>M</td></tr>
+<tr><td>QA-02</td><td>Eval in CI</td><td>Don't ship regressions</td><td>Run evals on prompt, model and KB changes; block below threshold</td><td>—</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-03</td><td>Simulated callers</td><td>Test voice end-to-end at scale</td><td>LLM-driven caller personas + TTS → the real pipeline</td><td>Voice-agent platforms offer simulation testing</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-04</td><td>Hallucination and grounding check</td><td>Policy answers must come from the KB</td><td>Faithfulness check on answers; log ungrounded answers</td><td>—</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>QA-05</td><td>Feedback capture</td><td>Learn from users</td><td>"Was this helpful?" by voice/SMS; analyst thumbs-down with reason</td><td>Universal</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-06</td><td>Human review sampling</td><td>Spot-check AI decisions</td><td>Sample N% of conversations and all sensitive ones for review</td><td>Quality AI sampling rules [W-GO2]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-07</td><td>Model and prompt registry</td><td>Know which version produced which tag</td><td>Store model, prompt version and taxonomy version on every output</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>QA-08</td><td>Drift monitoring</td><td>Topic mix or STT quality changes</td><td>Weekly metrics on confidence, unknown rate, WER sample</td><td>—</td><td>🟡 Prometheus metrics</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<h2 id="17-platform-operations-and-cost">17. Platform, operations and cost</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>OP-01</td><td>Repeatable customer deployment</td><td>Second customer in a week</td><td><b>Helm/Ansible profile per customer; config, not forks</b></td><td>—</td><td>🟡 Helm/Ansible; per-customer bot forks exist</td><td>P1</td><td>M</td></tr>
+<tr><td>OP-02</td><td>Multi-tenancy</td><td>SaaS economics later</td><td>Tenant ID in data + config; keep private deploy for government</td><td>—</td><td>❌ (no tenant concept)</td><td>P2</td><td>L</td></tr>
+<tr><td>OP-03</td><td>HA and failover</td><td>Calls die with their node</td><td>Multiple workers and zones; drain on deploy</td><td>—</td><td>🟡 drain timeout</td><td>P1</td><td>M</td></tr>
+<tr><td>OP-04</td><td>Observability per layer</td><td>Find the failing layer fast</td><td>Network → SIP → app → AI dashboards, request tracing</td><td>—</td><td>🟡 Prometheus + APM</td><td>P1</td><td>S</td></tr>
+<tr><td>OP-05</td><td>Cost per conversation</td><td>Unit economics and pricing</td><td><b>Token and audio usage per call (already in the summary) → cost dashboard</b></td><td>—</td><td>🟡 data exists</td><td>P1</td><td>S</td></tr>
+<tr><td>OP-06</td><td>Internet-outage resilience</td><td>Iranian outages</td><td>All models local; no foreign dependency</td><td>Chargoon writes about this risk [B9]</td><td>✅ mostly</td><td>P0</td><td>—</td></tr>
+<tr><td>OP-07</td><td>Load test with real SIP</td><td>Payday peaks</td><td>SIP load generator (e.g. SIPp) through the SBC</td><td>—</td><td>❌ (WebSocket only)</td><td>P0</td><td>S</td></tr>
+<tr><td>OP-08</td><td>Kafka resilience and DLQ</td><td>No lost data</td><td>—</td><td>—</td><td>✅ grogu DLQ; 🟡 coa ticket produce errors only logged</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="18-commercial-and-customer-success">18. Commercial and customer success</h2>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>CM-01</td><td>Onboarding kit</td><td>Go live fast</td><td>Org data template, starter taxonomy, starter KB, scripts</td><td>Leena publishes deployment playbooks (CHRISTUS case) [R3]</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CM-02</td><td>Starter HR content packs</td><td>Value on day one</td><td>Persian HR policy Q&amp;A templates (labour law, insurance, leave)</td><td>Qualtrics premade EX topics [W-QT1]</td><td>❌</td><td>P1</td><td>M</td></tr>
+<tr><td>CM-03</td><td>Usage metering</td><td>Price by employee, conversation or minute</td><td>From OP-05</td><td>—</td><td>🟡</td><td>P2</td><td>S</td></tr>
+<tr><td>CM-04</td><td>Support process and SLA</td><td>Buyer guide question 9</td><td>Ticket process, response times, on-call</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+<tr><td>CM-05</td><td>Adoption campaigns</td><td>Employees must know the line exists</td><td>Posters, SMS, intranet; measure reach per unit</td><td>—</td><td>❌</td><td>P1</td><td>S</td></tr>
+</tbody></table>
+<h2 id="18b-recruiting-from-interview-scheduling-to-the-candidates-status">18b. Recruiting: from interview scheduling to the candidate's status</h2>
+<p>A different buyer (talent acquisition), a different user (a <b>candidate</b>, not an employee) and a higher risk (AI in hiring is <b>high-risk</b> under EU AI Act Annex III; NYC Local Law 144 requires a yearly independent bias audit and candidate notice) [W-LAW1, W-LAW2]. Dossier §25.2 lists it as Iranian white space: no Persian voice interviewing seen.</p>
+<p><b>Scope fence (same idea as ticketing):</b> we are the <b>voice and messaging layer</b> of the candidate journey, not an ATS. We schedule, remind, reschedule, run a short structured phone pre-screen, collect interviewer feedback, and tell the candidate their status. The ATS (Jobvision, Jobinja, the customer's HR system or a simple Phoenix candidate list) stays the record. <b>The AI never decides</b>: it suggests, a person decides and records the reason.</p>
+<table>
+<thead><tr><th>#</th><th>Feature</th><th>Need</th><th>Solution options</th><th>What others do</th><th>Phoenix today</th><th>Pri</th><th>Eff</th></tr></thead>
+<tbody>
+<tr><td>RC-01</td><td>Candidate record and pipeline stages</td><td>Know where each candidate is</td><td><b>Thin record: candidate, job, stage (applied → pre-screen → interview → feedback → decision → notified), owner, history; mirror of the ATS when one exists</b></td><td>Paradox syncs with Workday, SuccessFactors and other ATSs [W-PX1]; Jobinja shows the candidate each review stage [W-JI1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-02</td><td>Interview self-scheduling</td><td>Back-and-forth phone calls waste recruiter time</td><td><b>Interviewer availability slots → candidate picks by SMS link, chat or voice → invites to all; Jalali calendar and Iranian holidays</b></td><td>Paradox: calendar sync, candidate picks a slot in chat, invites to all, panels and multi-location [W-PX1]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-03</td><td>Reminders and no-show reduction</td><td>No-shows waste interview slots</td><td><b>SMS + outbound call 24 h and 1 h before; "reply 1 to confirm"</b></td><td>Paradox reminders 24 h and 1 h before [W-PX1]</td><td>🟡 SMS, <code>set_reminder</code>, outbound <code>call_reminder</code> exist (dobby)</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-04</td><td>Reschedule and cancel by voice or SMS</td><td>People's plans change</td><td>Candidate or interviewer says "I can't make it" → offer new slots</td><td>Paradox reschedules for either side [W-PX1]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-05</td><td>Structured phone pre-screen</td><td>High-volume roles (call centre, stores, field) need a fast first filter</td><td><b>Short fixed question set (availability, location, shift, expected pay, must-have licence); same questions for everyone; transcript + summary to the recruiter; knock-out only on objective facts the candidate states</b></td><td>Paradox, UKG Rapid Hire, HeyMilo, Ribbon, Alex [dossier §25.3]</td><td>🟡 IVA, outbound call, transcript, summary exist; no screening flow</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-06</td><td>AI structured first-round interview</td><td>Interview hundreds in parallel</td><td>Competency questions with rubric; AI scores <b>with evidence quotes</b>, a human reviews every report</td><td>Eightfold AI Interviewer, Alex, HeyMilo [dossier §25.3]</td><td>❌</td><td>P2 (bet)</td><td>L</td></tr>
+<tr><td>RC-07</td><td>Interviewer feedback collection</td><td>Feedback is late or missing, decisions stall</td><td>Scorecard link by SMS right after the interview; reminders until filled; the AI drafts a summary from the scorecard and the interview notes</td><td>Paradox lists "ratings &amp; feedback" [W-PX2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-08</td><td>Human decision with recorded reason</td><td>Fairness, appeal, audit</td><td><b>Decision only by a person; reason required; AI suggestions shown separately and logged</b></td><td>Common model: AI screens, humans decide [W-LAW3]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-09</td><td>Candidate status updates and "what's my status?"</td><td>Silence is the top candidate complaint</td><td><b>SMS on each stage change; candidate calls the IVA and hears their status with a code</b></td><td>Jobinja notifies the candidate at each stage [W-JI1]; Jobvision: the employer calls the candidate to arrange the interview [W-JV1]</td><td>🟡 SMS + IVA exist</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-10</td><td>Candidate notice and consent</td><td>Legal and trust: the candidate must know an AI is talking and recording</td><td>Spoken notice at call start; consent record; human alternative on request</td><td>NYC LL144: notice 10 business days before use [W-LAW2]</td><td>❌</td><td>P2</td><td>S</td></tr>
+<tr><td>RC-11</td><td>Fairness monitoring</td><td>STT errors differ by accent, so scores can be unfair by region</td><td><b>Selection rate by group (four-fifths rule), WER by accent on screening calls, rubric review</b></td><td>Bias audits with impact ratios [W-LAW3]</td><td>❌</td><td>P2</td><td>M</td></tr>
+<tr><td>RC-12</td><td>Candidate data retention</td><td>Rejected candidates' recordings must not live forever</td><td>Short retention for audio, transcript kept per policy; delete on request</td><td>GDPR / AI Act logging duties [W-LAW1]</td><td>🟡 retention job exists for calls</td><td>P2</td><td>S</td></tr>
+</tbody></table>
+<p><b>Judgment:</b> keep it P2 until the EX pilot is proven: it is a new buyer and a new sales motion. The cheap, low-risk part (RC-02/03/04/07/09: scheduling, reminders, rescheduling, feedback chasing, status updates) reuses what is already built (outbound calls, SMS, reminders, IVA) and makes no hiring judgment. RC-05 is the natural next step. RC-06 (AI interviewer) is a bet that needs fairness work (RC-11) first, because Persian STT quality varies by accent.</p>
+<h2 id="19-key-judgments">19. Key judgments</h2>
+<ol>
+<li><b>Answering is a commodity; channel, language and trust are the moat.</b> All 13 HCM vendors now have an HR service agent (dossier §25.5b). None has Persian voice on the phone with on-prem models. Compete on CH-01, VX-*, SC-08 and the privacy block, not on "our bot answers better".</li>
+<li><b>Trust is the P0, not features.</b> SC-01 to SC-06, ID-01, IN-02/03 and AN-02 are small jobs, mostly S and M. Without them the buyer test fails, however good the AI is.</li>
+<li><b>The org tree (IG-01) is the hidden dependency.</b> Scope, k-threshold, routing, personalisation and segment analytics all depend on it. Build it before any of those.</li>
+<li><b>Taxonomy = top-down + discovered + human-corrected.</b> Every leader (Qualtrics, Google, AWS) combines a managed taxonomy with automatic discovery. Fixed categories alone miss new problems; discovery alone gives unstable dashboards. Do AN-04 + AN-06 + AN-14 now and AN-05 next.</li>
+<li><b>Knowledge-gap logging (KB-G) is the cheapest high-value feature.</b> It is a few days of work. It improves the bot every week and gives EX a concrete report ("employees asked 340 times about X and we had no answer").</li>
+<li><b>Requests need a contract decision first.</b> Technically it is one tool plus a ledger (S–M). Politically, CON-09 says no follow-up in the MVP and the listening channel promises anonymity. Agree the modes (ID-01) with EX before building CS-*.</li>
+<li><b>Raise and promotion are not tickets.</b> Route them as manager conversations (CS-10). A queue for "I want a raise" creates an expectation HR can't meet and blames the product.</li>
+<li><b>Close the loop or participation dies.</b> LP-02 and LP-04 are what make employees call a second time. They are cheap; schedule them right after the pilot proves volume.</li>
+<li><b>Re-own the analytics engine (AN-18).</b> The tags HR will judge the product on come from <code>coa-ai</code>, untouched for 14 months and built for customer call centres. Moving enrichment to an eval-gated LLM pipeline is a P0 risk item, not a refactor.</li>
+</ol>
+<h2 id="20-suggested-release-cut">20. Suggested release cut</h2>
+<p>Deadlines follow the README rule: <b>T + n working days from a named input</b>, never a calendar date.</p>
+<table>
+<thead><tr><th>Release</th><th>Goal</th><th>Features</th></tr></thead>
+<tbody>
+<tr><td><b>R0 — Trust (pilot gate)</b></td><td>Pass the buyer's privacy test</td><td>SC-01/03/04/05/06/10, ID-01/04/05/06/08, IN-02/03/13, AN-02/09, BR-06/07, AC-07, OP-07, IG-01, IG-02 (Excel)</td></tr>
+<tr><td><b>R1 — Pilot proof</b></td><td>Show measurable value</td><td>KB-G, AN-04/06/14/17/18, BR-01/02/04/10, VX-08, IN-06/07/12, QA-01/05</td></tr>
+<tr><td><b>R2 — Second sale</b></td><td>Requests + action</td><td>CS-01..06, CS-09/11/12, LP-01/02/04, IN-05/09/11, AN-05/10/11/13, CH-04, CH-13, KB-J, KB-K step 1, ID-03/07</td></tr>
+<tr><td><b>R3 — Productise</b></td><td>Second customer in a week</td><td>AD-*, OP-01/03/05, QA-02/03, CM-01/02, IG-03/05, KB-B/C/D/E/F</td></tr>
+<tr><td><b>R4 — Bets</b></td><td>Differentiate further</td><td>AC-02/03/04, PL-*, CS-07/10/13, IG-07, AD-06, OP-02, RC-01..05/07..12 (recruiting voice layer), RC-06 later</td></tr>
+</tbody></table>
+<h2 id="21-red-lines-what-not-to-build">21. Red lines: what not to build</h2>
+<p>From dossier §25.8, plus the new areas:</p>
+<ul>
+<li><b>No individual emotion detection on employees</b> (EU AI Act Art. 5): emotions only aggregated, or off.</li>
+<li><b>No individual attrition-risk score.</b> Group level only, k-gated.</li>
+<li><b>No passive listening</b> of email, chat or work calls; voluntary channels only.</li>
+<li><b>No automatic HR decisions</b> (pay, promotion, discipline). The AI suggests and routes; people decide.</li>
+<li><b>No full ITSM or BPM engine.</b> Keep the desk lightweight and integrate for the rest.</li>
+<li><b>No full whistleblowing product.</b> A private queue only (CS-09).</li>
+<li><b>No memory in anonymous mode</b>, ever.</li>
+</ul>
+<h2 id="sources">Sources</h2>
+<p><b>Already in the repo:</b> dossier §25.9 (G1–G31, R1–R*, B1–B12, W-series in MARKET_ALIGNMENT) — <code>product/source/product_dossier_fa.html</code>, <code>product/source/market_alignment_fa.html</code>.</p>
+<p><b>New for this catalog:</b></p>
+<table>
+<thead><tr><th>Code</th><th>Topic</th><th>Link</th></tr></thead>
+<tbody>
+<tr><td>W-WD1</td><td>Workday Help case management</td><td>https://doc.workday.com/admin-guide/en-us/human-capital-management/hcm-innovation-services/workday-help/case-management/hot1559060224551.html</td></tr>
+<tr><td>W-WD2</td><td>Workday Help: routing, confidential, SLA, email/Teams/Slack intake</td><td>https://doc.workday.com/admin-guide/en-us/human-capital-management/hcm-innovation-services/workday-help/case-management/syz1562672658215.html</td></tr>
+<tr><td>W-OR1</td><td>Oracle HR Help Desk</td><td>https://www.oracle.com/human-capital-management/hr-help-desk/</td></tr>
+<tr><td>W-OR2</td><td>Oracle HR case management</td><td>https://blogs.oracle.com/fusioninsider/newhr-case-management-for-hcm-help-desk-available-now</td></tr>
+<tr><td>W-SAP1</td><td>SAP Employee Central Service Center</td><td>https://sap.com/africa/products/hcm/employee-central-service-center.html</td></tr>
+<tr><td>W-SAP2</td><td>SAP ESM vs ECSC/HRSD</td><td>https://www.pentos.com/insights/events-and-webinars/recorded-webinars/HR-Service-Delivery</td></tr>
+<tr><td>W-SN1</td><td>ServiceNow + Workday, Employee Center</td><td>https://blog.vsoftconsulting.com/blog/elevate-hr-with-a-servicenow-and-workday-integration</td></tr>
+<tr><td>W-SN2</td><td>ServiceNow HRSD lifecycle events</td><td>https://docs.servicenow.com/bundle/orlando-hr-service-delivery/page/product/human-resources/concept/hr-lifecycle-event-configuration.html</td></tr>
+<tr><td>W-MW1</td><td>Moveworks for HR</td><td>https://help.moveworks.com/docs/moveworks-for-hr</td></tr>
+<tr><td>W-MW2</td><td>Moveworks ServiceNow ticketing</td><td>https://help.moveworks.com/docs/servicenow-ticketing-integration-overview</td></tr>
+<tr><td>W-MW3</td><td>Moveworks Knowledge Studio recommendations</td><td>https://help.moveworks.com/service-management/knowledge-studio/ai-powered-recommendations</td></tr>
+<tr><td>W-LE1</td><td>Leena AI integrations</td><td>https://leena.ai/integrations</td></tr>
+<tr><td>W-LE2</td><td>Leena AI helpdesk</td><td>https://docs.leena.ai/docs/helpdesk-overview</td></tr>
+<tr><td>W-DB1</td><td>Darwinbox helpdesk listing</td><td>https://platform.softwareone.com/product/employee-helpdesk/PCP-5387-7166</td></tr>
+<tr><td>W-AV1</td><td>AllVoices anonymous two-way messaging</td><td>https://support.allvoices.co/hc/en-us/articles/8497429800091-How-can-an-employer-properly-investigate-a-report-if-it-is-anonymous</td></tr>
+<tr><td>W-DL1</td><td>Deel anonymous reporting</td><td>https://www.deel.com/solutions/anonymous-reporting/</td></tr>
+<tr><td>W-AWS1</td><td>Contact Lens gen-AI summaries</td><td>https://aws.amazon.com/about-aws/whats-new/2024/07/amazon-connect-contact-lens-ai-powered-summaries/</td></tr>
+<tr><td>W-AWS2</td><td>Contact Lens rules and theme detection</td><td>https://docs.aws.amazon.com/connect/latest/adminguide/build-rules-for-contact-lens.html · https://aws.amazon.com/about-aws/whats-new/2023/05/amazon-connect-contact-lens-theme-detection/</td></tr>
+<tr><td>W-AWS3</td><td>Contact Lens sentiment</td><td>https://aws.amazon.com/blogs/contact-center/announcing-contact-lens-for-amazon-connect-preview/</td></tr>
+<tr><td>W-GO1</td><td>Google CX Insights topic model</td><td>https://docs.cloud.google.com/contact-center/insights/docs/release-notes</td></tr>
+<tr><td>W-GO2</td><td>Google Quality AI</td><td>https://docs.cloud.google.com/contact-center/insights/docs/qai-setup-guide</td></tr>
+<tr><td>W-QT1</td><td>Qualtrics Text iQ</td><td>https://www.qualtrics.com/support/survey-platform/data-and-analysis-module/text-iq/text-iq-functionality/</td></tr>
+<tr><td>W-QT2</td><td>Qualtrics EX Comment Summaries</td><td>https://qualtrics.com/support/employee-experience/creating-ee-project/dashboards-tab/widgets-ee/analysis-widgets-ee/comment-summaries-widget-ex</td></tr>
+<tr><td>W-KO1</td><td>Cognigy / Kore.ai / Parloa comparison</td><td>https://fin.ai/learn/cognigy-vs-kore-ai-vs-parloa</td></tr>
+<tr><td>W-PA1</td><td>Cognigy vs PolyAI</td><td>https://aiagentrank.io/compare/cognigy-vs-polyai</td></tr>
+<tr><td>W-QT3</td><td>Qualtrics closed loop / ticket tasks</td><td>https://www.qualtrics.com/support/vocalize/common-use-cases-voc/closing-the-loop/ · https://dxtraining.iowa.gov/digital-services/qualtrics/understanding-qualtrics-cx/closed-loop-ticket-system</td></tr>
+<tr><td>W-SU1</td><td>SpeakUp voice message with distortion (RIPE NCC policy)</td><td>https://www.RIPE.net/documents/3151/Whistleblower_Policy_2024.pdf</td></tr>
+<tr><td>W-FU1</td><td>FaceUp anonymised voice notes</td><td>https://faceup.com/en/compare/speakup-alternative</td></tr>
+<tr><td>W-WL1</td><td>Whistlelink oral reporting with voice distortion</td><td>https://www.whistlelink.com/product-news/january-2024/</td></tr>
+<tr><td>W-AWS4</td><td>AWS WhatsApp voice notes + Transcribe</td><td>https://cpaasintel.rsunga.people.aws.dev/articles/94ac33693b9d</td></tr>
+<tr><td>W-MD1</td><td>Medallia voice/video feedback (third-party comparison)</td><td>https://www.enterpret.com/comparisons/qualtrics-vs-medallia</td></tr>
+<tr><td>W-SN3</td><td>ServiceNow Employee Center announcement (schedule + audience)</td><td>https://www.servicenow.com/docs/r/SogDT~k7ktsbe1ZYegnaLg/dtd_XHDQWqpVhDwveChZkQ</td></tr>
+<tr><td>W-MW4</td><td>Moveworks proactive messaging API</td><td>https://moveworks.com/us/en/company/news/press-releases/moveworks-announces-api-proactively-prevent-issues</td></tr>
+<tr><td>W-VX1</td><td>Scheduled IVR announcements (Voxo)</td><td>https://docs.voxo.co/pharmacy/announcements</td></tr>
+<tr><td>W-PX1</td><td>Paradox conversational scheduling</td><td>https://paradox.ai/products/scheduling</td></tr>
+<tr><td>W-PX2</td><td>Paradox feature list (ratings &amp; feedback)</td><td>https://www.paradox.ai/franchise/kfc</td></tr>
+<tr><td>W-JI1</td><td>Jobinja employer panel: stages, interview details</td><td>https://jobinja.ir/how-to</td></tr>
+<tr><td>W-JV1</td><td>Jobvision FAQ: employer arranges interviews</td><td>https://jobvision.ir/faq</td></tr>
+<tr><td>W-LAW1</td><td>EU AI Act and hiring (high-risk, timing contested)</td><td>https://resources.rework.com/libraries/ai-for-hr/ai-hiring-laws</td></tr>
+<tr><td>W-LAW2</td><td>NYC Local Law 144 (bias audit, notice)</td><td>https://www.pivotpointsecurity.com/what-is-nycs-ai-bias-law-and-how-does-it-impact-firms-using-hr-automation/</td></tr>
+<tr><td>W-LAW3</td><td>AI interview bias audits 2026 (four-fifths rule, human review)</td><td>https://humanly.io/blog/ai-interview-bias-audit-2026</td></tr>
+<tr><td>W-TD1</td><td>HR tier-0 resolution figures (vendor, unverified)</td><td>https://www.infosys.com/newsroom/documents/robust-hr-service-delivery-solution.pdf · https://www.applaudhr.com/blog/artificial-intelligence/hr-meets-ai-enhancing-service-delivery-with-artificial-intelligence</td></tr>
+</tbody></table>
+<p>Third-party and vendor-marketing sources (W-KO1, W-PA1, W-DB1, W-TD1) are weaker. Verify them before quoting to a buyer.</p>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

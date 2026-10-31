@@ -24,6 +24,8 @@ FILES = [
     "market_alignment_fa.html",
     "ai_learning_guide_fa.html",
     "iva_ex_prompt_requirements_fa.html",
+    "feature_catalog.html",
+    "feature_catalog_fa.html",
 ]
 
 HEAD_START, HEAD_END = "<!-- theme:head:start -->", "<!-- theme:head:end -->"
