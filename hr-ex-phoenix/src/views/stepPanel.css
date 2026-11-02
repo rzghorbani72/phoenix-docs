@@ -1,0 +1,27 @@
+/* Step panel: side panel on desktop, bottom sheet on narrow screens. Extends .panel from styles.css. */
+.panel { overscroll-behavior: contain; }
+.panel .sheet-grip { display: none; }
+.panel-keys { margin: 14px 0 0; text-align: center; }
+
+@media (max-width: 859.98px) {
+  .panel {
+    top: auto; bottom: 0; inset-inline: 0; width: 100%; height: 58%; max-height: calc(100% - 12px);
+    border-inline-start: 0; border-top: 4px solid var(--lc); border-radius: 18px 18px 0 0;
+    padding: 0 16px 24px; box-shadow: 0 -10px 30px rgba(0, 0, 0, .35);
+    animation: sheet-up .24s ease-out; transition: height .22s ease;
+  }
+  [dir="rtl"] .panel { animation-name: sheet-up; }
+  .panel.tall { height: calc(100% - 12px); }
+  .panel .sheet-grip {
+    display: grid; place-items: center; position: sticky; top: 0; z-index: 2; width: calc(100% + 32px); margin: 0 -16px 2px;
+    height: 22px; padding: 0; border: 0; background: var(--surface); cursor: pointer;
+  }
+  .panel .sheet-grip span { width: 44px; height: 5px; border-radius: 3px; background: var(--line); }
+  .panel .sheet-grip:hover span { background: var(--muted); }
+  .panel-title { font-size: 1.2em; }
+  .panel .facts { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .panel .pn button { max-width: 100%; }
+  .panel-keys { display: none; }
+}
+@keyframes sheet-up { from { transform: translateY(40px); opacity: 0; } }
+@media (hover: none) { .panel-keys { display: none; } }

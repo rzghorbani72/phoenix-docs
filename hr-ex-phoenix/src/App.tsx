@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
-import { DATA } from "./lib/data";
-import { ctxFor, plain } from "./lib/md";
-import type { Status } from "./lib/types";
-import MapView, { LANE_COLOR, type MapFilters } from "./components/map/MapView";
+import { DATA, laneOf } from "./lib/data";
+import { ctxFor } from "./lib/md";
+import MapView from "./components/map/MapView";
+import OverviewMap from "./components/map/OverviewMap";
+import { MapToolbar } from "./components/map/MapToolbar";
+import { TourBar } from "./components/map/Tour";
+import { TOUR_IDS, tourHash } from "./components/map/tourData";
+import { STATUSES, type MapFilters } from "./components/map/shared";
 import { BodyView, Md } from "./components/Blocks";
 import { Search } from "./components/Search";
 import { DocsView } from "./views/DocsView";
@@ -12,11 +16,22 @@ import { ModelsView } from "./views/ModelsView";
 import { RisksView } from "./views/RisksView";
 import { StepPanel } from "./views/StepPanel";
 
-type Route = { view: "map" | "step" | "models" | "model" | "guide" | "risks" | "docs"; id?: string; lane?: string };
+type Route = {
+  view: "map" | "step" | "models" | "model" | "guide" | "risks" | "docs"; id?: string; lane?: string;
+  /** Map level: lane cards instead of the step-level diagram (#/map/overview). */
+  overview?: boolean;
+  /** 0-based stop of the "follow one turn" tour (#/tour/1 … #/tour/16). */
+  tour?: number;
+};
 
 function parse(hash: string): Route {
   const p = hash.replace(/^#\/?/, "").split("/");
   if (p[0] === "step" && p[1]) return { view: "step", id: p[1] };
+  if (p[0] === "tour") {
+    const i = Math.min(Math.max(Number(p[1]) || 1, 1), TOUR_IDS.length) - 1;
+    return { view: "step", id: TOUR_IDS[i], tour: i };
+  }
+  if (p[0] === "map" && p[1] === "overview") return { view: "map", overview: true };
   if (p[0] === "model" && p[1]) return { view: "model", id: p[1] };
   if (p[0] === "models" || p[0] === "guide" || p[0] === "risks" || p[0] === "docs") return { view: p[0] };
   if (p[0] === "map" && p[1] === "lane" && p[2]) return { view: "map", lane: p[2] };
@@ -27,16 +42,26 @@ const store = {
   get: (k: string) => { try { return localStorage.getItem(k); } catch { return null; } },
   set: (k: string, v: string) => { try { localStorage.setItem(k, v); } catch { /* private mode */ } },
 };
-const ALL: Status[] = ["live", "off", "notdeployed", "external", "unknown"];
+const go = (h: string) => { window.location.hash = h; };
+/** ?lang=fa / ?theme=light override the stored choice (handy for links and screenshots). */
+const param = (k: string) => { try { return new URLSearchParams(window.location.search).get(k); } catch { return null; } };
+const typing = (t: EventTarget | null) =>
+  t instanceof HTMLElement && (t.isContentEditable || ["INPUT", "SELECT", "TEXTAREA"].includes(t.tagName));
 
 export default function App() {
   const [route, setRoute] = useState<Route>(() => parse(window.location.hash));
-  const [lang, setLang] = useState<"en" | "fa">(() => (store.get("pp-lang") === "fa" ? "fa" : "en"));
-  const [theme, setTheme] = useState<"dark" | "light">(() =>
-    (store.get("pp-theme") as "dark" | "light") ?? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark"));
+  const [lang, setLang] = useState<"en" | "fa">(() => {
+    const q = param("lang");
+    return q === "fa" || q === "en" ? q : store.get("pp-lang") === "fa" ? "fa" : "en";
+  });
+  const [theme, setTheme] = useState<"dark" | "light">(() => {
+    const q = param("theme");
+    if (q === "dark" || q === "light") return q;
+    return (store.get("pp-theme") as "dark" | "light") ?? (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  });
   const [searchOpen, setSearchOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [filters, setFilters] = useState<MapFilters>({ model: "", statuses: new Set(ALL), query: "", cross: false });
+  const [filters, setFilters] = useState<MapFilters>({ model: "", statuses: new Set(STATUSES), query: "", cross: false });
   const d = DATA[lang];
   const ctx = useMemo(() => ctxFor(d, 0), [d]);
 
@@ -54,21 +79,35 @@ export default function App() {
   }, [lang, theme, d.dir]);
   useEffect(() => {
     const k = (e: KeyboardEvent) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setSearchOpen(true); }
-      if (e.key === "Escape" && route.view === "step") window.location.hash = "#/map";
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") { e.preventDefault(); setSearchOpen(true); return; }
+      if (route.view !== "step" || !route.id || searchOpen || aboutOpen || e.defaultPrevented) return;
+      if (e.key === "Escape") {
+        // First Esc leaves the tour (panel stays on that step), the next one closes the panel.
+        go(route.tour !== undefined ? `#/step/${route.id}` : "#/map");
+        return;
+      }
+      if ((e.key !== "ArrowLeft" && e.key !== "ArrowRight") || e.altKey || e.ctrlKey || e.metaKey || e.shiftKey || typing(e.target)) return;
+      // Arrows follow the reading direction: in RTL the left arrow moves forward.
+      const step = (e.key === "ArrowRight") === (d.dir === "ltr") ? 1 : -1;
+      if (route.tour !== undefined) {
+        const n = route.tour + step;
+        if (n >= 0 && n < TOUR_IDS.length) { e.preventDefault(); go(tourHash(n)); }
+        return;
+      }
+      const w = laneOf(d, route.id);
+      const next = w?.lane.steps[w.num - 1 + step];
+      if (next) { e.preventDefault(); go(`#/step/${next}`); }
     };
     window.addEventListener("keydown", k);
     return () => window.removeEventListener("keydown", k);
-  }, [route.view]);
+  }, [route, d, searchOpen, aboutOpen]);
   useEffect(() => { if (route.view !== "map" && route.view !== "step") window.scrollTo(0, 0); }, [route]);
 
   const onMap = route.view === "map" || route.view === "step";
   const ui = d.ui;
   const tabs: [Route["view"], string][] = [["map", ui.nav_map], ["models", ui.nav_models], ["guide", ui.nav_guide ?? "Guide"], ["risks", ui.nav_risks], ["docs", lang === "fa" ? "اسناد" : "Documents"]];
-  const toggleStatus = (s: Status) => setFilters((f) => {
-    const st = new Set(f.statuses); if (st.has(s) && st.size > 1) st.delete(s); else st.add(s);
-    return { ...f, statuses: st };
-  });
+  const stepLane = route.view === "step" && route.id ? laneOf(d, route.id)?.lane.id : undefined;
+  const inTour = route.tour !== undefined;
 
   return (
     <div className={`app ${onMap ? "on-map" : ""}`}>
@@ -88,30 +127,15 @@ export default function App() {
       </header>
 
       {onMap && (
-        <div className="mapwrap">
-          <div className="toolbar">
-            <select value={filters.model} onChange={(e) => setFilters({ ...filters, model: e.target.value })}>
-              <option value="">{lang === "fa" ? "برجسته‌سازی بر اساس مدل…" : "Highlight steps by model…"}</option>
-              {d.models.cards.filter((c) => c.steps?.length).map((c) => <option key={c.id ?? c.name} value={c.id}>{plain(c.name)} — {plain(c.size)}</option>)}
-            </select>
-            <input value={filters.query} onChange={(e) => setFilters({ ...filters, query: e.target.value })}
-              placeholder={lang === "fa" ? "فیلتر گام‌ها…" : "Filter steps…"} />
-            <div className="statuses">
-              {ALL.map((s) => (
-                <button key={s} className={`badge s-${s} ${filters.statuses.has(s) ? "" : "off"}`} onClick={() => toggleStatus(s)}>{ui.status[s]}</button>
-              ))}
-            </div>
-            <label className="chk"><input type="checkbox" checked={filters.cross} onChange={(e) => setFilters({ ...filters, cross: e.target.checked })} />{lang === "fa" ? "همهٔ جریان‌های بین مسیرها" : "All cross-lane flows"}</label>
-            <div className="lanes">
-              {d.lanes.map((l) => (
-                <a key={l.id} href={`#/map/lane/${l.id}`} style={{ ["--lc" as string]: LANE_COLOR[l.color] }} title={plain(l.title)}>{l.prefix}</a>
-              ))}
-              <a href="#/map/lane/all" title={lang === "fa" ? "نمای کامل" : "Fit everything"}>⤢</a>
-            </div>
-          </div>
-          <MapView d={d} filters={filters} selected={route.view === "step" ? route.id : undefined} lane={route.lane} theme={theme}
-            onOpen={(id) => { window.location.hash = `#/step/${id}`; }} />
-          {route.view === "step" && route.id && <StepPanel d={d} id={route.id} />}
+        <div className={`mapwrap${route.view === "step" ? " has-panel" : ""}${inTour ? " in-tour" : ""}`}>
+          <MapToolbar d={d} filters={filters} setFilters={setFilters} overview={!!route.overview} tourActive={inTour}
+            lane={route.lane ?? stepLane} compact={route.view === "step"} />
+          {route.overview
+            ? <OverviewMap d={d} theme={theme} onLane={(id) => go(`#/map/lane/${id}`)} />
+            : <MapView d={d} filters={filters} selected={route.view === "step" ? route.id : undefined} lane={route.lane} theme={theme}
+                tour={inTour ? TOUR_IDS : undefined} onOpen={(id) => go(`#/step/${id}`)} />}
+          {route.view === "step" && route.id && <StepPanel d={d} id={route.id} tour={inTour} />}
+          {inTour && <TourBar d={d} index={route.tour!} />}
         </div>
       )}
       {route.view === "models" && <ModelsView d={d} />}
