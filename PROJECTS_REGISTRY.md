@@ -6,9 +6,9 @@
 
 | پروژهٔ اصلی | نشانه‌ها / نام‌های مستعار | فایل زمینه (اول بخوان) |
 |---|---|---|
-| **HR / EX (Phoenix)** | HR، منابع انسانی، EX، صدای کارکنان، Employee Voice، Phoenix HR، پایلوت EX، UAT، `product-learning-docs` | `/home/rayan/Develope/AI/documents/product-learning-docs/product-management/HR_PROJECT_CONTEXT_FA.md` |
+| **HR / EX (Phoenix)** | HR، منابع انسانی، EX، صدای کارکنان، Employee Voice، Phoenix HR، پایلوت EX، UAT، `hr-ex-phoenix` | `/home/rayan/Develope/AI/documents/hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md` |
 | **LLM Hub** | LLM Hub، چت هاب، Chat Hub، Hub API، LiteLLM، Keycloak، Shadow AI، `chat-hub-product` | `/home/rayan/Develope/AI/documents/chat-hub-product/CHAT_HUB_PROJECT_CONTEXT_FA.md` |
-| **COA (Phoenix)** | COA، پنل تحلیل تماس، جست‌وجوی تماس، برچسب‌ها و روندهای تماس، `coa-api`، Phoenix COA | `/home/rayan/Develope/AI/documents/COA_PROJECT_CONTEXT_FA.md` |
+| **COA (Phoenix)** | COA، پنل تحلیل تماس، جست‌وجوی تماس، برچسب‌ها و روندهای تماس، `coa-api`، Phoenix COA | `/home/rayan/Develope/AI/documents/hr-ex-phoenix/COA_PROJECT_CONTEXT_FA.md` |
 
 ## مرزبندی پروژه‌ها
 - COA یکی از اجزای محصول Phoenix است و می‌تواند مستقل از کاربرد HR/EX موضوع کار باشد. اگر درخواست مشخصاً دربارهٔ تطبیق COA برای HR یا پایلوت EX است، فایل زمینهٔ HR/EX را هم بخوان.

@@ -161,7 +161,7 @@ footer{color:var(--muted);font-size:12.5px}
     <li><label><input type="checkbox"><span><b>Branchهای موازی:</b> classifier، clarifying، guardrail و پاسخ اصلی؛ یکی برنده می‌شود. Classification و clarifying هنوز feature flag ندارند.</span></label></li>
     <li><label><input type="checkbox"><span><b>Toolها:</b> <code>send_sms</code>، <code>set_reminder</code>، <code>redirect_to_human_agent</code>، <code>exit_tool</code> و غیره. برای pilot فعال‌ها با <code>AGENT_ENABLED_TOOLS</code> محدود می‌شود؛ ابزارهای نمایشی مثل <code>tell_joke</code> و <code>get_gold_price</code> برای HR باید خاموش شوند.</span></label></li>
     <li><label><input type="checkbox"><span><b>حافظه بلندمدت:</b> کاربر با شماره تلفن شناخته می‌شود و memory بعد از هر تماس بازنویسی می‌شود. حساسیت حریم خصوصی برای HR جدی است.</span></label></li>
-    <li><label><input type="checkbox"><span><b>Prompt و نقش‌ها:</b> هر نقش prompt جدا دارد (<code>aiva/prompts/&lt;role&gt;.py</code> یا <code>&lt;ROLE&gt;_LLM_TEMPLATE</code>)؛ بدانی لحن و Instruction پروژه HR (پوشه <code>kb/tones</code>) کجا وارد می‌شود.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Prompt و نقش‌ها:</b> هر نقش prompt جدا دارد (<code>aiva/prompts/&lt;role&gt;.py</code> یا <code>&lt;ROLE&gt;_LLM_TEMPLATE</code>)؛ بدانی لحن و Instruction پروژه HR (پوشه <code>hr-ex-phoenix/knowledge-base/tones</code>) کجا وارد می‌شود.</span></label></li>
     <li><label><input type="checkbox"><span><b>Arize Phoenix + OpenTelemetry</b> برای trace هر فراخوانی LLM (prompt، token، latency). مستند آن را «قابلیت استفاده‌نشده» می‌شمارد و راه‌حل کمبود eval می‌داند.</span></label></li>
   </ul>
 </section>
@@ -198,7 +198,7 @@ footer{color:var(--muted);font-size:12.5px}
     <tr><td>AI Analysis</td><td>۱۵</td><td>تگ‌ها، sentiment، موضوع‌بندی؛ وابسته به <code>coa-ai</code> که در مخزن نیست</td></tr>
     <tr><td>Segmentation & Employee Context</td><td>۷</td><td>اتصال شماره به دیتاست کارکنان و زمینه شغلی</td></tr>
     <tr><td>Privacy & Access</td><td>۱۱</td><td>retention، ناشناس‌سازی، RBAC، IDOR، <code>permission_classes = ()</code> در aiva <span class="tag risk">ریسک</span></td></tr>
-    <tr><td>Knowledge Base Pilot</td><td>۱۰</td><td>KB، guardrail، فرآیند import/export (فایل‌های پوشه <code>import-list</code>)</td></tr>
+    <tr><td>Knowledge Base Pilot</td><td>۱۰</td><td>KB، guardrail، فرآیند import/export (فایل‌های پوشه <code>hr-ex-phoenix/knowledge-base/imports</code>)</td></tr>
     <tr><td>Analytics & Management View</td><td>۱۲</td><td>داشبورد، trend، گزارش برای مدیریت</td></tr>
     <tr><td>Pilot, UAT & Technical Setup</td><td>۱۵</td><td>محیط، golden set، معیار پذیرش، ددلاین</td></tr>
     </tbody></table></div>
@@ -232,7 +232,7 @@ footer{color:var(--muted);font-size:12.5px}
   <ul class="chk">
     <li><label><input type="checkbox"><span><b>Eval خودکار:</b> فعلاً هیچ سنجش کیفیت AI برای AIVA و CCA نیست. Golden Set برای retrieval، guardrail و tool call + trace با Arize Phoenix. <span class="tag code">DOC</span></span></label></li>
     <li><label><input type="checkbox"><span><b>مسیریابی مدل بر اساس هزینه:</b> مدل کوچک برای classification، بزرگ برای پاسخ نهایی. <span class="tag code">DOC</span></span></label></li>
-    <li><label><input type="checkbox"><span><b>تشخیص تعارض در KB</b> (پروژه پیشنهادی <code>kb-conflict-detection</code> در پوشه projects to do). <span class="tag inf">پیشنهاد</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>تشخیص تعارض در KB</b> (پروژه پیشنهادی <code>kb-conflict-detection</code> در پوشه project-proposals). <span class="tag inf">پیشنهاد</span></span></label></li>
   </ul>
   <h3>امنیت، تست و عملیات</h3>
   <ul class="chk">

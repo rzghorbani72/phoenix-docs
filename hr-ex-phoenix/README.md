@@ -1,12 +1,27 @@
-# product/ — Phoenix product-management and technical documentation
+# hr-ex-phoenix/ — HR / EX product and Phoenix platform documentation
 
 Product-facing documentation derived **directly from the code** in this monorepo, for the
 Technical PM role. Every claim here is backed by a `file:line` you can open.
 
 - Code reviewed: **2026-09-28**; updated through commit `cb570a50b` (**2026-10-06**) — see §26 of both dossiers
 - Scope: the 10 Python projects with commits since 2026-06-28 (~98k LOC)
-- Agreement reviewed: `HR - meet UAT agreement - Fit-Gap MVP` (87 rows, 8 blocks) — the
+- Agreement reviewed: `requirements/HR - meet UAT agreement - Fit-Gap MVP.csv` (87 rows, 8 blocks) — the
   Employee Experience (EX) voice-of-employee pilot between MCINEXT and MCI's EX department
+
+## Folder map (start here)
+
+| Folder / file | What is in it | Start with |
+|---|---|---|
+| `HR_PROJECT_CONTEXT_FA.md` | Short global context for the **HR product / EX pilot**: COA·CCA·IVA baseline, how EX relates to HR, working rules, source pointers. Give it to Claude or Codex at the start of HR work | itself |
+| `COA_PROJECT_CONTEXT_FA.md` | Same idea for **COA** (call-analytics panel) work that is independent of HR | itself |
+| `product-management/` | Business, scope, customers, competitors, roadmap, fit-gap, the EX PRD (Persian HTML/PDF) | `START_HERE_FA.html` |
+| `technical/` | Architecture and code docs. **`technical/phoenix-pipelines/`** is the clickable EX pipeline map: 6 pipelines + the agentlib framework, step pages, 22 model pages, a TPM guide, risks (English `en/`, Persian `fa/`, editable `.drawio`) | `technical/phoenix-pipelines/en/index.html` |
+| `knowledge-base/` | EX knowledge-base content and import files (see its README) | `knowledge-base/README.md` |
+| `requirements/` | Source requirement files: the UAT agreement Fit-Gap (87 rows) and the Continuous Listening MVP fit-gap | — |
+| `diagrams/` | Photos of hand-drawn architecture notes: IVA call flow, COA/CCA analysis flow, CCA topic mapper | — |
+| `source/` | Generators for everything above (`build.sh`, theme, `pipelines/` site generator) — edit sources, then rebuild | `source/build.sh` |
+
+Naming: folders are `kebab-case`; generated documents are `UPPER_SNAKE` (`_FA` = Persian); data files carry a version (`_v1`); photos of notes end in `_notes`.
 
 ## What's in this folder
 
@@ -25,7 +40,6 @@ Every document is published as a **dark-themed standalone HTML page** and (excep
 | File | Audience | What it is |
 |---|---|---|
 | **`START_HERE_FA.html`** | Everyone, start here | Hub page: question-to-document router, map of every file, HR requirements per pipeline stage (13 stages, with layer, status and what to measure), sensitive and emergency call handling by layer and stage, needs solved by world products, AI models and improvement levers, the pilot gate |
-| **`HR_PROJECT_CONTEXT_FA.md`** | Codex, Claude, anyone joining HR work | Reusable global context for the HR product transformation: current COA/CCA/IVA baseline, relationship between the overall HR product and the EX pilot, working principles, document pointers and a copyable kickoff prompt |
 | `HR_TECH_CHECKLIST_FA.html` | TPM | Technical study checklist: which models run where (ASR, LLM, embedding, TTS, VAD), ASR in depth, aiva, COA, the HR Fit-Gap blocks, improvement ideas and questions for the team |
 | `PRODUCT_DOSSIER_FA.pdf` | TPM, stakeholders | §1–10: exhaustive feature catalog, Fit-Gap verdict, critical findings, risks, unit economics, deadline strategy, Now/Next/Later scope, meeting Q&A. §25: HR product ideas, global and Iranian competitors, 13 HCM/HRIS vendors, feature-extraction matrix, approaches from competitor blogs, SAP deep dive, Chargoon, buyer-readiness test against Chargoon's selection guide, red lines, web sources. §27: Persian summary of `FEATURE_CATALOG.md` (17 domains, the ticketing decision "one internal `create_request` tool, platform routes inside or outside", 9 judgments, release cut R0–R4) |
 | `FIT_GAP_TRACKER.xlsx` + `FIT_GAP_TRACKER_FA.html` | You (to fill in) | The 87 agreement rows plus code-verified status, evidence, confidence, dependency owner, proposed conditional deadline and action. RTL, filterable, with a live summary sheet |

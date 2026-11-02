@@ -11,7 +11,7 @@ COA را با CCA یکی نگیرید: CCA به تحلیل تماس/مکالمه
 ## مرز با پروژه‌های دیگر
 
 - اگر کار دربارهٔ محصول یا کد COA به‌طور کلی است، از این زمینه شروع کنید.
-- اگر درخواست دربارهٔ تطبیق Phoenix/COA برای HR یا پایلوت صدای کارکنان (EX) است، زمینهٔ HR/EX را هم بخوانید: `product-learning-docs/product-management/HR_PROJECT_CONTEXT_FA.md`.
+- اگر درخواست دربارهٔ تطبیق Phoenix/COA برای HR یا پایلوت صدای کارکنان (EX) است، زمینهٔ HR/EX را هم بخوانید: `hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md`.
 - COA با LLM Hub ارتباط نام‌گذاری‌شده‌ای ندارد؛ اشارهٔ صرف به AI یا چت‌بات، درخواست را به LLM Hub تبدیل نمی‌کند.
 
 ## اصول کار
@@ -22,8 +22,8 @@ COA را با CCA یکی نگیرید: CCA به تحلیل تماس/مکالمه
 
 ## منابع شروع
 
-- `product-learning-docs/README.md` — نمای معماری Phoenix، سرویس‌های مرتبط و اشاره‌گرهای کد.
-- `product-learning-docs/product-management/HR_PROJECT_CONTEXT_FA.md` — معنای COA در محصول Phoenix و رابطه‌اش با HR/EX.
-- `product-learning-docs/product-management/IVA_COA_PIPELINES.html` — مرور خط لولهٔ IVA و COA.
+- `hr-ex-phoenix/README.md` — نمای معماری Phoenix، سرویس‌های مرتبط و اشاره‌گرهای کد.
+- `hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md` — معنای COA در محصول Phoenix و رابطه‌اش با HR/EX.
+- `hr-ex-phoenix/technical/IVA_COA_PIPELINES.html` — مرور خط لولهٔ IVA و COA.
 
 مسیرهای واقعی کد بسته به مخزن کاری فرق می‌کنند؛ قبل از نتیجه‌گیری، مخزن و شاخهٔ درست COA را شناسایی کنید.

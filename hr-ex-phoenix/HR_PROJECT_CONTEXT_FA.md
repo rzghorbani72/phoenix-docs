@@ -46,15 +46,15 @@
 
 مسیرها نسبت به ریشهٔ مخزن هستند:
 
-- `product-learning-docs/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html` — PRD رفتار IVA برای پایلوت EX، خط قرمزها، سناریوهای آزمون و تصمیم‌های باز.
-- `product-learning-docs/product-management/PRODUCT_DOSSIER_FA.html` — وضعیت محصول و کد، ایده‌های HR، رقبا و قابلیت‌ها؛ به‌ویژه فصل ۲۵.
-- `product-learning-docs/product-management/FEATURE_CATALOG_FA.html` — کاتالوگ قابلیت‌ها، وضعیت فعلی، اولویت و برش انتشار.
-- `product-learning-docs/product-management/MARKET_ALIGNMENT_FA.html` — نگاشت نیازهای توافق پایلوت به الگوهای بازار و مرزبندی سازمانی/داده.
-- `product-learning-docs/product-management/INSPIRATION_PLAYBOOK_FA.html` — نمونه‌های بازار و نحوهٔ کار قابلیت‌های مشابه.
-- `product-learning-docs/product-management/START_HERE_FA.html` — راهنمای انتخاب سند بر اساس پرسش.
-- `product-learning-docs/README.md` — فهرست اسناد و روش نگهداری/ساخت خروجی‌ها.
+- `hr-ex-phoenix/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html` — PRD رفتار IVA برای پایلوت EX، خط قرمزها، سناریوهای آزمون و تصمیم‌های باز.
+- `hr-ex-phoenix/product-management/PRODUCT_DOSSIER_FA.html` — وضعیت محصول و کد، ایده‌های HR، رقبا و قابلیت‌ها؛ به‌ویژه فصل ۲۵.
+- `hr-ex-phoenix/product-management/FEATURE_CATALOG_FA.html` — کاتالوگ قابلیت‌ها، وضعیت فعلی، اولویت و برش انتشار.
+- `hr-ex-phoenix/product-management/MARKET_ALIGNMENT_FA.html` — نگاشت نیازهای توافق پایلوت به الگوهای بازار و مرزبندی سازمانی/داده.
+- `hr-ex-phoenix/product-management/INSPIRATION_PLAYBOOK_FA.html` — نمونه‌های بازار و نحوهٔ کار قابلیت‌های مشابه.
+- `hr-ex-phoenix/product-management/START_HERE_FA.html` — راهنمای انتخاب سند بر اساس پرسش.
+- `hr-ex-phoenix/README.md` — فهرست اسناد و روش نگهداری/ساخت خروجی‌ها.
 
 ## متن آماده برای آغاز کار با Codex یا Claude
 
-> زمینه: روی محصول مدیریت منابع انسانی Phoenix کار می‌کنیم. محصول فعلی از COA، CCA و IVA تشکیل شده و هدف، استفادهٔ مجدد از آن برای HR است: قابلیت‌های نامرتبط پنل را متناسب با تصمیم محصول حذف/پنهان/بازطراحی کنیم، قابلیت‌های مفید را نگه داریم و قابلیت‌های HR را اضافه کنیم. پایلوت مستند فعلی «صدای کارکنان / EX» است و همهٔ ایده‌های HR الزاماً در دامنهٔ پایلوت نیستند. فایل `product-learning-docs/product-management/HR_PROJECT_CONTEXT_FA.md` را بخوان؛ برای نیازمندی قطعی EX به `IVA_EX_PROMPT_REQUIREMENTS_FA.html` و توافق UAT، برای قابلیت و رقبا به `PRODUCT_DOSSIER_FA.html` فصل ۲۵، و برای وضعیت واقعی کد به مستندات فنی/خود کد رجوع کن. موجود، نیازمند تغییر، پیشنهاد و تصمیم باز را از هم جدا نگه دار و ادعای محصولی را بدون منبع قطعی نکن.
+> زمینه: روی محصول مدیریت منابع انسانی Phoenix کار می‌کنیم. محصول فعلی از COA، CCA و IVA تشکیل شده و هدف، استفادهٔ مجدد از آن برای HR است: قابلیت‌های نامرتبط پنل را متناسب با تصمیم محصول حذف/پنهان/بازطراحی کنیم، قابلیت‌های مفید را نگه داریم و قابلیت‌های HR را اضافه کنیم. پایلوت مستند فعلی «صدای کارکنان / EX» است و همهٔ ایده‌های HR الزاماً در دامنهٔ پایلوت نیستند. فایل `hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md` را بخوان؛ برای نیازمندی قطعی EX به `IVA_EX_PROMPT_REQUIREMENTS_FA.html` و توافق UAT، برای قابلیت و رقبا به `PRODUCT_DOSSIER_FA.html` فصل ۲۵، و برای وضعیت واقعی کد به مستندات فنی/خود کد رجوع کن. موجود، نیازمند تغییر، پیشنهاد و تصمیم باز را از هم جدا نگه دار و ادعای محصولی را بدون منبع قطعی نکن.
 
