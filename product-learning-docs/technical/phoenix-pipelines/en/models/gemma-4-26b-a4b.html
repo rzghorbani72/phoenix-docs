@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light"><title>Gemma-4 26B-A4B · shared pool (gemma4-26b-llm-lb) · Phoenix EX pipelines</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#0f141a;--surface:#161d26;--surface-2:#1d2631;--ink:#e4e9ef;--muted:#9aa6b4;--line:#2c3744;
+--accent:#8fb4ef;--ok:#84d48c;--ok-bg:#15301a;--warn:#f1c45c;--warn-bg:#34290b;--bad:#ff9289;--bad-bg:#3a1714;
+--gap:#c9cdd3;--gap-bg:#2a3039;--info:#8fbfff;--info-bg:#142a47;--code-bg:#1b2430;
+--c-violet:#b79cf5;--c-teal:#5eead4;--c-pink:#f9a8d4;--c-orange:#fdba74;--c-cyan:#67e8f9;
+--f-body:"Vazirmatn","Noto Sans Arabic",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace;--col:1240px}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;
+--ink:#17202b;--muted:#5b6776;--line:#d6dde5;--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;
+--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;
+--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;--c-orange:#b55d0c;--c-cyan:#0e7f93}}
+:root[data-theme="light"]{--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;--ink:#17202b;--muted:#5b6776;--line:#d6dde5;
+--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;
+--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;
+--c-orange:#b55d0c;--c-cyan:#0e7f93}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.75 var(--f-body)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:5px;overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+pre{background:var(--code-bg);padding:12px 14px;border-radius:10px;overflow:auto;direction:ltr;text-align:left}pre code{background:none;padding:0}
+.wrap{max-width:var(--col);margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;gap:14px;align-items:center;min-height:52px;flex-wrap:wrap}
+header.top .brand{font-weight:800;color:var(--ink)}header.top nav{display:flex;gap:14px;flex-wrap:wrap;margin-inline-start:auto;font-size:.92em}
+header.top button{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font:inherit;cursor:pointer}
+h1{font-size:1.9em;line-height:1.3;margin:28px 0 6px}h2{font-size:1.3em;margin:34px 0 10px;padding-top:6px}h3{font-size:1.08em;margin:22px 0 6px}
+.lede{color:var(--muted);max-width:860px;margin:0 0 10px}
+.meta{color:var(--muted);font-size:.85em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.85em;color:var(--muted);margin:14px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78em;font-weight:600;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-live{color:var(--ok);background:var(--ok-bg)}.s-off{color:var(--gap);background:var(--gap-bg)}
+.s-notdeployed{color:var(--bad);background:var(--bad-bg)}.s-external{color:var(--warn);background:var(--warn-bg)}
+.s-unknown{color:var(--info);background:var(--info-bg)}
+/* system overview */
+.sys{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin:16px 0;overflow-x:auto}
+.sys svg{width:100%;min-width:760px;height:auto;display:block}
+.sys a text{fill:var(--ink)}.sys .sub{fill:var(--muted)}.sys .edge{stroke:var(--muted);fill:none;stroke-width:1.6}
+.sys .elab{fill:var(--muted);font-size:12px}.sys a:hover rect{filter:brightness(1.25)}
+/* lanes */
+.lane{border:1px solid var(--line);border-radius:14px;margin:22px 0;background:var(--surface);overflow:hidden}
+.lane>.lh{padding:12px 16px;border-bottom:1px solid var(--line);border-inline-start:6px solid var(--lc)}
+.lane>.lh h2{margin:0;padding:0;font-size:1.15em}.lane>.lh p{margin:2px 0 0;color:var(--muted);font-size:.9em}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px 30px;padding:16px;padding-inline-end:36px}
+.card{position:relative;min-height:118px;background:var(--surface-2);border:1px solid var(--line);
+border-top:3px solid var(--lc);border-radius:10px;padding:10px 12px;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.card:hover{text-decoration:none;border-color:var(--lc);transform:translateY(-1px)}
+.card .n{font-family:var(--f-mono);font-size:.75em;color:var(--lc)}
+.card .t{font-weight:700;line-height:1.35}.card .m{font-size:.8em;color:var(--muted);line-height:1.4}
+.card .b{margin-top:auto}
+.card:not(:last-child)::after{content:"→";position:absolute;inset-inline-end:-22px;top:42%;color:var(--muted);font-size:1.1em}
+[dir=rtl] .card:not(:last-child)::after{content:"←"}
+.handoff{padding:0 16px 14px;color:var(--muted);font-size:.85em}
+/* step page */
+.crumbs{font-size:.85em;color:var(--muted);margin-top:18px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.fact .k{font-size:.75em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.fact .v{font-weight:600;overflow-wrap:anywhere}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0}
+.sec h2{font-size:1.08em;margin:14px 0 6px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9em;margin:6px 0}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}th{color:var(--muted);font-weight:600}
+.note{border-inline-start:4px solid var(--info);background:var(--info-bg);padding:8px 12px;border-radius:8px;margin:8px 0}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}.note.bad{border-color:var(--bad);background:var(--bad-bg)}
+.inf{color:var(--warn);font-style:italic;font-size:.9em}
+.pn{display:flex;justify-content:space-between;gap:12px;margin:26px 0 40px;flex-wrap:wrap}
+.pn a{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;max-width:48%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.mcard h3{margin:0 0 4px}.mcard .size{font-family:var(--f-mono);color:var(--accent);font-size:.9em}
+.sev{font-weight:700;font-size:.8em;padding:1px 8px;border-radius:6px}.sev-high{color:var(--bad);background:var(--bad-bg)}
+.sev-med{color:var(--warn);background:var(--warn-bg)}.sev-low{color:var(--gap);background:var(--gap-bg)}
+footer{color:var(--muted);font-size:.82em;border-top:1px solid var(--line);margin-top:40px;padding:16px 0 30px}
+@media (max-width:640px){.flow{grid-template-columns:1fr;gap:30px;padding-inline-end:16px}.card:not(:last-child)::after{content:"↓";inset-inline-end:auto;inset-inline-start:50%;top:auto;bottom:-22px}
+h1{font-size:1.5em}.pn a{max-width:100%}}
+</style><script>
+(function(){var k='pp-theme',r=document.documentElement;try{var t=localStorage.getItem(k);if(t)r.dataset.theme=t}catch(e){}
+document.addEventListener('click',function(e){if(e.target.id!=='themeBtn')return;
+var d=r.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+r.dataset.theme=d==='light'?'dark':'light';try{localStorage.setItem(k,r.dataset.theme)}catch(e){}});})();
+</script></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="../index.html">Phoenix EX pipelines</a>
+<nav><a href="../index.html">Pipeline map</a><a href="../models.html">Models</a>
+<a href="../risks.html">Risks & gaps</a><a href="../guide.html">Guide</a><a href="../../fa/models/gemma-4-26b-a4b.html">فارسی</a><button id="themeBtn" type="button">◐</button></nav></div></header>
+<main class="wrap"><div class="crumbs"><a href="../models.html">Every model in the platform: what, how big, where served, who uses it, and why</a></div><h1 style="border-inline-start:6px solid var(--accent);padding-inline-start:12px">Gemma-4 26B-A4B · shared pool (gemma4-26b-llm-lb)</h1><p><span class="badge s-live">Live</span> <span class="size">26B total · ~4B active (MoE) · 23K context here</span></p><p class="lede">In one paragraph for a TPM: Gemma-4 26B-A4B is a mixture-of-experts model: it stores ~26B parameters but uses only about 4B for each token. That makes it nearly as knowledgeable as a large model but several times faster and cheaper per token than the dense 31B. EX uses it for every quick decision in a voice turn: has the caller finished speaking, does the call need to end, does the request need clarifying, which branch should answer. Until today it also ran the main EX answer agent. It has the largest context cap in the platform (23,000 tokens), but speculative decoding is switched off on the k8s pod because of a vLLM bug.</p><div class="facts"><div class="fact"><div class="k">Model (fact)</div><div class="v">Gemma-4 26B-A4B-it, MoE, open weights</div></div><div class="fact"><div class="k">Size (fact)</div><div class="v">~26B total, ~4B active per token</div></div><div class="fact"><div class="k">Native context (fact)</div><div class="v">~256K</div></div><div class="fact"><div class="k">Context cap here</div><div class="v">23,000 (<code>prod/gemma4-26b/values.yaml:90-91</code>)</div></div><div class="fact"><div class="k">Engine</div><div class="v">vLLM <code>v0.25.1</code></div></div><div class="fact"><div class="k">LB</div><div class="v"><code>gemma4-26b-llm-lb:8080</code>, 3 Envoy v1.38.3</div></div><div class="fact"><div class="k">Upstreams</div><div class="v">k8s pod + <code>172.16.21.4:8225/8226</code></div></div></div><section class="sec"><h2>Used in these steps</h2><ul><li><a href="../steps/v-turn.html">End-of-turn detection (LLM)</a></li><li><a href="../steps/b-intent.html">Intent: should the call end?</a></li><li><a href="../steps/b-clarify.html">Clarifying / small talk (speculative)</a></li><li><a href="../steps/b-classify.html">Route classifier</a></li><li><a href="../steps/b-voicebridge.html">Voice bridge (filler sentence)</a></li><li><a href="../steps/b-signal.html">Signal turns (no user speech)</a></li></ul></section><section class="sec"><h2>What it is (model facts)</h2><p>A sparse MoE member of Gemma-4. A router picks a few experts per token, so compute per token is ~4B parameters while the full ~26B must sit in GPU memory. Native multimodal input (text + image); here text-only. 'A4B' = about 4B active.</p></section><section class="sec"><h2>How it is served here</h2><div class="tw"><table><thead><tr><th>Item</th><th>Value</th><th>Ref</th></tr></thead><tbody><tr><td>k8s deployment</td><td><code>gemma4-26b</code>, 1 replica, vLLM v0.25.1</td><td><code>prod/gemma4-26b/values.yaml:2,5</code></td></tr><tr><td>Served name</td><td><code>google/gemma-4-26B-A4B-it</code></td><td><code>:93-94</code></td></tr><tr><td>Flags</td><td>max-model-len 23000, gpu-mem 0.95, <code>--async-scheduling</code>, tool + reasoning parsers <code>gemma4</code>, multimodal limits 0</td><td><code>:86-105</code></td></tr><tr><td>Speculative decoding</td><td><strong>commented out</strong>: “Temporarily disable speculative decoding for gemma4 26b since there is a bug with vllm 0.25.1”</td><td><code>:106-108</code></td></tr><tr><td>LB upstreams</td><td><code>gemma4-26b-lb:8000</code>, <code>172.16.21.4:8225</code>, <code>172.16.21.4:8226</code> (8221 commented out)</td><td><code>prod/gemma4-26b-llm-lb/values.yaml:231-247</code></td></tr><tr><td>Recent LB churn</td><td><code>cd0aefa93</code> “temporarily remove 8226” (10-18), <code>a162c2c21</code> “reinsert removed endpoint” (10-25)</td><td>git</td></tr></tbody></table></div></section><section class="sec"><h2>Who uses it</h2><div class="tw"><table><thead><tr><th>Service</th><th>Component</th><th>Role</th><th>Env var</th><th>Ref</th></tr></thead><tbody><tr><td>chatbot-ex (EX)</td><td>iva-chatbot</td><td>intent (should the call end?)</td><td><code>INTENT_AGENT_LLM_*</code></td><td><code>prod/chatbot-ex/values.yaml:2484-2487</code></td></tr><tr><td>chatbot-ex (EX)</td><td>iva-chatbot</td><td>clarifying / small talk (defined twice)</td><td><code>CLARIFYING_LLM_*</code></td><td><code>:2461-2466</code>, <code>:2555-2560</code></td></tr><tr><td>chatbot-ex (EX)</td><td>iva-chatbot</td><td>route classifier</td><td><code>CLASSIFYING_LLM_*</code></td><td><code>:2547-2552</code></td></tr><tr><td>chatbot-ex (EX)</td><td>iva-chatbot</td><td>voice bridge filler (disabled)</td><td><code>VOICE_BRIDGE_LLM_*</code>, temp 0.5</td><td><code>:2533-2546</code></td></tr><tr><td>chatbot-ex (EX)</td><td>iva-chatbot</td><td>idle message (disabled) via AxonHub</td><td><code>IDLE_LLM_*</code></td><td><code>:2492-2499</code></td></tr><tr><td>chatbot-ex (EX)</td><td>agent (LiveKit, 6 replicas)</td><td>LLM end-of-turn detection</td><td><code>AGENT_TURN_MODEL=openai</code>, <code>AGENT_OPENAI_TURN_*</code></td><td><code>:3067-3072</code></td></tr><tr><td>aiva, aiva-poll, aiva-neda</td><td>api, agent</td><td>intent, classify, clarify, voice bridge, turn</td><td>same names</td><td>e.g. <code>prod/aiva-poll/values.yaml:139,802,962,1678</code></td></tr><tr><td>mci-agentic</td><td>chatbot, coa-api, grogu-ticket</td><td>main agent, tool calling, <strong>context filter</strong> (since 11-01), user-info, ticket</td><td><code>AGENT_LLM_MODEL</code>, <code>TOOL_CALLING_OPENAI_MODEL</code>, <code>CONTEXTS_FILTER_LLM_MODEL</code></td><td><code>prod/mci-agentic/values.yaml:380,817,882,1948,4209</code></td></tr><tr><td>chatbot-mci-iva</td><td>api</td><td>guardrail, redirect check</td><td><code>GUARDRAIL_OPENAI_MODEL</code>, <code>REDIRECT_CONFIRMATION_CHECK_OPENAI_MODEL</code></td><td><code>prod/chatbot-mci-iva/values.yaml:126,485</code></td></tr><tr><td>…</td><td>ewano, mobinnet, agent-chat, english-avatar, se-agent (guardrail), zazu, arbaeen</td><td>various</td><td></td><td>platform scan</td></tr></tbody></table></div><p>EX steps: <a href="../steps/v-turn.html">end-of-turn</a>, <a href="../steps/b-intent.html">intent</a>, <a href="../steps/b-clarify.html">clarify</a>, <a href="../steps/b-classify.html">classify</a>, <a href="../steps/b-voicebridge.html">voice bridge</a>, <a href="../steps/b-signal.html">signal turns</a>.</p></section><section class="sec"><h2>Why it is used there</h2><p>Each of these steps runs on every turn, often several in parallel, before the caller hears anything. They are short classification-style prompts, so a ~4B-active model gives enough judgement while keeping the turn fast <span class="inf">(inferred)</span>. Commits <code>62c1f34ab</code> and <code>220cf41ea</code> (Oct 14–17) moved several bots “from old gpt oss model urls to new gemma4 26b”, making 26B-A4B the platform's default fast model.</p><p>Code note: the LiveKit agent's own default for turn detection is the 31B (<code>phoenix:python/chatbot-iva-agent/src/config.py:105</code>); EX overrides it to 26B. Turn modes are <code>mci</code>, <code>openai</code>, <code>deactive</code> (<code>src/enums.py:21-24</code>).</p></section><section class="sec"><h2>Trade-offs</h2><ul><li><strong>Speed vs depth:</strong> fast and cheap, but weaker than 31B on multi-step reasoning; EX moved its main agent off 26B after two days (inferred: quality).</li><li><strong>23K cap</strong> is the most generous in the platform; prompts that fit here may not fit on the 31B (15K).</li><li><strong>No spec-decode on the k8s pod:</strong> one of the speed levers is off until vLLM is fixed; the COA 26B pod (vLLM 0.23.0) still has it on.</li></ul></section><section class="sec"><h2>Risks and open questions</h2><ul><li><code>CLARIFYING_LLM_*</code> is defined twice in EX values; the later one wins. Same value today, drift risk.</li><li>Exporter scrapes <code>172.16.21.4:8220/8221</code> (not in the LB) as 26B; check labels in Grafana.</li><li>Is spec-decode on for the two bare-metal upstreams? Not visible.</li></ul></section><section class="sec"><h2>How to observe it</h2><ul><li>Prometheus job <code>vllm-gemma4-gpu-exporter</code> (bare-metal 8225/8226) + pod ServiceMonitor; Envoy stats on the LB.</li><li>Phoenix <code>chatbot-ex-iva</code>: spans for intent / classify / clarify carry <code>llm.model_name = google/gemma-4-26B-A4B-it</code>.</li><li>Turn-detection latency also in Elastic APM from the LiveKit agent.</li></ul></section><div class="pn"><a href="gemma-4-31b-coa.html">← Gemma-4 31B · COA and zarebin pools</a><a href="gemma-4-26b-coa.html">Gemma-4 26B-A4B · COA pool →</a></div></main>
+<footer class="wrap">Status labels: Live = in prod config and wired. Configured, off = present but disabled by a flag. Not deployed = code exists, no prod component. External = outside the cluster or outside both repos. Text marked <span class="inf">(inferred)</span> is reasoning, not code. Model sizes are public model facts, not read from code.</footer></body></html>

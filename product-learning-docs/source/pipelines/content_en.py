@@ -7,18 +7,21 @@ outside our repos) | unknown. Every code claim carries a path:line reference.
 """
 
 from content_en_brain import BRAIN_STEPS
+from content_en_guide import GUIDE
+from content_en_models import MODELS
+from content_en_framework import FRAMEWORK_LANE, FRAMEWORK_STEPS
 
 OPS = "chatbot-ops/prod/chatbot-ex/values.yaml"
 AG = "python/chatbot-iva-agent@3524df3f"
 
 UI = {
     "brand": "Phoenix EX pipelines",
-    "nav_map": "Pipeline map", "nav_models": "Models", "nav_risks": "Risks & gaps", "other_lang": "فارسی",
+    "nav_map": "Pipeline map", "nav_models": "Models", "nav_risks": "Risks & gaps", "nav_guide": "Guide", "other_lang": "فارسی",
     "status": {"live": "Live", "off": "Configured, off", "notdeployed": "Not deployed",
                "external": "External / outside repo", "unknown": "Unverified"},
     "legend_hint": "Click any step for its deep dive. Dashed boxes in the .drawio copy are off or not deployed.",
     "sys_title": "System at a glance", "steps_word": "steps",
-    "prev": "←", "next": "→", "back": "Back to the map",
+    "prev": "←", "next": "→", "back": "Back to the map", "back_models": "Back to all models",
     "used_in": "Used in these steps", "col_sev": "Severity", "col_issue": "Issue", "col_why": "Why it matters",
     "col_where": "Steps", "sev": {"high": "High", "med": "Medium", "low": "Low"},
 }
@@ -575,46 +578,8 @@ STEPS = {
         ]},
 }
 STEPS.update(BRAIN_STEPS)
-
-MODELS = {
-    "title": "Every model in EX: size, role and why",
-    "lede": "Sizes are public model facts (billions of parameters), not read from code. MoE models list total and active parameters: active parameters drive speed and cost per token.",
-    "cards": [
-        {"name": "Gemma-4 26B-A4B-it", "size": "26B total · ~4B active (MoE) · context 23K here", "status": "live",
-         "facts": ["**Role:** the main voice answer agent, intent, classifying, clarifying, end-of-turn detection, voice bridge (off).",
-                   "**Why:** near-large-model understanding at ~4B-model speed, which is what a live phone turn needs (inferred).",
-                   "**Serving:** `gemma4-26b-llm-lb`, vLLM 0.25.1, spec-decode off."],
-         "steps": ["v-turn", "b-intent", "b-clarify", "b-classify", "b-react", "b-voicebridge"]},
-        {"name": "Gemma-4 31B-it", "size": "31B dense · context 15K here", "status": "live",
-         "facts": ["**Role:** guardrail, KB speakable summary, suggestion markdown, text chatbot agent, diacritisation.",
-                   "**Why:** best in-house Persian quality where safety or wording matters more than latency (inferred).",
-                   "**Serving:** `gemma-4-31b-llm-lb`, vLLM 0.25.1, MTP speculative decoding."],
-         "steps": ["b-guardrail", "b-guard-reply", "k-summarize"]},
-        {"name": "Gemma-4 E2B-it", "size": "~2B effective (~5B with embeddings)", "status": "live",
-         "facts": ["**Role:** relevance filter over retrieved Q&A on every turn.", "**Why:** easy pick-from-list task, every turn, lowest latency (inferred).",
-                   "**Serving:** bare-metal only, flags not in git."], "steps": ["k-filter"]},
-        {"name": "hakim-unsup", "size": "≈0.12B encoder · 768-d (unverified)", "status": "live",
-         "facts": ["**Role:** embeds KB questions and each employee utterance.", "**Why:** in-house Persian encoder, cheap enough for CPU (inferred).",
-                   "**Serving:** vLLM pooling, max length 512."], "steps": ["k-embed", "k-search"]},
-        {"name": "Silero VAD", "size": "≈1M params (0.001B) · CPU", "status": "live",
-         "facts": ["**Role:** speech / silence detection inside each call process.", "**Why:** standard, tiny, per-frame fast."], "steps": ["v-vad"]},
-        {"name": "Soniox real-time STT", "size": "proprietary · size not published", "status": "external",
-         "facts": ["**Role:** live Persian transcription.", "**Why:** streaming accuracy and latency (inferred).", "**Note:** employee audio leaves the cluster."], "steps": ["v-stt"]},
-        {"name": "OpenAI gpt-6-luna", "size": "proprietary", "status": "external",
-         "facts": ["**Role:** greeting agent; also the shared AQA NL2SQL agent.", "**Note:** the only EX text generation outside the cluster."], "steps": ["b-greeting", "v-session", "a-aqa"]},
-        {"name": "neurobox TTS `ex_prod`", "size": "unknown (VITS-class ≈0.03–0.04B if VITS, inferred)", "status": "unknown",
-         "facts": ["**Role:** speaks every answer.", "**Serving:** Triton behind `neurobox-gateway-green` (neurobox-prod, not in our repos)."], "steps": ["v-tts"]},
-        {"name": "k2 ASR `coa_iva_prod_long` + emotion + gender", "size": "unknown", "status": "external",
-         "facts": ["**Role:** offline re-transcription for analytics.", "**Serving:** `asr-k2-tmp-gw-proxy` (neurobox-prod)."], "steps": ["a-asr"]},
-        {"name": "CCA engine models", "size": "likely Gemma-4 26B-A4B and/or 31B COA pools (inferred)", "status": "external",
-         "facts": ["**Role:** call tagging, sentiment, summary, categories.", "**Note:** no client of the COA pools in our repos."], "steps": ["a-cca"]},
-    ],
-    "sections": [
-        ("How to read “B”", ["**B = billions of parameters.** It sets memory and quality. For MoE models (“A4B”, “A3B”) only the active part runs per token, so a 26B-A4B model decodes about as fast as a 4B dense model but needs the memory of a 26B one.",
-                             "**Context length** (15K, 23K tokens here) is the most the model can read at once: system prompt + KB contexts + history + answer. It is set per deployment (`--max-model-len`), not by the model.",
-                             "**Token budgets per step** (max output tokens, temperature) are listed on each step page when the code sets them."]),
-    ],
-}
+STEPS.update(FRAMEWORK_STEPS)
+LANES.append(dict(FRAMEWORK_LANE, band=True))
 
 RISKS = {
     "title": "Risks and gaps a TPM should track",
@@ -642,5 +607,5 @@ RISKS = {
 }
 
 DATA = {"lang": "en", "dir": "ltr", "ui": UI, "meta": META, "lanes": LANES, "system_edges": SYSTEM_EDGES,
-        "key_points": KEY_POINTS, "steps": STEPS, "models": MODELS, "risks": RISKS}
+        "key_points": KEY_POINTS, "steps": STEPS, "models": MODELS, "guide": GUIDE, "risks": RISKS}
 DATA["lanes"][1]["steps"] = [k for k in BRAIN_STEPS]
