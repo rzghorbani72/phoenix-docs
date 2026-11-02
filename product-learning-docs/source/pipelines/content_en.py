@@ -27,7 +27,7 @@ META = {
     "title": "Phoenix EX (Employee Voice): every pipeline, step by step",
     "title_plain": "Phoenix EX pipelines",
     "lede": "How an employee's phone call becomes a live AI conversation, how the agent decides each answer, where its knowledge comes from, and how every call becomes analytics. Each box opens a deep dive: the model, its size, why it is used, inputs and outputs, settings and the exact logic.",
-    "source": "Read from code and prod config on 2026-11-02: `chatbot-ops` prod @ `e748fd027`; `phoenix` main @ `7b7c602eb`. Code refs follow what prod actually runs: aiva v0.31.1 (= commit `206e55746`; main is already at 0.33.3), voice agent `3524df3f` from the unmerged branch `feat-soniox-lang` (main v0.40.0 has no Soniox), coa-api v5.22.0 (= main). Paths are relative to each repo.",
+    "source": "Read from code and prod config on 2026-11-02: `chatbot-ops` prod @ `dd851385e` (includes the 2026-11-02 move of the EX main agent and guardrail to a dedicated Gemma-4 31B); `phoenix` main @ `7b7c602eb`. Code refs follow what prod actually runs: aiva v0.31.1 (= commit `206e55746`; main is already at 0.33.3), voice agent `3524df3f` from the unmerged branch `feat-soniox-lang` (main v0.40.0 has no Soniox), coa-api v5.22.0 (= main). Paths are relative to each repo.",
     "footer": "Status labels: Live = in prod config and wired. Configured, off = present but disabled by a flag. Not deployed = code exists, no prod component. External = outside the cluster or outside both repos. Text marked (inferred) is reasoning, not code. Model sizes are public model facts, not read from code.",
 }
 
@@ -71,7 +71,7 @@ SYSTEM_EDGES = [
 ]
 
 KEY_POINTS = [
-    {"note": "**In one sentence:** Soniox (cloud) transcribes the employee → a Gemma-4 26B-A4B model decides the turn is over → aiva runs guardrail, retrieval (Hakim embeddings + Gemma-4 E2B filter) and a Gemma-4 26B-A4B ReAct agent → neurobox TTS speaks the answer → after hang-up, grogu re-transcribes the call and the external CCA engine tags it for the EX panel."},
+    {"note": "**In one sentence:** Soniox (cloud) transcribes the employee → a Gemma-4 26B-A4B model decides the turn is over → aiva runs guardrail, retrieval (Hakim embeddings + Gemma-4 E2B filter) and a Gemma-4 31B ReAct agent (guardrail and agent share one dedicated 31B instance) → neurobox TTS speaks the answer → after hang-up, grogu re-transcribes the call and the external CCA engine tags it for the EX panel."},
     {"note": "**Things to know before you read:** prod runs code that is not on local `main`. Two steps send employee data outside the cluster (Soniox speech-to-text, OpenAI greeting). The LLM call-tagging engine (CCA) and the EX panel source are not in our repos. See [Risks & gaps](risks.html).", "kind": "warn"},
 ]
 
@@ -90,14 +90,14 @@ STEPS = {
                 "LiveKit creates a room with a SIP participant whose identity looks like `sip_+98912…`.",
                 "The worker has no `agent_name`, so LiveKit auto-dispatches every new room to it (inferred from LiveKit semantics) (`src/main.py:363-371`).",
                 "The job joins audio-only, waits for the participant, and extracts the phone number with regex `sip_\\+?([a-zA-Z0-9]+)`, normalised to `98…` (`main.py:79, 320-333`).",
-                "SIP headers `x-originalcallid` and `x-subscityid` are read. If the call id is missing EX falls back to the session id (`AGENT_ORIGINAL_CALL_ID_FALLBACK=session_id`, `" + OPS + ":3024`).",
+                "SIP headers `x-originalcallid` and `x-subscityid` are read. If the call id is missing EX falls back to the session id (`AGENT_ORIGINAL_CALL_ID_FALLBACK=session_id`, `" + OPS + ":3026`).",
             ]}),
-            ("Why it is built this way", "Pre-warmed processes (Silero VAD loaded, session object built) remove model-load time from the first second of the call. Drain timeout 1800 s and pod grace 1920 s let live calls finish during a rollout (`" + OPS + ":2966`)."),
+            ("Why it is built this way", "Pre-warmed processes (Silero VAD loaded, session object built) remove model-load time from the first second of the call. Drain timeout 1800 s and pod grace 1920 s let live calls finish during a rollout (`" + OPS + ":2968`)."),
             ("Risks", [
                 "LiveKit server, SIP trunk and dispatch rules are not in git: nobody can review them from code.",
-                "LiveKit API key/secret and the Redis password are plaintext in `" + OPS + ":3073-3076, 3180-3189`.",
+                "LiveKit API key/secret and the Redis password are plaintext in `" + OPS + ":3075-3078, 3182-3191`.",
             ]),
-            ("Sources", [f"`{AG}/src/main.py:79-109, 320-371`", f"`{OPS}:2965-3171` (agent component)"]),
+            ("Sources", [f"`{AG}/src/main.py:79-109, 320-371`", f"`{OPS}:2967-3173` (agent component)"]),
         ]},
     "v-session": {
         "title": "Session start and greeting", "title_plain": "Session + greeting", "status": "live",
@@ -109,13 +109,13 @@ STEPS = {
         "sections": [
             ("Logic", {"ol": [
                 "In the agent constructor `instructions=session_id` triggers a **synchronous** HTTP call to aiva `/chat/session` (`agents/agentlib.py:63-93`).",
-                "aiva gets or creates the `ChatbotUser` by phone, opens a `Session`, and its GreetingAgent writes a greeting from the user's long-term memory (`aiva/chat/views/session.py:43-81`). See [B1 Greeting agent](b-greeting.html).",
+                "aiva gets or creates the `ChatbotUser` by phone, opens a `Session`, and its GreetingAgent writes a greeting from the user's long-term memory (`aiva/chat/views/session.py:43-81`). See [B2 Greeting agent](b-greeting.html).",
                 "The agent starts the LiveKit session, waits `AGENT_SIP_RTP_STABILIZATION_DELAY=0.4 s` for the audio path to settle, then `session.say(greeting, allow_interruptions=True)` (`entrypoint.py:68-90`).",
-                "The thinking sound (`OFFICE_AMBIENCE`, volume 0.5) is armed; ambient background is off (`" + OPS + ":3026-3035`).",
+                "The thinking sound (`OFFICE_AMBIENCE`, volume 0.5) is armed; ambient background is off (`" + OPS + ":3028-3037`).",
             ]}),
             ("If it fails", {"note": "If `/chat/session` fails the session id becomes `unknown` and the agent speaks `AGENT_GREETING_MESSAGE`, whose code default is the **MCI greeting** (“سلام، من دستیار هوشمند همراه اول هستم…”). EX does not override it (`config.py:410-413`). An EX caller would hear the MCI assistant.", "kind": "bad"}),
-            ("Why OpenAI for the greeting", "The greeting is the only text-generation step in EX that leaves the cluster. The Gemma 26B URL is commented out (`" + OPS + ":2509-2521`). The commit does not say why (likely greeting quality or latency, inferred)."),
-            ("Sources", [f"`{AG}/src/agents/agentlib.py:63-93`", f"`{AG}/src/entrypoint.py:68-94`", f"`{OPS}:2508-2521, 3020-3035, 3126-3127`"]),
+            ("Why OpenAI for the greeting", "The greeting is the only text-generation step in EX that leaves the cluster. The Gemma 26B URL is commented out (`" + OPS + ":2511-2523`). The commit does not say why (likely greeting quality or latency, inferred)."),
+            ("Sources", [f"`{AG}/src/agents/agentlib.py:63-93`", f"`{AG}/src/entrypoint.py:68-94`", f"`{OPS}:2510-2523, 3022-3037, 3128-3129`"]),
         ]},
     "v-vad": {
         "title": "Voice activity detection (Silero)", "title_plain": "VAD (Silero)", "status": "live",
@@ -125,10 +125,10 @@ STEPS = {
                   ("Threshold", "0.3 (default 0.5)"), ("Min speech / silence", "0.2 s / 0.5 s")],
         "sections": [
             ("Settings in EX", {"table": [["Setting", "EX", "Code default", "Ref"],
-                ["`AGENT_VAD_ACTIVATION_THRESHOLD`", "**0.3**", "0.5", "`" + OPS + ":3105`"],
-                ["`AGENT_VAD_MIN_SPEECH_DURATION`", "**0.2 s**", "0.5", "`" + OPS + ":3109`"],
-                ["`AGENT_VAD_MIN_SILENCE_DURATION`", "**0.5 s**", "1.0", "`" + OPS + ":3097`"],
-                ["`AGENT_VAD_PREFIX_PADDING_DURATION`", "**0.5 s**", "2", "`" + OPS + ":3107`"]]}),
+                ["`AGENT_VAD_ACTIVATION_THRESHOLD`", "**0.3**", "0.5", "`" + OPS + ":3107`"],
+                ["`AGENT_VAD_MIN_SPEECH_DURATION`", "**0.2 s**", "0.5", "`" + OPS + ":3111`"],
+                ["`AGENT_VAD_MIN_SILENCE_DURATION`", "**0.5 s**", "1.0", "`" + OPS + ":3099`"],
+                ["`AGENT_VAD_PREFIX_PADDING_DURATION`", "**0.5 s**", "2", "`" + OPS + ":3109`"]]}),
             ("Why this model and these numbers", "Silero is the standard VAD for LiveKit: tiny, CPU-only, and fast enough to run per audio frame inside each call process. EX is tuned to be **sensitive**: a low threshold and 0.2 s minimum catch short Persian replies like «بله». The cost is more false triggers from line noise, and more barge-ins on noise (inferred). The installed noise-cancellation plugin is not used (`requirements.txt:67`)."),
             ("Inputs / outputs", "Input: caller PCM frames. Output: speech-start / speech-end events consumed by STT segmentation, the turn detector, barge-in and the user-away timer."),
             ("Sources", [f"`{AG}/src/main.py:88-98, 157-195`", f"`{AG}/src/config.py:63-67`"]),
@@ -142,7 +142,7 @@ STEPS = {
                   ("Path", "via egress proxy `envoy-relay-chatbot`"), ("Retries", "3 × 10 s timeout")],
         "sections": [
             ("Logic", [
-                "`AGENT_STT_CLIENT=soniox` selects `LoggedSonioxSTT`; the key is secret `aiva/soniox_api_key`; traffic goes through `AGENT_STT_PROXY` (`" + OPS + ":3115-3123`, `chatbotlib.py:284-296`).",
+                "`AGENT_STT_CLIENT=soniox` selects `LoggedSonioxSTT`; the key is secret `aiva/soniox_api_key`; traffic goes through `AGENT_STT_PROXY` (`" + OPS + ":3117-3125`, `chatbotlib.py:284-296`).",
                 "Soniox is a streaming recogniser, so frames go straight to it without a VAD stream adapter (`agentlib.py:299-311`). Interim and final transcripts arrive while the person is still talking.",
                 "Language hints `[\"fa\"]`, strict (`config.py:378-387`).",
                 "After 3 failed retries an STT error is counted; after `AGENT_MAX_UNRECOVERABLE_ERRORS=3` the session closes (inferred from LiveKit semantics).",
@@ -150,7 +150,7 @@ STEPS = {
             ("Why Soniox", "Higher Persian streaming accuracy and lower latency than the in-house ASR are the likely reasons (inferred; no decision record in code). The in-house k2 ASR is still used after the call for analytics (see [A3](a-asr.html))."),
             ("Watch out", ({"note": "**Branch drift:** Soniox support exists only in the deployed image `3524df3f` from branch `feat-soniox-lang`, which is **not merged into main**. Rebuilding the agent from main would silently send STT to an empty OpenAI URL (main: `src/agents/agentlib.py:354`).", "kind": "bad"},
                            {"note": "**Privacy:** employee voice leaves the cluster to a SaaS vendor, and every Soniox response is logged at INFO (`utils/soniox_stt.py:22-36`), so transcripts land in `/app/access.log`.", "kind": "warn"})),
-            ("Sources", [f"`{AG}/src/utils/soniox_stt.py`", f"`{AG}/src/agents/chatbotlib.py:284-296`", f"`{OPS}:3115-3123`"]),
+            ("Sources", [f"`{AG}/src/utils/soniox_stt.py`", f"`{AG}/src/agents/chatbotlib.py:284-296`", f"`{OPS}:3117-3125`"]),
         ]},
     "v-turn": {
         "title": "End-of-turn detection (LLM)", "title_plain": "End-of-turn LLM", "status": "live",
@@ -162,7 +162,7 @@ STEPS = {
         "sections": [
             ("Logic", {"ol": [
                 "VAD reports 0.5 s of silence.",
-                "LiveKit calls `OpenAICompatibleModel` (`AGENT_TURN_MODEL=openai`, `" + OPS + ":3065-3070`).",
+                "LiveKit calls `OpenAICompatibleModel` (`AGENT_TURN_MODEL=openai`, `" + OPS + ":3067-3072`).",
                 "System prompt: “end-of-turn detector… respond with a single float 0.0-1.0” (`config.py:114-123`). User message: `Chat history:` + `latest user input:` built from the last `AGENT_MAX_HISTORY_TURNS=6` messages (`openai_turn_detector.py:84-86, 172-205`).",
                 "The reply is parsed as `float(content)`. Below `AGENT_UNLIKELY_THRESHOLD=0.5` the turn is treated as unfinished and the agent waits longer (see [V6](v-endpoint.html)).",
                 "**Fail-safe:** any HTTP error, timeout or unparsable reply returns 1.0, meaning “turn finished” (`openai_turn_detector.py:88-92`).",
@@ -170,7 +170,7 @@ STEPS = {
             ("Why a 26B MoE for a yes/no question", "Persian end-of-turn needs language understanding (a trailing «که…» means more is coming). The A4B MoE gives near-large-model understanding at roughly 4B-model decode cost, and the reply is one token, so it is cheap (inferred). An older dedicated Persian turn model (`mci_turn_detector.py`) exists but is unused in EX."),
             ("Risks", ["It shares the `gemma4-26b-llm-lb` pool with 10 other services; under load the 8 s timeout and retries can stall a turn, and the fail-safe then cuts in.",
                        "The `timeout` argument LiveKit passes is ignored (`openai_turn_detector.py:82`)."]),
-            ("Sources", [f"`{AG}/src/utils/openai_turn_detector.py`", f"`{OPS}:3065-3070, 3018-3019`", "`chatbot-ops/prod/gemma4-26b/values.yaml:87-108`"]),
+            ("Sources", [f"`{AG}/src/utils/openai_turn_detector.py`", f"`{OPS}:3067-3072, 3020-3021`", "`chatbot-ops/prod/gemma4-26b/values.yaml:87-108`"]),
         ]},
     "v-endpoint": {
         "title": "Endpointing delay", "title_plain": "Endpointing", "status": "live",
@@ -178,7 +178,7 @@ STEPS = {
         "summary": "After the turn model answers, LiveKit waits a short, adaptive delay before committing the employee's turn and calling the brain.",
         "facts": [("Mode", "`dynamic`, alpha 0.99"), ("Min / max delay", "0.1 s / 0.5 s"), ("Code defaults", "fixed, 0.5 / 3.0 s")],
         "sections": [
-            ("Logic", "`EndpointingOptions(mode=dynamic, min_delay=0.1, max_delay=0.5, alpha=0.99)` (`main.py:159-166`, `" + OPS + ":3089-3104`). If the turn model says “finished” the wait is near `min_delay`; otherwise near `max_delay`. Dynamic mode adapts inside the range from observed pause statistics (inferred from LiveKit semantics)."),
+            ("Logic", "`EndpointingOptions(mode=dynamic, min_delay=0.1, max_delay=0.5, alpha=0.99)` (`main.py:159-166`, `" + OPS + ":3091-3106`). If the turn model says “finished” the wait is near `min_delay`; otherwise near `max_delay`. Dynamic mode adapts inside the range from observed pause statistics (inferred from LiveKit semantics)."),
             ("Latency budget (voice layer only)", {"table": [["Segment", "Value"],
                 ["VAD end-of-speech", "0.5 s silence"], ["End-of-turn LLM", "typically sub-second (inferred); up to 8 s × retries"],
                 ["Endpointing", "0.1–0.5 s"], ["aiva first token + first sentence", "brain lane"],
@@ -193,12 +193,12 @@ STEPS = {
                   ("Timeout", "10 s, 3 retries"), ("Model sent", "none (aiva decides)")],
         "sections": [
             ("Logic", [
-                "`livekit_openai.LLM(client=AsyncClient(base_url=AGENT_LLM_BASE_URL))` with `extra_body={session_id}` (`agentlib.py:326-344`, `" + OPS + ":3124-3125`).",
+                "`livekit_openai.LLM(client=AsyncClient(base_url=AGENT_LLM_BASE_URL))` with `extra_body={session_id}` (`agentlib.py:326-344`, `" + OPS + ":3126-3127`).",
                 "aiva also recovers the session from the system message, which is the session id (`aiva/chat/views/completion.py:72-81`).",
-                "While waiting, the thinking sound plays. `VOICE_BRIDGE_ENABLED=false`, so no filler sentence is generated (`" + OPS + ":2531`).",
+                "While waiting, the thinking sound plays. `VOICE_BRIDGE_ENABLED=false`, so no filler sentence is generated (`" + OPS + ":2533`).",
                 "Silence reminders reuse the same endpoint with `extra_body.signal=\"instruct\"` (`agentlib.py:506-531`).",
                 "aiva returns HTTP 204 when the last history item is a tool output with nothing to say (`completion.py:103-108`).",
-                "`AGENT_RECORD_LLM_REQUEST_TIMES=True` stores each request time for the Kafka summary (`" + OPS + ":3016`).",
+                "`AGENT_RECORD_LLM_REQUEST_TIMES=True` stores each request time for the Kafka summary (`" + OPS + ":3018`).",
             ]),
             ("Continue", "What happens inside aiva: [lane 2, the brain](../index.html#lane-brain)."),
         ]},
@@ -216,7 +216,7 @@ STEPS = {
                 "neurobox is an OpenAI-style façade over Triton gRPC; its cache keys are text + speed + format, TTL 24 h (`golang/neurobox-gateway/internal/api/tts.go:187-190`).",
             ]}),
             ("Unknown", {"note": "In main's neurobox-gateway the Triton model is fixed by gateway config and the request `model` is used only for metrics (`internal/services/tts.go:24, 61-84`). Which voice `ex_prod` maps to on the `green` gateway cannot be verified from our repos.", "kind": "warn"}),
-            ("Sources", [f"`{AG}/src/utils/tts.py`", f"`{OPS}:3128-3133`"]),
+            ("Sources", [f"`{AG}/src/utils/tts.py`", f"`{OPS}:3130-3135`"]),
         ]},
     "v-bargein": {
         "title": "Barge-in (interruptions)", "title_plain": "Barge-in", "status": "live",
@@ -224,7 +224,7 @@ STEPS = {
         "summary": "If the employee starts talking while the agent speaks, playback stops so the employee can be heard.",
         "facts": [("Mode", "VAD"), ("Min duration", "0.4 s"), ("Greeting interruptible", "yes"), ("Exit message interruptible", "no")],
         "sections": [
-            ("Logic", "`InterruptionOptions(enabled=True, mode=\"vad\", min_duration=0.4, min_words=0)` (`main.py:167-172`, `" + OPS + ":3111`). Interrupted assistant messages are marked `interrupted=true` in history and in the Kafka summary (`entrypoint.py:319`)."),
+            ("Logic", "`InterruptionOptions(enabled=True, mode=\"vad\", min_duration=0.4, min_words=0)` (`main.py:167-172`, `" + OPS + ":3113`). Interrupted assistant messages are marked `interrupted=true` in history and in the Kafka summary (`entrypoint.py:319`)."),
             ("Risk", "With VAD threshold 0.3, background noise of 0.4 s or more can cut the agent off (inferred)."),
         ]},
     "v-silence": {
@@ -411,7 +411,7 @@ STEPS = {
         "title": "Memory writer (summariser)", "title_plain": "Memory writer", "status": "notdeployed",
         "chip": "Kafka consumer · not deployed in EX", "chip_plain": "not deployed",
         "summary": "Code exists that reads finished calls from Kafka and summarises them into the employee's memory. EX does not deploy it.",
-        "facts": [("Command", "`aiva_consume_kafka`"), ("Prompt", "`aiva_summarize_agent_llm_template`"), ("Would use", "adcs `AGENT_LLM_*` → Gemma-4 26B-A4B (inferred)")],
+        "facts": [("Command", "`aiva_consume_kafka`"), ("Prompt", "`aiva_summarize_agent_llm_template`"), ("Would use", "adcs `AGENT_LLM_*` → Gemma-4 31B at `172.23.0.17:8318` (inferred)")],
         "sections": [
             ("What it would do", "Consume `aggregated` call events, merge previous memory with the new transcript, and overwrite `ChatbotUser.memory` with “user goals, constraints, decisions, key facts… always include the name” (`aiva/memory/management/commands/aiva_consume_kafka.py`, `aiva/prompts/memory.py`). No TTL or purge exists."),
             ("Open item", "EX `iva-chatbot` sets no `KAFKA_BOOTSTRAP_SERVERS`, yet `MemorySettings` requires it at import (`aiva/memory/config.py:15`). Confirm with `kubectl exec env`; either the image ships a `.env` or the reading is wrong."),
@@ -445,7 +445,7 @@ STEPS = {
                               "Write `calls.status=queued` and the first `call_ai_tags` row, then commit the Kafka offset (`worker.go:72-98`).",
                               "Set `in_progress` and process."]}),
             ("Note", "The summary already contains the live transcript, but grogu ignores it and re-transcribes the audio ([A3](a-asr.html)). That doubles ASR cost, and the analysed text can differ from what the bot heard."),
-            ("Failure", "Any error → dead-letter table → retry worker every 5 min (EX), up to 10 retries (`deadletter/worker.go:43`, `internal/config/config.go:102`, `" + OPS + ":3389-3396`)."),
+            ("Failure", "Any error → dead-letter table → retry worker every 5 min (EX), up to 10 retries (`deadletter/worker.go:43`, `internal/config/config.go:102`, `" + OPS + ":3391-3398`)."),
         ]},
     "a-merge": {
         "title": "Merge the two channels", "title_plain": "Channel merge", "status": "live",
@@ -513,7 +513,7 @@ STEPS = {
         "sections": [("Endpoints", ["`/api/v1/analyse/calls/recordings`, `/analyse/voice/call/<id>`, `Thematic-analysis/*`, `special-analysis/*`, `dashboard/*`",
                                     "`/api/v1/iva/dashboard/{metrics, satisfaction-timeseries, time-buckets}`",
                                     "`/api/v1/iva/announcement/*` (TTS `coa-ex-prod` + diacritisation)", "`/api/v1/trends/*`, `/tickets/*`, `/management/*`"]),
-                     ("Labels", "EX emotion tags: NORMAL عادی, COMPLAINING شاکی, ANGRY عصبانی, HAPPY خوشحال, SAD ناراحت, EXCITED هیجان‌زده, SWEAR الفاظ رکیک (`" + OPS + ":2684-2685`). Sentiment labels are inconsistent across code (`NORMAL`/`ANGRY`/`COMPLAINANT`/`COMPLAINING`).")]},
+                     ("Labels", "EX emotion tags: NORMAL عادی, COMPLAINING شاکی, ANGRY عصبانی, HAPPY خوشحال, SAD ناراحت, EXCITED هیجان‌زده, SWEAR الفاظ رکیک (`" + OPS + ":2686-2687`). Sentiment labels are inconsistent across code (`NORMAL`/`ANGRY`/`COMPLAINANT`/`COMPLAINING`).")]},
     "a-panel": {
         "title": "EX panel", "title_plain": "ex-agent-ui", "status": "external",
         "chip": "agent-ui v2.20.6 · source not in phoenix", "chip_plain": "EX panel",
@@ -532,14 +532,16 @@ STEPS = {
     "p-serving": {
         "title": "Model serving (vLLM pools)", "title_plain": "vLLM pools", "status": "live",
         "chip": "Envoy LB → k8s pod + bare-metal GPUs", "chip_plain": "vLLM pools",
-        "summary": "Each model is served by vLLM behind an Envoy load balancer that mixes one Kubernetes pod with several bare-metal GPU servers.",
+        "summary": "Each model is served by vLLM behind an Envoy load balancer that mixes one Kubernetes pod with several bare-metal GPU servers. One exception since 2026-11-02: the EX main agent and guardrail call a single bare-metal 31B instance directly, with no load balancer.",
         "sections": [
             ("Pools EX uses", {"table": [["Pool", "Model", "Context", "Notes"],
-                ["`gemma-4-31b-llm-lb`", "Gemma-4 31B", "15K", "speculative decoding (MTP, 4 tokens); shared by 17 services"],
-                ["`gemma4-26b-llm-lb`", "Gemma-4 26B-A4B", "23K", "spec-decode off (vLLM 0.25.1 bug); shared by 11 services"],
+                ["`172.23.0.17:8318` (no LB)", "Gemma-4 31B", "unknown", "dedicated bare-metal vLLM for EX main agent + guardrail since 2026-11-02; launch flags (context, spec-decode) not in git; not scraped by the exporter"],
+                ["`gemma-4-31b-llm-lb`", "Gemma-4 31B", "15K", "speculative decoding (MTP, 4 tokens); shared by 16 services; EX uses it only for KB summarise / markdown and text chat now"],
+                ["`gemma4-26b-llm-lb`", "Gemma-4 26B-A4B", "23K", "spec-decode off (vLLM 0.25.1 bug); shared by 11 services; EX: intent, router, clarifying, end-of-turn"],
                 ["`gemma-4-e2b-llm-lb`", "Gemma-4 E2B", "unknown", "bare-metal only; flags not in git; 13 services"],
                 ["`hakim-unsupervised-vllm-proxy`", "hakim-unsup", "512", "vLLM pooling (CPU + GPU)"]]}),
             ("Gaps", ["No values file requests GPUs or sets tensor-parallel, dtype or max-num-seqs; bare-metal launch flags are not in git.",
+                      "The dedicated 31B endpoint is a raw IP in the EX values (`" + OPS + ":1318-1327`), not behind any Envoy pool: no health check, no failover. The host `172.23.0.17` also backs other pools on other ports (31B pool `:8319`, zarebin, COA, Qwen, embeddings), so “dedicated” means its own vLLM process, not necessarily its own GPUs (inferred).",
                       "Context windows (15K / 23K) are far below the models' native windows; long prompts + history can hit vLLM 400 errors."]),
             ("Sources", ["`chatbot-ops/prod/gemma4-31b/values.yaml:86-107`", "`chatbot-ops/prod/gemma4-26b/values.yaml:87-108`", "`chatbot-ops/prod/gemma4-e2b-llm-lb/values.yaml:231-237`"]),
         ]},
@@ -556,7 +558,7 @@ STEPS = {
         "facts": [("Projects", "`chatbot-ex`, `chatbot-ex-iva`"), ("Sampling", "100% for IVA"), ("Retention", "30 days"),
                   ("Prompt tag", "`production` (greeting suggestion `v0_2_0`)")],
         "sections": [
-            ("How prompts load", "`USE_PHOENIX_PROMPTS=true`: aiva pulls each `*_TEMPLATE_PROMPT_NAME` by tag from `phoenix-svc:6006`. If loading fails, it falls back to the template in the env var of the same role (`aiva/prompts/loader/loader.py`, `" + OPS + ":1405-1459`). **Prompt versions are managed in Phoenix, not git**, so a prompt change is a production change without a code review."),
+            ("How prompts load", "`USE_PHOENIX_PROMPTS=true`: aiva pulls each `*_TEMPLATE_PROMPT_NAME` by tag from `phoenix-svc:6006`. If loading fails, it falls back to the template in the env var of the same role (`aiva/prompts/loader/loader.py`, `" + OPS + ":1407-1461`). **Prompt versions are managed in Phoenix, not git**, so a prompt change is a production change without a code review."),
             ("How to use it as a TPM", ["Prompts → open an `ex_iva_*` prompt → Versions shows who changed what.",
                                         "Tracing → project `chatbot-ex-iva` → filter by session to replay one call turn by turn, including retrieved contexts.",
                                         "Token counts per span depend on instrumentation; no explicit `LLM_TOKEN_COUNT_*` attribute was found (inferred)."]),
@@ -569,7 +571,7 @@ STEPS = {
             ("Useful series", ["tokens: `vllm:prompt_tokens_total`, `vllm:generation_tokens_total`",
                                "latency: `vllm:time_to_first_token_seconds`, `vllm:e2e_request_latency_seconds`",
                                "load: `vllm:num_requests_waiting`, KV-cache usage", "LB: `envoy_cluster_upstream_rq_time` per pool"]),
-            ("Caveats", {"note": "Exporter targets do not match LB upstreams: some live 31B ports are not scraped and the zarebin pool is labelled 31B, so per-model totals are incomplete. vLLM metrics cannot split EX from other products sharing a pool; use Phoenix traces for that.", "kind": "warn"}),
+            ("Caveats", {"note": "Exporter targets do not match LB upstreams: some live 31B ports are not scraped (including the dedicated EX endpoint `172.23.0.17:8318`, so the EX main agent and guardrail have no vLLM metrics) and the zarebin pool is labelled 31B, so per-model totals are incomplete. vLLM metrics cannot split EX from other products sharing a pool; use Phoenix traces for that.", "kind": "warn"}),
         ]},
 }
 STEPS.update(BRAIN_STEPS)
@@ -622,13 +624,14 @@ RISKS = {
         {"sev": "high", "title": "Employee data leaves the cluster", "why": "Live audio → Soniox; greeting context → OpenAI; logs hold transcripts and phone numbers; traces sampled at 100%.", "steps": ["v-stt", "v-session", "m-stores"]},
         {"sev": "high", "title": "No HR sensitive / emergency handling after the call", "why": "No taxonomy, classifier or alerting in code; the bot prompt assumes a backend that does not exist.", "steps": ["a-cca"]},
         {"sev": "high", "title": "Analysis engine (CCA) is a black box", "why": "Prompts, models and settings are not in our repos, so EX analytics cannot be audited.", "steps": ["a-cca"]},
+        {"sev": "high", "title": "Main agent and guardrail on one unmonitored endpoint", "why": "Since 2026-11-02 both call one bare-metal vLLM at `172.23.0.17:8318`: no load balancer, health check or failover, and not in the exporter, so no metrics. If it fails, every EX turn fails.", "steps": ["b-react", "b-guardrail", "p-serving", "p-metrics"]},
         {"sev": "high", "title": "Fallback prompts are broken", "why": "If Phoenix is unreachable at pod start, env fallbacks load; the ReAct one would make every main turn fail (KeyError) and the guardrail one ignores policies.", "steps": ["b-prompts"]},
         {"sev": "med", "title": "Grounding is prompt-only", "why": "Threshold 0.25 + fail-open filter on a ~2B model; no code gate for “no approved answer”.", "steps": ["k-search", "k-filter"]},
         {"sev": "med", "title": "Human transfer always fails and drops the call", "why": "`AGENT_SIP_REDIRECT_URL` unset.", "steps": ["v-end"]},
         {"sev": "med", "title": "MCI greeting fallback", "why": "If session creation fails the caller hears the MCI assistant greeting.", "steps": ["v-session"]},
         {"sev": "med", "title": "EX panel may show MCI data", "why": "Trends bucket, failed-calls table and NL2SQL tables default to MCI.", "steps": ["a-sync", "a-aqa"]},
         {"sev": "med", "title": "Prompts change outside code review", "why": "All `ex_iva_*` prompts are versioned in Phoenix, tag `production`.", "steps": ["p-phoenix"]},
-        {"sev": "med", "title": "Guardrail on every turn, fails open, no timeout", "why": "31B shared pool sits on the critical path; empty output = allowed; aiva sets no timeouts.", "steps": ["b-guardrail"]},
+        {"sev": "med", "title": "Guardrail on every turn, fails open, no timeout", "why": "A 31B check sits on the critical path and now queues on the same instance as the main answer; empty output = allowed; aiva sets no timeouts.", "steps": ["b-guardrail"]},
         {"sev": "med", "title": "Code / prod drift", "why": "aiva main 0.33.3 vs prod 0.31.1 (next deploy changes history handling); KB image tag `df70f4be` matches no commit.", "steps": ["b-setup", "k-author"]},
         {"sev": "low", "title": "Leftovers from MCI aiva", "why": "`send_sms` enabled without a token; shared `aiva-classification` examples; ignored prompt `ex_iva_guardrail_llm_base_template`.", "steps": ["b-tools", "b-classify", "b-guard-reply"]},
         {"sev": "low", "title": "Voice answer text unused", "why": "`iva_text` is indexed but the agent reads the text-chat answer.", "steps": ["k-collections"]},
