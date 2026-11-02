@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light"><title>Silero VAD (تشخیص فعالیت صوتی) · پایپ‌لاین‌های Phoenix EX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#0f141a;--surface:#161d26;--surface-2:#1d2631;--ink:#e4e9ef;--muted:#9aa6b4;--line:#2c3744;
+--accent:#8fb4ef;--ok:#84d48c;--ok-bg:#15301a;--warn:#f1c45c;--warn-bg:#34290b;--bad:#ff9289;--bad-bg:#3a1714;
+--gap:#c9cdd3;--gap-bg:#2a3039;--info:#8fbfff;--info-bg:#142a47;--code-bg:#1b2430;
+--c-violet:#b79cf5;--c-teal:#5eead4;--c-pink:#f9a8d4;--c-orange:#fdba74;--c-cyan:#67e8f9;
+--f-body:"Vazirmatn","Noto Sans Arabic",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace;--col:1240px}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;
+--ink:#17202b;--muted:#5b6776;--line:#d6dde5;--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;
+--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;
+--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;--c-orange:#b55d0c;--c-cyan:#0e7f93}}
+:root[data-theme="light"]{--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;--ink:#17202b;--muted:#5b6776;--line:#d6dde5;
+--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;
+--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;
+--c-orange:#b55d0c;--c-cyan:#0e7f93}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.75 var(--f-body)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:5px;overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+pre{background:var(--code-bg);padding:12px 14px;border-radius:10px;overflow:auto;direction:ltr;text-align:left}pre code{background:none;padding:0}
+.wrap{max-width:var(--col);margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;gap:14px;align-items:center;min-height:52px;flex-wrap:wrap}
+header.top .brand{font-weight:800;color:var(--ink)}header.top nav{display:flex;gap:14px;flex-wrap:wrap;margin-inline-start:auto;font-size:.92em}
+header.top button{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font:inherit;cursor:pointer}
+h1{font-size:1.9em;line-height:1.3;margin:28px 0 6px}h2{font-size:1.3em;margin:34px 0 10px;padding-top:6px}h3{font-size:1.08em;margin:22px 0 6px}
+.lede{color:var(--muted);max-width:860px;margin:0 0 10px}
+.meta{color:var(--muted);font-size:.85em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.85em;color:var(--muted);margin:14px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78em;font-weight:600;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-live{color:var(--ok);background:var(--ok-bg)}.s-off{color:var(--gap);background:var(--gap-bg)}
+.s-notdeployed{color:var(--bad);background:var(--bad-bg)}.s-external{color:var(--warn);background:var(--warn-bg)}
+.s-unknown{color:var(--info);background:var(--info-bg)}
+/* system overview */
+.sys{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin:16px 0;overflow-x:auto}
+.sys svg{width:100%;min-width:760px;height:auto;display:block}
+.sys a text{fill:var(--ink)}.sys .sub{fill:var(--muted)}.sys .edge{stroke:var(--muted);fill:none;stroke-width:1.6}
+.sys .elab{fill:var(--muted);font-size:12px}.sys a:hover rect{filter:brightness(1.25)}
+/* lanes */
+.lane{border:1px solid var(--line);border-radius:14px;margin:22px 0;background:var(--surface);overflow:hidden}
+.lane>.lh{padding:12px 16px;border-bottom:1px solid var(--line);border-inline-start:6px solid var(--lc)}
+.lane>.lh h2{margin:0;padding:0;font-size:1.15em}.lane>.lh p{margin:2px 0 0;color:var(--muted);font-size:.9em}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px 30px;padding:16px;padding-inline-end:36px}
+.card{position:relative;min-height:118px;background:var(--surface-2);border:1px solid var(--line);
+border-top:3px solid var(--lc);border-radius:10px;padding:10px 12px;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.card:hover{text-decoration:none;border-color:var(--lc);transform:translateY(-1px)}
+.card .n{font-family:var(--f-mono);font-size:.75em;color:var(--lc)}
+.card .t{font-weight:700;line-height:1.35}.card .m{font-size:.8em;color:var(--muted);line-height:1.4}
+.card .b{margin-top:auto}
+.card:not(:last-child)::after{content:"→";position:absolute;inset-inline-end:-22px;top:42%;color:var(--muted);font-size:1.1em}
+[dir=rtl] .card:not(:last-child)::after{content:"←"}
+.handoff{padding:0 16px 14px;color:var(--muted);font-size:.85em}
+/* step page */
+.crumbs{font-size:.85em;color:var(--muted);margin-top:18px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.fact .k{font-size:.75em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.fact .v{font-weight:600;overflow-wrap:anywhere}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0}
+.sec h2{font-size:1.08em;margin:14px 0 6px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9em;margin:6px 0}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}th{color:var(--muted);font-weight:600}
+.note{border-inline-start:4px solid var(--info);background:var(--info-bg);padding:8px 12px;border-radius:8px;margin:8px 0}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}.note.bad{border-color:var(--bad);background:var(--bad-bg)}
+.inf{color:var(--warn);font-style:italic;font-size:.9em}
+.pn{display:flex;justify-content:space-between;gap:12px;margin:26px 0 40px;flex-wrap:wrap}
+.pn a{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;max-width:48%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.mcard h3{margin:0 0 4px}.mcard .size{font-family:var(--f-mono);color:var(--accent);font-size:.9em}
+.sev{font-weight:700;font-size:.8em;padding:1px 8px;border-radius:6px}.sev-high{color:var(--bad);background:var(--bad-bg)}
+.sev-med{color:var(--warn);background:var(--warn-bg)}.sev-low{color:var(--gap);background:var(--gap-bg)}
+footer{color:var(--muted);font-size:.82em;border-top:1px solid var(--line);margin-top:40px;padding:16px 0 30px}
+@media (max-width:640px){.flow{grid-template-columns:1fr;gap:30px;padding-inline-end:16px}.card:not(:last-child)::after{content:"↓";inset-inline-end:auto;inset-inline-start:50%;top:auto;bottom:-22px}
+h1{font-size:1.5em}.pn a{max-width:100%}}
+</style><script>
+(function(){var k='pp-theme',r=document.documentElement;try{var t=localStorage.getItem(k);if(t)r.dataset.theme=t}catch(e){}
+document.addEventListener('click',function(e){if(e.target.id!=='themeBtn')return;
+var d=r.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+r.dataset.theme=d==='light'?'dark':'light';try{localStorage.setItem(k,r.dataset.theme)}catch(e){}});})();
+</script></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="../index.html">پایپ‌لاین‌های Phoenix EX</a>
+<nav><a href="../index.html">نقشهٔ پایپ‌لاین</a><a href="../models.html">مدل‌ها</a>
+<a href="../risks.html">ریسک‌ها و کمبودها</a><a href="../guide.html">راهنما</a><a href="../../en/models/silero-vad.html">English</a><button id="themeBtn" type="button">◐</button></nav></div></header>
+<main class="wrap"><div class="crumbs"><a href="../models.html">همهٔ مدل‌های پلتفرم: چیست، چه اندازه‌ای دارد، کجا اجرا می‌شود، چه کسی از آن استفاده می‌کند و چرا</a></div><h1 style="border-inline-start:6px solid var(--accent);padding-inline-start:12px">Silero VAD (تشخیص فعالیت صوتی)</h1><p><span class="badge s-live">فعال</span> <span class="size">≈1–2 MB ONNX، بسیار کمتر از 0.01B</span></p><p class="lede">در یک پاراگراف برای TPM: Silero VAD یک شبکهٔ عصبی متن‌باز بسیار کوچک است که هر چند میلی‌ثانیه می‌گوید آیا صدا شامل گفتار هست یا نه. در EX درون هر worker تماس LiveKit اجرا می‌شود و تعیین می‌کند عامل کی گوش دادن را شروع کند، کی سکوت یک نوبت را تمام کند و کی تماس‌گیرنده وسط حرف عامل بپرد (barge-in). آنقدر کوچک است که روی CPU و بدون سرویس مستقل اجرا می‌شود. آستانه‌های آن تنظیمات محصولی EX هستند که شناختنشان ارزش دارد.</p><div class="facts"><div class="fact"><div class="k">مدل (واقعیت)</div><div class="v">Silero VAD (دورهٔ v5)، متن‌باز (MIT)، حدود 1 تا 2 مگابایت ONNX؛ بسیار کمتر از 0.01B پارامتر</div></div><div class="fact"><div class="k">کتابخانه</div><div class="v"><code>livekit-plugins-silero==1.2.8</code> (<code>phoenix:python/chatbot-iva-agent/requirements.txt:69</code>)</div></div><div class="fact"><div class="k">بارگذاری</div><div class="v"><code>silero.VAD.load(...)</code> در prewarm (<code>phoenix:python/chatbot-iva-agent/src/main.py:89-94</code>)</div></div><div class="fact"><div class="k">آستانه‌های EX</div><div class="v">activation برابر 0.3، حداقل سکوت 0.5 ثانیه، حداقل گفتار 0.2 ثانیه، prefix padding برابر 0.5 ثانیه (<code>prod/chatbot-ex/values.yaml:3099-3112</code>)</div></div></div><section class="sec"><h2>استفاده‌شده در این گام‌ها</h2><ul><li><a href="../steps/v-vad.html">تشخیص فعالیت صوتی (Silero)</a></li><li><a href="../steps/v-endpoint.html">تأخیر تعیین پایان (endpointing)</a></li><li><a href="../steps/v-bargein.html">قطع کلام (barge-in)</a></li><li><a href="../steps/v-silence.html">مدیریت سکوت و نویز</a></li></ul></section><section class="sec"><h2>کجاهای دیگر</h2><ul><li>سرویس‌های Silero راه‌دور (HTTP/gRPC) برای <code>aiva-realtime</code> (<code>phoenix:python/aiva-realtime/aiva_realtime/config/realtime.py:157</code>) و برای voice segmenter که ASR آفلاین استفاده می‌کند (<code>phoenix:golang/voice-segmenter/config/config.go:31</code>).</li><li>Silero در مرورگر (<code>silero_vad_v5.onnx</code>) در رابط کاربری websocall (<code>phoenix:javascript/websocall-ui/app/scripts/copy-vad-assets.mjs:25</code>).</li></ul></section><section class="sec"><h2>چرا آن‌جا استفاده می‌شود</h2><p>انتخاب استاندارد در LiveKit؛ برای هر فریم سریع است و در برابر نویز از VAD مبتنی بر انرژی مقاوم‌تر است.</p></section><section class="sec"><h2>مبادلات (Trade-offs)</h2><ul><li>آستانهٔ activation پایین (0.3) گفتار آهسته را می‌گیرد اما نویز بیشتری هم می‌گیرد؛ حداقل وقفه 0.4 ثانیه (<code>:3113-3114</code>) از barge-in محافظت می‌کند.</li><li>تأخیرهای endpointing بین 0.1 تا 0.5 ثانیه (<code>:3101-3104</code>) پاسخ‌گویی را با خطر قطع‌کردن حرف تماس‌گیرنده معامله می‌کنند.</li></ul></section><section class="sec"><h2>چگونه مشاهده کنیم</h2><ul><li>Spanهای APM عامل برای هر نوبت؛ turn-detection exporter (<code>prod/turn-detection-exporter/exporter.yaml:26-29</code>).</li></ul></section><div class="pn"><a href="neurobox-tts.html">→ Neurobox TTS (صدای ex_prod) و tts-service از نوع VITS</a><a href="../models.html">بازگشت به همهٔ مدل‌ها</a></div></main>
+<footer class="wrap">برچسب‌های وضعیت: فعال = در پیکربندی عملیاتی هست و متصل است. پیکربندی‌شده، خاموش = وجود دارد اما با یک پرچم غیرفعال است. مستقر نشده = کد هست اما مؤلفهٔ عملیاتی ندارد. بیرونی = بیرون از کلاستر یا بیرون از هر دو مخزن. متن‌های دارای برچسب <span class="inf">(استنباطی)</span> استدلال هستند، نه کد. اندازهٔ مدل‌ها از اطلاعات عمومی مدل‌هاست و از کد خوانده نشده است.</footer></body></html>

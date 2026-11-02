@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light"><title>باس رویداد، رویدادها و task runner · پایپ‌لاین‌های Phoenix EX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#0f141a;--surface:#161d26;--surface-2:#1d2631;--ink:#e4e9ef;--muted:#9aa6b4;--line:#2c3744;
+--accent:#8fb4ef;--ok:#84d48c;--ok-bg:#15301a;--warn:#f1c45c;--warn-bg:#34290b;--bad:#ff9289;--bad-bg:#3a1714;
+--gap:#c9cdd3;--gap-bg:#2a3039;--info:#8fbfff;--info-bg:#142a47;--code-bg:#1b2430;
+--c-violet:#b79cf5;--c-teal:#5eead4;--c-pink:#f9a8d4;--c-orange:#fdba74;--c-cyan:#67e8f9;
+--f-body:"Vazirmatn","Noto Sans Arabic",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace;--col:1240px}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;
+--ink:#17202b;--muted:#5b6776;--line:#d6dde5;--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;
+--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;
+--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;--c-orange:#b55d0c;--c-cyan:#0e7f93}}
+:root[data-theme="light"]{--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;--ink:#17202b;--muted:#5b6776;--line:#d6dde5;
+--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;
+--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;
+--c-orange:#b55d0c;--c-cyan:#0e7f93}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.75 var(--f-body)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:5px;overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+pre{background:var(--code-bg);padding:12px 14px;border-radius:10px;overflow:auto;direction:ltr;text-align:left}pre code{background:none;padding:0}
+.wrap{max-width:var(--col);margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;gap:14px;align-items:center;min-height:52px;flex-wrap:wrap}
+header.top .brand{font-weight:800;color:var(--ink)}header.top nav{display:flex;gap:14px;flex-wrap:wrap;margin-inline-start:auto;font-size:.92em}
+header.top button{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font:inherit;cursor:pointer}
+h1{font-size:1.9em;line-height:1.3;margin:28px 0 6px}h2{font-size:1.3em;margin:34px 0 10px;padding-top:6px}h3{font-size:1.08em;margin:22px 0 6px}
+.lede{color:var(--muted);max-width:860px;margin:0 0 10px}
+.meta{color:var(--muted);font-size:.85em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.85em;color:var(--muted);margin:14px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78em;font-weight:600;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-live{color:var(--ok);background:var(--ok-bg)}.s-off{color:var(--gap);background:var(--gap-bg)}
+.s-notdeployed{color:var(--bad);background:var(--bad-bg)}.s-external{color:var(--warn);background:var(--warn-bg)}
+.s-unknown{color:var(--info);background:var(--info-bg)}
+/* system overview */
+.sys{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin:16px 0;overflow-x:auto}
+.sys svg{width:100%;min-width:760px;height:auto;display:block}
+.sys a text{fill:var(--ink)}.sys .sub{fill:var(--muted)}.sys .edge{stroke:var(--muted);fill:none;stroke-width:1.6}
+.sys .elab{fill:var(--muted);font-size:12px}.sys a:hover rect{filter:brightness(1.25)}
+/* lanes */
+.lane{border:1px solid var(--line);border-radius:14px;margin:22px 0;background:var(--surface);overflow:hidden}
+.lane>.lh{padding:12px 16px;border-bottom:1px solid var(--line);border-inline-start:6px solid var(--lc)}
+.lane>.lh h2{margin:0;padding:0;font-size:1.15em}.lane>.lh p{margin:2px 0 0;color:var(--muted);font-size:.9em}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px 30px;padding:16px;padding-inline-end:36px}
+.card{position:relative;min-height:118px;background:var(--surface-2);border:1px solid var(--line);
+border-top:3px solid var(--lc);border-radius:10px;padding:10px 12px;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.card:hover{text-decoration:none;border-color:var(--lc);transform:translateY(-1px)}
+.card .n{font-family:var(--f-mono);font-size:.75em;color:var(--lc)}
+.card .t{font-weight:700;line-height:1.35}.card .m{font-size:.8em;color:var(--muted);line-height:1.4}
+.card .b{margin-top:auto}
+.card:not(:last-child)::after{content:"→";position:absolute;inset-inline-end:-22px;top:42%;color:var(--muted);font-size:1.1em}
+[dir=rtl] .card:not(:last-child)::after{content:"←"}
+.handoff{padding:0 16px 14px;color:var(--muted);font-size:.85em}
+/* step page */
+.crumbs{font-size:.85em;color:var(--muted);margin-top:18px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.fact .k{font-size:.75em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.fact .v{font-weight:600;overflow-wrap:anywhere}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0}
+.sec h2{font-size:1.08em;margin:14px 0 6px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9em;margin:6px 0}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}th{color:var(--muted);font-weight:600}
+.note{border-inline-start:4px solid var(--info);background:var(--info-bg);padding:8px 12px;border-radius:8px;margin:8px 0}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}.note.bad{border-color:var(--bad);background:var(--bad-bg)}
+.inf{color:var(--warn);font-style:italic;font-size:.9em}
+.pn{display:flex;justify-content:space-between;gap:12px;margin:26px 0 40px;flex-wrap:wrap}
+.pn a{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;max-width:48%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.mcard h3{margin:0 0 4px}.mcard .size{font-family:var(--f-mono);color:var(--accent);font-size:.9em}
+.sev{font-weight:700;font-size:.8em;padding:1px 8px;border-radius:6px}.sev-high{color:var(--bad);background:var(--bad-bg)}
+.sev-med{color:var(--warn);background:var(--warn-bg)}.sev-low{color:var(--gap);background:var(--gap-bg)}
+footer{color:var(--muted);font-size:.82em;border-top:1px solid var(--line);margin-top:40px;padding:16px 0 30px}
+@media (max-width:640px){.flow{grid-template-columns:1fr;gap:30px;padding-inline-end:16px}.card:not(:last-child)::after{content:"↓";inset-inline-end:auto;inset-inline-start:50%;top:auto;bottom:-22px}
+h1{font-size:1.5em}.pn a{max-width:100%}}
+</style><script>
+(function(){var k='pp-theme',r=document.documentElement;try{var t=localStorage.getItem(k);if(t)r.dataset.theme=t}catch(e){}
+document.addEventListener('click',function(e){if(e.target.id!=='themeBtn')return;
+var d=r.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+r.dataset.theme=d==='light'?'dark':'light';try{localStorage.setItem(k,r.dataset.theme)}catch(e){}});})();
+</script></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="../index.html">پایپ‌لاین‌های Phoenix EX</a>
+<nav><a href="../index.html">نقشهٔ پایپ‌لاین</a><a href="../models.html">مدل‌ها</a>
+<a href="../risks.html">ریسک‌ها و کمبودها</a><a href="../guide.html">راهنما</a><a href="../../en/steps/f-bus.html">English</a><button id="themeBtn" type="button">◐</button></nav></div></header>
+<main class="wrap"><div class="crumbs"><a href="../index.html#lane-framework">7 · agentlib: فریم‌ورک داخلی عامل زیر aiva</a> · F2</div><h1 style="border-inline-start:6px solid var(--ok);padding-inline-start:12px">باس رویداد، رویدادها و task runner</h1><p><span class="badge s-live">فعال</span></p><p class="lede">در agentlib همه‌چیز از راه یک باس رویداد (event bus) درون‌حافظه‌ای برای هر درخواست با هم حرف می‌زنند. هر handler اعلام می‌کند به کدام نوع رویدادها نیاز دارد. باس وقتی همهٔ آن‌ها رسیدند، handler را در پس‌زمینه اجرا می‌کند. خطاها به یک کانال خطا می‌روند و درخواست از کار نمی‌افتد.</p><div class="facts"><div class="fact"><div class="k">کلاس</div><div class="v"><code>EventBus</code> (<code>agentlib/core/event/bus.py:25</code>)</div></div><div class="fact"><div class="k">دامنه</div><div class="v">یک باس برای هر درخواست HTTP (میان‌افزار ADCS تابع <code>event_bus()</code> را صدا می‌زند، <code>adcs/common/middlewares/event_bus.py:27</code>)</div></div><div class="fact"><div class="k">اجرا</div><div class="v">هر listener به‌صورت یک task پس‌زمینهٔ asyncio اجرا می‌شود (<code>agentlib/runner/task.py:46-57</code>)</div></div><div class="fact"><div class="k">خطاها</div><div class="v">به <code>bus.error_chan</code> فرستاده می‌شوند؛ ADCS با اولین خطا جریان پاسخ را می‌بندد</div></div><div class="fact"><div class="k">تلاش مجدد</div><div class="v">فقط از راه DLQ اختیاری (حداکثر 3 تلاش)؛ EX از آن استفاده نمی‌کند</div></div></div><section class="sec"><h2>چه و چرا</h2><p>باس را مثل یک تابلوی اعلانات درون یک درخواست در نظر بگیرید. یک مؤلفه یادداشتی می‌چسباند (<strong>رویداد</strong>، یک رکورد تغییرناپذیر مثل <code>EmbeddingResultEvent</code>). هر مؤلفه‌ای که گفته به این نوع یادداشت اهمیت می‌دهد، یک نسخه می‌گیرد و اجرا می‌شود. هیچ‌کس مستقیم دیگری را صدا نمی‌زند. به همین دلیل aiva می‌تواند تشخیص intent، clarifying، classification، embedding و بازیابی را هم‌زمان اجرا کند.</p></section><section class="sec"><h2>چگونه کار می‌کند</h2><ol><li>یک متد با <code>@EventBus.on</code> علامت‌گذاری می‌شود. باس از type hint پارامترها می‌فهمد کدام نوع رویدادها را می‌خواهد (<code>agentlib/core/event/bus.py:92-128</code>).</li><li>وقتی یک شیء handler ساخته می‌شود، <code>EventHandlerMixin._attach_bus</code> همهٔ متدهای علامت‌گذاری‌شده را پیدا و مشترک (subscribe) می‌کند (<code>agentlib/core/mixin/event/handler.py:57-93</code>).</li><li><code>publish_nowait(event)</code> تحویل را در یک task پس‌زمینه زمان‌بندی می‌کند؛ <code>publish</code> منتظر آن می‌ماند (<code>bus.py:130-147</code>).</li><li><strong>معنای join:</strong> متدی با چند پارامتر رویداد فقط وقتی اجرا می‌شود که از هر کدام یکی رسیده باشد؛ سپس حافظهٔ آن پاک می‌شود (<code>agentlib/core/event/listener.py:51-87</code>). مثال: <code>react_retrieve(contexts, instructions, tools)</code> فقط وقتی اجرا می‌شود که هر سه بازیابی تمام شده باشند.</li><li><strong>تطابق دقیق نوع:</strong> تحویل بر اساس کلاس دقیق رویداد است، نه زیرکلاس‌ها (<code>bus.py:139-143</code>). aiva به همین تکیه دارد: <code>AIVARetrieveEvent</code> آن، بازیابی‌کنندهٔ tool خود agentlib را فعال نمی‌کند.</li><li><strong>تگ‌ها:</strong> رویداد فقط وقتی تحویل داده می‌شود که تگ‌هایش زیرمجموعهٔ تگ‌های listener باشد (<code>listener.py:60</code>). رویداد بدون تگ به همه می‌رسد؛ رویدادی با تگ <code>guardrail</code> فقط به listenerهایی می‌رسد که با همان تگ تعریف شده‌اند.</li><li>هر استثنا (exception) در یک listener به <code>ExecutionError</code> روی <code>error_chan</code> تبدیل می‌شود (<code>listener.py:73-85</code>, <code>runner/task.py:108-125</code>).</li></ol></section><section class="sec"><h2>کلاس پایهٔ رویداد</h2><p>هر رویداد یک dataclass فریزشده است با <code>eid</code>، <code>tries</code>، <code>tags</code> و یک <code>payload</code> اختیاری (<code>agentlib/core/schemas/event/base.py:11-32</code>). <code>clone()</code> مقدار <code>tries</code> را یکی زیاد می‌کند و صف dead-letter برای انتشار دوباره از آن استفاده می‌کند (<code>agentlib/core/event/dlq.py:28-46</code>، پیش‌فرض <code>max_tries=3</code>).</p></section><section class="sec"><h2>EX چه چیزی را استفاده می‌کند و چه چیزی را نه</h2><ul><li>استفاده می‌کند: باس، معنای join، تگ‌های <code>react</code> / <code>guardrail</code>، کانال خطا (ADCS خطا را لاگ می‌کند و جریان را می‌بندد، <code>adcs/chat/handlers/chat.py:51-55</code>).</li><li>استفاده نمی‌کند: DLQ، <code>wait_until_done</code>، <code>clear_events</code>. فریم‌ورک یک مرحلهٔ ناموفق را دوباره تلاش نمی‌کند.</li></ul></section><section class="sec"><h2>نکته‌های پنهان</h2><div class="note warn">یک خطا در هر جا نوبت را تمام می‌کند: اولین <code>ExecutionError</code> باعث می‌شود ADCS جریان را ببندد. پس تماس‌گیرنده در آن نوبت چیزی بیشتر نمی‌شنود، حتی اگر شاخهٔ دیگری هنوز می‌توانست پاسخ دهد.</div><div class="note warn">در 0.45.0 وقتی aiva شاخهٔ بازنده را لغو می‌کند، callback پایان در runner روی taskی لغوشده <code>exception()</code> را صدا می‌زند (<code>runner/task.py:99-104</code>) و این درون callback یک <code>CancelledError</code> ایجاد می‌کند. asyncio آن را به‌صورت خطا لاگ می‌کند؛ نوبت خراب نمی‌شود <span class="inf">(استنباطی)</span>. در 0.46.2 رفع شده است.</div><div class="note ">حالت join روی listener نگه‌داری می‌شود. اگر یکی از رویدادهای مورد انتظار هرگز نرسد (مثلاً یک بازیابی‌کننده خطا داد)، handler مربوط بی‌صدا هرگز اجرا نمی‌شود <span class="inf">(استنباطی)</span>.</div></section><section class="sec"><h2>تغییرات main</h2><p>نسخهٔ 0.46.2 باعث می‌شود <code>wait_until_done</code> زنجیرهٔ رویدادهایی را که خودشان رویداد منتشر می‌کنند تخلیه کند، taskهای لغوشده را در runner نادیده بگیرد و وقتی کانال خطا از قبل بسته است دیگر خطا ندهد (<code>raise_on_closed=False</code>).</p></section><div class="pn"><a href="f-overview.html">→ agentlib چیست و prod کدام نسخه را اجرا می‌کند</a><a href="f-orch-base.html">Orchestrator پایهٔ چت: دنبالهٔ رویدادهای یک نوبت ←</a></div></main>
+<footer class="wrap">برچسب‌های وضعیت: فعال = در پیکربندی عملیاتی هست و متصل است. پیکربندی‌شده، خاموش = وجود دارد اما با یک پرچم غیرفعال است. مستقر نشده = کد هست اما مؤلفهٔ عملیاتی ندارد. بیرونی = بیرون از کلاستر یا بیرون از هر دو مخزن. متن‌های دارای برچسب <span class="inf">(استنباطی)</span> استدلال هستند، نه کد. اندازهٔ مدل‌ها از اطلاعات عمومی مدل‌هاست و از کد خوانده نشده است.</footer></body></html>

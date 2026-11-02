@@ -1,0 +1,98 @@
+PAGES2 = {
+"gemma-4-31b-coa": {
+    "title": "Gemma-4 31B · استخرهای COA و zarebin",
+    "title_plain": "Gemma-4 31B COA / zarebin",
+    "status": "unknown",
+    "chip": "در حال اجرا، بدون مصرف‌کننده در git",
+    "summary": "خلاصهٔ یک‌بندی برای TPM: دو استخر دیگر Gemma-4 31B کنار استخر مشترک وجود دارند. استخر COA از نظر تعداد upstream بزرگ‌ترین استخر 31B است (یک پاد k8s به‌علاوهٔ هشت پردازهٔ bare-metal). استخر zarebin دو پردازهٔ bare-metal است. هیچ‌چیز در chatbot-ops یا phoenix هیچ‌یک از این load balancerها را با نام صدا نمی‌زند. پس این استخرها از بیرون این مخزن‌ها استفاده می‌شوند (به احتمال زیاد موتور تحلیل تماس CCA و یک محصول MCI به نام Zarebin)، از طریق AxonHub می‌رسند، یا بیکارند. این مقدار GPU بدون صاحب مشخص زیاد است: از تیم پلتفرم بپرسید.",
+    "facts": [
+        ("مدل (واقعیت)", "Gemma-4 31B-it، متراکم"),
+        ("پاد COA", "vLLM v0.25.1، سقف 15K، MTP spec-decode، 1 replica (`prod/gemma4-31b-coa/values.yaml`)"),
+        ("LB مربوط به COA", "`gemma-4-31b-coa-llm-lb`، 3 replica از Envoy v1.38.3"),
+        ("LB مربوط به zarebin", "`gemma-4-31b-zarebin-llm-lb`، 3 replica از Envoy v1.37.0"),
+        ("مصرف‌کننده در git", "هیچ"),
+    ],
+    "sections": [
+        ("چگونه اینجا سرو می‌شود", ({"table": [
+            ["استخر", "upstreamها", "مرجع"],
+            ["COA", "`gemma4-31b-coa-lb:8000` (k8s) + `172.23.0.17:8314/8321/8310` + `172.23.0.3:8311-8315`", "`prod/gemma4-31b-coa-llm-lb/values.yaml:230-271`"],
+            ["zarebin", "`172.23.0.17:8311`، `172.23.0.17:8312` (فقط bare-metal)", "`prod/gemma4-31b-zarebin-llm-lb/values.yaml:222-228`"],
+        ]}, "chart با نام `gemma4-31b-coa` با `gemma4-31b` یکسان است، به‌جز `fullnameOverride` (`prod/gemma4-31b-coa/values.yaml:6`). در 2026-06-06 اضافه شد (`dbd597e40` “add gemma4-31b-coa Helm chart and configuration”). در 2026-10-31 یکی از upstreamهای COA عوض شد (`396040738` “replace one of coa”).")),
+        ("چه کسی از آن استفاده می‌کند", ("هیچ ارجاع زنده یا کامنت‌شده‌ای به `gemma-4-31b-coa-llm-lb` یا `gemma-4-31b-zarebin-llm-lb` بیرون از chartهای خودشان نیست. مصرف‌کننده‌های محتمل (همه استنباطی):", [
+            "CCA، موتور تحلیل تماس که تماس‌های EX را برچسب می‌زند (خلاصه، موضوع، رضایت). در مخزن phoenix نیست؛ [موتور تحلیل AI](../steps/a-cca.html) را ببینید.",
+            "Zarebin، محصولی از MCI که نامش بر این استخر است؛ `rzghorbani72` در 2026-10-24 commit با عنوان “modify ops configs based on zarebin” زده است.",
+            "کانال‌های AxonHub (جدول مسیریابی در پایگاه دادهٔ آن).",
+        ])),
+        ("چرا وجود دارد (استنباطی)", "تحلیل دسته‌ای (صدها تماس ضبط‌شده در ساعت) اگر استخر را با چت زنده مشترک بگیرد، چت را دچار قحطی منابع می‌کند. استخر اختصاصی اجازه می‌دهد تحلیل با تمام توان اجرا شود بی‌آنکه تأخیر تماس‌گیرنده آسیب ببیند."),
+        ("مصالحه‌ها", [
+            "جداسازی در برابر بهره‌وری: استخرهای اختصاصی وقتی صاحبشان بیکار است بیکار می‌مانند.",
+            "همان سقف 15K استخر مشترک: رونوشت یک تماس بلند باید همراه پرامپت تحلیل در 15K توکن جا شود (استنباطی).",
+        ]),
+        ("ریسک‌ها و پرسش‌های باز", [
+            "صاحب این استخرها کیست و بهره‌وری‌شان چقدر است؟ بدون مصرف‌کننده در git نمی‌توان هزینه را نسبت داد.",
+            "Exporter: `172.23.0.17:8310/8314/8321` و `172.23.0.3:8313-8315` scrape نمی‌شوند؛ `172.23.0.17:8311/8312` (zarebin) scrape می‌شوند اما به‌طور کلی با برچسب 'Gemma 4 31B' ثبت شده‌اند.",
+        ]),
+        ("چگونه مشاهده‌اش کنیم", [
+            "لاگ‌های دسترسی Envoy با تگ `gemma-4-31b-coa-llm-lb-prod.chatbot` و فیلدهای `upstream_address` و `x_forwarded_for` ارسال می‌شوند: سریع‌ترین راه برای یافتن فراخواننده‌های واقعی.",
+            "متریک‌های vLLM برای پاد k8s از طریق ServiceMonitor آن.",
+        ]),
+    ],
+},
+"gemma-4-26b-a4b": {
+    "title": "Gemma-4 26B-A4B · استخر مشترک (gemma4-26b-llm-lb)",
+    "title_plain": "Gemma-4 26B-A4B",
+    "status": "live",
+    "chip": "تصمیم‌های سریع EX",
+    "summary": "خلاصهٔ یک‌بندی برای TPM: Gemma-4 26B-A4B یک مدل ترکیب خبرگان (MoE) است: حدود 26B پارامتر نگه می‌دارد اما برای هر توکن فقط حدود 4B را به کار می‌گیرد. این یعنی دانشی نزدیک به یک مدل بزرگ دارد اما در هر توکن چند برابر سریع‌تر و ارزان‌تر از 31B متراکم است. EX آن را برای هر تصمیم سریع در یک نوبت صوتی به کار می‌برد: آیا تماس‌گیرنده حرفش را تمام کرده، آیا تماس باید پایان یابد، آیا درخواست به روشن‌سازی نیاز دارد، و کدام شاخه باید پاسخ دهد. تا امروز عامل پاسخ اصلی EX را هم اجرا می‌کرد. بزرگ‌ترین سقف context پلتفرم (23,000 توکن) را دارد، اما رمزگشایی گمانه‌ای روی پاد k8s به‌خاطر یک باگ vLLM خاموش است.",
+    "facts": [
+        ("مدل (واقعیت)", "Gemma-4 26B-A4B-it، MoE، وزن‌های باز"),
+        ("اندازه (واقعیت)", "حدود 26B کل، حدود 4B فعال در هر توکن"),
+        ("context بومی (واقعیت)", "حدود 256K"),
+        ("سقف context اینجا", "23,000 (`prod/gemma4-26b/values.yaml:90-91`)"),
+        ("موتور", "vLLM `v0.25.1`"),
+        ("LB", "`gemma4-26b-llm-lb:8080`، 3 replica از Envoy v1.38.3"),
+        ("upstreamها", "پاد k8s + `172.16.21.4:8225/8226`"),
+    ],
+    "sections": [
+        ("مدل چیست (واقعیت‌های مدل)", "یک عضو MoE تنک از Gemma-4. یک router برای هر توکن چند خبره را انتخاب می‌کند؛ پس محاسبه در هر توکن حدود 4B پارامتر است، اما کل حدود 26B باید در حافظهٔ GPU جا بگیرد. ورودی بومی چندوجهی (متن + تصویر) دارد؛ اینجا فقط متن. 'A4B' یعنی حدود 4B فعال."),
+        ("چگونه اینجا سرو می‌شود", ({"table": [
+            ["مورد", "مقدار", "مرجع"],
+            ["استقرار k8s", "`gemma4-26b`، 1 replica، vLLM v0.25.1", "`prod/gemma4-26b/values.yaml:2,5`"],
+            ["نام سرویس‌دهی", "`google/gemma-4-26B-A4B-it`", "`:93-94`"],
+            ["پرچم‌ها", "max-model-len 23000، gpu-mem 0.95، `--async-scheduling`، parserهای ابزار و استدلال `gemma4`، محدودیت‌های چندوجهی برابر 0", "`:86-105`"],
+            ["رمزگشایی گمانه‌ای", "**کامنت شده**: “Temporarily disable speculative decoding for gemma4 26b since there is a bug with vllm 0.25.1”", "`:106-108`"],
+            ["upstreamهای LB", "`gemma4-26b-lb:8000`، `172.16.21.4:8225`، `172.16.21.4:8226` (8221 کامنت شده)", "`prod/gemma4-26b-llm-lb/values.yaml:231-247`"],
+            ["تغییرات اخیر LB", "`cd0aefa93` “temporarily remove 8226” (10-18)، `a162c2c21` “reinsert removed endpoint” (10-25)", "git"],
+        ]},)),
+        ("چه کسی از آن استفاده می‌کند", ({"table": [
+            ["سرویس", "مؤلفه", "نقش", "متغیر env", "مرجع"],
+            ["chatbot-ex (EX)", "iva-chatbot", "intent (آیا تماس باید پایان یابد؟)", "`INTENT_AGENT_LLM_*`", "`prod/chatbot-ex/values.yaml:2484-2487`"],
+            ["chatbot-ex (EX)", "iva-chatbot", "روشن‌سازی / گپ کوتاه (دوبار تعریف شده)", "`CLARIFYING_LLM_*`", "`:2461-2466`، `:2555-2560`"],
+            ["chatbot-ex (EX)", "iva-chatbot", "دسته‌بند مسیر", "`CLASSIFYING_LLM_*`", "`:2547-2552`"],
+            ["chatbot-ex (EX)", "iva-chatbot", "پرکنندهٔ voice bridge (غیرفعال)", "`VOICE_BRIDGE_LLM_*`، دما 0.5", "`:2533-2546`"],
+            ["chatbot-ex (EX)", "iva-chatbot", "پیام بیکاری (غیرفعال) از طریق AxonHub", "`IDLE_LLM_*`", "`:2492-2499`"],
+            ["chatbot-ex (EX)", "agent (LiveKit، 6 replica)", "تشخیص پایان نوبت با LLM", "`AGENT_TURN_MODEL=openai`، `AGENT_OPENAI_TURN_*`", "`:3067-3072`"],
+            ["aiva، aiva-poll، aiva-neda", "api، agent", "intent، دسته‌بندی، روشن‌سازی، voice bridge، نوبت", "همان نام‌ها", "مثلاً `prod/aiva-poll/values.yaml:139,802,962,1678`"],
+            ["mci-agentic", "chatbot، coa-api، grogu-ticket", "عامل اصلی، فراخوانی ابزار، **فیلتر context** (از 11-01)، اطلاعات کاربر، تیکت", "`AGENT_LLM_MODEL`، `TOOL_CALLING_OPENAI_MODEL`، `CONTEXTS_FILTER_LLM_MODEL`", "`prod/mci-agentic/values.yaml:380,817,882,1948,4209`"],
+            ["chatbot-mci-iva", "api", "گاردریل، بررسی تغییر مسیر", "`GUARDRAIL_OPENAI_MODEL`، `REDIRECT_CONFIRMATION_CHECK_OPENAI_MODEL`", "`prod/chatbot-mci-iva/values.yaml:126,485`"],
+            ["…", "ewano، mobinnet، agent-chat، english-avatar، se-agent (گاردریل)، zazu، arbaeen", "متفرقه", "", "پویش پلتفرم"],
+        ]}, "گام‌های EX: [پایان نوبت](../steps/v-turn.html)، [intent](../steps/b-intent.html)، [روشن‌سازی](../steps/b-clarify.html)، [دسته‌بندی](../steps/b-classify.html)، [voice bridge](../steps/b-voicebridge.html)، [نوبت‌های سیگنال](../steps/b-signal.html).")),
+        ("چرا آنجا استفاده می‌شود", ("هر یک از این گام‌ها در هر نوبت اجرا می‌شود، اغلب چند تا هم‌زمان، پیش از آنکه تماس‌گیرنده چیزی بشنود. پرامپت‌ها کوتاه و از نوع دسته‌بندی‌اند، پس مدلی با حدود 4B فعال قضاوت کافی می‌دهد و نوبت را سریع نگه می‌دارد (استنباطی). commitهای `62c1f34ab` و `220cf41ea` (14 تا 17 اکتبر) چند بات را “from old gpt oss model urls to new gemma4 26b” منتقل کردند و 26B-A4B را به مدل سریع پیش‌فرض پلتفرم تبدیل کردند.", "نکتهٔ کد: پیش‌فرض خود عامل LiveKit برای تشخیص نوبت مدل 31B است (`phoenix:python/chatbot-iva-agent/src/config.py:105`)؛ EX آن را به 26B تغییر می‌دهد. حالت‌های نوبت `mci`، `openai` و `deactive` هستند (`src/enums.py:21-24`).")),
+        ("مصالحه‌ها", [
+            "**سرعت در برابر عمق:** سریع و ارزان است اما در استدلال چندمرحله‌ای از 31B ضعیف‌تر است؛ EX عامل اصلی‌اش را بعد از دو روز از 26B خارج کرد (استنباطی: کیفیت).",
+            "**سقف 23K** سخاوتمندانه‌ترین سقف پلتفرم است؛ پرامپت‌هایی که اینجا جا می‌شوند ممکن است روی 31B (با 15K) جا نشوند.",
+            "**بدون spec-decode روی پاد k8s:** یکی از اهرم‌های سرعت تا رفع vLLM خاموش است؛ پاد COA مربوط به 26B (با vLLM 0.23.0) هنوز آن را روشن دارد.",
+        ]),
+        ("ریسک‌ها و پرسش‌های باز", [
+            "`CLARIFYING_LLM_*` در values مربوط به EX دو بار تعریف شده است؛ تعریف بعدی برنده است. امروز مقدارها یکی است، اما خطر ناهمخوانی هست.",
+            "Exporter مقدار `172.16.21.4:8220/8221` را (که در LB نیست) به‌عنوان 26B scrape می‌کند؛ برچسب‌ها را در Grafana بررسی کنید.",
+            "آیا spec-decode روی دو upstream مربوط به bare-metal روشن است؟ دیده نمی‌شود.",
+        ]),
+        ("چگونه مشاهده‌اش کنیم", [
+            "job مربوط به Prometheus با نام `vllm-gemma4-gpu-exporter` (bare-metal پورت‌های 8225/8226) + ServiceMonitor پاد؛ آمار Envoy روی LB.",
+            "Phoenix در پروژهٔ `chatbot-ex-iva`: spanهای intent / classify / clarify مقدار `llm.model_name = google/gemma-4-26B-A4B-it` را دارند.",
+            "تأخیر تشخیص نوبت در Elastic APM هم از عامل LiveKit دیده می‌شود.",
+        ]),
+    ],
+},
+}

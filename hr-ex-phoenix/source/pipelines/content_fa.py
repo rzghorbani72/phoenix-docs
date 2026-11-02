@@ -8,18 +8,21 @@ Mirrors content_en.py key-for-key; only human-readable strings are translated.
 """
 
 from content_fa_brain import BRAIN_STEPS
+from content_fa_framework import FRAMEWORK_LANE, FRAMEWORK_STEPS
+from content_fa_guide import GUIDE
+from content_fa_models import MODELS
 
 OPS = "chatbot-ops/prod/chatbot-ex/values.yaml"
 AG = "python/chatbot-iva-agent@3524df3f"
 
 UI = {
     "brand": "پایپ‌لاین‌های Phoenix EX",
-    "nav_map": "نقشهٔ پایپ‌لاین", "nav_models": "مدل‌ها", "nav_risks": "ریسک‌ها و کمبودها", "other_lang": "English",
+    "nav_map": "نقشهٔ پایپ‌لاین", "nav_models": "مدل‌ها", "nav_risks": "ریسک‌ها و کمبودها", "nav_guide": "راهنما", "other_lang": "English",
     "status": {"live": "فعال", "off": "پیکربندی‌شده، خاموش", "notdeployed": "مستقر نشده",
                "external": "بیرونی / خارج از مخزن", "unknown": "تأییدنشده"},
     "legend_hint": "روی هر گام کلیک کنید تا بررسی عمیق آن را ببینید. در نسخهٔ .drawio، کادرهای خط‌چین خاموش یا مستقرنشده هستند.",
     "sys_title": "نمای کلی سامانه", "steps_word": "گام",
-    "prev": "→", "next": "←", "back": "بازگشت به نقشه",
+    "prev": "→", "next": "←", "back": "بازگشت به نقشه", "back_models": "بازگشت به همهٔ مدل‌ها",
     "used_in": "استفاده‌شده در این گام‌ها", "col_sev": "شدت", "col_issue": "مسئله", "col_why": "چرا مهم است",
     "col_where": "گام‌ها", "sev": {"high": "بالا", "med": "متوسط", "low": "پایین"},
 }
@@ -576,46 +579,8 @@ STEPS = {
         ]},
 }
 STEPS.update(BRAIN_STEPS)
-
-MODELS = {
-    "title": "همهٔ مدل‌های EX: اندازه، نقش و دلیل",
-    "lede": "اندازه‌ها از اطلاعات عمومی مدل‌ها هستند (میلیارد پارامتر) و از کد خوانده نشده‌اند. برای مدل‌های MoE پارامترهای کل و فعال آمده است: پارامترهای فعال سرعت و هزینهٔ هر توکن را تعیین می‌کنند.",
-    "cards": [
-        {"name": "Gemma-4 26B-A4B-it", "size": "26B کل · حدود 4B فعال (MoE) · context در اینجا 23K", "status": "live",
-         "facts": ["**نقش:** عامل اصلی پاسخ صوتی، intent، دسته‌بندی، شفاف‌سازی، تشخیص پایان نوبت، پل صوتی (خاموش).",
-                   "**دلیل:** فهمی نزدیک به مدل‌های بزرگ با سرعتی در حد مدل 4B، که همان نیاز یک نوبت زندهٔ تلفنی است (استنباطی).",
-                   "**سرویس‌دهی:** `gemma4-26b-llm-lb`، vLLM 0.25.1، spec-decode خاموش."],
-         "steps": ["v-turn", "b-intent", "b-clarify", "b-classify", "b-react", "b-voicebridge"]},
-        {"name": "Gemma-4 31B-it", "size": "31B متراکم · context در اینجا 15K", "status": "live",
-         "facts": ["**نقش:** گاردریل، خلاصهٔ قابل‌خواندن پایگاه دانش، markdown پیشنهادها، عامل چت‌بات متنی، اعراب‌گذاری.",
-                   "**دلیل:** بهترین کیفیت فارسی داخلی، جایی که ایمنی یا عبارت‌بندی از تأخیر مهم‌تر است (استنباطی).",
-                   "**سرویس‌دهی:** `gemma-4-31b-llm-lb`، vLLM 0.25.1، رمزگشایی پیش‌بینانهٔ MTP."],
-         "steps": ["b-guardrail", "b-guard-reply", "k-summarize"]},
-        {"name": "Gemma-4 E2B-it", "size": "حدود 2B مؤثر (حدود 5B با embeddingها)", "status": "live",
-         "facts": ["**نقش:** فیلتر ارتباط روی پرسش‌وپاسخ‌های بازیابی‌شده در هر نوبت.", "**دلیل:** کار ساده‌ی انتخاب از فهرست، در هر نوبت، با کمترین تأخیر (استنباطی).",
-                   "**سرویس‌دهی:** فقط bare-metal، پرچم‌ها در git نیستند."], "steps": ["k-filter"]},
-        {"name": "hakim-unsup", "size": "رمزگذار ≈0.12B · 768 بُعد (تأییدنشده)", "status": "live",
-         "facts": ["**نقش:** پرسش‌های پایگاه دانش و هر گفتهٔ کارمند را به بردار تبدیل می‌کند.", "**دلیل:** رمزگذار فارسی داخلی، آن‌قدر ارزان که روی CPU اجرا شود (استنباطی).",
-                   "**سرویس‌دهی:** vLLM pooling، حداکثر طول 512."], "steps": ["k-embed", "k-search"]},
-        {"name": "Silero VAD", "size": "≈1M پارامتر (0.001B) · CPU", "status": "live",
-         "facts": ["**نقش:** تشخیص گفتار / سکوت درون پردازهٔ هر تماس.", "**دلیل:** استاندارد، بسیار کوچک، سریع در سطح هر فریم."], "steps": ["v-vad"]},
-        {"name": "Soniox real-time STT", "size": "اختصاصی · اندازه منتشر نشده", "status": "external",
-         "facts": ["**نقش:** تبدیل زندهٔ گفتار فارسی به متن.", "**دلیل:** دقت و تأخیر استریم (استنباطی).", "**نکته:** صدای کارمند از کلاستر خارج می‌شود."], "steps": ["v-stt"]},
-        {"name": "OpenAI gpt-6-luna", "size": "اختصاصی", "status": "external",
-         "facts": ["**نقش:** عامل خوشامدگویی؛ همچنین عامل مشترک AQA NL2SQL.", "**نکته:** تنها تولید متن EX که بیرون از کلاستر انجام می‌شود."], "steps": ["b-greeting", "v-session", "a-aqa"]},
-        {"name": "neurobox TTS `ex_prod`", "size": "نامعلوم (اگر VITS باشد، هم‌ردهٔ VITS ≈0.03 تا 0.04B، استنباطی)", "status": "unknown",
-         "facts": ["**نقش:** همهٔ پاسخ‌ها را با صدا می‌خواند.", "**سرویس‌دهی:** Triton پشت `neurobox-gateway-green` (neurobox-prod، در مخزن‌های ما نیست)."], "steps": ["v-tts"]},
-        {"name": "k2 ASR `coa_iva_prod_long` + emotion + gender", "size": "نامعلوم", "status": "external",
-         "facts": ["**نقش:** تبدیل دوبارهٔ آفلاین گفتار به متن برای تحلیل.", "**سرویس‌دهی:** `asr-k2-tmp-gw-proxy` (neurobox-prod)."], "steps": ["a-asr"]},
-        {"name": "مدل‌های موتور CCA", "size": "احتمالاً استخرهای COA با Gemma-4 26B-A4B و/یا 31B (استنباطی)", "status": "external",
-         "facts": ["**نقش:** برچسب‌گذاری تماس، احساسات، خلاصه، دسته‌ها.", "**نکته:** هیچ کلاینتی برای استخرهای COA در مخزن‌های ما نیست."], "steps": ["a-cca"]},
-    ],
-    "sections": [
-        ("«B» را چگونه بخوانیم", ["**B = میلیارد پارامتر.** حافظه و کیفیت را تعیین می‌کند. در مدل‌های MoE («A4B»، «A3B») فقط بخش فعال در هر توکن اجرا می‌شود، پس مدل 26B-A4B تقریباً به سرعت یک مدل متراکم 4B رمزگشایی می‌کند اما به حافظهٔ یک مدل 26B نیاز دارد.",
-                             "**طول context** (در اینجا 15K و 23K توکن) حداکثر مقداری است که مدل می‌تواند یک‌جا بخواند: پرامپت سیستمی + زمینه‌های پایگاه دانش + تاریخچه + پاسخ. این مقدار برای هر استقرار تنظیم می‌شود (`--max-model-len`)، نه توسط خود مدل.",
-                             "**بودجهٔ توکن هر گام** (حداکثر توکن خروجی، temperature) هر جا کد آن را تنظیم کرده باشد، در صفحهٔ همان گام آمده است."]),
-    ],
-}
+STEPS.update(FRAMEWORK_STEPS)
+LANES.append(dict(FRAMEWORK_LANE, band=True))
 
 RISKS = {
     "title": "ریسک‌ها و کمبودهایی که یک TPM باید پیگیری کند",
@@ -643,5 +608,5 @@ RISKS = {
 }
 
 DATA = {"lang": "fa", "dir": "rtl", "ui": UI, "meta": META, "lanes": LANES, "system_edges": SYSTEM_EDGES,
-        "key_points": KEY_POINTS, "steps": STEPS, "models": MODELS, "risks": RISKS}
+        "key_points": KEY_POINTS, "steps": STEPS, "models": MODELS, "guide": GUIDE, "risks": RISKS}
 DATA["lanes"][1]["steps"] = [k for k in BRAIN_STEPS]
