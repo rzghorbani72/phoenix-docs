@@ -235,7 +235,7 @@ footer{margin-top:64px;color:var(--muted);font-size:13px;border-top:1px solid va
 │    └─ RBAC + dashboard
 │
 └─ O5: Security must see and control
-     ├─ Trace with search/filter and TTFT             ← whiteboard: Trace
+     ├─ Trace with search/filter and TTFT (Time to First Token؛ زمان تا اولین توکن پاسخ) ← whiteboard: Trace
      ├─ Local multimodal guardrail, admin-editable    ← whiteboard: GuardRail
      └─ Session management</pre>
   <div class="callout info"><strong>نکته‌ی coaching:</strong> همه‌ی آیتم‌های وایت‌برد به یک Opportunity وصل شدند، ولی O1 و O2 مستقیماً Outcome اصلی (پذیرش) را حرکت می‌دهند و O4/O5 فقط <b>بعد از پذیرش</b> ارزش دارند. ترتیب نقشه‌ی راه از همین می‌آید.</div>
@@ -278,7 +278,7 @@ VS Code ────────►   • SSO, RBAC, sessions                   
   <div class="table-wrap"><table>
     <thead><tr><th>#</th><th>فرض</th><th>تست</th><th>معیار موفقیت</th><th>نتیجه</th></tr></thead>
     <tbody>
-      <tr><td>A1</td><td>دسترسی پایدار و مجاز به مدل‌های جهانی داریم</td><td>استعلام حقوقی + اسکریپت uptime ۱۴ روزه روی ۲ مسیر</td><td>تأیید مکتوب + uptime ≥ ۹۹٪</td><td class="tbd">TBD</td></tr>
+      <tr><td>A1 (Assumption 1)</td><td>دسترسی پایدار و مجاز به مدل‌های جهانی داریم</td><td>استعلام حقوقی + اسکریپت uptime ۱۴ روزه روی ۲ مسیر</td><td>تأیید مکتوب + uptime ≥ ۹۹٪</td><td class="tbd">TBD</td></tr>
       <tr><td>A2</td><td>کارمندان با کیفیت برابر، ابزار شخصی را رها می‌کنند</td><td>پایلوت ۳۰ نفر ۷ روز + مقایسه ترافیک پروکسی</td><td>≥ ۷۰٪ «دیگر نیاز ندارم» و −۳۰٪ ترافیک خارجی آن‌ها</td><td class="tbd">TBD</td></tr>
       <tr><td>A3</td><td>دیدن usage/سهمیه در پروفایل اعتماد می‌سازد و مصرف بی‌رویه را کم می‌کند</td><td>A/B در پایلوت: با/بدون صفحه‌ی Usage</td><td>≥ ۱۵٪ کمتر سهمیه‌ی تمام‌شده در گروه با صفحه</td><td class="tbd">TBD</td></tr>
       <tr><td>A4</td><td>dev‌ها کلید سازمانی را در VS Code جایگزین ابزار پولی شخصی می‌کنند</td><td>۱۰ dev، ۲ هفته، Continue/Cline با کلید Hub</td><td>≥ ۷/۱۰ بعد از ۲ هفته هنوز فعال</td><td class="tbd">TBD</td></tr>
@@ -325,7 +325,7 @@ VS Code ────────►   • SSO, RBAC, sessions                   
       <dl>
         <dt>Effort</dt><dd>S تا M — LiteLLM به‌عنوان موتور. لیست مدل per-role در Hub API.</dd>
         <dt>Impact</dt><dd>مستقیماً O1 (کیفیت = پذیرش).</dd>
-        <dt>Risk</dt><dd>وابستگی به A1 (دسترسی به ارائه‌دهنده). ترجمه‌ی tool-calling بین فرمت‌ها برای مدل‌های غیر OpenAI ناقص است.</dd>
+        <dt>Risk</dt><dd>وابستگی به A1 (Assumption 1؛ فرض ۱: دسترسی پایدار و مجاز به مدل‌های جهانی). ترجمه‌ی tool-calling بین فرمت‌ها برای مدل‌های غیر OpenAI ناقص است.</dd>
       </dl>
     </div>
 
@@ -505,7 +505,7 @@ VS Code ────────►   • SSO, RBAC, sessions                   
 <!-- ============ ROADMAP ============ -->
 <section class="doc" id="roadmap">
   <h2><span class="num">۰۵</span> Roadmap</h2>
-  <div class="callout warn"><strong>فرض‌های پایه برای همه‌ی تاریخ‌ها:</strong> تیم ۳ تا ۴ مهندس (۱ فرانت، ۲ بک‌اند/پلتفرم، ۰.۵ DevOps) + ۱ PM یا PO پاره‌وقت. Keycloak یا AD در دسترس است. A1 (دسترسی به ارائه‌دهنده‌ها) تا پایان M0 تأیید می‌شود. <b>اگر هر کدام از این‌ها غلط باشد، همه‌ی تاریخ‌ها جابه‌جا می‌شوند.</b></div>
+  <div class="callout warn"><strong>فرض‌های پایه برای همه‌ی تاریخ‌ها:</strong> تیم ۳ تا ۴ مهندس (۱ فرانت، ۲ بک‌اند/پلتفرم، ۰.۵ DevOps) + ۱ PM یا PO پاره‌وقت. Keycloak یا AD در دسترس است. A1 (Assumption 1؛ دسترسی پایدار و مجاز به مدل‌های جهانی) تا پایان M0 تأیید می‌شود. <b>اگر هر کدام از این‌ها غلط باشد، همه‌ی تاریخ‌ها جابه‌جا می‌شوند.</b></div>
 
   <div class="gantt" aria-label="Timeline">
     <div class="gantt-grid">
