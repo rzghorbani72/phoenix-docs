@@ -46,12 +46,12 @@
 
 مسیرها نسبت به ریشهٔ مخزن هستند:
 
-- `hr-ex-phoenix/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html` — PRD رفتار IVA برای پایلوت EX، خط قرمزها، سناریوهای آزمون و تصمیم‌های باز.
-- `hr-ex-phoenix/product-management/PRODUCT_DOSSIER_FA.html` — وضعیت محصول و کد، ایده‌های HR، رقبا و قابلیت‌ها؛ به‌ویژه فصل ۲۵.
-- `hr-ex-phoenix/product-management/FEATURE_CATALOG_FA.html` — کاتالوگ قابلیت‌ها، وضعیت فعلی، اولویت و برش انتشار.
-- `hr-ex-phoenix/product-management/MARKET_ALIGNMENT_FA.html` — نگاشت نیازهای توافق پایلوت به الگوهای بازار و مرزبندی سازمانی/داده.
-- `hr-ex-phoenix/product-management/INSPIRATION_PLAYBOOK_FA.html` — نمونه‌های بازار و نحوهٔ کار قابلیت‌های مشابه.
-- `hr-ex-phoenix/product-management/START_HERE_FA.html` — راهنمای انتخاب سند بر اساس پرسش.
+- `hr-ex-phoenix/public/docs/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html` — PRD رفتار IVA برای پایلوت EX، خط قرمزها، سناریوهای آزمون و تصمیم‌های باز.
+- `hr-ex-phoenix/public/docs/product-management/PRODUCT_DOSSIER_FA.html` — وضعیت محصول و کد، ایده‌های HR، رقبا و قابلیت‌ها؛ به‌ویژه فصل ۲۵.
+- `hr-ex-phoenix/public/docs/product-management/FEATURE_CATALOG_FA.html` — کاتالوگ قابلیت‌ها، وضعیت فعلی، اولویت و برش انتشار.
+- `hr-ex-phoenix/public/docs/product-management/MARKET_ALIGNMENT_FA.html` — نگاشت نیازهای توافق پایلوت به الگوهای بازار و مرزبندی سازمانی/داده.
+- `hr-ex-phoenix/public/docs/product-management/INSPIRATION_PLAYBOOK_FA.html` — نمونه‌های بازار و نحوهٔ کار قابلیت‌های مشابه.
+- `hr-ex-phoenix/public/docs/product-management/START_HERE_FA.html` — راهنمای انتخاب سند بر اساس پرسش.
 - `hr-ex-phoenix/README.md` — فهرست اسناد و روش نگهداری/ساخت خروجی‌ها.
 
 ## متن آماده برای آغاز کار با Codex یا Claude

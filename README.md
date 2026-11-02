@@ -5,18 +5,16 @@ Claude and Codex: [`PROJECTS_REGISTRY.md`](PROJECTS_REGISTRY.md) (their global c
 
 | Folder | What | Start with |
 |---|---|---|
-| [`hr-ex-phoenix/`](hr-ex-phoenix/) | **HR / EX (Phoenix)**: product docs, technical docs, the clickable pipeline map, KB content, requirements, diagrams | [`hr-ex-phoenix/README.md`](hr-ex-phoenix/README.md) → folder map |
+| [`hr-ex-phoenix/`](hr-ex-phoenix/) | **HR / EX (Phoenix)** as a React app: interactive pipeline map, models, guide, risks, plus all product/technical docs, KB content, requirements and diagrams under `public/docs/` | [`hr-ex-phoenix/README.md`](hr-ex-phoenix/README.md) → folder map |
 | [`chat-hub-product/`](chat-hub-product/) | **LLM Hub / Chat Hub** product docs (not the call-center chatbot) | [`CHAT_HUB_PROJECT_CONTEXT_FA.md`](chat-hub-product/CHAT_HUB_PROJECT_CONTEXT_FA.md) |
 | [`project-proposals/`](project-proposals/) | Proposed projects, one Word file each | [`README.md`](project-proposals/README.md) |
 
 Quick finds:
 
-- **Interactive diagram app (start here)** → `hr-ex-phoenix/technical/phoenix-pipelines/app/index.html` (open the file in a browser; EN/FA toggle inside)
-- **Understand the EX / Phoenix pipelines and every model** (static pages) → `hr-ex-phoenix/technical/phoenix-pipelines/en/index.html` (Persian: `fa/`)
-- **TPM learning guide** → `hr-ex-phoenix/technical/phoenix-pipelines/en/guide.html`
-- **EX agent requirements (PRD)** → `hr-ex-phoenix/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html`
-- **Knowledge-base content and imports** → `hr-ex-phoenix/knowledge-base/`
+- **Interactive app: pipelines, every model, TPM guide, risks, all documents (start here)** → `cd hr-ex-phoenix && npm install && npm run dev` (EN/FA toggle inside)
+- **EX agent requirements (PRD)** → `hr-ex-phoenix/public/docs/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html`
+- **Knowledge-base content and imports** → `hr-ex-phoenix/public/docs/knowledge-base/`
 - **Project context for an AI assistant** → `hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md`, `hr-ex-phoenix/COA_PROJECT_CONTEXT_FA.md`, `chat-hub-product/CHAT_HUB_PROJECT_CONTEXT_FA.md`
 
 Conventions: folders `kebab-case`; one folder per project; each project folder has a `README.md` and its context file at its root;
-generated documents are `UPPER_SNAKE` (`_FA` = Persian) and are rebuilt from `source/`, never edited by hand.
+generated documents are `UPPER_SNAKE` (`_FA` = Persian) and are rebuilt from their sources (`hr-ex-phoenix/scripts/docs/`, `hr-ex-phoenix/content/`), never edited by hand.

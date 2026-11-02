@@ -24,6 +24,6 @@ COA را با CCA یکی نگیرید: CCA به تحلیل تماس/مکالمه
 
 - `hr-ex-phoenix/README.md` — نمای معماری Phoenix، سرویس‌های مرتبط و اشاره‌گرهای کد.
 - `hr-ex-phoenix/HR_PROJECT_CONTEXT_FA.md` — معنای COA در محصول Phoenix و رابطه‌اش با HR/EX.
-- `hr-ex-phoenix/technical/IVA_COA_PIPELINES.html` — مرور خط لولهٔ IVA و COA.
+- `hr-ex-phoenix/public/docs/technical/IVA_COA_PIPELINES.html` — مرور خط لولهٔ IVA و COA.
 
 مسیرهای واقعی کد بسته به مخزن کاری فرق می‌کنند؛ قبل از نتیجه‌گیری، مخزن و شاخهٔ درست COA را شناسایی کنید.

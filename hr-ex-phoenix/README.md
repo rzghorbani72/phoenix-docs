@@ -8,20 +8,34 @@ Technical PM role. Every claim here is backed by a `file:line` you can open.
 - Agreement reviewed: `requirements/HR - meet UAT agreement - Fit-Gap MVP.csv` (87 rows, 8 blocks) — the
   Employee Experience (EX) voice-of-employee pilot between MCINEXT and MCI's EX department
 
+## Run it
+
+This folder is a standard Vite + React + TypeScript app. Python 3 is needed for the content export.
+
+```bash
+npm install
+npm run dev        # export content -> src/data, build drawio, start the dev server
+npm run build      # typecheck + production build into dist/ (documents in public/ are copied as-is)
+npm run preview    # serve dist/ locally
+```
+
 ## Folder map (start here)
 
-| Folder / file | What is in it | Start with |
-|---|---|---|
-| `HR_PROJECT_CONTEXT_FA.md` | Short global context for the **HR product / EX pilot**: COA·CCA·IVA baseline, how EX relates to HR, working rules, source pointers. Give it to Claude or Codex at the start of HR work | itself |
-| `COA_PROJECT_CONTEXT_FA.md` | Same idea for **COA** (call-analytics panel) work that is independent of HR | itself |
-| `product-management/` | Business, scope, customers, competitors, roadmap, fit-gap, the EX PRD (Persian HTML/PDF) | `START_HERE_FA.html` |
-| `technical/` | Architecture and code docs. **`technical/phoenix-pipelines/app/index.html`** is the interactive app (zoomable diagram, step and model panels, search, EN/FA; built from `source/pipelines-app/`). **`technical/phoenix-pipelines/`** is the clickable EX pipeline map: 6 pipelines + the agentlib framework, step pages, 22 model pages, a TPM guide, risks (English `en/`, Persian `fa/`, editable `.drawio`) | `technical/phoenix-pipelines/en/index.html` |
-| `knowledge-base/` | EX knowledge-base content and import files (see its README) | `knowledge-base/README.md` |
-| `requirements/` | Source requirement files: the UAT agreement Fit-Gap (87 rows) and the Continuous Listening MVP fit-gap | — |
-| `diagrams/` | Photos of hand-drawn architecture notes: IVA call flow, COA/CCA analysis flow, CCA topic mapper | — |
-| `source/` | Generators for everything above (`build.sh`, theme, `pipelines/` site generator, `pipelines-app/` React app: `npm install && npm run build`) — edit sources, then rebuild | `source/build.sh` |
+| Folder / file | What is in it |
+|---|---|
+| `HR_PROJECT_CONTEXT_FA.md` | Short global context for the **HR product / EX pilot**: COA·CCA·IVA baseline, how EX relates to HR, working rules, source pointers. Give it to Claude or Codex at the start of HR work |
+| `COA_PROJECT_CONTEXT_FA.md` | Same idea for **COA** (call-analytics panel) work that is independent of HR |
+| `src/` | The React app: `lib/` (data, types, inline markup), `components/` (diagram, blocks, search), `views/` (step panel, models, guide, risks, documents) |
+| `content/` | **Single source of truth** for the pipeline content in English and Persian (`content_en*.py`, `content_fa*.py`). `export_json.py` writes `src/data/{en,fa}.json` (generated, not committed); `build_drawio.py` writes `public/phoenix-pipelines.drawio`, whose boxes open the app routes |
+| `public/docs/product-management/` | Business, scope, customers, competitors, roadmap, fit-gap, the EX PRD (Persian HTML/PDF). Start with `START_HERE_FA.html` |
+| `public/docs/technical/` | Technical dossier, AI learning guide, the older IVA/COA pipeline walkthrough |
+| `public/docs/knowledge-base/` | EX knowledge-base content and import files (see its README) |
+| `public/docs/requirements/` | Source requirement files: the UAT agreement Fit-Gap (87 rows) and the Continuous Listening MVP fit-gap |
+| `public/docs/diagrams/` | Photos of hand-drawn architecture notes: IVA call flow, COA/CCA analysis flow, CCA topic mapper |
+| `scripts/docs/` | Generators and sources for the product/technical HTML+PDF documents (`build.sh`, theme, TSV, HTML sources); they publish into `public/docs/` |
 
 Naming: folders are `kebab-case`; generated documents are `UPPER_SNAKE` (`_FA` = Persian); data files carry a version (`_v1`); photos of notes end in `_notes`.
+The paths in the sections below are relative to `public/docs/` unless they say otherwise.
 
 ## What's in this folder
 
@@ -47,7 +61,7 @@ Every document is published as a **dark-themed standalone HTML page** and (excep
 | `INSPIRATION_PLAYBOOK_FA.html/.pdf` | TPM, tech leads, developers | Plain-Persian playbook: the Iranian competitors (Sokhan, Amerandish, Sitak, Asr Gooyesh, Part, Poshtyar, Chargoon, Porsline) and foreign sources of inspiration most similar to Phoenix, why each resembles us, how their key features work, what we already have, how to build it and how feasible it is. Ends with a versioned feature list: **v1 = MCI UAT agreement rows (with Fit-Gap IDs)**, v2/v3 = later |
 | `MARKET_ALIGNMENT_FA.html/.pdf` | TPM, CTO, tech leads | Translates the MCI Fit-Gap needs into market patterns: 9 product building blocks (org tree + scope, data tiers, k-threshold, HR sync, knowledge spaces, insight engine, sensitive routing, program/channel, eval); all 87 rows tagged Generic / Config / MCI-only next to their code verdict; how Qualtrics, Viva Glint, Peakon, Medallia, Culture Amp, NICE, ServiceNow and Leena model access; the معاونت/اداره scope model with enforcement points and corner cases; COA/AIVA/Chatbot/auth shape; sequencing on the roadmap waves |
 | `ANSWER_PACK_FA.pdf` | EX department and MCI evaluation committee | Buyer-facing draft answering Chargoon's HR software selection guide (7 Mehr 1405): problem as process, scope tiers, 8 testable criteria, role × data matrix, demo scenario with exceptions, the 10 demo questions, required inputs from EX, proposed acceptance criteria, cost-proposal structure. Yellow dashed fields need EX data or a joint decision before sending |
-| `FEATURE_CATALOG.md` + `FEATURE_CATALOG.html` + `FEATURE_CATALOG_FA.md` + `FEATURE_CATALOG_FA.html` | TPM, CTO, tech leads | English master feature list for the whole EX product (voice + chat, answers, requests/ticketing, conversation tagging, insights, privacy, integrations, admin, AI quality, ops): 180 features in 18 domains (including recruiting), each with the need, solution options, what world leaders do (sourced), Phoenix status from code, priority and effort. Ends with key judgments, a release cut R0–R4 and red lines. The `.md` files are the sources (English, and a Persian translation `_FA`): edit them, then run `source/build.sh` (or `source/build_feature_catalog.py` plus `apply_theme.py`) to regenerate the themed `.html` files |
+| `FEATURE_CATALOG.md` + `FEATURE_CATALOG.html` + `FEATURE_CATALOG_FA.md` + `FEATURE_CATALOG_FA.html` | TPM, CTO, tech leads | English master feature list for the whole EX product (voice + chat, answers, requests/ticketing, conversation tagging, insights, privacy, integrations, admin, AI quality, ops): 180 features in 18 domains (including recruiting), each with the need, solution options, what world leaders do (sourced), Phoenix status from code, priority and effort. Ends with key judgments, a release cut R0–R4 and red lines. The `.md` files are the sources (English, and a Persian translation `_FA`): edit them, then run `scripts/docs/build.sh` (or `scripts/docs/build_feature_catalog.py` plus `apply_theme.py`) to regenerate the themed `.html` files |
 | `AI_LEARNING_GUIDE_FA.html/.pdf` | TPM, anyone on the team | Plain-Persian guide to staying current in AI: core concepts (tokens, SFT/RLHF, RAG, MoE, quantization), reading a Hugging Face model card field by field, an abbreviation glossary, what each benchmark measures and its pitfalls, a voice chapter (WER/CER for Persian, RTFx, MOS, turn-detection latency), curated leaderboards, papers, newsletters and courses, a weekly routine, a 10-minute model check and exercises |
 | `IVA_EX_PROMPT_REQUIREMENTS_FA.html/.pdf` | Prompt-engineering team, IVA tech team, EX | Plain-Persian PRD for the new EX voice agent ("دستیار هوشمند صدای کارکنان"), derived from EX's Instruction v1.0: ~70 numbered, testable requirements (intro, tone, listening-first, follow-up, metadata confidentiality, voice types, KB answering and the three "can't answer" cases, summary, sensitive voice, angry callers, guardrails, closing) plus voice-channel and prompt-security additions, proposed tool contract, the prompt-engineering process, a prompt skeleton, 25 eval scenarios, release gate, open decisions, risks and a traceability matrix |
 
@@ -56,15 +70,14 @@ Every document is published as a **dark-themed standalone HTML page** and (excep
 | File | Audience | What it is |
 |---|---|---|
 | `TECHNICAL_DOSSIER_FA.pdf` | Engineers, tech leads, TPM when reviewing | Voice AI basics (VAD, Turn, STT/ASR, TTS, Egress); call path (service number → backbone → SBC → SIP/RTP → LiveKit → agent); §11 repo map; tech-stack philosophy (why each language, datastore and service, untapped capabilities, audio channel/codec trade-offs, CTO decision sheet); §12–24: architecture, agentlib, AIVA orchestration, IVA voice agent, CCA pipeline, AQA, auth, data model and messaging, config reference, CI/deploy, developer cookbook, tech debt, endpoint catalog; abbreviations and glossary |
-| `IVA_COA_PIPELINES.html` | Engineers | IVA and COA pipeline walkthrough (overview, IVA, COA, gaps). Describes MCI defaults as of 2026-10-05; **superseded by `phoenix-pipelines/` for EX** |
-| **`phoenix-pipelines/`** | TPM, engineers | Clickable map of every EX pipeline (phone call, aiva brain, knowledge base, memory/data, post-call analytics, models/platform) with 53 step deep-dive pages: model, size in B params, why, inputs/outputs, settings, logic and code refs. Also a model inventory and a risks & gaps page. English `en/` and Persian `fa/`, plus an editable `phoenix-pipelines.drawio` whose boxes link to the step pages. Read from chatbot-ops prod @ `e748fd027` and phoenix main @ `7b7c602eb` on **2026-11-02** |
+| `IVA_COA_PIPELINES.html` | Engineers | IVA and COA pipeline walkthrough (overview, IVA, COA, gaps). Describes MCI defaults as of 2026-10-05; **superseded by the app's pipeline map for EX** |
 
 ### Shared
 
 | File | Audience | What it is |
 |---|---|---|
 | `README.md` | Engineers, future you | This file — the "how" behind the system and how to regenerate everything |
-| `source/` | Maintainers | HTML and TSV sources plus `build.sh`; everything above except `IVA_COA_PIPELINES.html` is reproducible from here. `source/pipelines/` builds `technical/phoenix-pipelines/` (`build_pipelines.py` for layout, `content_*.py` for text): edit the content, then rerun |
+| `scripts/docs/` (from the project root) | Maintainers | HTML and TSV sources plus `build.sh`; every document above except `IVA_COA_PIPELINES.html` is reproducible from here. The pipeline map lives in the app: edit `content/content_*.py`, then `npm run dev` |
 
 ### Using the tracker
 
