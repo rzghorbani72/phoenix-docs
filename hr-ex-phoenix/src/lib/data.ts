@@ -8,17 +8,15 @@ const fa = faJson as unknown as Data;
 const mark = <T extends object>(o: T): T => ({ ...o, fallback: true });
 
 /** Persian falls back to English item by item, so a half-translated build still shows everything. */
-function mergeFa(): Data {
+export function mergeFa(en: Data, fa: Data): Data {
   const steps: Record<string, Page> = {};
-  for (const [id, s] of Object.entries(en.steps)) steps[id] = fa.steps[id] ?? mark(s);
-  const faLanes = new Map(fa.lanes.map((l) => [l.id, l]));
+  for (const [id, s] of Object.entries(en.steps)) steps[id] = fa.steps?.[id] ?? mark(s);
+  const faLanes = new Map((fa.lanes ?? []).map((l) => [l.id, l]));
   const lanes: Lane[] = en.lanes.map((l) => faLanes.get(l.id) ?? l);
-  const hasPages = Object.keys(fa.models.pages ?? {}).length > 0;
+  const hasPages = Object.keys(fa.models?.pages ?? {}).length > 0;
   const pages: Record<string, Page> = {};
-  for (const [id, p] of Object.entries(en.models.pages)) pages[id] = fa.models.pages?.[id] ?? mark(p);
-  const models = hasPages
-    ? { ...fa.models, pages }
-    : { ...en.models, pages, fallback: true };
+  for (const [id, p] of Object.entries(en.models.pages)) pages[id] = fa.models?.pages?.[id] ?? mark(p);
+  const models = hasPages ? { ...fa.models, pages } : { ...en.models, pages, fallback: true };
   return {
     ...fa,
     steps,
@@ -29,7 +27,7 @@ function mergeFa(): Data {
   };
 }
 
-export const DATA: Record<"en" | "fa", Data> = { en, fa: mergeFa() };
+export const DATA: Record<"en" | "fa", Data> = { en, fa: mergeFa(en, fa) };
 
 /** Which lane a step belongs to, and its 1-based number in that lane (e.g. B10). */
 export function laneOf(d: Data, stepId: string): { lane: Lane; num: number } | undefined {

@@ -33,12 +33,14 @@ export function Badge({ status, label }: { status: Status; label: string }) {
   return <span className={`badge s-${status}`}>{label}</span>;
 }
 
-export function Sections({ sections, ctx }: { sections: [string, Body][]; ctx: LinkCtx }) {
+/** `level` is the heading level of each section title: 3 under a panel's h2, 2 directly under a page h1. */
+export function Sections({ sections, ctx, level = 3 }: { sections: [string, Body][]; ctx: LinkCtx; level?: 2 | 3 }) {
+  const H = level === 2 ? "h2" : "h3";
   return (
     <>
       {sections.map(([h, b], i) => (
         <section className="sec" key={i}>
-          <h3><Md text={h} ctx={ctx} /></h3>
+          <H><Md text={h} ctx={ctx} /></H>
           <BodyView body={b} ctx={ctx} />
         </section>
       ))}

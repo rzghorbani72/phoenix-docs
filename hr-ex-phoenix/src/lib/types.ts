@@ -55,6 +55,8 @@ export interface Risk {
 export interface Data {
   lang: "en" | "fa";
   dir: "ltr" | "rtl";
+  // UI strings are a loose JSON bag (nested maps such as `status` and `sev`); typed per use site.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ui: Record<string, any>;
   meta: { title: string; title_plain: string; lede: string; source: string; footer: string };
   lanes: Lane[];

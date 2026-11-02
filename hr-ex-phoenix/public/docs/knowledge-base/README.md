@@ -3,7 +3,7 @@
 Content for the EX (Employee Voice) agent's knowledge base. The KB is curated Q&A, loaded through the
 KB API or a CSV import with the columns
 `questions, questions_as_suggestion, answer_text, answer_iva_text, answer_type, start_time, end_time, is_active, tags`
-(see lane 3 of `../technical/phoenix-pipelines/en/index.html`).
+(see lane 3, “Knowledge base”, of the pipeline map in the app: `npm run dev` in `hr-ex-phoenix/`, then `#/map/lane/kb`).
 
 | Folder | What it holds |
 |---|---|

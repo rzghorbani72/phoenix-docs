@@ -2,7 +2,8 @@
 """Export the pipeline content (content_en / content_fa DATA) as JSON for the React app.
 
 Tuples that hold several section bodies become {"multi": [...]} so the app can tell them
-apart from bullet lists. Output: ../src/data/{en,fa}.json
+apart from bullet lists. Output: ../src/data/{en,fa}.json, plus the documents manifest
+../src/data/docs.json (build_docs_manifest.py).
 """
 
 from __future__ import annotations
@@ -56,3 +57,6 @@ def export(lang):
 if __name__ == "__main__":
     for lang in sys.argv[1:] or ["en", "fa"]:
         export(lang)
+    import build_docs_manifest  # documents library manifest -> src/data/docs.json
+
+    build_docs_manifest.main()
