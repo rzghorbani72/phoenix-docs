@@ -151,6 +151,7 @@ def page(d, title, body, depth=0, other=None):
     up = "../" * depth
     ui = d["ui"]
     other_link = f'<a href="{other}">{ui["other_lang"]}</a>' if other else ""
+    guide_link = f'<a href="{up}guide.html">{ui.get("nav_guide", "Guide")}</a>' if d.get("guide") else ""
     return f"""<!doctype html>
 <html lang="{d['lang']}" dir="{d['dir']}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -160,7 +161,7 @@ def page(d, title, body, depth=0, other=None):
 <style>{CSS}</style><script>{JS}</script></head>
 <body><header class="top"><div class="wrap"><a class="brand" href="{up}index.html">{ui['brand']}</a>
 <nav><a href="{up}index.html">{ui['nav_map']}</a><a href="{up}models.html">{ui['nav_models']}</a>
-<a href="{up}risks.html">{ui['nav_risks']}</a>{other_link}<button id="themeBtn" type="button">◐</button></nav></div></header>
+<a href="{up}risks.html">{ui['nav_risks']}</a>{guide_link}{other_link}<button id="themeBtn" type="button">◐</button></nav></div></header>
 <main class="wrap">{body}</main>
 <footer class="wrap">{md(d['meta']['footer'])}</footer></body></html>"""
 
@@ -171,12 +172,16 @@ def badge(d, status):
 
 # ---------------------------------------------------------------- system overview svg
 def system_svg(d):
-    """Six lane blocks in a 3x2 grid plus labelled hand-off arrows; each block jumps to its lane."""
+    """Six lane blocks in a 3x2 grid plus labelled hand-off arrows; each block jumps to its lane.
+    Lanes marked "band" (e.g. the framework everything runs on) are drawn as a full-width foundation bar below."""
     lanes = {l["id"]: l for l in d["lanes"]}
-    W, H, bw, bh = 1180, 330, 300, 104
+    blocks = [l for l in d["lanes"] if not l.get("band")][:6]
+    bands = [l for l in d["lanes"] if l.get("band")]
+    W, bw, bh, band_h = 1180, 300, 104, 64
     xs, ys = [20, 440, 860], [24, 202]
+    H = 330 + len(bands) * (band_h + 30)
     pos = {}
-    for i, l in enumerate(d["lanes"][:6]):
+    for i, l in enumerate(blocks):
         pos[l["id"]] = (xs[i % 3], ys[i // 3])
     parts = [f'<svg viewBox="0 0 {W} {H}" role="img" aria-label="{html.escape(d["ui"]["sys_title"])}">',
              '<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">'
@@ -209,6 +214,13 @@ def system_svg(d):
                      f'<text x="{x + bw / 2}" y="{y + 40}" text-anchor="middle" font-weight="800" font-size="18">{html.escape(l["short"])}</text>'
                      f'<text class="sub" x="{x + bw / 2}" y="{y + 66}" text-anchor="middle" font-size="13">{html.escape(l["tagline"])}</text>'
                      f'<text class="sub" x="{x + bw / 2}" y="{y + 88}" text-anchor="middle" font-size="12">{n} {html.escape(d["ui"]["steps_word"])}</text></a>')
+    for j, l in enumerate(bands):
+        y = 336 + j * (band_h + 30)
+        col = f"var({LANE_COLORS[l['color']]})"
+        text = f'{l["short"]} · {l["tagline"]} · {len(l["steps"])} {d["ui"]["steps_word"]}'
+        parts.append(f'<a href="#lane-{l["id"]}"><rect x="20" y="{y}" width="{W - 40}" height="{band_h}" rx="12" fill="var(--surface-2)" '
+                     f'stroke="{col}" stroke-width="2" stroke-dasharray="6 4"/>'
+                     f'<text x="{W / 2}" y="{y + band_h / 2 + 6}" text-anchor="middle" font-weight="700" font-size="16">{html.escape(text)}</text></a>')
     parts.append("</svg>")
     return "".join(parts)
 
@@ -263,9 +275,11 @@ def build_step(d, l, sid, other):
 def build_models(d, other):
     out = [f'<h1>{md(d["models"]["title"])}</h1><p class="lede">{md(d["models"]["lede"])}</p>']
     out.append('<div class="grid">')
+    pages = d["models"].get("pages", {})
     for m in d["models"]["cards"]:
         used = "".join(f'<li><a href="steps/{u}.html">{md(d["steps"][u]["title"])}</a></li>' for u in m.get("steps", []))
-        out.append(f'<div class="mcard"><h3>{md(m["name"])}</h3><div class="size">{md(m["size"])}</div>'
+        name = f'<a href="models/{m["id"]}.html">{md(m["name"])}</a>' if m.get("id") in pages else md(m["name"])
+        out.append(f'<div class="mcard"><h3>{name}</h3><div class="size">{md(m["size"])}</div>'
                    f'<p>{badge(d, m["status"])}</p>{block(m["facts"])}'
                    + (f'<p class="meta">{d["ui"]["used_in"]}</p><ul>{used}</ul>' if used else "") + "</div>")
     out.append("</div>")
@@ -273,6 +287,45 @@ def build_models(d, other):
         bodies = body if isinstance(body, tuple) else (body,)
         out.append(f'<section class="sec"><h2>{md(h)}</h2>{"".join(block(b) for b in bodies)}</section>')
     return page(d, d["models"]["title"], "".join(out), 0, other)
+
+
+def build_model_page(d, mid, other):
+    """Deep-dive page for one model; same section format as a step page, ordered like the cards."""
+    ui, m = d["ui"], d["models"]["pages"][mid]
+    order = [c["id"] for c in d["models"]["cards"] if c.get("id") in d["models"]["pages"]]
+    i = order.index(mid)
+    card = next(c for c in d["models"]["cards"] if c.get("id") == mid)
+    out = [f'<div class="crumbs"><a href="../models.html">{md(d["models"]["title"])}</a></div>',
+           f'<h1 style="border-inline-start:6px solid var(--accent);padding-inline-start:12px">{md(m["title"])}</h1>',
+           f'<p>{badge(d, m["status"])} <span class="size">{md(card["size"])}</span></p><p class="lede">{md(m["summary"])}</p>']
+    if m.get("facts"):
+        out.append('<div class="facts">' + "".join(
+            f'<div class="fact"><div class="k">{md(k)}</div><div class="v">{md(v)}</div></div>' for k, v in m["facts"]) + "</div>")
+    if card.get("steps"):
+        out.append(f'<section class="sec"><h2>{ui["used_in"]}</h2><ul>' + "".join(
+            f'<li><a href="../steps/{u}.html">{md(d["steps"][u]["title"])}</a></li>' for u in card["steps"]) + "</ul></section>")
+    for h, body in m.get("sections", []):
+        bodies = body if isinstance(body, tuple) else (body,)
+        out.append(f'<section class="sec"><h2>{md(h)}</h2>{"".join(block(b) for b in bodies)}</section>')
+    prev_ = order[i - 1] if i > 0 else None
+    next_ = order[i + 1] if i + 1 < len(order) else None
+    pages = d["models"]["pages"]
+    pn = '<div class="pn">'
+    pn += f'<a href="{prev_}.html">{ui["prev"]} {md(pages[prev_]["title"])}</a>' if prev_ else "<span></span>"
+    pn += f'<a href="{next_}.html">{md(pages[next_]["title"])} {ui["next"]}</a>' if next_ else f'<a href="../models.html">{ui["back_models"] if "back_models" in ui else ui["back"]}</a>'
+    out.append(pn + "</div>")
+    return page(d, f'{m["title"]} · {ui["brand"]}', "".join(out), 1, other)
+
+
+def build_guide(d, other):
+    g = d["guide"]
+    out = [f'<h1>{md(g["title"])}</h1><p class="lede">{md(g["lede"])}</p>']
+    toc = "".join(f'<li><a href="#g{i}">{md(h)}</a></li>' for i, (h, _) in enumerate(g["sections"]))
+    out.append(f'<section class="sec"><ol>{toc}</ol></section>')
+    for i, (h, body) in enumerate(g["sections"]):
+        bodies = body if isinstance(body, tuple) else (body,)
+        out.append(f'<section class="sec" id="g{i}"><h2>{md(h)}</h2>{"".join(block(b) for b in bodies)}</section>')
+    return page(d, g["title"], "".join(out), 0, other)
 
 
 def build_risks(d, other):
@@ -319,9 +372,29 @@ def build_drawio(d, base_href):
                              '<mxGeometry relative="1" as="geometry"/></mxCell>')
             prev = sid
         y += lh + 30
-    return ('<mxfile host="phoenix-pipelines"><diagram id="ex" name="EX pipelines"><mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" '
-            'guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" math="0" shadow="0"><root>'
-            + "".join(cells) + "</root></mxGraphModel></diagram></mxfile>")
+    diagrams = [("ex", "EX pipelines", cells)]
+    if d["models"].get("pages"):
+        diagrams.append(("models", "Model catalog", model_cells(d, base_href.replace("steps/", "models/"))))
+    head = ('<mxGraphModel dx="1600" dy="1000" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" '
+            'fold="1" page="0" pageScale="1" math="0" shadow="0"><root>')
+    return ('<mxfile host="phoenix-pipelines">' + "".join(
+        f'<diagram id="{i}" name="{n}">{head}{"".join(c)}</root></mxGraphModel></diagram>' for i, n, c in diagrams) + "</mxfile>")
+
+
+def model_cells(d, base_href):
+    """One linked box per model page, in card order, coloured by status."""
+    fill = {"live": "#dff3e1", "external": "#fbf0d2", "unknown": "#e2edfb", "off": "#eceff3", "notdeployed": "#fbe4e2"}
+    cells = ['<mxCell id="0"/>', '<mxCell id="1" parent="0"/>']
+    per_row, cw, ch, gx, gy = 5, 230, 84, 26, 26
+    cards = [c for c in d["models"]["cards"] if c.get("id") in d["models"]["pages"]]
+    for i, c in enumerate(cards):
+        r, col = divmod(i, per_row)
+        label = f'{d["models"]["pages"][c["id"]]["title_plain"]}\n{c["size"]}'
+        label = re.sub(r"[`*]", "", label)
+        cells.append(f'<UserObject id="m_{c["id"]}" label={quoteattr(label)} link={quoteattr(base_href + c["id"] + ".html")} status="{c["status"]}">'
+                     f'<mxCell style="rounded=1;whiteSpace=wrap;html=0;fillColor={fill.get(c["status"], "#ffffff")};strokeColor=#3c6fc4;fontSize=12;" vertex="1" parent="1">'
+                     f'<mxGeometry x="{20 + col * (cw + gx)}" y="{20 + r * (ch + gy)}" width="{cw}" height="{ch}" as="geometry"/></mxCell></UserObject>')
+    return cells
 
 
 # ---------------------------------------------------------------- main
@@ -334,6 +407,10 @@ def check(d):
         missing += [s for s in m.get("steps", []) if s not in ids]
     for r in d["risks"]["items"]:
         missing += [s for s in r.get("steps", []) if s not in ids]
+    pages = d["models"].get("pages", {})
+    if pages:
+        card_ids = [c.get("id") for c in d["models"]["cards"]]
+        missing += [f"model:{p}" for p in pages if p not in card_ids] + [f"model:{c}" for c in card_ids if c not in pages]
     if missing:
         raise SystemExit(f"{d['lang']}: unknown or orphan step ids: {sorted(set(missing))}")
 
@@ -355,6 +432,13 @@ def main():
             for sid in l["steps"]:
                 (dst / "steps" / f"{sid}.html").write_text(
                     build_step(d, l, sid, f"../../{other_lang}/steps/{sid}.html"), encoding="utf-8")
+        if d["models"].get("pages"):
+            (dst / "models").mkdir()
+            for mid in d["models"]["pages"]:
+                (dst / "models" / f"{mid}.html").write_text(
+                    build_model_page(d, mid, f"../../{other_lang}/models/{mid}.html"), encoding="utf-8")
+        if d.get("guide"):
+            (dst / "guide.html").write_text(build_guide(d, f"../{other_lang}/guide.html"), encoding="utf-8")
         if lang == "en":
             (OUT / "phoenix-pipelines.drawio").write_text(build_drawio(d, "en/steps/"), encoding="utf-8")
         print(f"{lang}: {sum(len(l['steps']) for l in d['lanes'])} step pages -> {dst}")
