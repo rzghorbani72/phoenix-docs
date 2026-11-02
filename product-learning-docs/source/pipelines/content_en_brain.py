@@ -1,0 +1,186 @@
+"""English content for lane 2 (the aiva brain). Code refs are aiva v0.31.1 = phoenix commit 206e55746
+(what prod runs), agentlib 0.45.0 (`agentlib/...`), and EX values (`values.yaml:N` = chatbot-ops/prod/chatbot-ex/values.yaml)."""
+
+V = "values.yaml"
+
+BRAIN_STEPS = {
+    "b-prompts": {
+        "title": "Prompt loading at startup", "title_plain": "Prompt loading", "status": "live",
+        "chip": "13 prompts from Phoenix · tag production · once per pod start", "chip_plain": "Phoenix prompts",
+        "summary": "When an aiva pod starts, it downloads every prompt template from the Phoenix prompt registry. Only the text is used; the model shown next to each prompt in the Phoenix UI is ignored.",
+        "facts": [("Source", "`phoenix-svc:6006/v1/prompts/{name}/tags/production`"), ("When", "once, before Django starts (`aiva/asgi.py:20`)"),
+                  ("Timeout", "10 s per prompt, no retry"), ("Fallback", "per prompt, to the env copy in `" + V + ":1460-2437`")],
+        "sections": [
+            ("Logic", {"ol": [
+                "`load_prompts()` walks every settings field ending in `_TEMPLATE` and reads `<FIELD>_PROMPT_NAME` / `_PROMPT_TAG_NAME` (`aiva/prompts/loader/loader.py:56-122`).",
+                "Accepted: a string template, or a chat template with exactly one text message. Empty or NUL-containing prompts are rejected.",
+                "On failure, `FALL_BACK_ON_PHOENIX_PROMPT_FAILURE=true` keeps the env copy for that prompt only (new in 0.31; in 0.28 one failure reverted all prompts).",
+            ]}),
+            ("The model column in Phoenix is not what runs", {"table": [["Phoenix prompt", "Shown in Phoenix", "Actually runs on"],
+                ["`ex_iva_react_agent_llm_template` (+ `_user_`)", "gemma-4-31B", "**Gemma-4 26B-A4B**"],
+                ["`ex_iva_intent_agent_llm_template`", "gemma-4-31B", "**Gemma-4 26B-A4B**"],
+                ["`ex_iva_classifying_llm_template`", "gemma-4-31B", "**Gemma-4 26B-A4B**"],
+                ["`ex_iva_clarifying_llm_template` (+ `_user_`)", "gemma-4-31B", "**Gemma-4 26B-A4B**"],
+                ["`ex_iva_contexts_filter_llm_template`", "gemma-4-31B", "**Gemma-4 E2B**"],
+                ["`ex_iva_guardrail_llm_check_template`, `_generate_`", "gemma-4-31B", "Gemma-4 31B"],
+                ["`ex_iva_greeting_agent_llm_template`", "gemma-4-31B", "**OpenAI gpt-6-luna**"],
+                ["`ex_iva_voice_bridge_llm_template`", "gemma-4-31B", "off"],
+                ["`ex_iva_instructions_filter_llm_template`", "gemma-4-31B", "off"],
+                ["`ex_iva_guardrail_llm_base_template`", "gemma-4-31B", "**ignored** (no such field in aiva)"]]}),
+            ("Watch out", ({"note": "A prompt edited in Phoenix only takes effect after the pods restart, and it is a production change without code review.", "kind": "warn"},
+                           {"note": "If Phoenix is down when a pod starts, the env fallbacks are used, and some are broken: the ReAct system fallback contains `{contexts}`, which the code cannot fill, so every main turn would fail with a KeyError (inferred, high confidence) (`" + V + ":1477-1479`). The guardrail fallback has no `{guardrails}` slot, the intent fallback says MCI and names the wrong tool, and the classifier examples are about travel.", "kind": "bad"})),
+            ("Sources", ["`aiva/prompts/loader/loader.py`", "`aiva/chat/config.py:55-242`", "`" + V + ":1393-1459`"]),
+        ]},
+    "b-greeting": {
+        "title": "Greeting agent", "title_plain": "Greeting agent", "status": "external",
+        "chip": "OpenAI gpt-6-luna · once per call", "chip_plain": "gpt-6-luna",
+        "summary": "Writes the first sentence the employee hears, personalised from long-term memory if any exists. It is the only per-call LLM step that runs outside the cluster.",
+        "facts": [("Model", "`gpt-6-luna` at `api.openai.com` via `envoy-relay-chatbot`"), ("Size", "proprietary"),
+                  ("Prompt", "`ex_iva_greeting_agent_llm_template`"), ("Settings", "non-streaming, no tools, reasoning effort none, no temperature / max tokens")],
+        "sections": [
+            ("Inputs / outputs", "System prompt = template with `{memory}` filled (empty in EX). No user message. Output: one Persian line; a literal `‌` is turned into a real zero-width non-joiner (`chat/utils/greeting.py`, `agents/greeting/agent.py:31-52`)."),
+            ("Why it matters", ["The phone number and memory reach OpenAI through the session view (inferred from the code path).",
+                                "The static EX intro in `GREETING_MESSAGE` (with the AI disclosure «دستیار هوشمند صدای کارکنان… یک دستیار هوش مصنوعی») is **never played**; aiva does not read that variable. Check that the Phoenix greeting prompt carries the required AI disclosure.",
+                                "No try/except: an OpenAI error or a reply slower than 8 s makes the voice agent play the MCI greeting."]),
+            ("Sources", ["`aiva/chat/views/session.py:43-84`", "`aiva/chat/utils/agents.py:35-56`", "`" + V + ":2508-2521`"]),
+        ]},
+    "b-setup": {
+        "title": "Request setup", "title_plain": "Request setup", "status": "live",
+        "chip": "session · history ≤50 · memory · last contexts", "chip_plain": "request setup",
+        "summary": "aiva loads the session and the employee record, trims the conversation, restores earlier tool results and last turn's knowledge, then fans the turn out to several agents at once.",
+        "facts": [("Endpoint", "`POST /api/v1/chat/completions`, `stream: true` required"), ("History", "50 items"),
+                  ("Memory in prompts", "the literal string `\"{}\"` when empty"), ("Output", "SSE chunks")],
+        "sections": [
+            ("Logic", {"ol": [
+                "Session from `session_id`, or from the last system message. Without one (web call, or `unknown`), an anonymous user with phone `1234` is used and nothing is saved (`chat/views/completion.py:72-81, 204-208`).",
+                "Tool-result replay from `session.params.tool_call_results` (`:83-89`).",
+                "No new user text and last item is a tool output → HTTP 204.",
+                "`session.params.latest_contexts` from the previous turn is loaded for the relevance filter.",
+                "One `UserInputEvent` is published; intent, clarifying, voice bridge and embedding start **in parallel**.",
+            ]}),
+            ("Detail", "`ChatbotUser.memory` is a JSON field defaulting to `{}`, so every `{memory}` slot gets the text `{}` in EX; the greeting uses an empty string instead."),
+        ]},
+    "b-intent": {
+        "title": "Intent: should the call end?", "title_plain": "Intent (exit)", "status": "live",
+        "chip": "Gemma-4 26B-A4B · tool exit_tool · temp 0.1", "chip_plain": "Gemma-4 26B-A4B",
+        "summary": "A fast check on every utterance: did the employee clearly say goodbye? If so, aiva tells the voice agent to hang up, without waiting for a full answer.",
+        "facts": [("Model", "`google/gemma-4-26B-A4B-it`"), ("Prompt", "`ex_iva_intent_agent_llm_template`"),
+                  ("Input", "current utterance only (no history, no memory)"), ("Tools", "`exit_tool` (human transfer not enabled)"),
+                  ("Settings", "non-streaming, temperature 0.1")],
+        "sections": [
+            ("Output", "Calls `exit_tool` → EXIT; anything else (the prompt asks for `0`) → CONTINUE. Exceptions → CONTINUE (`agents/intent_detection/agent.py:42-62`, `event_handler.py:25-44`)."),
+            ("Why a separate agent", "Hanging up must be deterministic and fast; a small dedicated tool call is more reliable than hoping the main agent ends the call (inferred)."),
+            ("Latency", "Every branch waits for the intent result, so this call is on the critical path of every turn (`orchestrator.py:253-259`)."),
+            ("Weak spot", "Only the current utterance is seen, so «نه، همین بود» after a question may be misread without context (inferred)."),
+        ]},
+    "b-clarify": {
+        "title": "Clarifying / small talk (speculative)", "title_plain": "Clarifying (speculative)", "status": "live",
+        "chip": "Gemma-4 26B-A4B · starts streaming early", "chip_plain": "Gemma-4 26B-A4B",
+        "summary": "For greetings, thanks, unclear speech or a missing detail, a short reply is needed. aiva starts writing it immediately, in private, in case the router picks it, to hide latency.",
+        "facts": [("Model", "`google/gemma-4-26B-A4B-it`"), ("Prompts", "`ex_iva_clarifying_llm_template` + `_user_template`"),
+                  ("Input", "full history (≤50) + user text + dates (Gregorian / Jalali / Hijri) + memory"), ("Settings", "streaming, no tools, no temperature")],
+        "sections": [
+            ("Logic", "Runs on every turn (`chat/handlers/clarifying.py:71-122`). The stream is buffered. If the router picks it, the buffered tokens are forwarded at once; if MAIN, INTENT or GUARDRAIL wins it is cancelled and never saved. If it fails while winning, the turn falls back to MAIN."),
+            ("Cost", "A 26B-A4B call is spent on every turn even when its output is thrown away. That is the price of the latency hiding (inferred)."),
+            ("Gap", "The env fallback prompt is generic (driving routes, nearby places) with nothing HR-specific (`" + V + ":1843-1942`)."),
+        ]},
+    "b-retrieve": {
+        "title": "Embedding and retrieval", "title_plain": "Retrieve", "status": "live",
+        "chip": "hakim-unsup → 5 retrievers in parallel → E2B filter", "chip_plain": "retrieval",
+        "summary": "The utterance is embedded once and that vector is used to search knowledge, instructions, guardrail policies and routing examples at the same time.",
+        "facts": [("Embedding", "`hakim-unsup` (≈0.12B)"), ("Retrievers", "contexts, instructions, guardrails, classification, tools")],
+        "sections": [
+            ("Retrievers", {"table": [["Retriever", "Collection", "Top-k / threshold", "Then"],
+                ["Contexts", "`chatbot-ex-aiva-contexts`", "10 / 0.25", "Gemma-4 E2B relevance filter"],
+                ["Instructions", "`chatbot-ex-aiva-instructions`", "10 / none", "filter off; collection empty"],
+                ["Guardrail policies", "`chatbot-ex-aiva-guardrails`", "10 / none", "→ guardrail check"],
+                ["Routing examples", "`aiva-classification` (shared, not EX)", "10 / none", "→ classifier"],
+                ["Tools", "static list", "—", "`send_sms`"]]}),
+            ("Deep dive", "The knowledge part is described step by step in lane 3: [K6 search](k-search.html), [K7 relevance filter](k-filter.html), [K8 carry-over](k-carry.html)."),
+        ]},
+    "b-guardrail": {
+        "title": "Guardrail check", "title_plain": "Guardrail check", "status": "live",
+        "chip": "Gemma-4 31B · answers 1 (allow) or 0 (deny) · fails open", "chip_plain": "Gemma-4 31B",
+        "summary": "A safety and scope gate: is this request something the EX assistant may handle, given the approved knowledge and the allow/deny policies? A deny replaces the answer with a polite refusal.",
+        "facts": [("Model", "`google/gemma-4-31B-it` at `gemma-4-31b-llm-lb`"), ("Size", "31B dense"),
+                  ("Prompt", "`ex_iva_guardrail_llm_check_template`"), ("Input", "whole conversation as text + `{instructions}` `{contexts}` `{guardrails}`"),
+                  ("Output", "a token containing 1 or 0"), ("Timeouts", "none in aiva; SDK default 600 s, 2 retries")],
+        "sections": [
+            ("Logic", {"ol": [
+                "Waits until filtered contexts, instructions and guardrail policies are all retrieved (`agentlib/inference/orchestrations/chat/with_guardrail.py:159-181`).",
+                "Policies are rendered as `<retrieved_guardrail>` records with permission, reason and matched question (`agentlib/agents/guardrail/prompt.py:12-74`).",
+                "The reply is parsed: default **allowed**; a `1` allows, a `0` denies, last one wins (`agentlib/agents/guardrail/parser.py:10-28`).",
+                "Counter `guardrail_results_total{allowed}` is incremented. Signal turns skip the check.",
+            ]}),
+            ("Why the biggest model here", "This is the safety decision for HR content, so quality matters more than speed (inferred). The text chatbot uses the same model for its guardrail."),
+            ("Risks", ({"note": "**On the critical path:** every reply, even “thanks”, waits for embedding → Qdrant → E2B filter → 31B check. The 31B pool is shared with 16 other services and has a 15K context.", "kind": "warn"},
+                       {"note": "**Fails open:** an empty or non-numeric reply means “allowed”.", "kind": "warn"})),
+        ]},
+    "b-classify": {
+        "title": "Route classifier", "title_plain": "Route classifier", "status": "live",
+        "chip": "Gemma-4 26B-A4B · main or clarifying_chitchat", "chip_plain": "Gemma-4 26B-A4B",
+        "summary": "A one-word decision: does this turn need the full answer agent, or just a short clarifying / social reply?",
+        "facts": [("Model", "`google/gemma-4-26B-A4B-it`"), ("Prompt", "`ex_iva_classifying_llm_template`"),
+                  ("Input", "JSON: last 10 history items, input, memory, up to 10 examples"), ("Output", "`main` | `clarifying_chitchat`; invalid → `main`")],
+        "sections": [
+            ("Logic", "Waits for the routing examples, then calls the model, lowercases and parses the label (`chat/handlers/classification.py:63-171`). Errors fall back to `main`."),
+            ("Gap", "The few-shot examples come from the shared `aiva-classification` collection (not EX), and the env fallback examples are about travel and science. Ask the owner what is in that collection."),
+        ]},
+    "b-branch": {
+        "title": "Pick one answer", "title_plain": "Branch selection", "status": "live",
+        "chip": "deny > exit > clarifying > main · losers cancelled", "chip_plain": "branch selection",
+        "summary": "Several agents ran in parallel; the orchestrator now picks exactly one to answer and cancels the rest.",
+        "sections": [
+            ("Priority", {"ol": ["**Guardrail deny** wins at once → [refusal](b-guard-reply.html).",
+                                 "Nothing is chosen until the guardrail has allowed **and** intent has answered.",
+                                 "**Intent EXIT** → emit function call `exit` → the voice agent hangs up.",
+                                 "**Clarifying** (if the router chose it) → forward its buffered stream.",
+                                 "**Main** → start the [ReAct agent](b-react.html) once contexts, instructions and tools are ready."]}),
+            ("Detail", "Only the winner's text is saved; speculative output is never persisted (`chat/handlers/orchestrator.py:241-346`). `TOOL_CALLING_EXIT_ANSWER` («ممنون از تماس شما، خداحافظ») is defined but unused."),
+        ]},
+    "b-react": {
+        "title": "Main answer agent (ReAct)", "title_plain": "ReAct answer agent", "status": "live",
+        "chip": "Gemma-4 26B-A4B · streaming · ≤10 tool loops", "chip_plain": "Gemma-4 26B-A4B ReAct",
+        "summary": "The main conversational brain of EX: listens to feedback, answers HR questions only from the retrieved knowledge, asks at most one clarifying question, follows the sensitive-topic and confidentiality rules, and closes politely.",
+        "facts": [("Model", "`google/gemma-4-26B-A4B-it` at `gemma4-26b-llm-lb`"), ("Size", "26B total / ~4B active (MoE)"),
+                  ("Prompts", "system `ex_iva_react_agent_llm_template` + user `ex_iva_react_agent_llm_user_template`"),
+                  ("Settings", "streaming (Responses API), reasoning effort none, no temperature / max tokens, max 10 iterations"),
+                  ("Context", "23,000 tokens (vLLM `--max-model-len`)"), ("Code default model", "gemma-4-31B (overridden)")],
+        "sections": [
+            ("Prompt assembly", {"ol": [
+                "**System** = the EX system prompt, rendered only with cache-stable fields (assistant name, objective, tone…) so the prefix can be cached (`agents/react/prompt.py:84-94`).",
+                "**Latest user message** is replaced by the user template with `{instructions}`, `{memory}` (`{}`), `{current_datetimes}` (Gregorian / Jalali / Hijri), `{contexts}` as `Question:`/`Answer:` lines, `{signals}`, `{user_request}` (raw ASR text).",
+                "**History**: up to 50 earlier items including replayed tool calls.",
+                "Prompt-cache breakpoints on the system message and the previous two user messages (new in 0.31; whether vLLM honours them is unknown).",
+            ]}),
+            ("What the EX prompt asks for", "From the env fallback copy (`" + V + ":1461-1689`); the live Phoenix version may differ: listen and acknowledge feedback; answer organisational questions only from retrieved contexts; one clarifying question at most; for sensitive topics say it is recorded only when the system confirms; no promises about pay, promotion or case outcomes; closing lines say recording is not confirmed, because aiva has no “feedback recorded” event."),
+            ("Why 26B-A4B and not 31B", "Every turn is on the live phone path; ~4B active parameters keep time-to-first-token low, while 26B total keeps Persian quality close to the 31B (inferred). The general aiva deployment runs its main agent on gpt-6-luna; EX keeps per-turn traffic in-house, likely for HR privacy and cost (inferred)."),
+            ("Failure", "No per-step timeout in aiva (SDK default 600 s, 2 retries); the voice agent gives up after 10 s × 3."),
+        ]},
+    "b-tools": {
+        "title": "Tools the agent can call", "title_plain": "Tools (send_sms)", "status": "live",
+        "chip": "send_sms only · token not set", "chip_plain": "send_sms",
+        "summary": "The answer agent can call one tool in EX: send an SMS to the caller. Its delivery token is not configured, so it likely fails.",
+        "facts": [("Enabled", "`AGENT_ENABLED_TOOLS=[\"send_sms\"]`"), ("API", "Resan `resan.mci.dev`, 30 s timeout"), ("Token", "`RESAN_TOKEN` not set → probably returns False (inferred)")],
+        "sections": [
+            ("Not enabled in EX", "`campaign_rank`, `get_gold_price`, `set_reminder`, `read_reminders`, `send_rubika_message`, `websearch`, `tell_joke` (`tools/registry.py:16-41`). The EX prompt does not mention SMS; this looks like a leftover from MCI aiva (inferred)."),
+            ("Exit and transfer", "Ending the call is handled by the [intent agent](b-intent.html); transfer to a human is not enabled."),
+        ]},
+    "b-guard-reply": {
+        "title": "Refusal reply (guardrail deny)", "title_plain": "Guardrail refusal", "status": "live",
+        "chip": "Gemma-4 31B · streaming", "chip_plain": "Gemma-4 31B",
+        "summary": "When the guardrail denies a request, a short, friendly Persian refusal is generated instead of an answer, without mentioning policies.",
+        "facts": [("Model", "`google/gemma-4-31B-it`"), ("Prompt", "`ex_iva_guardrail_generate_llm_template`"), ("Input", "full conversation + `{instructions}` `{contexts}`")],
+        "sections": [("Naming trap", "In aiva the guardrail's `base_prompt_template` is the **generate** template; the Phoenix prompt `ex_iva_guardrail_llm_base_template` is not used at all (`chat/utils/agents.py:111-132`).")]},
+    "b-voicebridge": {
+        "title": "Voice bridge (filler sentence)", "title_plain": "Voice bridge", "status": "off",
+        "chip": "Gemma-4 26B-A4B · disabled in EX", "chip_plain": "off",
+        "summary": "Would speak a tiny filler sentence («یک لحظه…») immediately while the real answer is prepared. Disabled in EX; the thinking sound covers the gap instead.",
+        "facts": [("Flag", "`VOICE_BRIDGE_ENABLED=false`"), ("If on", "26B-A4B, temperature 0.5, max 50 tokens, last 10 messages")],
+        "sections": [("Sources", ["`chat/handlers/voice_bridge.py:53-151`", "`" + V + ":2531-2544`"])]},
+    "b-signal": {
+        "title": "Signal turns (no user speech)", "title_plain": "Signal turns", "status": "live",
+        "chip": "user-away reminders · skip guardrail and retrieval", "chip_plain": "signal turns",
+        "summary": "When the voice agent needs a line without user speech, such as a silence reminder, it sends a signal. aiva skips guardrail, retrieval and routing and asks the ReAct agent directly.",
+        "sections": [("Logic", "`start_signal` injects intent CONTINUE, auto-allows the guardrail, flattens the conversation and fills `{signals}` (`chat/handlers/chat.py:285-325`, `agents/react/event_handler.py:180-207`). Latest contexts are not saved on signal turns.")]},
+}

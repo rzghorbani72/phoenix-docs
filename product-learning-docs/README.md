@@ -41,14 +41,15 @@ Every document is published as a **dark-themed standalone HTML page** and (excep
 | File | Audience | What it is |
 |---|---|---|
 | `TECHNICAL_DOSSIER_FA.pdf` | Engineers, tech leads, TPM when reviewing | Voice AI basics (VAD, Turn, STT/ASR, TTS, Egress); call path (service number → backbone → SBC → SIP/RTP → LiveKit → agent); §11 repo map; tech-stack philosophy (why each language, datastore and service, untapped capabilities, audio channel/codec trade-offs, CTO decision sheet); §12–24: architecture, agentlib, AIVA orchestration, IVA voice agent, CCA pipeline, AQA, auth, data model and messaging, config reference, CI/deploy, developer cookbook, tech debt, endpoint catalog; abbreviations and glossary |
-| `IVA_COA_PIPELINES.html` | Engineers | IVA and COA pipeline walkthrough (overview, IVA, COA, gaps) |
+| `IVA_COA_PIPELINES.html` | Engineers | IVA and COA pipeline walkthrough (overview, IVA, COA, gaps). Describes MCI defaults as of 2026-10-05; **superseded by `phoenix-pipelines/` for EX** |
+| **`phoenix-pipelines/`** | TPM, engineers | Clickable map of every EX pipeline (phone call, aiva brain, knowledge base, memory/data, post-call analytics, models/platform) with 53 step deep-dive pages: model, size in B params, why, inputs/outputs, settings, logic and code refs. Also a model inventory and a risks & gaps page. English `en/` and Persian `fa/`, plus an editable `phoenix-pipelines.drawio` whose boxes link to the step pages. Read from chatbot-ops prod @ `e748fd027` and phoenix main @ `7b7c602eb` on **2026-11-02** |
 
 ### Shared
 
 | File | Audience | What it is |
 |---|---|---|
 | `README.md` | Engineers, future you | This file — the "how" behind the system and how to regenerate everything |
-| `source/` | Maintainers | HTML and TSV sources plus `build.sh`; everything above except `IVA_COA_PIPELINES.html` is reproducible from here |
+| `source/` | Maintainers | HTML and TSV sources plus `build.sh`; everything above except `IVA_COA_PIPELINES.html` is reproducible from here. `source/pipelines/` builds `technical/phoenix-pipelines/` (`build_pipelines.py` for layout, `content_*.py` for text): edit the content, then rerun |
 
 ### Using the tracker
 

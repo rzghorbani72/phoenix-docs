@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark light"><title>Every model in EX: size, role and why</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;600;800&display=swap">
+<style>
+:root{--bg:#0f141a;--surface:#161d26;--surface-2:#1d2631;--ink:#e4e9ef;--muted:#9aa6b4;--line:#2c3744;
+--accent:#8fb4ef;--ok:#84d48c;--ok-bg:#15301a;--warn:#f1c45c;--warn-bg:#34290b;--bad:#ff9289;--bad-bg:#3a1714;
+--gap:#c9cdd3;--gap-bg:#2a3039;--info:#8fbfff;--info-bg:#142a47;--code-bg:#1b2430;
+--c-violet:#b79cf5;--c-teal:#5eead4;--c-pink:#f9a8d4;--c-orange:#fdba74;--c-cyan:#67e8f9;
+--f-body:"Vazirmatn","Noto Sans Arabic",system-ui,sans-serif;--f-mono:"IBM Plex Mono",ui-monospace,monospace;--col:1240px}
+@media (prefers-color-scheme:light){:root:not([data-theme="dark"]){--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;
+--ink:#17202b;--muted:#5b6776;--line:#d6dde5;--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;
+--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;
+--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;--c-orange:#b55d0c;--c-cyan:#0e7f93}}
+:root[data-theme="light"]{--bg:#f4f6f8;--surface:#fff;--surface-2:#eef2f6;--ink:#17202b;--muted:#5b6776;--line:#d6dde5;
+--accent:#2f62b8;--ok:#237a2e;--ok-bg:#e3f4e5;--warn:#8a6100;--warn-bg:#fbf0d2;--bad:#b3261e;--bad-bg:#fbe4e2;--gap:#4b5563;
+--gap-bg:#eceff3;--info:#1d5fb8;--info-bg:#e2edfb;--code-bg:#eef2f6;--c-violet:#6d44c9;--c-teal:#0b8a76;--c-pink:#b8377a;
+--c-orange:#b55d0c;--c-cyan:#0e7f93}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.75 var(--f-body)}
+a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
+code{font-family:var(--f-mono);font-size:.86em;background:var(--code-bg);padding:.08em .35em;border-radius:5px;overflow-wrap:anywhere;direction:ltr;unicode-bidi:isolate}
+pre{background:var(--code-bg);padding:12px 14px;border-radius:10px;overflow:auto;direction:ltr;text-align:left}pre code{background:none;padding:0}
+.wrap{max-width:var(--col);margin:0 auto;padding:0 16px}
+header.top{border-bottom:1px solid var(--line);background:var(--surface);position:sticky;top:0;z-index:5}
+header.top .wrap{display:flex;gap:14px;align-items:center;min-height:52px;flex-wrap:wrap}
+header.top .brand{font-weight:800;color:var(--ink)}header.top nav{display:flex;gap:14px;flex-wrap:wrap;margin-inline-start:auto;font-size:.92em}
+header.top button{background:var(--surface-2);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:2px 10px;font:inherit;cursor:pointer}
+h1{font-size:1.9em;line-height:1.3;margin:28px 0 6px}h2{font-size:1.3em;margin:34px 0 10px;padding-top:6px}h3{font-size:1.08em;margin:22px 0 6px}
+.lede{color:var(--muted);max-width:860px;margin:0 0 10px}
+.meta{color:var(--muted);font-size:.85em}
+.legend{display:flex;flex-wrap:wrap;gap:8px 16px;font-size:.85em;color:var(--muted);margin:14px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;font-size:.78em;font-weight:600;padding:1px 9px;border-radius:999px;white-space:nowrap}
+.badge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor}
+.s-live{color:var(--ok);background:var(--ok-bg)}.s-off{color:var(--gap);background:var(--gap-bg)}
+.s-notdeployed{color:var(--bad);background:var(--bad-bg)}.s-external{color:var(--warn);background:var(--warn-bg)}
+.s-unknown{color:var(--info);background:var(--info-bg)}
+/* system overview */
+.sys{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px;margin:16px 0;overflow-x:auto}
+.sys svg{width:100%;min-width:760px;height:auto;display:block}
+.sys a text{fill:var(--ink)}.sys .sub{fill:var(--muted)}.sys .edge{stroke:var(--muted);fill:none;stroke-width:1.6}
+.sys .elab{fill:var(--muted);font-size:12px}.sys a:hover rect{filter:brightness(1.25)}
+/* lanes */
+.lane{border:1px solid var(--line);border-radius:14px;margin:22px 0;background:var(--surface);overflow:hidden}
+.lane>.lh{padding:12px 16px;border-bottom:1px solid var(--line);border-inline-start:6px solid var(--lc)}
+.lane>.lh h2{margin:0;padding:0;font-size:1.15em}.lane>.lh p{margin:2px 0 0;color:var(--muted);font-size:.9em}
+.flow{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px 30px;padding:16px;padding-inline-end:36px}
+.card{position:relative;min-height:118px;background:var(--surface-2);border:1px solid var(--line);
+border-top:3px solid var(--lc);border-radius:10px;padding:10px 12px;color:var(--ink);display:flex;flex-direction:column;gap:4px}
+.card:hover{text-decoration:none;border-color:var(--lc);transform:translateY(-1px)}
+.card .n{font-family:var(--f-mono);font-size:.75em;color:var(--lc)}
+.card .t{font-weight:700;line-height:1.35}.card .m{font-size:.8em;color:var(--muted);line-height:1.4}
+.card .b{margin-top:auto}
+.card:not(:last-child)::after{content:"→";position:absolute;inset-inline-end:-22px;top:42%;color:var(--muted);font-size:1.1em}
+[dir=rtl] .card:not(:last-child)::after{content:"←"}
+.handoff{padding:0 16px 14px;color:var(--muted);font-size:.85em}
+/* step page */
+.crumbs{font-size:.85em;color:var(--muted);margin-top:18px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:16px 0}
+.fact{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 12px}
+.fact .k{font-size:.75em;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}.fact .v{font-weight:600;overflow-wrap:anywhere}
+.sec{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:4px 18px 10px;margin:14px 0}
+.sec h2{font-size:1.08em;margin:14px 0 6px}
+.tw{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:.9em;margin:6px 0}
+th,td{border-bottom:1px solid var(--line);padding:6px 8px;text-align:start;vertical-align:top}th{color:var(--muted);font-weight:600}
+.note{border-inline-start:4px solid var(--info);background:var(--info-bg);padding:8px 12px;border-radius:8px;margin:8px 0}
+.note.warn{border-color:var(--warn);background:var(--warn-bg)}.note.bad{border-color:var(--bad);background:var(--bad-bg)}
+.inf{color:var(--warn);font-style:italic;font-size:.9em}
+.pn{display:flex;justify-content:space-between;gap:12px;margin:26px 0 40px;flex-wrap:wrap}
+.pn a{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:8px 14px;max-width:48%}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.mcard{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.mcard h3{margin:0 0 4px}.mcard .size{font-family:var(--f-mono);color:var(--accent);font-size:.9em}
+.sev{font-weight:700;font-size:.8em;padding:1px 8px;border-radius:6px}.sev-high{color:var(--bad);background:var(--bad-bg)}
+.sev-med{color:var(--warn);background:var(--warn-bg)}.sev-low{color:var(--gap);background:var(--gap-bg)}
+footer{color:var(--muted);font-size:.82em;border-top:1px solid var(--line);margin-top:40px;padding:16px 0 30px}
+@media (max-width:640px){.flow{grid-template-columns:1fr;gap:30px;padding-inline-end:16px}.card:not(:last-child)::after{content:"↓";inset-inline-end:auto;inset-inline-start:50%;top:auto;bottom:-22px}
+h1{font-size:1.5em}.pn a{max-width:100%}}
+</style><script>
+(function(){var k='pp-theme',r=document.documentElement;try{var t=localStorage.getItem(k);if(t)r.dataset.theme=t}catch(e){}
+document.addEventListener('click',function(e){if(e.target.id!=='themeBtn')return;
+var d=r.dataset.theme||(matchMedia('(prefers-color-scheme: light)').matches?'light':'dark');
+r.dataset.theme=d==='light'?'dark':'light';try{localStorage.setItem(k,r.dataset.theme)}catch(e){}});})();
+</script></head>
+<body><header class="top"><div class="wrap"><a class="brand" href="index.html">Phoenix EX pipelines</a>
+<nav><a href="index.html">Pipeline map</a><a href="models.html">Models</a>
+<a href="risks.html">Risks & gaps</a><a href="../fa/models.html">فارسی</a><button id="themeBtn" type="button">◐</button></nav></div></header>
+<main class="wrap"><h1>Every model in EX: size, role and why</h1><p class="lede">Sizes are public model facts (billions of parameters), not read from code. MoE models list total and active parameters: active parameters drive speed and cost per token.</p><div class="grid"><div class="mcard"><h3>Gemma-4 26B-A4B-it</h3><div class="size">26B total · ~4B active (MoE) · context 23K here</div><p><span class="badge s-live">Live</span></p><ul><li><strong>Role:</strong> the main voice answer agent, intent, classifying, clarifying, end-of-turn detection, voice bridge (off).</li><li><strong>Why:</strong> near-large-model understanding at ~4B-model speed, which is what a live phone turn needs <span class="inf">(inferred)</span>.</li><li><strong>Serving:</strong> <code>gemma4-26b-llm-lb</code>, vLLM 0.25.1, spec-decode off.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/v-turn.html">End-of-turn detection (LLM)</a></li><li><a href="steps/b-intent.html">Intent: should the call end?</a></li><li><a href="steps/b-clarify.html">Clarifying / small talk (speculative)</a></li><li><a href="steps/b-classify.html">Route classifier</a></li><li><a href="steps/b-react.html">Main answer agent (ReAct)</a></li><li><a href="steps/b-voicebridge.html">Voice bridge (filler sentence)</a></li></ul></div><div class="mcard"><h3>Gemma-4 31B-it</h3><div class="size">31B dense · context 15K here</div><p><span class="badge s-live">Live</span></p><ul><li><strong>Role:</strong> guardrail, KB speakable summary, suggestion markdown, text chatbot agent, diacritisation.</li><li><strong>Why:</strong> best in-house Persian quality where safety or wording matters more than latency <span class="inf">(inferred)</span>.</li><li><strong>Serving:</strong> <code>gemma-4-31b-llm-lb</code>, vLLM 0.25.1, MTP speculative decoding.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/b-guardrail.html">Guardrail check</a></li><li><a href="steps/b-guard-reply.html">Refusal reply (guardrail deny)</a></li><li><a href="steps/k-summarize.html">Speakable-summary helper</a></li></ul></div><div class="mcard"><h3>Gemma-4 E2B-it</h3><div class="size">~2B effective (~5B with embeddings)</div><p><span class="badge s-live">Live</span></p><ul><li><strong>Role:</strong> relevance filter over retrieved Q&amp;A on every turn.</li><li><strong>Why:</strong> easy pick-from-list task, every turn, lowest latency <span class="inf">(inferred)</span>.</li><li><strong>Serving:</strong> bare-metal only, flags not in git.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/k-filter.html">Relevance filter (LLM)</a></li></ul></div><div class="mcard"><h3>hakim-unsup</h3><div class="size">≈0.12B encoder · 768-d (unverified)</div><p><span class="badge s-live">Live</span></p><ul><li><strong>Role:</strong> embeds KB questions and each employee utterance.</li><li><strong>Why:</strong> in-house Persian encoder, cheap enough for CPU <span class="inf">(inferred)</span>.</li><li><strong>Serving:</strong> vLLM pooling, max length 512.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/k-embed.html">Embedding the questions</a></li><li><a href="steps/k-search.html">Search at answer time</a></li></ul></div><div class="mcard"><h3>Silero VAD</h3><div class="size">≈1M params (0.001B) · CPU</div><p><span class="badge s-live">Live</span></p><ul><li><strong>Role:</strong> speech / silence detection inside each call process.</li><li><strong>Why:</strong> standard, tiny, per-frame fast.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/v-vad.html">Voice activity detection (Silero)</a></li></ul></div><div class="mcard"><h3>Soniox real-time STT</h3><div class="size">proprietary · size not published</div><p><span class="badge s-external">External / outside repo</span></p><ul><li><strong>Role:</strong> live Persian transcription.</li><li><strong>Why:</strong> streaming accuracy and latency <span class="inf">(inferred)</span>.</li><li><strong>Note:</strong> employee audio leaves the cluster.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/v-stt.html">Speech-to-text (Soniox, cloud)</a></li></ul></div><div class="mcard"><h3>OpenAI gpt-6-luna</h3><div class="size">proprietary</div><p><span class="badge s-external">External / outside repo</span></p><ul><li><strong>Role:</strong> greeting agent; also the shared AQA NL2SQL agent.</li><li><strong>Note:</strong> the only EX text generation outside the cluster.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/b-greeting.html">Greeting agent</a></li><li><a href="steps/v-session.html">Session start and greeting</a></li><li><a href="steps/a-aqa.html">Ask-your-data (NL2SQL)</a></li></ul></div><div class="mcard"><h3>neurobox TTS <code>ex_prod</code></h3><div class="size">unknown (VITS-class ≈0.03–0.04B if VITS, inferred)</div><p><span class="badge s-unknown">Unverified</span></p><ul><li><strong>Role:</strong> speaks every answer.</li><li><strong>Serving:</strong> Triton behind <code>neurobox-gateway-green</code> (neurobox-prod, not in our repos).</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/v-tts.html">Text-to-speech (neurobox ex_prod)</a></li></ul></div><div class="mcard"><h3>k2 ASR <code>coa_iva_prod_long</code> + emotion + gender</h3><div class="size">unknown</div><p><span class="badge s-external">External / outside repo</span></p><ul><li><strong>Role:</strong> offline re-transcription for analytics.</li><li><strong>Serving:</strong> <code>asr-k2-tmp-gw-proxy</code> (neurobox-prod).</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/a-asr.html">Offline speech recognition + emotion</a></li></ul></div><div class="mcard"><h3>CCA engine models</h3><div class="size">likely Gemma-4 26B-A4B and/or 31B COA pools <span class="inf">(inferred)</span></div><p><span class="badge s-external">External / outside repo</span></p><ul><li><strong>Role:</strong> call tagging, sentiment, summary, categories.</li><li><strong>Note:</strong> no client of the COA pools in our repos.</li></ul><p class="meta">Used in these steps</p><ul><li><a href="steps/a-cca.html">AI analysis engine (CCA)</a></li></ul></div></div><section class="sec"><h2>How to read “B”</h2><ul><li><strong>B = billions of parameters.</strong> It sets memory and quality. For MoE models (“A4B”, “A3B”) only the active part runs per token, so a 26B-A4B model decodes about as fast as a 4B dense model but needs the memory of a 26B one.</li><li><strong>Context length</strong> (15K, 23K tokens here) is the most the model can read at once: system prompt + KB contexts + history + answer. It is set per deployment (<code>--max-model-len</code>), not by the model.</li><li><strong>Token budgets per step</strong> (max output tokens, temperature) are listed on each step page when the code sets them.</li></ul></section></main>
+<footer class="wrap">Status labels: Live = in prod config and wired. Configured, off = present but disabled by a flag. Not deployed = code exists, no prod component. External = outside the cluster or outside both repos. Text marked <span class="inf">(inferred)</span> is reasoning, not code. Model sizes are public model facts, not read from code.</footer></body></html>

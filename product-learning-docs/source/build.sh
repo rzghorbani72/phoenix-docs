@@ -9,6 +9,7 @@ pdf() { google-chrome --headless=new --no-sandbox --no-pdf-header-footer \
 python3 build_xlsx.py        # product-management/FIT_GAP_TRACKER.xlsx + fit_gap_tracker_fa.html
 python3 build_feature_catalog.py  # FEATURE_CATALOG(.md|_FA.md) -> feature_catalog(_fa).html (the .md files stay the source)
 python3 apply_theme.py       # inline theme/phoenix_fa.{css,js} into every HTML source
+python3 pipelines/build_pipelines.py   # technical/phoenix-pipelines/{en,fa} + .drawio
 
 PM=../product-management
 TECH=../technical
