@@ -11,6 +11,7 @@
     animation: sheet-up .24s ease-out; transition: height .22s ease;
   }
   [dir="rtl"] .panel { animation-name: sheet-up; }
+  .panel.in-tour { height: 46%; }
   .panel.tall { height: calc(100% - 12px); }
   .panel .sheet-grip {
     display: grid; place-items: center; position: sticky; top: 0; z-index: 2; width: calc(100% + 32px); margin: 0 -16px 2px;

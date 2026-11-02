@@ -254,9 +254,9 @@ function Canvas({ d, filters, selected, lane, onOpen, theme, tour }: Props) {
         const b = boxes[selected];
         const cx = b.x + b.width / 2, cy = b.y + b.height / 2;
         if (narrow) {
-          // Sheet covers the lower ~58%; the tour caption (if any) covers the top. Aim for the gap.
+          // Sheet covers the lower 58% (46% in a tour, whose caption covers the top). Aim for the gap.
           const H = window.innerHeight - 56, zoom = 0.62;
-          const target = tourKey ? 0.3 : 0.21;
+          const target = tourKey ? 0.41 : 0.21;
           rf.setCenter(cx, cy + ((0.5 - target) * H) / zoom, { zoom, duration: 500 });
         } else {
           const zoom = 0.95;

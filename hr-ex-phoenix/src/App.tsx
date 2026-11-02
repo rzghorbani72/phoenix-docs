@@ -114,15 +114,18 @@ export default function App() {
       <header className="top">
         <a className="brand" href="#/map"><span className="logo">◆</span>{ui.brand}</a>
         <nav className="tabs">
-          {tabs.map(([v, label]) => (
-            <a key={v} href={`#/${v}`} className={(route.view === v || (v === "map" && route.view === "step") || (v === "models" && route.view === "model")) ? "on" : ""}>{label}</a>
-          ))}
+          {tabs.map(([v, label]) => {
+            const on = route.view === v || (v === "map" && (route.view === "step")) || (v === "models" && route.view === "model");
+            return (
+            <a key={v} href={`#/${v}`} className={on ? "on" : ""} aria-current={on ? "page" : undefined}>{label}</a>
+            );
+          })}
         </nav>
         <div className="tools">
           <button className="search-btn" onClick={() => setSearchOpen(true)}>⌕ <span>{lang === "fa" ? "جست‌وجو" : "Search"}</span><kbd>Ctrl K</kbd></button>
-          <button onClick={() => setAboutOpen(true)} title="About">ⓘ</button>
+          <button onClick={() => setAboutOpen(true)} title={lang === "fa" ? "دربارهٔ این نقشه" : "About this map"} aria-label={lang === "fa" ? "دربارهٔ این نقشه" : "About this map"}>ⓘ</button>
           <button onClick={() => setLang(lang === "en" ? "fa" : "en")}>{lang === "en" ? "فارسی" : "English"}</button>
-          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="theme">{theme === "dark" ? "☀" : "☾"}</button>
+          <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label={theme === "dark" ? (lang === "fa" ? "تم روشن" : "Switch to light theme") : (lang === "fa" ? "تم تیره" : "Switch to dark theme")}>{theme === "dark" ? "☀" : "☾"}</button>
         </div>
       </header>
 
@@ -147,8 +150,8 @@ export default function App() {
       {searchOpen && <Search d={d} onClose={() => setSearchOpen(false)} />}
       {aboutOpen && (
         <div className="overlay" onClick={() => setAboutOpen(false)}>
-          <div className="about" onClick={(e) => e.stopPropagation()}>
-            <button className="icon close" onClick={() => setAboutOpen(false)}>✕</button>
+          <div className="about" role="dialog" aria-modal="true" aria-label={d.meta.title_plain} onClick={(e) => e.stopPropagation()}>
+            <button className="icon close" aria-label={lang === "fa" ? "بستن" : "Close"} onClick={() => setAboutOpen(false)}>✕</button>
             <h2><Md text={d.meta.title} ctx={ctx} /></h2>
             <Md as="p" text={d.meta.lede} ctx={ctx} />
             {d.key_points.map((k, i) => <BodyView key={i} body={k} ctx={ctx} />)}

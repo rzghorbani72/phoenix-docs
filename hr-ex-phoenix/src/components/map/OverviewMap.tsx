@@ -23,11 +23,11 @@ const ROUTE: Record<string, [string, string]> = {
   "call>brain": ["r:35", "l:35"], "brain>call": ["l:65", "r:65"],
   "brain>kb": ["r:35", "l:35"], "kb>brain": ["l:65", "r:65"],
   "kb>ops": ["r:50", "l:50"], "call>analytics": ["b:50", "t:50"], "brain>memory": ["b:50", "t:50"],
-  "framework>brain": ["t:22", "b:80"],
+  "framework>brain": ["t:20", "b:80"],
 };
 const HANDLES: [Side, number][] = [
   ["l", 35], ["l", 50], ["l", 65], ["r", 35], ["r", 50], ["r", 65],
-  ["t", 22], ["t", 50], ["t", 80], ["b", 20], ["b", 50], ["b", 80],
+  ["t", 20], ["t", 50], ["t", 80], ["b", 20], ["b", 50], ["b", 80],
 ];
 const POS: Record<Side, Position> = { l: Position.Left, r: Position.Right, t: Position.Top, b: Position.Bottom };
 const mirror = (spec: string, rtl: boolean) => {
