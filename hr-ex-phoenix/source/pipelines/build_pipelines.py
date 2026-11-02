@@ -152,6 +152,8 @@ def page(d, title, body, depth=0, other=None):
     ui = d["ui"]
     other_link = f'<a href="{other}">{ui["other_lang"]}</a>' if other else ""
     guide_link = f'<a href="{up}guide.html">{ui.get("nav_guide", "Guide")}</a>' if d.get("guide") else ""
+    # The interactive React app (source/pipelines-app) is built next to en/ and fa/.
+    guide_link += f'<a href="{up}../app/index.html"><strong>{"نسخهٔ تعاملی" if d["lang"] == "fa" else "Interactive app"}</strong></a>'
     return f"""<!doctype html>
 <html lang="{d['lang']}" dir="{d['dir']}">
 <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

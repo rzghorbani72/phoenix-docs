@@ -15,11 +15,11 @@ Technical PM role. Every claim here is backed by a `file:line` you can open.
 | `HR_PROJECT_CONTEXT_FA.md` | Short global context for the **HR product / EX pilot**: COA·CCA·IVA baseline, how EX relates to HR, working rules, source pointers. Give it to Claude or Codex at the start of HR work | itself |
 | `COA_PROJECT_CONTEXT_FA.md` | Same idea for **COA** (call-analytics panel) work that is independent of HR | itself |
 | `product-management/` | Business, scope, customers, competitors, roadmap, fit-gap, the EX PRD (Persian HTML/PDF) | `START_HERE_FA.html` |
-| `technical/` | Architecture and code docs. **`technical/phoenix-pipelines/`** is the clickable EX pipeline map: 6 pipelines + the agentlib framework, step pages, 22 model pages, a TPM guide, risks (English `en/`, Persian `fa/`, editable `.drawio`) | `technical/phoenix-pipelines/en/index.html` |
+| `technical/` | Architecture and code docs. **`technical/phoenix-pipelines/app/index.html`** is the interactive app (zoomable diagram, step and model panels, search, EN/FA; built from `source/pipelines-app/`). **`technical/phoenix-pipelines/`** is the clickable EX pipeline map: 6 pipelines + the agentlib framework, step pages, 22 model pages, a TPM guide, risks (English `en/`, Persian `fa/`, editable `.drawio`) | `technical/phoenix-pipelines/en/index.html` |
 | `knowledge-base/` | EX knowledge-base content and import files (see its README) | `knowledge-base/README.md` |
 | `requirements/` | Source requirement files: the UAT agreement Fit-Gap (87 rows) and the Continuous Listening MVP fit-gap | — |
 | `diagrams/` | Photos of hand-drawn architecture notes: IVA call flow, COA/CCA analysis flow, CCA topic mapper | — |
-| `source/` | Generators for everything above (`build.sh`, theme, `pipelines/` site generator) — edit sources, then rebuild | `source/build.sh` |
+| `source/` | Generators for everything above (`build.sh`, theme, `pipelines/` site generator, `pipelines-app/` React app: `npm install && npm run build`) — edit sources, then rebuild | `source/build.sh` |
 
 Naming: folders are `kebab-case`; generated documents are `UPPER_SNAKE` (`_FA` = Persian); data files carry a version (`_v1`); photos of notes end in `_notes`.
 

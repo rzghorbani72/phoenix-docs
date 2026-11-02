@@ -11,7 +11,8 @@ Claude and Codex: [`PROJECTS_REGISTRY.md`](PROJECTS_REGISTRY.md) (their global c
 
 Quick finds:
 
-- **Understand the EX / Phoenix pipelines and every model** → `hr-ex-phoenix/technical/phoenix-pipelines/en/index.html` (Persian: `fa/`)
+- **Interactive diagram app (start here)** → `hr-ex-phoenix/technical/phoenix-pipelines/app/index.html` (open the file in a browser; EN/FA toggle inside)
+- **Understand the EX / Phoenix pipelines and every model** (static pages) → `hr-ex-phoenix/technical/phoenix-pipelines/en/index.html` (Persian: `fa/`)
 - **TPM learning guide** → `hr-ex-phoenix/technical/phoenix-pipelines/en/guide.html`
 - **EX agent requirements (PRD)** → `hr-ex-phoenix/product-management/IVA_EX_PROMPT_REQUIREMENTS_FA.html`
 - **Knowledge-base content and imports** → `hr-ex-phoenix/knowledge-base/`
