@@ -1,4 +1,5 @@
 node_modules/
 dist/
 src/data/
+.source-sync/
 __pycache__/

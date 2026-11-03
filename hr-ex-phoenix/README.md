@@ -452,6 +452,22 @@ cd product/source
   every HTML source between marker comments, so edit the theme, never the inlined copy.
 - The two dossiers share the same sources guide and glossary; edit both if you change those.
 
+## Daily source sync
+
+`scripts/sync_daily.py` pulls `phoenix` (`main`) and `chatbot-ops` (`prod`) from the MCI Git server.
+When either branch advances, it asks the local Codex CLI to review the changed code against the
+HR/EX app content, updates diagrams only when the EX behavior changed, then runs `npm run content`.
+It leaves all documentation edits uncommitted for review. Source checkouts and logs stay under the
+ignored `.source-sync/` folder. The job skips source review when there are no new commits, and
+stops if the relevant documentation sources or generated diagram already have uncommitted changes.
+
+Install the 07:00 local-time cron entry with `python3 scripts/install_daily_sync.py`; remove it with
+`python3 scripts/install_daily_sync.py --remove`. The machine needs MCI Git access, SSH access to
+both repositories, and a working local Codex CLI connection. Review the output in
+`.source-sync/cron.log` and `git status`. For a one-shot local run, use `npm run sync`; to sync,
+commit the generated documentation, and push the current branch, use `npm run sync:push`. The push
+command stages only files reported as changed by that sync.
+
 ## Limits of this review
 
 - `python/coa-ai` was out of scope (stale); AI-04–AI-07 are marked **نامشخص** (unverified) for
