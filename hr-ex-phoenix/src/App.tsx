@@ -147,6 +147,8 @@ export default function App() {
       {route.view === "risks" && <RisksView d={d} />}
       {route.view === "docs" && <DocsView d={d} />}
 
+      <footer className="app-footer">Developed by Reza.Ghorbani</footer>
+
       {searchOpen && <Search d={d} onClose={() => setSearchOpen(false)} />}
       {aboutOpen && (
         <div className="overlay" onClick={() => setAboutOpen(false)}>
