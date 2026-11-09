@@ -1,5 +1,6 @@
 import type { Data } from "./types";
 import docsManifest from "../data/docs.json";
+import { docKey, docRoute, HTML_DOCS } from "../views/docs/manifest";
 
 export interface LinkCtx {
   steps: Set<string>;
@@ -42,7 +43,8 @@ const PAGES = new Set(["models", "risks", "guide", "docs"]);
  * - `index.html#lane-x` (any folder depth) → `#/map/lane/x`; `index.html` → `#/map`
  * - `[../]steps/<id>.html`, `<id>.html` → `#/step/<id>`; `[../]models/<id>.html` → `#/model/<id>`
  * - `models.html`, `risks.html`, `guide.html`, `docs.html` → `#/models` …
- * - a document (`../../AI_LEARNING_GUIDE_FA.html`, `../../../product-management/X.pdf`, `docs/…`) →
+ * - an HTML document (`../../AI_LEARNING_GUIDE_FA.html#x`) → `#/doc/AI_LEARNING_GUIDE/x`, shown inside the app
+ * - any other document (`../../../product-management/X.pdf`, `docs/…`) →
  *   `docs/<folder>/<file>`, looked up by file name in the documents manifest, new tab
  * - `#/…` app routes pass through
  */
@@ -69,6 +71,8 @@ export function resolveHref(href: string, ctx: LinkCtx): { href: string; externa
   let name = file;
   try { name = decodeURIComponent(file); } catch { /* keep the raw name */ }
   const doc = (ctx.docs ?? DOC_INDEX).get(name.toLowerCase());
+  // HTML documents open inside the app, in the reader's language when that version exists.
+  if (doc && /\.html?$/i.test(doc) && HTML_DOCS.has(docKey(doc))) return { href: docRoute(docKey(doc), hash), external: false };
   if (doc) return { href: encodeURI(doc) + tail, external: true };
   // Unknown file: drop the static site's "../" prefixes so it stays relative to the app (public/).
   const rel = path.replace(/^(\.\.?\/)+/, "");

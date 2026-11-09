@@ -1,0 +1,1161 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Market Inspiration for Phoenix</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 1200px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <section class="cover">
+      <div class="small">Confidential — MCINEXT internal</div>
+      <h1>Market inspiration: what similar companies have built and how we should build it</h1>
+      <div class="sub">
+        The key features of the companies most similar to Phoenix, in plain
+        language: how each feature works, what we have today, how to build it and
+        how feasible it is.
+      </div>
+      <table class="meta">
+        <tr><td>Goal</td><td>Build a complete product that meets the real needs of the Iranian market. Iranian companies are our competitors; foreign companies are only a source of ideas.</td></tr>
+        <tr><td>Priority</td><td><b>Version 1 = the requirements of the MCI UAT agreement</b> (87 Fit-Gap rows). Any feature not in the agreement moves to later versions. In the final list, the agreement row number appears next to each feature.</td></tr>
+        <tr><td>Audience</td><td>All project members</td></tr>
+        <tr><td>Basis</td><td>Company websites, blogs and documentation (visited Sep–Oct 2026) and the Phoenix repository code</td></tr>
+        <tr><td>Date</td><td>5 Oct 2026</td></tr>
+      </table>
+    </section>
+
+    <h2 id="read">How to read this</h2>
+    <p>Each card in this document has five parts:</p>
+    <ol>
+      <li><b>What they built</b> — the feature in plain language.</li>
+      <li><b>How it works</b> — the steps, as far as the company has published them.</li>
+      <li><b>What we have today</b> — based on the Phoenix code.</li>
+      <li><b>How to build it</b> — suggested steps for the team.</li>
+      <li><b>Feasibility</b> — one of the three levels below.</li>
+    </ol>
+    <p>The version of each idea (1, 2 or 3) is given in the final list; version 1 is only the requirements of the MCI UAT agreement.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 18%">Level</th><th>Meaning</th></tr>
+      </thead>
+      <tr><td><span class="tag t-ok">Easy</span></td><td>Mostly configuring or completing something we already have; a few weeks with the current team.</td></tr>
+      <tr><td><span class="tag t-warn">Medium</span></td><td>A new part has to be built; about one to two months.</td></tr>
+      <tr><td><span class="tag t-bad">Hard</span></td><td>A quarter or more, or dependent on data and cooperation from another organization.</td></tr>
+    </table>
+    <div class="box warn">
+      <b>A warning about sources:</b> Iranian companies do not publish technical details,
+      and most of their pages are marketing. For them we include only what they
+      themselves have said, and wherever we have guessed it is marked with the label <b>"our reading"</b>. The
+      "how it works" details come mostly from the blogs and documentation of foreign companies.
+    </div>
+
+    <h2 id="phoenix">Phoenix in four parts</h2>
+    <p>To keep the comparison simple, we view our own product in four parts:</p>
+    <table>
+      <thead>
+        <tr><th style="width: 24%">Part</th><th>What it does</th><th style="width: 22%">Name in code</th></tr>
+      </thead>
+      <tr><td><b>1. Smart phone line</b></td><td>The employee calls a number and talks to a Persian voice assistant; the assistant listens, answers and, if needed, hands the call to a human.</td><td>IVA</td></tr>
+      <tr><td><b>2. Conversation brain</b></td><td>Understands what the user means, asks a follow-up question if what they said was ambiguous, finds the answer in the knowledge base and can send an SMS or a reminder.</td><td>AIVA and knowledge base</td></tr>
+      <tr><td><b>3. Call analytics</b></td><td>Every call is turned into text; topic, subtopic, sentiment, summary and suggestions are extracted, and the trend of each topic is tracked over time.</td><td>CCA and coa-api</td></tr>
+      <tr><td><b>4. Ask the data</b></td><td>A manager asks a question in Persian ("Why did dissatisfaction rise in Fars province?") and gets the answer with a chart.</td><td>AQA</td></tr>
+    </table>
+    <p>
+      Beneath these four parts are the foundations: user sign-in and roles, data
+      retention and deletion, and fully on-premises operation with no need for internet access.
+    </p>
+
+    <h2 id="choose" class="pb">Which companies are similar to us, and why</h2>
+    <p>
+      We chose companies only on the basis of <b>similarity to the four parts of Phoenix</b>. In
+      the "Exact similarity" column, each company's feature is placed next to its equivalent in our product. A company
+      that only has payroll software or personnel records, even a large one,
+      is not included here, because it teaches us nothing about building our parts.
+    </p>
+    <table>
+      <thead>
+        <tr><th style="width: 16%">Company</th><th style="width: 8%">Country</th><th>Exact similarity: their feature → equivalent in Phoenix</th><th style="width: 9%">Similarity</th></tr>
+      </thead>
+      <tr><td><b>Sokhan</b></td><td>Iran</td><td>"Rasa" (the caller speaks freely, no menu) → <b>smart phone line</b> with an open start · "Qualex" (analysis of all calls: sentiment, summary, keywords) → <b>call analytics</b> · "Lenabot" (chatbot built on a language model) → <b>conversation brain</b></td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Amerandish</b></td><td>Iran</td><td>"Hooshtel" (smart Persian phone operator with handover to a human) → <b>smart phone line</b> · "Monitoring dashboard" (all conversations turned into text, call metrics) → <b>call analytics</b> · "Farsava" → our speech-to-text engine</td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Sitak</b></td><td>Iran</td><td>Two-channel recording + speech-to-text + summary + sensitive words + critical-call alert → our <b>call analytics</b>, which has exactly this chain (except the single-call alert)</td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Asr Gooyesh Pardaz</b></td><td>Iran</td><td>"Niusha" and "Romand" (IVR and voice bot) → <b>smart phone line</b> · "Nevisa" and "Ariana" → our speech engines</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Part (iVira)</b></td><td>Iran</td><td>"Avanegar" and "Avasho" → our speech engines · "Daniar" and "Dorna" (Persian chatbot and language model) → <b>conversation brain</b></td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Poshtyar</b></td><td>Iran</td><td>24-hour phone receptionist with Persian AI → <b>smart phone line</b> (for small businesses, not enterprises)</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Chargoon (Didgah)</b></td><td>Iran</td><td>Chatbot that answers HR questions → <b>conversation brain + knowledge base</b> · natural-language questions over data → <b>ask the data</b> · the customer is the same HR department</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Porsline</b></td><td>Iran</td><td>Employee experience survey with "sign in with personnel code, anonymous result" → <b>our pilot goal</b> (listening to the employee voice) and the anonymity requirement · text only</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Perceptyx</b></td><td>USA</td><td>"Conversation instead of survey" → <b>our entire pilot</b> · topic, intent and sentiment analysis of comments → <b>call analytics</b> · open questions over comments → <b>ask the data</b></td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Qualtrics</b></td><td>USA</td><td>Smart follow-up question when an answer is vague → the <b>follow-up question</b> branch of the conversation brain (row CON-04)</td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Listen Labs</b></td><td>USA</td><td>Automated interviews with configurable follow-up depth → <b>follow-up question cap</b> (row CON-06) · automated analysis of interviews → <b>call analytics</b></td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Observe.AI, Level AI, Calabrio</b></td><td>USA</td><td>Automated evaluation of all calls with evidence and confidence level → <b>call analytics</b> and the requirement "declare model uncertainty" (row AI-14)</td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Leena AI</b></td><td>USA/India</td><td>HR voice assistant with a knowledge base and referral to a human → <b>phone line + conversation brain + knowledge base</b> (the agreement's knowledge block)</td><td><span class="tag t-ok">High</span></td></tr>
+      <tr><td><b>Moveworks</b></td><td>USA</td><td>Employee assistant that doesn't guess values and only asks when something is ambiguous → <b>conversation brain</b></td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Rippling, Lattice</b></td><td>USA</td><td>Answers that show the query and the evidence → <b>ask the data</b> and fact-based summary (row AI-03)</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td><b>Paradox, HiBob, UKG, SAP</b></td><td>USA/Europe</td><td>Calls and reminders, building the knowledge base from real questions, voice for frontline employees (SAP on LiveKit, the same infrastructure as ours) → <b>phone line</b> and <b>knowledge base</b></td><td><span class="tag t-warn">Medium</span></td></tr>
+    </table>
+
+    <!-- ================= Part: Iranian competitors ================= -->
+    <section class="part">
+      <div class="num">Part One</div>
+      <div class="ttl">Iranian competitors</div>
+      <div class="desc">Companies that sell the same kind of technology in Iran. For each one we ask: what feature does it have that we should also have, and how can we build it better?</div>
+    </section>
+
+    <h2 id="sokhan">Sokhan — a complete smart contact center</h2>
+    <p class="small">Website: <span class="en">sokhan.ai</span> · Announced customers: banking, insurance, agriculture, transportation</p>
+    <div class="box ok"><b>Why it is similar to us:</b> Like us, it has a smart Persian phone line (Rasa, no menu), analysis of all calls (Qualex) and a chatbot built on a language model (Lenabot). It is the only Iranian company that has three of our four parts together.</div>
+    <h3>What they built</h3>
+    <table>
+      <thead><tr><th style="width: 22%">Product</th><th>Function</th></tr></thead>
+      <tr><td><b>Rasa</b> — smart call routing</td><td>Instead of a "for … press 1" menu, the caller says what they want freely, and the system sends them to the right place or answers itself. 24 hours a day, with transfer to an agent.</td></tr>
+      <tr><td><b>Qualex</b> — call quality control</td><td>All calls (not a sample) are turned into text and analyzed: script compliance, talk time of each side, silence, emotion (dissatisfaction, satisfaction, stress), transfers and dropped calls, speech rate, keywords. Automatic scoring with configurable criteria, <b>real-time alerts to the supervisor</b>, <b>daily feedback to each agent</b>, identification of each agent's training needs, and a dashboard with 20+ metrics.</td></tr>
+      <tr><td><b>Yarex</b> — agent assistant</td><td>During the call, it shows customer information from the CRM, suggests answers based on what the customer means, automates after-call work and writes a summary.</td></tr>
+      <tr><td><b>Tikabot</b></td><td>Answers in messaging apps (Bale, Telegram, WhatsApp, Instagram) based on a knowledge tree, with referral to a human.</td></tr>
+      <tr><td><b>Lenabot</b></td><td>A chatbot built on a large language model for web and messaging apps.</td></tr>
+    </table>
+    <h3>How it works</h3>
+    <p>
+      According to them: Persian-specific speech-to-text, <b>separating each
+      speaker's voice</b> and noise reduction, followed by text analysis. Connection to VoIP, the organization's
+      PBX and the cloud. No further details have been published.
+    </p>
+    <h3>What we have today</h3>
+    <ul>
+      <li>Open conversation start with no menu (the same idea as Rasa) — <span class="tag t-ok">Have</span></li>
+      <li>Analysis of all calls: topic, sentiment, summary, inappropriate words — <span class="tag t-ok">Have</span></li>
+      <li>Agent scorecard with file export — <span class="tag t-warn">Partial</span></li>
+      <li>Real-time alert for a specific call — <span class="tag t-gap">Missing</span> (trend alerts only)</li>
+      <li>Automatic periodic feedback to each person — <span class="tag t-gap">Missing</span></li>
+      <li>Live agent assistant — <span class="tag t-gap">Missing</span></li>
+      <li>Messaging apps — <span class="tag t-warn">Partial</span> (the Rubika tool exists but is off)</li>
+    </ul>
+    <h3>How to build it, and what inspiration we take</h3>
+    <ol>
+      <li><b>Automatic periodic feedback:</b> Adapt the "daily feedback to the agent" idea for HR: every week, send the manager of each unit a short summary of the most frequent topics in their unit (only if the number of people has reached the minimum threshold). Built from the existing analytics data. <span class="tag t-ok">Easy</span></li>
+      <li><b>Sensitive-call alert:</b> If a topic such as harassment, a safety hazard or a threat comes up in a call, notify an authorized, restricted role — not the direct manager. <span class="tag t-ok">Easy</span></li>
+      <li><b>HR agent assistant:</b> When a call is transferred to a human HR agent, the conversation summary and suggested answers from the knowledge base appear on the agent's screen. <span class="tag t-bad">Hard</span> (new user interface and PBX integration)</li>
+    </ol>
+    <div class="box"><b>Bottom line:</b> Sokhan is the most complete Iranian suite for contact centers. Our advantage should lie in HR domain knowledge, listening to the employee voice and protecting privacy; these are not seen in Sokhan's products.</div>
+
+    <h2 id="amerandish">Amerandish — smart operator and contact center monitoring</h2>
+    <p class="small">Website: <span class="en">amerandish.com</span> · Products: Hooshtel, Farsava, Botava, Monitoring dashboard</p>
+    <div class="box ok"><b>Why it is similar to us:</b> Hooshtel does the same job as our phone line (listen, transcribe, understand, answer, hand over to a human), and its monitoring dashboard does the same job as our call analytics.</div>
+    <h3>What they built</h3>
+    <ul>
+      <li><b>Hooshtel:</b> A smart phone operator on VoIP; it listens, transcribes, understands and answers like an operator; if it can't find an answer, it hands the call to a human.</li>
+      <li><b>Saipa and Iran Khodro project:</b> Answering repetitive questions, listing the dealerships in each city, registering roadside-assistance requests and repair appointments, registering complaints with automatic speech-to-text, following up on registration renewals. Claim: about <b>80% of questions are similar</b> and get automated.</li>
+      <li><b>Contact center monitoring dashboard:</b> Turning the entire conversation into text and reporting by keyword, along with a detailed list of metrics (table below).</li>
+    </ul>
+    <h3>Metrics they measure</h3>
+    <table>
+      <thead><tr><th style="width: 50%">Quantitative metrics</th><th>Qualitative metrics</th></tr></thead>
+      <tr>
+        <td>Call duration · operator talk time · caller talk time · silence duration · wait time · abandoned calls · number of turns · repeated questions (a sign of not understanding) · call transfer rate · speech rate · call volume per number</td>
+        <td>Did the caller get the right answer? · topic classification · voice loudness · instruction compliance · full conversation transcript</td>
+      </tr>
+    </table>
+    <h3>What we have today</h3>
+    <p>
+      We have two-channel recording (each side's voice separately) and the timing of each sentence, so we can compute most of the
+      quantitative metrics above without a new model. We do not have "Did they get an
+      answer?".
+    </p>
+    <h3>How to build it, and what inspiration we take</h3>
+    <ol>
+      <li><b>Quantitative metrics for each call:</b> From the sentence timings of the two channels: talk time of each side, long silences, overlapping speech, number of turns. For the Employee Voice line this takes on a new meaning: very short calls or calls full of silence mean our question was badly designed. <span class="tag t-ok">Easy</span></li>
+      <li><b>"Did they get an answer?":</b> At the end of a service desk call, a language model reads the transcript and determines whether the question was answered, referred or left unanswered. This is the basis for measuring "resolution without a human". <span class="tag t-ok">Easy</span></li>
+      <li><b>Voice complaint registration:</b> The same Iran Khodro complaint-registration pattern, for "report a workplace problem". <span class="tag t-warn">Medium</span></li>
+    </ol>
+    <div class="box"><b>Bottom line:</b> Technologically, Amerandish is the closest domestic company to us, but it has not announced any HR use case. Its list of metrics is a ready-made checklist for our dashboard.</div>
+
+    <h2 id="sitak">Sitak — AI-based call quality control</h2>
+    <p class="small">Website: <span class="en">sitak.co</span></p>
+    <div class="box ok"><b>Why it is similar to us:</b> Its processing chain (two-channel recording → text → summary → sensitive words → alert) is, step by step, the same chain as our call analytics.</div>
+    <h3>How it works (according to their own guide)</h3>
+    <ol>
+      <li><b>Two-channel</b> audio recording (operator and customer separately).</li>
+      <li>Sending to the AI system and converting speech to text.</li>
+      <li>Analyzing the text and producing five outputs: a <b>summary</b> for the customer record; detection of <b>sensitive words</b> (complaint, threat, competitor name); measurement of satisfaction, tone, politeness and compliance with opening and closing phrases; discovery of costly processes; and a <b>critical-call alert</b> (tension, insults, request for a manager).</li>
+    </ol>
+    <h3>What we have today</h3>
+    <p>We have two-channel recording, speech-to-text, summaries, inappropriate words for each side, and sentiment. We do not have a "customer-definable sensitive word list" or alerts for a single call.</p>
+    <h3>How to build it</h3>
+    <ol>
+      <li><b>Editable sensitive word list:</b> An HR specialist defines a list (such as "آزار" ("harassment"), "تبعیض" ("discrimination"), "حادثه" ("accident")) and calls containing these topics get tagged. Ideally the language model detects the "topic", not just the word itself. <span class="tag t-ok">Easy</span></li>
+      <li><b>Critical-call alert</b> with the same rule as above, sent only to the authorized role. <span class="tag t-ok">Easy</span></li>
+    </ol>
+
+    <h2 id="asr">Asr Gooyesh Pardaz — Persian speech, IVR and voice biometrics</h2>
+    <p class="small">Website: <span class="en">asr-gooyesh.com</span> · About two decades in business</p>
+    <div class="box ok"><b>Why it is similar to us:</b> It builds smart IVR and Persian voice bots; the same layer our phone line stands on (speech-to-text, text-to-speech).</div>
+    <h3>What they built</h3>
+    <ul>
+      <li><b>Niusha:</b> A smart IVR that understands speech.</li>
+      <li><b>Romand:</b> A voice bot.</li>
+      <li><b>Nevisa:</b> Persian speech-to-text.</li>
+      <li><b>Shenasa:</b> Voice-based identity verification; <b>Ramzava:</b> voice password; <b>Ariana:</b> text-to-speech.</li>
+    </ul>
+    <h3>Inspiration for us</h3>
+    <ul>
+      <li><b>Voice-based identity verification</b> for personal tasks at the service desk (such as "send me my payslip"): use a partner instead of building it. <span class="tag t-bad">Hard</span> if we build it ourselves.</li>
+      <li><b>Quality benchmark:</b> Compare the accuracy of our own speech-to-text on real employee audio against Nevisa and Avanegar, so we have a defensible number. <span class="tag t-ok">Easy</span></li>
+    </ul>
+
+    <h2 id="part">Part (iVira) — Persian AI infrastructure</h2>
+    <p class="small">Part AI Research Center · Products: Avanegar, Avasho, Daniar, Dorna</p>
+    <div class="box ok"><b>Why it is similar to us:</b> It has our same three base engines in Persian: speech-to-text, text-to-speech, and a language model for conversation.</div>
+    <ul>
+      <li><b>Avanegar:</b> Conversational speech-to-text, claimed to be robust to noise and accents.</li>
+      <li><b>Avasho:</b> Text-to-speech with a custom voice.</li>
+      <li><b>Daniar and Dorna:</b> Persian chatbot and language model.</li>
+    </ul>
+    <h3>Inspiration for us</h3>
+    <ul>
+      <li><b>A dedicated organizational voice:</b> A phone assistant with a consistent, familiar voice ("the MCI voice for employees"). If our speech engine supports custom voices, <span class="tag t-warn">Medium</span>; otherwise, via a partner.</li>
+      <li><b>Backup engine:</b> Keep a second speech engine ready for the day the main engine has a problem.</li>
+    </ul>
+
+    <h2 id="poshtyar">Poshtyar — phone receptionist for small businesses</h2>
+    <div class="box ok"><b>Why it is similar to us:</b> A Persian voice assistant on the phone that answers 24 hours a day — the same as our phone line, at a small scale.</div>
+    <p>A 24-hour phone receptionist with Persian voice AI. What is interesting for us is the <b>simplicity of setup</b>: a small business sets up its own line without an engineer. Inspiration: "creating a new line" (for example, exit interviews) should be as easy as filling in a form for an HR specialist. <span class="tag t-warn">Medium</span></p>
+
+    <h2 id="chargoon">Chargoon (Didgah) — HR software</h2>
+    <div class="box ok"><b>Why it is similar to us:</b> A chatbot that answers HR questions (like our conversation brain and knowledge base) and natural-language questions over data (like our ask the data); and its customer is the same HR department.</div>
+    <h3>What they built</h3>
+    <ul>
+      <li>44 HR modules, from recruitment to retirement; employee self-service (payslip, leave, editing personal information); a chatbot that answers HR questions; smart shift management.</li>
+      <li>Natural-language questions over organizational data, being piloted inside Avat and Didgah (according to the rebrand news of Oct–Nov 2025).</li>
+      <li><b>An open API</b> for other companies to connect to.</li>
+    </ul>
+    <h3>Inspiration for us</h3>
+    <ul>
+      <li><b>Integrate, don't compete:</b> Chargoon's open API is a way to obtain the org structure and leave balances, if the customer is on Didgah. <span class="tag t-warn">Medium</span> (dependent on Chargoon's cooperation)</li>
+      <li><b>High-demand content:</b> The most-read posts on Chargoon's blog are "Payroll tax 1405 (2026)" ("مالیات حقوق ۱۴۰۵") and "Severance pay" ("حق سنوات"). A ready-made "labor law and payroll" knowledge base for our service desk has demand right here. <span class="tag t-ok">Easy</span></li>
+      <li><b>Buyer's test:</b> Chargoon's software-selection guide is exactly what a buyer will ask us (covered in the "Answer Pack").</li>
+    </ul>
+    <p class="small">Note: the claim of an "AI platform with an offline language model" in the previous dossier was attributed to an article that says no such thing; until it is confirmed, take only "being piloted" as the basis.</p>
+
+    <h2 id="porsline">Porsline — employee experience surveys</h2>
+    <div class="box ok"><b>Why it is similar to us:</b> It pursues the same goal as our pilot — listening to the employee voice and keeping employees anonymous — only with a text form instead of a phone conversation.</div>
+    <h3>What they built</h3>
+    <ul>
+      <li>Measurement of employee loyalty (the question "How likely are you to recommend this organization to a friend?") and job engagement.</li>
+      <li><b>Sign in with personnel code, but anonymous in the results:</b> only authorized employees can respond, but the response is not recorded under anyone's name.</li>
+      <li>Chart-based reports broken down by unit, and an AI assistant for building forms and analyzing data.</li>
+    </ul>
+    <h3>Inspiration for us</h3>
+    <ul>
+      <li><b>The same anonymity mechanism for the phone:</b> the phone number is checked only to permit entry, and in the analysis it is replaced with a meaningless identifier. This is exactly what the pilot needs. <span class="tag t-warn">Medium</span></li>
+      <li><b>Help with question design:</b> an assistant that suggests questions and follow-up questions from a goal ("I want to understand why people leave"). <span class="tag t-ok">Easy</span></li>
+    </ul>
+
+    <!-- ================= Part: Foreign sources of inspiration ================= -->
+    <section class="part">
+      <div class="num">Part Two</div>
+      <div class="ttl">Foreign sources of inspiration</div>
+      <div class="desc">These companies are not our competitors. From their blogs and documentation we learn exactly how they built their key features. Ordered by the four parts of Phoenix.</div>
+    </section>
+
+    <h2 id="listen">Listening to the employee voice</h2>
+
+    <h3>Perceptyx — conversation instead of survey</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> Exactly our pilot idea, only with chat instead of phone: the employee talks, the assistant asks follow-up questions, comments are analyzed and the manager asks questions of the comments.</div>
+    <p><b>What they built:</b> Instead of filling in a form, the employee says what they think in a chat-like conversation. The assistant starts the conversation at key moments (such as the end of the probation period) and asks follow-up questions based on what that person said.</p>
+    <p><b>How they analyze comments (from their own technical paper, Feb 2026):</b></p>
+    <table>
+      <thead><tr><th style="width: 24%">Task</th><th>Method</th></tr></thead>
+      <tr><td>Finding the topic</td><td>Three methods together: a model trained on labeled examples, a keyword list, and a method that <b>discovers new topics on its own</b>.</td></tr>
+      <tr><td>Speaker intent</td><td>Each comment falls into one of these categories: praise, wants and preferences, suggestion ("should…"), needs and concerns.</td></tr>
+      <tr><td>Sentiment</td><td>Three levels: positive, neutral, negative.</td></tr>
+      <tr><td>Emotion</td><td>Six states: anger, fear, interest, joy, sadness, surprise.</td></tr>
+      <tr><td>Privacy</td><td><b>Before any comment is sent to an external language model, people's names are masked using a name-recognition model.</b> Customer data is not used to train the model. Every AI feature is labeled and the customer can turn it off.</td></tr>
+    </table>
+    <p><b>Sentiment model:</b> 1,000 real comments were labeled by four organizational psychologists following a shared guideline; these four people themselves disagreed in 7% of cases (meaning 100% accuracy is not possible). A small fine-tuned model reached 89.4% accuracy, almost equal to a large model with a precise prompt (89.3%) but cheaper and faster. "Mixed" comments ("My manager is good but the workload is high") were reviewed separately.</p>
+    <p><b>What we have today:</b> We have topic and subtopic, sentiment, emotion and the "suggestions" column. We <b>do not have</b> new-topic discovery, name masking or an accuracy benchmark.</p>
+    <p><b>How to build it:</b></p>
+    <ol>
+      <li><b>Mask names and numbers before storage and analysis</b>: rules for numbers (phone, personnel code) + a language model or name-recognition model for names. <span class="tag t-ok">Easy</span></li>
+      <li><b>An "intent" column</b> next to sentiment; just one new prompt for the language model that already does the analysis. <span class="tag t-ok">Easy</span></li>
+      <li><b>New-topic discovery:</b> comments that don't fit any existing topic are collected, grouped by semantic similarity, and each growing group is suggested to a specialist ("New topic: night-shift commuter shuttle"). <span class="tag t-warn">Medium</span></li>
+      <li><b>Persian sentiment benchmark:</b> 1,000 anonymized excerpts from pilot calls, three labelers, one guideline. <span class="tag t-ok">Easy</span></li>
+    </ol>
+
+    <h3>Qualtrics — smart follow-up questions mid-survey</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> The same thing agreement row CON-04 asks of us: when an answer is vague, one targeted follow-up question.</div>
+    <p><b>How it works:</b> When an employee answers an open question, the AI reads the answer and, if it is general or vague, asks a targeted follow-up question about that same point. In their experiments about <b>40%</b> of respondents expanded their answers. Another important finding of theirs: only <b>48%</b> of employees say they have seen the impact of their feedback; and wherever the organization listened more, engagement nearly doubled.</p>
+    <p><b>What we have today:</b> The "follow-up question" branch exists in the conversation brain and works. There is no cap on the number of follow-up questions and no reporting of results back to employees.</p>
+    <p><b>How to build it:</b> (1) A cap and rule for follow-up questions for each question <span class="tag t-ok">Easy</span>; (2) "We heard, we acted": after each cycle, a voice message or SMS to the same unit about what was done <span class="tag t-ok">Easy</span>.</p>
+
+    <h3>Listen Labs — AI interviews at scale</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> One assistant talks with hundreds of people at the same time and summarizes the results itself — the same thing our Employee Voice line does.</div>
+    <p><b>How it works (from their documentation):</b></p>
+    <ol>
+      <li>The researcher writes the goal in plain language; the system builds the <b>interview guide</b> (list of questions) and the screening questions.</li>
+      <li>For <b>each question</b> a follow-up depth is chosen: none, only when the answer is short, once, or two to three times.</li>
+      <li>For each question you can write a "probing instruction": exactly which aspect to look for.</li>
+      <li>The system estimates the approximate interview length so it doesn't run long.</li>
+      <li>Hundreds of interviews run at the same time; automated analysis delivers findings, themes and a ready report in less than a day.</li>
+    </ol>
+    <p><b>How to build it — a "conversation plan" for each line:</b> each line (pulse, exit interview, new-hire follow-up) has a list of questions, with follow-up depth and a probing instruction set for each question; the conversation brain proceeds from that plan. It also solves the gap noted in the pilot agreement (the follow-up question cap). <span class="tag t-warn">Medium</span></p>
+
+    <h3>Culture Amp — beware of "passive listening"</h3>
+    <p>They consider passive analysis of employees' messages and emails "hype": only 24% of HR professionals recommend their organization's listening approach, and their own experiment on work messages showed that some groups (by region, gender, tenure) are less visible. <b>Takeaway for us:</b> voluntary, informed channels only.</p>
+
+    <h2 id="quality" class="pb">Call analysis and evaluation</h2>
+    <h3>Observe.AI, Level AI and Calabrio — automated evaluation of all calls</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> They automatically turn every call into text and a score — the same job as our call analytics — and give evidence and a confidence level for each result (agreement row AI-14).</div>
+    <p><b>What they built:</b> Instead of a quality specialist listening to one or two of every hundred calls, the system scores <b>all</b> calls against an evaluation form and, for each answer, provides <b>evidence</b> (the relevant part of the conversation and its timestamp) and a <b>reason</b>. Claim: evaluation five times faster.</p>
+    <p><b>Rules for writing an evaluation form (from Calabrio's guide):</b></p>
+    <ol>
+      <li>Phrase the question as "Did the agent …?" and ask about <b>observable behavior</b>.</li>
+      <li>Most questions should be <b>yes/no</b>; they give the most accurate results.</li>
+      <li>Each question should measure only <b>one</b> behavior.</li>
+      <li>For each question, write a description of exactly what to look for; for each option, a precise condition and a <b>sample conversation</b>.</li>
+      <li>Scoring: yes = 100, no = 0, "not applicable" = excluded from the calculation. At most a five-point scale with equal intervals (100, 75, 50, 25, 0).</li>
+      <li>"Not applicable" is when that behavior made no sense in that call (for example, the call was transferred).</li>
+    </ol>
+    <p>Level AI says its system doesn't need to be trained on a list of phrases; it understands the intent of each question and gives evidence and reasoning for each answer. Observe.AI shows the score for each section of the form and an "auto-fail" for serious errors.</p>
+    <p><b>What we have today:</b> An agent scorecard and analytic tags for each call. We do not have a "definable evaluation form" engine.</p>
+    <p><b>How to build it — an evaluation form engine:</b></p>
+    <ol>
+      <li>The specialist builds a form: question, description, options with conditions and examples.</li>
+      <li>For each call and each question, the language model reads the transcript and returns: the answer, the evidence sentence, its timestamp in the call, and a short reason.</li>
+      <li>The score is calculated with the rule above; calls the model is not confident about are flagged for human review.</li>
+      <li>The specialist can correct any answer, and these corrections are collected to measure accuracy.</li>
+    </ol>
+    <div class="box ok"><b>Dual use for us:</b> The same engine measures (a) the quality of <b>our own phone assistant</b> ("Did the assistant ask an appropriate follow-up question?", "Was the call ending clear?") and (b) the quality of the HR service desk agents. <span class="tag t-warn">Medium</span></div>
+
+    <h2 id="helpdesk" class="pb">Employee assistant and service desk</h2>
+    <h3>Leena AI — voice and text HR assistant</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> A voice assistant that answers from an HR knowledge base and hands over to a human when it can't — the same as our phone line, conversation brain and knowledge base.</div>
+    <p><b>What they built:</b> A ready-made "AI colleague" for HR (onboarding, leave, payroll questions, benefits), voice-enabled and available 24 hours a day in more than 100 languages, with ready connectors to 200+ systems and a tool that defines processes in plain sentences. Claim: <b>70%+ of requests are resolved without a human</b>, set up in 45 days.</p>
+    <p><b>Lessons from a rollout to 51,000 employees of a hospital chain:</b></p>
+    <ol>
+      <li>The first year was spent on <b>organizing content</b>, security and internal alignment; internal alignment was the hardest part.</li>
+      <li>First tasks: leave balance and leave requests, policy questions, process guides, filling in forms.</li>
+      <li>The most effective way to win users: introducing the assistant at the <b>new-hire orientation session</b>; and games and in-person demos instead of announcements.</li>
+      <li>Metrics: first use, repeat use, satisfaction with answer accuracy.</li>
+      <li>"Getting things done" (not just answering) was essential.</li>
+    </ol>
+
+    <h3>HiBob and Perk — the right order for building a service desk</h3>
+    <p>Perk "did not start with AI". The order: (1) all requests were gathered in a single portal; (2) the knowledge base was built from <b>real questions</b>; (3) repetitive tasks were automated; (4) AI was added last. Result: 60% of requests handled without a human, 40% reduction in first response time.</p>
+
+    <h3>Moveworks — an assistant that doesn't guess</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> An employee assistant with the same pattern as ours: understanding intent, asking when ambiguous, tools, referral to a human.</div>
+    <p><b>The problem:</b> When a language model needs a case number or code, it makes up something that "looks right". <b>Their solution:</b></p>
+    <ol>
+      <li>Every required value (leave type, date, code) is a defined "slot".</li>
+      <li>The options are read from the <b>system of record</b>, not from the model's memory; the model only chooses among them.</li>
+      <li>The selected value is locked and the rest of the conversation uses it.</li>
+      <li>It only asks when there is ambiguity; for each slot it is set to "always ask", "infer if known" or "always infer".</li>
+    </ol>
+    <p><b>The right definition of "resolution without a human":</b> events are logged separately: intent understood, resolved, task done automatically, referred to a human, <b>abandoned and later followed up through another channel</b>. If the user got tired and left, it is not counted as "resolved".</p>
+    <p><b>How to build it:</b> for personal service desk tasks, upgrade the current follow-up question branch to "slot + read from system of record + verbal confirmation" ("مرخصی استحقاقی، شنبه ۱۲ مهر؛ درست است؟" ("Annual leave, Saturday 12 Mehr [4 Oct 2026]; is that right?")) <span class="tag t-warn">Medium</span>. Counting "resolution without a human": if the same number calls again within 72 hours, it is unresolved <span class="tag t-ok">Easy</span>.</p>
+
+    <h3>UKG and SAP — voice for frontline employees</h3>
+    <p>UKG launched its voice assistant with only <b>12 tasks</b>: "What's my shift schedule this week?", "Where am I working today?", "Is there a problem with my timecard?", "Do I have enough time off for next week?", changing the payroll account. SAP built its assistant's voice on <b>LiveKit</b> — the same infrastructure our phone line runs on. <b>Inspiration:</b> the first phase of our voice service desk should also have 10 to 12 high-frequency tasks, each with its own test.</p>
+
+    <h3>Paradox — calls and reminders</h3>
+    <p>From 25 million interview appointments: timely reminders and easy rescheduling cut no-shows by <b>40%</b>; <b>93%</b> of reschedules were initiated by the organization itself, not the candidate. <b>Inspiration for our outbound calls</b> (exit interviews, new-hire follow-up): reminder SMS + "to reschedule, call this same number" + easy rescheduling on the HR side. <span class="tag t-warn">Medium</span></p>
+
+    <h2 id="data" class="pb">Ask the data</h2>
+    <h3>Rippling — an answer that shows its work</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> A question in everyday language → building a query over the data → answer and report; the same job as our ask-the-data assistant.</div>
+    <ol>
+      <li>A main assistant receives the question and passes it to one of 5 to 7 specialist assistants: reading data, searching the text of policies, or performing an action.</li>
+      <li>The assistant sees only the data that <b>the user themselves</b> is allowed to see.</li>
+      <li>The answer is shown together with the underlying query and report so it can be checked.</li>
+      <li>Any change is first queued for approval and goes through the organization's own approval path.</li>
+      <li>Testing in four layers: on every code change, after merge (300 to 400 questions), <b>about 10 critical scenarios that block a release</b>, and daily monitoring.</li>
+    </ol>
+    <p><b>What we have today:</b> The ask-the-data assistant (AQA) builds queries and is the only part of ours with automated tests. <b>How to build it:</b> show the query and row count next to each chart; pass the user's role into the query; anonymized views only for unit managers. <span class="tag t-ok">Easy</span></p>
+
+    <h3>Lattice — a report where every sentence has evidence</h3>
+    <div class="box ok"><b>Why it is similar to us:</b> It builds summaries from conversations and feedback; the same thing our per-call summary and monthly report do (row AI-03: fact-based summary).</div>
+    <p>It builds a performance review draft from real notes and feedback; <b>every sentence links to its specific source</b>; if data is thin it says "not enough information" instead of a generic sentence; the assistant doesn't score or submit — only a human does. Result: 47% faster. <b>Inspiration:</b> each topic in our monthly report should cite a few anonymized quotes and call numbers; below the minimum group size it should say "not enough data". <span class="tag t-ok">Easy</span></p>
+
+    <!-- ================= Part: Feature list ================= -->
+    <section class="part">
+      <div class="num">Part Three</div>
+      <div class="ttl">Feature list for development, by version</div>
+      <div class="desc">Version 1 is only the requirements of the MCI UAT agreement, and each row carries its agreement row number. Ideas that are not in the agreement go to versions 2 and 3.</div>
+    </section>
+
+    <h2 id="v1">Version 1 — MCI UAT agreement requirements</h2>
+    <p>
+      These 19 features cover the gaps in the pilot agreement. The "Inspired by" column
+      tells where to learn how to build it; the "Today" column is the status of our code. Agreement rows
+      that already work fully today (such as open conversation start, topic trends,
+      time filter) are not repeated here.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 5%">#</th>
+          <th style="width: 20%">Feature</th>
+          <th style="width: 13%">Agreement row</th>
+          <th style="width: 14%">Inspired by</th>
+          <th style="width: 9%">Today</th>
+          <th>How to build it</th>
+          <th style="width: 8%">Feasibility</th>
+        </tr>
+      </thead>
+      <tr><td class="c-num">1</td><td><b>Mask names and numbers before storage and in outputs</b></td><td class="en">PRV-01, PRV-09</td><td>Perceptyx</td><td><span class="tag t-gap">Missing</span></td><td>Rules for numbers (phone, personnel code) + model-based name recognition; in the data ingestion path, once for all parts.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">2</td><td><b>Access only for authorized employees, and a message for unauthorized numbers</b></td><td class="en">VIA-02, VIA-03, SEG-06, TEC-06</td><td>Porsline</td><td><span class="tag t-warn">Partial</span></td><td>Check the number at call time (not only in memory); a short message and hang-up without creating an analytics record.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">3</td><td><b>Separate identity from analytics</b></td><td class="en">SEG-03, PRV-02, PRV-04</td><td>Porsline, Perceptyx</td><td><span class="tag t-warn">Partial</span></td><td>Replace the number in analytics with a meaningless identifier; only the system administrator has access to identity; managers see only aggregate statistics.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">4</td><td><b>Minimum group size (do not show groups smaller than k people)</b></td><td class="en">PRV-05, AN-06</td><td>Perceptyx, Qualtrics, Porsline</td><td><span class="tag t-gap">Missing</span></td><td>One condition in the reporting and ask-the-data layer; the value of k is set by EX.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">5</td><td><b>Log every access to identity and audio; audio only for authorized roles</b></td><td class="en">PRV-06, PRV-03, PRV-11</td><td>Leena (activity trail), HiBob</td><td><span class="tag t-gap">Missing</span></td><td>A shared access-logging layer: who, when, to what; an ownership check before playing audio.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">6</td><td><b>Detect and separate sensitive voice content, with severity and alerts</b></td><td class="en">PRV-10, AI-15, AN-09</td><td>Sitak, Sokhan (Qualex)</td><td><span class="tag t-warn">Partial</span></td><td>An editable list of sensitive topics + model-based detection; configurable severity instead of "always high"; notifications only to the authorized role.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">7</td><td><b>Follow-up question cap and rule; detecting a complete statement</b></td><td class="en">CON-04, CON-06, CON-07</td><td>Listen Labs, Qualtrics</td><td><span class="tag t-warn">Partial</span></td><td>For each line: the maximum number of follow-up questions and the condition for asking ("only if the answer was short or vague") as settings.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">8</td><td><b>Summary confirmation at the end of the call</b></td><td class="en">CON-08</td><td>Moveworks (verbal confirmation)</td><td><span class="tag t-warn">Partial</span></td><td>At the end, the assistant reads a one-sentence summary: "درست فهمیدم که…؟" ("Did I understand correctly that…?") and records any correction.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">9</td><td><b>Record call information and handle incomplete or dropped calls</b></td><td class="en">VIA-06, VIA-07</td><td>Amerandish (call metrics)</td><td><span class="tag t-warn">Partial</span></td><td>ID, time, duration and complete/incomplete status of each call; no fabricated summary is produced for an incomplete call.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">10</td><td><b>Type of statement (complaint, suggestion, praise, concern) and positive signals</b></td><td class="en">AI-05, AI-09, AN-05</td><td>Perceptyx (speaker intent)</td><td><span class="tag t-warn">Partial</span></td><td>One new prompt in the existing analysis; the "suggestions" column is its basis; a positive/negative filter in the dashboard.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">11</td><td><b>Group similar statements and discover new topics</b></td><td class="en">AI-12, AI-13</td><td>Perceptyx (automatic topic discovery)</td><td><span class="tag t-gap">Missing</span></td><td>Statements that don't fit an existing topic are grouped by semantic similarity; a growing group is suggested to a specialist.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">12</td><td><b>Declare model uncertainty and a "needs review" label</b></td><td class="en">AI-14</td><td>Level AI, Observe.AI, Lattice</td><td><span class="tag t-warn">Partial</span></td><td>The model gives a confidence level next to each label; below a threshold, it is flagged for human review.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">13</td><td><b>Fact-based summary with evidence</b></td><td class="en">AI-03, AN-08</td><td>Lattice, Level AI</td><td><span class="tag t-warn">Partial</span></td><td>Each summary point refers to the original sentence of the conversation; in reports, each topic comes with a few anonymized quotes.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">14</td><td><b>Accuracy benchmark for speech-to-text, topic and sentiment</b></td><td class="en">AI-01, AI-06, AI-07, AI-08</td><td>Perceptyx; Nevisa and Avanegar for comparison</td><td><span class="tag t-gap">Missing</span></td><td>An anonymized sample with human labels; measure word error, topic accuracy and three-level sentiment; a number for the acceptance criteria.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">15</td><td><b>Automated tests with golden scenarios</b></td><td class="en">TEC-08, TEC-10, TEC-11</td><td>Rippling</td><td><span class="tag t-warn">Partial</span></td><td>Extend the existing ask-the-data test pattern to the phone line and the conversation brain; rerun after every fix.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">16</td><td><b>Log unanswered and frequently asked questions</b></td><td class="en">KB-05, KB-07, KB-08</td><td>HiBob and Perk (knowledge from real questions)</td><td><span class="tag t-warn">Partial</span></td><td>Log every "I don't know"; a weekly list of unanswered and frequent questions for EX to complete the knowledge base.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">17</td><td><b>SMS with a link or information, with sending limits</b></td><td class="en">KB-06</td><td>Paradox (reminder SMS)</td><td><span class="tag t-ok">Have</span></td><td>The SMS tool exists; add a cap on the number of messages and the EX-approved scenarios.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">18</td><td><b>Ask the data with no path to identity</b></td><td class="en">AN-12, PRV-02</td><td>Rippling</td><td><span class="tag t-warn">Partial</span></td><td>Show the query and row count next to the chart; queries run only on the de-identified view.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">19</td><td><b>Import of employee and org-structure files with error reporting</b></td><td class="en">SEG-01, SEG-02, SEG-04, SEG-05, VIA-04, VIA-05</td><td>Chargoon (data integration)</td><td><span class="tag t-warn">Partial</span></td><td>A fixed file template, automatic validation on upload, an "unmapped" label for numbers without a unit.</td><td><span class="tag t-warn">Medium</span></td></tr>
+    </table>
+    <div class="box warn">
+      <b>Suggested build order for version 1:</b> privacy first (rows 1 to 6),
+      because without them the acceptance test fails; then conversation and analytics (7 to 13); then
+      measurement and testing (14 and 15), which provide the numbers for the acceptance criteria; and alongside all of them,
+      the knowledge base and data import (16 to 19). Commit to the time for each task as "T + n business days
+      after receiving the EX input".
+    </div>
+
+    <h2 id="v2">Version 2 — a second product for the same customer</h2>
+    <p>After pilot acceptance. All built on the same engine.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 5%">#</th><th style="width: 26%">Feature</th><th style="width: 22%">Inspired by</th><th>How to build it</th><th style="width: 9%">Feasibility</th></tr>
+      </thead>
+      <tr><td class="c-num">20</td><td><b>Weekly summary for managers and "We heard, we acted"</b></td><td>Sokhan (daily feedback), Qualtrics, Perceptyx</td><td>From the existing trend data + SMS; record the manager's action and announce it to the same unit.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">21</td><td><b>Call evaluation form engine</b></td><td>Observe.AI, Level AI, Calabrio, Qualex</td><td>A definable form; for each question: answer, evidence, timestamp and reason; for our own assistant and for agents.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">22</td><td><b>Full quantitative metrics for each call</b></td><td>Amerandish</td><td>From the timing of the two channels: talk time of each side, silence, overlapping speech, number of turns.</td><td><span class="tag t-ok">Easy</span></td></tr>
+      <tr><td class="c-num">23</td><td><b>Full conversation plan for each line</b></td><td>Listen Labs</td><td>Question list + depth + probing instruction; the basis for exit interviews and new-hire follow-up.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">24</td><td><b>Outbound calls with reminders and easy rescheduling</b></td><td>Paradox</td><td>Call scheduling, reminder SMS, rescheduling from either side; a load test before launch.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">25</td><td><b>Voice service desk with 10–12 high-frequency tasks and a "labor law and payroll" pack</b></td><td>UKG, Leena, Chargoon (high-demand content)</td><td>Knowledge base built from real questions; introduction at the orientation session; correct counting of "resolution without a human".</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">26</td><td><b>Direct integration with MCI's SAP</b></td><td>Agreement row SEG-07 (phase two)</td><td>A read-only integration behind a vendor-independent layer.</td><td><span class="tag t-bad">Hard</span></td></tr>
+    </table>
+
+    <h2 id="v3">Version 3 — expansion</h2>
+    <p>After the market is proven, and when a specific customer asks for it.</p>
+    <table>
+      <thead>
+        <tr><th style="width: 5%">#</th><th style="width: 26%">Feature</th><th style="width: 22%">Inspired by</th><th>How to build it</th><th style="width: 9%">Feasibility</th></tr>
+      </thead>
+      <tr><td class="c-num">27</td><td><b>"Don't guess" for personal tasks (leave requests, etc.)</b></td><td>Moveworks</td><td>Slot + read from the system of record + verbal confirmation before submitting.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">28</td><td><b>Create a new line with a single form</b></td><td>Poshtyar, Porsline</td><td>An HR specialist builds a new line without an engineer and tries it with a test call.</td><td><span class="tag t-bad">Hard</span></td></tr>
+      <tr><td class="c-num">29</td><td><b>Live agent assistant</b></td><td>Sokhan (Yarex)</td><td>Summary and suggested answers on the agent's screen when a call is transferred.</td><td><span class="tag t-bad">Hard</span></td></tr>
+      <tr><td class="c-num">30</td><td><b>Domestic messaging apps</b></td><td>Sokhan (Tikabot)</td><td>Turn on the Rubika and Bale integrations; unify conversations across channels.</td><td><span class="tag t-warn">Medium</span></td></tr>
+      <tr><td class="c-num">31</td><td><b>Voice-based identity verification</b></td><td>Asr Gooyesh Pardaz (Shenasa)</td><td>Through a partner; only for personal tasks.</td><td><span class="tag t-bad">Hard</span></td></tr>
+      <tr><td class="c-num">32</td><td><b>Dedicated organizational voice</b></td><td>Part (Avasho)</td><td>A consistent voice for the assistant; with our own engine or a partner's.</td><td><span class="tag t-warn">Medium</span></td></tr>
+    </table>
+
+    <h2 id="summary">Summary: what the complete product looks like</h2>
+    <ol>
+      <li><b>Version 1 means trust and accuracy:</b> most of the agreement's gaps are about privacy and measurement, not new AI. Every successful company in this space (Perceptyx, Porsline, Leena) has these foundations.</li>
+      <li><b>A conversation that beats a form:</b> the follow-up question cap and rule and the summary confirmation set our line apart from text surveys and IVR menus.</li>
+      <li><b>From listening to action:</b> sensitive-topic alerts in version 1, and manager summaries and "We heard, we acted" in version 2.</li>
+      <li><b>A second product on the same engine:</b> call evaluation, a voice service desk and outbound calls in version 2.</li>
+    </ol>
+    <div class="box ok">
+      <b>The key point:</b> Sokhan and Amerandish have smart contact centers but no HR;
+      Chargoon and Porsline have HR but no voice. Phoenix sits where
+      these two meet: Persian telephony + smart conversation + listening to the employee voice + privacy
+      protection + on-premises deployment. Version 1 makes this combination trustworthy for MCI;
+      later versions complete it.
+    </div>
+
+    <h2 id="sources">Sources</h2>
+    <table>
+      <thead><tr><th style="width: 24%">Company</th><th>Link</th></tr></thead>
+      <tr><td>Sokhan</td><td class="en"><code>https://cx.sokhan.ai/</code> · <code>https://cx.sokhan.ai/کوالکس-کنترل-کیفیت-هوش-مصنوعی/</code></td></tr>
+      <tr><td>Amerandish</td><td class="en"><code>https://amerandish.com/hooshtel/</code> · <code>https://amerandish.com/analytics/</code> · <code>https://virgool.io/Amerandish</code> (Saipa and Iran Khodro)</td></tr>
+      <tr><td>Sitak</td><td class="en"><code>https://sitak.co/sitak-tutorials/ai-qc/</code></td></tr>
+      <tr><td>Asr Gooyesh Pardaz</td><td class="en"><code>https://asr-gooyesh.com/fa/introduction/</code></td></tr>
+      <tr><td>Part (iVira)</td><td class="en"><code>https://www.zoomit.ir/tech-iran/429541-ivira-ai-persian-part/</code></td></tr>
+      <tr><td>Poshtyar</td><td class="en"><code>https://poshtyar.com/</code></td></tr>
+      <tr><td>Chargoon</td><td class="en"><code>https://chargoon.com/blog/</code> · <code>https://www.zoomit.ir/tech-iran/450754-chargoon-rebranded/</code></td></tr>
+      <tr><td>Porsline</td><td class="en"><code>https://porsline.ir</code></td></tr>
+      <tr><td>Perceptyx</td><td class="en"><code>https://go.perceptyx.com/platform/ai-agents/conversational-listening</code> · <code>https://go.perceptyx.com/hubfs/trust-center/Perceptyx%20AI%20Capabilities%20-%20White%20Paper%20-%20Feb%202026.pdf</code> · <code>https://blog.perceptyx.com/perceptyx-built-the-most-accurate-employee-feedback-sentiment-model</code></td></tr>
+      <tr><td>Qualtrics</td><td class="en"><code>https://www.qualtrics.com/news/new-ex-capabilities-x4-2026/</code></td></tr>
+      <tr><td>Listen Labs</td><td class="en"><code>https://docs.listenlabs.com/setup-to-launch/study-design-101</code></td></tr>
+      <tr><td>Culture Amp</td><td class="en"><code>https://www.cultureamp.com/blog/passive-listening</code></td></tr>
+      <tr><td>Observe.AI, Level AI, Calabrio</td><td class="en"><code>https://observe.ai/platform/auto-qa</code> · <code>https://thelevel.ai/blog/the-future-of-qa-is-here-meet-qa-gpt</code> · <code>https://help.calabrio.com/doc/Content/user-guides/evaluations/ai-evaluation-guidelines.htm</code></td></tr>
+      <tr><td>Leena AI</td><td class="en"><code>https://leena.ai</code> · <code>https://leena.ai/blog/christus-health-hr-ai-rollout</code></td></tr>
+      <tr><td>HiBob and Perk</td><td class="en"><code>https://www.hibob.com/blog/perk-employee-service-bob-zendesk/</code></td></tr>
+      <tr><td>Moveworks</td><td class="en"><code>https://www.moveworks.com/us/en/resources/blog/slots-deep-dive</code> · <code>https://www.moveworks.com/us/en/resources/blog/ai-ticket-deflection-tool-evaluation-checklist</code></td></tr>
+      <tr><td>UKG and SAP</td><td class="en"><code>https://www.ukg.com/company/newsroom/ukg-deepens-workforce-operating-platform-ai-built-help-chros-improve-frontline-work</code> · <code>https://livekit.com/blog/livekit-partners-with-sap-to-deliver-intelligent-voice-for-joule</code></td></tr>
+      <tr><td>Paradox</td><td class="en"><code>https://www.paradox.ai/blog/what-i-learned-from-scheduling-25-million-interviews</code></td></tr>
+      <tr><td>Rippling</td><td class="en"><code>https://www.langchain.com/blog/how-rippling-went-ai-native-across-every-product-in-6-months-with-deep-agents-and-langsmith</code></td></tr>
+      <tr><td>Lattice</td><td class="en"><code>https://lattice.com/blog/introducing-evidence-based-review-drafts</code></td></tr>
+    </table>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", T.toc);
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? T.light : T.dark;
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", T.blame, function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

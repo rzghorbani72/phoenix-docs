@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Answer Pack for the Selection Criteria</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 1200px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <div class="cover">
+      <h1>Answer Pack for the HR Software Selection Criteria</h1>
+      <div style="font-size: 12pt">
+        The "Employee Voice" line: intelligent voice conversation and analysis of employee feedback
+      </div>
+      <p class="meta">
+        Proposer: MCINEXT · Audience: the Employee Experience (EX) unit and the
+        MCI evaluation committee · Version: draft 0.1 · Date: 5 Oct 2026
+      </p>
+      <p class="small">
+        This document follows the five stages and the checklist of the "HR Software Selection Guide"
+        ("راهنمای انتخاب نرم‌افزار منابع انسانی", Chargoon, 29 Sep 2026) so the committee can compare the answers
+        directly with its own criteria. Items in
+        <span class="fill">dashed yellow</span> must be completed with data or a
+        joint decision before the final version.
+      </p>
+    </div>
+
+    <h2>1. The problem, in process terms</h2>
+    <p>
+      Web surveys do not reach employees without a desk or computer (stores, field staff,
+      contact center), and closed-ended answers do not reveal the "why" behind dissatisfaction.
+      Our proposal targets three specific processes:
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%">Process</th>
+          <th>Today</th>
+          <th style="width: 34%">Expected outcome</th>
+        </tr>
+      </thead>
+      <tr>
+        <td><b>Listening to frontline employee feedback</b></td>
+        <td>
+          Periodic web survey; frontline employee participation
+          <span class="fill">current rate: from EX</span>; open comments are read
+          manually.
+        </td>
+        <td>An always-on phone line with Persian conversation and follow-up questions; topic, subtopic and sentiment of every call, automatically.</td>
+      </tr>
+      <tr>
+        <td><b>Early detection of issues</b></td>
+        <td>Issues are seen after the survey round ends, with a delay of <span class="fill">several weeks: from EX</span>.</td>
+        <td>A trend dashboard with a baseline and an alert when a topic grows abnormally in a unit.</td>
+      </tr>
+      <tr>
+        <td><b>Answering managers' analytical questions</b></td>
+        <td>Every new question is a report request to a data analyst.</td>
+        <td>Ask in Persian and get a chart, with the query behind it shown.</td>
+      </tr>
+    </table>
+
+    <h2>2. Purchase scope: essential, next phase, future</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%">Level</th>
+          <th>Components</th>
+          <th style="width: 30%">Notes</th>
+        </tr>
+      </thead>
+      <tr>
+        <td><b>Essential to start</b></td>
+        <td>
+          Employee Voice phone line (Persian voice conversation, follow-up questions, clear
+          ending) · topic, subtopic, sentiment and summary analysis · dashboard and trends ·
+          natural-language questions over feedback data · privacy controls (section 4)
+        </td>
+        <td>The same scope as the pilot Fit-Gap agreement (87 rows in 8 blocks).</td>
+      </tr>
+      <tr>
+        <td><b>Important for the next phase</b></td>
+        <td>
+          Read-only connection to the org structure in the HR system · scheduled outbound
+          calls (exit interview, new-hire follow-up) · "We heard, we acted"
+          announcements to employees
+        </td>
+        <td>Depends on MCI-IT access and an EX decision.</td>
+      </tr>
+      <tr>
+        <td><b>Future</b></td>
+        <td>Answering HR policy and regulation questions · transactional actions (such as filing a request)</td>
+        <td>No process owner has been assigned in the organization yet; not part of this contract.</td>
+      </tr>
+    </table>
+    <div class="box">
+      <b>What this product is not:</b> it is not an HR record-keeping, payroll or
+      time-and-attendance system, and it does not replace the current system. It is a listening and analysis channel
+      that works alongside it. Employee data and all language models run inside
+      MCI's infrastructure and do not depend on the internet or any external service.
+    </div>
+
+    <h2 class="pb">3. Eight testable criteria</h2>
+    <p class="small">
+      <span class="tag ok">Ready</span> can be shown today ·
+      <span class="tag warn">Planned</span> partly ready, the rest scheduled ·
+      <span class="tag gap">Before UAT</span> in progress; delivered before acceptance
+      testing
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 14%">Criterion</th>
+          <th style="width: 20%">Committee's question</th>
+          <th>Our answer</th>
+          <th style="width: 10%">Status</th>
+        </tr>
+      </thead>
+      <tr>
+        <td>Process coverage</td>
+        <td>Does one complete process run from start to final report?</td>
+        <td>
+          Yes: call → speech recognition → conversation and follow-up questions → topic and sentiment tagging
+          → trend → report. Restricting calls to authorized numbers and a rejection message for unauthorized
+          calls are being added (VIA-02: T+7 business days after receiving the number list;
+          VIA-03: T+5 business days after the message text is set).
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+      <tr>
+        <td>Data integration</td>
+        <td>If an employee's information changes, what gets updated?</td>
+        <td>
+          Phase 1: org structure and unit mapping through a standard file that EX uploads
+          monthly; calls that do not map to a unit are shown
+          separately. Phase 2: read-only connection to the HR system, subject to
+          MCI-IT access (SEG-07). A write connection is out of scope.
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+      <tr>
+        <td>Rules and configuration</td>
+        <td>If a rule changes, who configures it?</td>
+        <td>
+          Without needing us: the introduction text and privacy notice, knowledge content, sample
+          analytical questions. By request to us in phase 1: the trend alert threshold and the maximum
+          number of follow-up questions. The next-phase goal is for EX to be able to configure these.
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+      <tr>
+        <td>Access levels</td>
+        <td>What does each role see?</td>
+        <td>
+          Permission-based access exists in all services. Three controls will be completed before UAT:
+          automatic removal of names and numbers from transcripts, no results shown for
+          groups smaller than k people, and logging of every access to audio and full transcripts. Details
+          in the matrix in section 4.
+        </td>
+        <td><span class="tag gap">Before UAT</span></td>
+      </tr>
+      <tr>
+        <td>Reporting</td>
+        <td>Can you build the required reports right now with sample data?</td>
+        <td>
+          Yes: call dashboard, topic analysis (topic and subtopic), trend with baseline,
+          time series, file export, and natural-language questions with the query shown. A demo
+          environment with Persian sample data is being prepared.
+        </td>
+        <td><span class="tag ok">Ready</span></td>
+      </tr>
+      <tr>
+        <td>Data migration</td>
+        <td>Where does the data come from, and who confirms it is correct?</td>
+        <td>
+          Three inputs from EX are needed (table in section 7). For each input, a file format, an owner and
+          automatic checks at upload are defined, and an error report goes back to the owner.
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+      <tr>
+        <td>Deployment</td>
+        <td>What are the phases, owners and acceptance criteria?</td>
+        <td>
+          The owner of each row is given in the Fit-Gap table (MCINEXT, MCI-IT, EX). The proposed acceptance
+          criteria are in section 8 and must be agreed before signing. Timelines
+          are committed as "T + n business days after receiving the input".
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+      <tr>
+        <td>Total cost</td>
+        <td>Besides the license, what other costs are there?</td>
+        <td>
+          A line-by-line financial proposal in section 9; the variable cost per call will be calculated and
+          announced from actual usage measured over 20 test calls.
+        </td>
+        <td><span class="tag warn">Planned</span></td>
+      </tr>
+    </table>
+
+    <h2 class="pb">4. Role × data matrix</h2>
+    <p>
+      Target state for the start of UAT. "✓" means has access, "—" means no access, "aggregate"
+      means counts and percentages only, without individual text.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 22%">Data</th>
+          <th class="c">Calling employee</th>
+          <th class="c">Unit manager</th>
+          <th class="c">EX specialist</th>
+          <th class="c">Special-case reviewer</th>
+          <th class="c">System administrator</th>
+        </tr>
+      </thead>
+      <tr><td>Dashboard and trends</td><td class="c">—</td><td class="c">Aggregate, own unit only and only if ≥ k people</td><td class="c">✓</td><td class="c">✓</td><td class="c">—</td></tr>
+      <tr><td>Topic and sentiment of each call</td><td class="c">—</td><td class="c">—</td><td class="c">✓ without phone number</td><td class="c">✓</td><td class="c">—</td></tr>
+      <tr><td>Sample quotes</td><td class="c">—</td><td class="c">—</td><td class="c">✓ after removing names and numbers</td><td class="c">✓</td><td class="c">—</td></tr>
+      <tr><td>Full transcript and audio</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">✓ with a time-boxed role and every access logged</td><td class="c">—</td></tr>
+      <tr><td>Phone number</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c"><span class="fill">EX decision</span></td><td class="c">—</td></tr>
+      <tr><td>Access log report</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">✓ read-only</td></tr>
+      <tr><td>Users and roles</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">—</td><td class="c">✓</td></tr>
+    </table>
+    <p class="small">
+      EX sets the value of k (minimum group size)
+      (<span class="fill">k = ?</span>). The "special-case reviewer" role is time-boxed
+      and is removed automatically when its period expires.
+    </p>
+
+    <h2>5. A real scenario with exceptions, to run in the demo meeting</h2>
+    <div class="box">
+      An employee at an MCI store in Shiraz calls and complains about workload and night
+      shifts. <b>Exception 1:</b> midway through the conversation, they say their supervisor's name and their own
+      personnel number. <b>Exception 2:</b> their unit has only 4 people.
+      <b>Exception 3:</b> a number outside the authorized list also calls.
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 32%">What the committee should see</th>
+          <th>System behavior</th>
+          <th style="width: 13%">Status</th>
+        </tr>
+      </thead>
+      <tr><td>What the employee hears</td><td>Introduction and privacy notice, open conversation, follow-up questions, clear ending with no promise of follow-up</td><td><span class="tag ok">Ready</span></td></tr>
+      <tr><td>Name and personnel number in the transcript and summary</td><td>Replaced with a placeholder tag before storage</td><td><span class="tag gap">Before UAT</span></td></tr>
+      <tr><td>What the manager of the 4-person unit sees</td><td>A "not enough data" message</td><td><span class="tag gap">Before UAT</span></td></tr>
+      <tr><td>What the EX specialist sees</td><td>Topic "workload / shifts", sentiment, anonymized summary, share in the monthly trend</td><td><span class="tag ok">Ready</span></td></tr>
+      <tr><td>Who hears the audio and where it is logged</td><td>Only the reviewer role; every access is logged with name, time and reason</td><td><span class="tag gap">Before UAT</span></td></tr>
+      <tr><td>Unauthorized number</td><td>A short message and the call ends without creating an analytics record</td><td><span class="tag warn">Planned</span></td></tr>
+    </table>
+
+    <h2 class="pb">6. Answers to the ten demo-meeting questions</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 4%">#</th>
+          <th style="width: 32%">Question</th>
+          <th>Answer</th>
+        </tr>
+      </thead>
+      <tr><td>1</td><td>Which parts are ready, which are configuration and which are development?</td><td>The Fit-Gap table marks each of the 87 rows with one of these statuses and technical evidence: Confirmed, Configuration, Partial, Absent.</td></tr>
+      <tr><td>2</td><td>If a rule changes, who configures it?</td><td>Section 3, criterion "Rules and configuration".</td></tr>
+      <tr><td>3</td><td>How is current data migrated and validated?</td><td>Section 7; automatic checks at upload and an error report to the data owner.</td></tr>
+      <tr><td>4</td><td>How are data inconsistencies shown?</td><td>Calls that do not map to a unit are separated with an "unmapped" tag and counted in the monthly report.</td></tr>
+      <tr><td>5</td><td>What training do users need?</td><td>Employees: none; just the phone number. EX specialists and managers: two training sessions on the dashboard and analytical questions <span class="fill">duration and format: to be agreed</span>.</td></tr>
+      <tr><td>6</td><td>Can you build the reports with sample data?</td><td>Yes, in the demo meeting with Persian sample data.</td></tr>
+      <tr><td>7</td><td>What are the prerequisites for connecting to current systems?</td><td>Allocating a trunk number and a virtual network address, and connecting to the telephony layer (VIA-01: T+5 business days after allocation). A connection to the HR system is not needed in phase 1.</td></tr>
+      <tr><td>8</td><td>What are the roles of the organization's team and ours in implementation?</td><td>The owner column in Fit-Gap; EX inputs in section 7.</td></tr>
+      <tr><td>9</td><td>How are support and change requests tracked?</td><td>A request channel with a tracking number and three urgency levels <span class="fill">response time per level: to be agreed</span>; every configuration change is recorded with a version and date.</td></tr>
+      <tr><td>10</td><td>Which line of the financial proposal covers each capability shown?</td><td>The "Related capabilities" column in section 9.</td></tr>
+    </table>
+
+    <h2>7. Inputs needed from the organization</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 24%">Input</th>
+          <th style="width: 14%">Owner</th>
+          <th>Format and checks</th>
+          <th style="width: 20%">Dependent rows</th>
+        </tr>
+      </thead>
+      <tr><td>List of authorized numbers and org structure</td><td>EX</td><td>CSV file with defined columns; checks for duplicates, number format and non-existent units</td><td class="en">VIA-02, VIA-05, SEG-01, SEG-02, SEG-06, AN-06</td></tr>
+      <tr><td>List of topics and subtopics</td><td>EX</td><td>A two-level table with a definition and 2 to 3 examples for each topic</td><td class="en">AI-05, AI-06, AI-07, AI-12</td></tr>
+      <tr><td>Initial knowledge content and answer scope</td><td>EX</td><td>The existing Import format; reviewed by EX before publishing</td><td class="en">KB-02, KB-04, TEC-07</td></tr>
+      <tr><td>Privacy notice text</td><td>EX with legal approval</td><td>Final text to be read at the start of the call</td><td class="en">CON-02</td></tr>
+      <tr><td>Minimum group size (k)</td><td>EX</td><td>A single number</td><td class="en">PRV-05</td></tr>
+      <tr><td>Definition of a complete / incomplete call</td><td>Joint</td><td>A written clause</td><td class="en">VIA-06, VIA-07</td></tr>
+      <tr><td>Reference test scenarios</td><td>EX</td><td>10 to 20 written scenarios with expected answers</td><td class="en">TEC-08, TEC-11</td></tr>
+    </table>
+
+    <h2 class="pb">8. Phases and proposed acceptance criteria</h2>
+    <p>
+      Proposal for agreement rows TEC-12, TEC-13 and TEC-15. Threshold numbers must be
+      set jointly; the measurement method is defined in advance.
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 18%">Phase</th>
+          <th>Acceptance criterion</th>
+          <th style="width: 30%">Measurement method</th>
+        </tr>
+      </thead>
+      <tr><td rowspan="3"><b>1. Readiness before UAT</b></td><td>Removal of names and numbers in transcripts and summaries</td><td>A pre-built test set; leak rate <span class="fill">threshold</span></td></tr>
+      <tr><td>Groups smaller than k not shown</td><td>Test with fictitious small units</td></tr>
+      <tr><td>100% of access to audio and full transcripts logged</td><td>Compare the accesses made with the log report</td></tr>
+      <tr><td rowspan="3"><b>2. UAT</b></td><td>Persian speech recognition accuracy on employees' voices</td><td>Word error rate on <span class="fill">number</span> transcribed sample calls</td></tr>
+      <tr><td>Summary faithfulness to the conversation</td><td>Human review of <span class="fill">number</span> calls</td></tr>
+      <tr><td>Topic-tagging correctness</td><td>Comparison with EX specialist labels on <span class="fill">number</span> calls</td></tr>
+      <tr><td rowspan="2"><b>3. Pilot</b></td><td>Completed-call rate</td><td>Per the joint definition VIA-06/07</td></tr>
+      <tr><td>Cost and latency per call</td><td>From actual usage data of the first 20 calls</td></tr>
+      <tr><td><b>4. Continuation decision</b></td><td colspan="2">A Go/No-Go meeting based on evidence from phases 1 to 3, not a demo.</td></tr>
+    </table>
+
+    <h2>9. Financial proposal structure</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 26%">Line</th>
+          <th>Related capabilities (sections 3 and 5)</th>
+          <th style="width: 16%">Type</th>
+          <th style="width: 14%">Amount</th>
+        </tr>
+      </thead>
+      <tr><td>Setup and configuration</td><td>Phone line, org mapping, topics, privacy notice</td><td>One-time</td><td><span class="fill">—</span></td></tr>
+      <tr><td>Privacy controls</td><td>De-identification, k threshold, access logging</td><td>One-time</td><td><span class="fill">—</span></td></tr>
+      <tr><td>On-premises infrastructure and models</td><td>Speech recognition, language model, storage</td><td>Monthly or capital</td><td><span class="fill">—</span></td></tr>
+      <tr><td>Variable cost per call</td><td>Conversation and analysis of each call</td><td>Per call</td><td><span class="fill">after 20 calls</span></td></tr>
+      <tr><td>Training</td><td>Dashboard and analytical questions</td><td>One-time</td><td><span class="fill">—</span></td></tr>
+      <tr><td>Support and maintenance</td><td>Request channel, three urgency levels</td><td>Monthly</td><td><span class="fill">—</span></td></tr>
+      <tr><td>Future changes and development</td><td>Next-phase items (section 2)</td><td>Separate</td><td>Outside this contract</td></tr>
+    </table>
+
+    <h2>10. Pre-contract checklist</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 46%">Item</th>
+          <th>Where it is answered in this document</th>
+        </tr>
+      </thead>
+      <tr><td>Three main problems and their impact</td><td>Section 1 (numbers from EX)</td></tr>
+      <tr><td>Essential components separated from future ones</td><td>Section 2</td></tr>
+      <tr><td>One real process with exceptions tested in the demo</td><td>Section 5</td></tr>
+      <tr><td>Data flow between components reviewed</td><td>Section 3 (process coverage)</td></tr>
+      <tr><td>Privacy and access levels approved</td><td>Section 4 and phase 1 of section 8</td></tr>
+      <tr><td>Data migration plan</td><td>Section 7</td></tr>
+      <tr><td>Reports reviewed with sample data</td><td>Section 3 (reporting) and section 6 question 6</td></tr>
+      <tr><td>Roles and implementation phases</td><td>Section 6 question 8 and section 8</td></tr>
+      <tr><td>Total cost including likely changes</td><td>Section 9</td></tr>
+      <tr><td>Project acceptance criteria</td><td>Section 8</td></tr>
+    </table>
+
+    <h2>11. Open decisions</h2>
+    <ol>
+      <li>The value of k, and whether the phone number is visible to any role at all (EX).</li>
+      <li>The acceptance thresholds in section 8 (joint).</li>
+      <li>Timeline for MCI-IT access for the phase 2 read-only connection.</li>
+      <li>Participation of an MCI security and IT representative in the pre-UAT evaluation.</li>
+    </ol>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", T.toc);
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? T.light : T.dark;
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", T.blame, function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

@@ -556,7 +556,7 @@ table.big td .small { font-size: 13px; }
         Config، Deploy و Cookbook توسعه
       </div>
       <table class="meta">
-        <tr><td style="width: 36%">مخاطب</td><td>توسعه‌دهندگان، سرپرستان فنی، CTO، و TPM هنگام Review یا برآورد</td></tr>
+        <tr><td style="width: 36%">مخاطب</td><td>همهٔ اعضای پروژه، به‌ویژه هنگام Review یا برآورد</td></tr>
         <tr><td>مبنا</td><td>خوانش مستقیم کد مخزن phoenix؛ ۱۰ پروژه Python فعال (~۹۸ هزار خط) + سرویس‌های Go/Rust پیرامونی</td></tr>
         <tr><td>سند همراه مدیریت محصول</td><td><code>product-management/PRODUCT_DOSSIER_FA.pdf</code> — فصل‌های ۱ تا ۱۰ و ۲۵ (Fit-Gap، ریسک، Scope، رقبا). شماره فصل‌ها در هر دو سند ثابت مانده تا ارجاع‌هایی مثل «§۵» یا «PRV-03» معتبر بمانند.</td></tr>
         <tr><td>تاریخ</td><td>بازبینی Code: ۶ مهر ۱۴۰۵ — <span class="en">2026-09-28</span> · تفکیک اسناد: ۱۳ مهر ۱۴۰۵</td></tr>
@@ -3333,7 +3333,7 @@ User stops speaking
       metrics above</span
     >
 
-    <h3>۸. برای <span class="en ab">TPM (Technical Product Manager)</span> — «الان در کدام لایه هستیم؟»</h3>
+    <h3>۸. «الان در کدام لایه هستیم؟»</h3>
     <p>
       اگر در جلسه گفتند <b>«سرشماره گرفته شده ولی هنوز <span class="en ab">IVA (Intelligent Virtual Assistant)</span> قابل استفاده
       نیست»</b>، کار تقریباً تمام نیست. بپرسید: <b>«الان در کدام لایه هستیم؟»</b>
@@ -3720,7 +3720,7 @@ Number allocated ✅ → Routing ⏳ → Fiber ⏳ → IP connectivity ⏳ → S
       بخش ۱۱ می‌گوید <b>چه چیزی</b> در Repository هست؛ این فصل می‌گوید <b>چرا</b>
       هست، <b>کی</b> باید از آن استفاده کرد، <b>کی نباید</b>، و چه قابلیت‌هایی از
       همین ابزارها هنوز استفاده نشده و می‌تواند به Feature محصول تبدیل شود. هدف این
-      است که یک <span class="en ab">CTO (Chief Technology Officer)</span> یا <span class="en ab">TPM (Technical Program/Product Manager)</span> بتواند
+      است که هر عضو پروژه بتواند
       بدون خواندن Code، درباره انتخاب ابزار، هزینه و Roadmap تصمیم بگیرد.
     </p>
     <div class="box">
@@ -8003,6 +8003,13 @@ pip install -r requirements.txt && python3 -m src.main console
 (function () {
   var root = document.documentElement;
   var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
@@ -8021,7 +8028,7 @@ pip install -r requirements.txt && python3 -m src.main console
   if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
     var nav = document.createElement("nav");
     nav.id = "side";
-    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    nav.setAttribute("aria-label", T.toc);
     var h1 = document.querySelector("h1");
     var docT = document.createElement("div");
     docT.className = "doc";
@@ -8089,21 +8096,21 @@ pip install -r requirements.txt && python3 -m src.main console
     if (t) return t === "dark";
     return true;
   }
-  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
     var next = isDark() ? "light" : "dark";
     root.setAttribute("data-theme", next);
     save("phx-theme", next);
-    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+    b.textContent = next === "dark" ? T.light : T.dark;
   });
   if (hasBlame) {
-    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+    var bb = btn("BLAME", T.blame, function (b) {
       var hidden = body.classList.toggle("hide-blame");
       b.setAttribute("aria-pressed", String(!hidden));
       save("phx-blame", hidden ? "hide" : "show");
     });
     bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
   }
-  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
   body.appendChild(bar);
 })();
 

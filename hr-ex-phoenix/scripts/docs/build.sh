@@ -22,9 +22,20 @@ publish answer_pack_fa.html       "$PM"   ANSWER_PACK_FA       pdf
 publish fit_gap_tracker_fa.html   "$PM"   FIT_GAP_TRACKER_FA
 publish inspiration_playbook_fa.html "$PM" INSPIRATION_PLAYBOOK_FA pdf
 publish market_alignment_fa.html  "$PM"   MARKET_ALIGNMENT_FA  pdf
-publish ai_learning_guide_fa.html "$PM"   AI_LEARNING_GUIDE_FA pdf
+publish ai_learning_guide_fa.html "$TECH" AI_LEARNING_GUIDE_FA pdf
 publish iva_ex_prompt_requirements_fa.html "$PM" IVA_EX_PROMPT_REQUIREMENTS_FA pdf
 publish feature_catalog.html      "$PM"   FEATURE_CATALOG
 publish feature_catalog_fa.html   "$PM"   FEATURE_CATALOG_FA
 publish technical_dossier_fa.html "$TECH" TECHNICAL_DOSSIER_FA pdf
+# English versions. They are translations of the _fa pages above: when a Persian source changes
+# (including fit_gap_tracker_fa.html, which build_xlsx.py regenerates), update its English twin too.
+publish product_dossier.html      "$PM"   PRODUCT_DOSSIER      pdf
+publish roadmap.html              "$PM"   ROADMAP              pdf
+publish answer_pack.html          "$PM"   ANSWER_PACK          pdf
+publish fit_gap_tracker.html      "$PM"   FIT_GAP_TRACKER
+publish inspiration_playbook.html "$PM"   INSPIRATION_PLAYBOOK pdf
+publish market_alignment.html     "$PM"   MARKET_ALIGNMENT     pdf
+publish ai_learning_guide.html    "$TECH" AI_LEARNING_GUIDE    pdf
+publish iva_ex_prompt_requirements.html "$PM" IVA_EX_PROMPT_REQUIREMENTS pdf
+publish technical_dossier.html    "$TECH" TECHNICAL_DOSSIER    pdf
 echo "done"

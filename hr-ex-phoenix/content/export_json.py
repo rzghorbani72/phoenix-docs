@@ -2,8 +2,9 @@
 """Export the pipeline content (content_en / content_fa DATA) as JSON for the React app.
 
 Tuples that hold several section bodies become {"multi": [...]} so the app can tell them
-apart from bullet lists. Output: ../src/data/{en,fa}.json, plus the documents manifest
-../src/data/docs.json (build_docs_manifest.py).
+apart from bullet lists. Output: ../src/data/{en,fa}.json, the documents manifest
+../src/data/docs.json (build_docs_manifest.py), and ../src/data/instances.json, which joins the
+committed ops snapshot with the curated names in instances_catalog.py.
 """
 
 from __future__ import annotations
@@ -54,9 +55,21 @@ def export(lang):
     print(f"{lang}: {len(out['steps'])} steps, {len(models['pages'])} model pages, guide={'guide' in out}")
 
 
+def export_instances():
+    import instances_catalog  # curated names; the facts come from scripts/build_instances.py
+
+    text = (HERE / "instances_snapshot.json").read_text(encoding="utf-8")
+    instances_catalog.assert_clean(text)
+    out = instances_catalog.merge(json.loads(text))
+    OUT.mkdir(parents=True, exist_ok=True)
+    (OUT / "instances.json").write_text(json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
+    print(f"instances: {len(out['instances'])} at {out['source']['commit']}")
+
+
 if __name__ == "__main__":
     for lang in sys.argv[1:] or ["en", "fa"]:
         export(lang)
+    export_instances()
     import build_docs_manifest  # documents library manifest -> src/data/docs.json
 
     build_docs_manifest.main()

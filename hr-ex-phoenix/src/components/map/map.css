@@ -193,3 +193,10 @@
   .tour-cap { margin: 2px 0 8px; }
   .mapwrap.has-panel .react-flow__controls { display: none; }
 }
+
+/* ---------- the overview for one instance ---------- */
+.ovcard.ov-unused { opacity: .5; }
+.ov-foot { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: auto; padding-top: 10px; }
+.ov-foot .ins-step-status { font-size: 1em; }
+.ov-foot .ov-cta { margin: 0; }
+.mtb select.mtb-instance { width: 190px; flex: 0 1 190px; }

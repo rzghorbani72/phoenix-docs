@@ -1,0 +1,289 @@
+<title>HR Pilot Technical Checklist</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: readable column + sticky table of contents; each section is a checklist with a progress percentage. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#14202b; --muted:#5b6b7a; --line:#dde3ea;
+  --accent:#0b6e8a; --accent-soft:#e1f1f5;
+  --ok:#17794a; --ok-soft:#e2f4ea; --warn:#9a5b00; --warn-soft:#fdf0d8; --risk:#b3261e; --risk-soft:#fbe5e3;
+  --code:#eef1f5;
+  --font:"Vazirmatn",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.85;
+  padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:200px minmax(0,1fr);gap:32px}
+@media(max-width:820px){.wrap{grid-template-columns:minmax(0,1fr)}}
+nav{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:2px;font-size:13px}
+@media(max-width:820px){nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px}}
+nav a{color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+nav a:hover,nav a:focus-visible{background:var(--accent-soft);color:var(--accent);outline:none}
+main{min-width:0;display:flex;flex-direction:column;gap:28px}
+h1{font-size:28px;line-height:1.4;margin:0;font-weight:800;text-wrap:balance}
+h2{font-size:20px;margin:0;font-weight:700;text-wrap:balance}
+h3{font-size:15px;margin:0 0 6px;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);max-width:68ch}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.tag{font-size:12px;padding:2px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);background:var(--surface)}
+.tag.code{border-color:transparent;background:var(--ok-soft);color:var(--ok)}
+.tag.inf{border-color:transparent;background:var(--warn-soft);color:var(--warn)}
+.tag.risk{border-color:transparent;background:var(--risk-soft);color:var(--risk)}
+section{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.prog{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;display:flex;align-items:center;gap:8px}
+.bar{width:80px;height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .2s}
+.callout{border-radius:8px;padding:10px 14px;background:var(--warn-soft);color:var(--fg);border-inline-start:3px solid var(--warn)}
+.callout.risk{background:var(--risk-soft);border-color:var(--risk)}
+.callout.info{background:var(--accent-soft);border-color:var(--accent)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:620px;font-size:14px}
+th,td{text-align:start;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.02em}
+code{font-family:var(--mono);font-size:12.5px;background:var(--code);padding:1px 6px;border-radius:4px;direction:ltr;unicode-bidi:isolate}
+ul.chk{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.chk li label{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border-radius:8px;cursor:pointer}
+ul.chk li label:hover{background:var(--accent-soft)}
+ul.chk input{margin-top:7px;accent-color:var(--accent);width:16px;height:16px;flex:none}
+ul.chk input:checked + span{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+ul.chk b{font-weight:700}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.cell{border:1px solid var(--line);border-radius:8px;padding:12px 14px;min-width:0}
+.fit{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.fit div{border-radius:8px;padding:10px 12px;background:var(--accent-soft)}
+.fit strong{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.3}
+.fit span{font-size:12px;color:var(--muted)}
+pre{margin:0;background:var(--code);border-radius:8px;padding:12px 14px;overflow-x:auto;direction:ltr;font-family:var(--mono);font-size:12.5px;line-height:1.7}
+footer{color:var(--muted);font-size:12.5px}
+</style>
+
+<div class="wrap" dir="ltr" lang="en">
+<nav aria-label="Contents">
+  <a href="#map">1. System map</a>
+  <a href="#models">2. Models</a>
+  <a href="#asr">3. ASR in depth</a>
+  <a href="#aiva">4. LLM and knowledge</a>
+  <a href="#coa">5. COA</a>
+  <a href="#hr">6. The HR project</a>
+  <a href="#improve">7. Improvements</a>
+  <a href="#ask">8. Questions for the team</a>
+</nav>
+
+<main>
+<header>
+  <h1>Technical checklist for the HR project (Employee Voice) on Phoenix and COA</h1>
+  <p class="lead">A list of things you should be able to explain or ask the team about. Tick each item once you have learned it; progress is saved in this browser.</p>
+  <div class="meta">
+    <span class="tag code">CODE / DOC = from your Technical Dossier documentation</span>
+    <span class="tag inf">Suggestion = my opinion, unverified</span>
+    <span class="tag risk">Risk = listed as a hazard in the documentation</span>
+  </div>
+  <p class="callout info" style="margin-top:14px">Source: the Phoenix Technical Dossier (code reading from 19 Sep to 6 Oct 2026) and the HR project Fit-Gap file. I have not run or opened the code repository itself; everything here comes from these documents.</p>
+</header>
+
+<section id="map" data-sec>
+  <div class="head"><h2>1. System map: two pipelines</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <p>Phoenix is a monorepo (Python, Go, Rust). It has two main paths, and HR touches both: the live call with the voice assistant, and the analysis of that same call after it ends.</p>
+  <div class="grid2">
+    <div class="cell"><h3>IVA: the live voice agent</h3>
+      <p>Caller → SIP/SBC → LiveKit → <code>chatbot-iva-agent</code> (VAD, STT, TTS) → <code>aiva</code> (the brain, ReAct) → Qdrant and Postgres. The output of each call is a summary on Kafka on the topic <code>chatbot-mci-iva</code>.</p></div>
+    <div class="cell"><h3>COA: call analytics</h3>
+      <p>Kafka → <code>grogu</code> (Go) → ASR → LLM tagging engine → ClickHouse → <code>coa-api</code> (Django) → <code>coa-ui</code> (Next.js). IVA calls also enter COA through that same topic.</p></div>
+  </div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span>I can describe the path of a call from dialing to the dashboard without looking at the document.</span></label></li>
+    <li><label><input type="checkbox"><span>I know where the two pipelines meet: the topic <code>chatbot-mci-iva</code> and the <code>grogu</code> group with <code>SOURCE_PLATFORM=iva</code>.</span></label></li>
+    <li><label><input type="checkbox"><span>I know the difference between LiveKit Egress (recording two separate tracks) and the stereo recording of TelC calls.</span></label></li>
+    <li><label><input type="checkbox"><span>I know what is not in the repository: the <code>coa-ai</code> tagging engine (last commit: 13 July 2025), the producer of the topic <code>chatbot-mci-iva-intent</code>, and the telecom edge.</span></label></li>
+  </ul>
+</section>
+
+<section id="models" data-sec>
+  <div class="head"><h2>2. Which model is used where</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <div class="tbl"><table>
+    <thead><tr><th>Task</th><th>Model / technology</th><th>Source</th><th>What you should know</th></tr></thead>
+    <tbody>
+    <tr><td>ASR / STT</td><td><b>The model name is not given in the documentation</b>. On NVIDIA Triton, behind <code>neurobox-gateway</code></td><td><span class="tag inf">Inference</span></td><td>Which model, which version, what data it was trained on, and what the current WER is. This is the most important unanswered question.</td></tr>
+    <tr><td>Main LLM</td><td><code>google/gemma-4-31B-it</code> and <code>openai/gpt-oss-120b</code> from an OpenAI-compatible gateway</td><td><span class="tag code">CODE</span> aiva/chat/config.py</td><td>Seven LLM roles in aiva are configured separately (<code>*_LLM_MODEL</code>, <code>*_LLM_BASE_URL</code>). Know which model each role currently runs on.</td></tr>
+    <tr><td>Embedding</td><td><code>text-embedding-3-large</code> or the in-house Hakim model</td><td><span class="tag code">CODE</span></td><td>The search model and the storage model must be the same; switching means rebuilding all of Qdrant.</td></tr>
+    <tr><td>TTS</td><td>OpenAI-compatible client, default <code>tts-1</code>, speed 1; in production on Triton</td><td><span class="tag code">CODE</span> config.py</td><td>Ask about the actual production model; <code>tts-1</code> is the code default.</td></tr>
+    <tr><td>VAD</td><td>Silero VAD (ONNX); a separate Rust service for 16kHz mono</td><td><span class="tag code">CODE</span></td><td>Threshold 0.5, minimum speech 0.5s, minimum silence 1s, two seconds of padding.</td></tr>
+    <tr><td>End-of-turn detection</td><td>Three modes: <code>deactive</code>, <code>mci</code> (custom model), <code>openai</code> (a 0 to 1 probability from an LLM)</td><td><span class="tag code">CODE</span></td><td>The default is off, and only fixed endpointing of 0.5 to 3 seconds is active.</td></tr>
+    <tr><td>Emotion / Gender</td><td>Available on Triton</td><td><span class="tag code">DOC</span></td><td>Potentially useful for HR (the employee's mood); check whether COA actually uses them.</td></tr>
+    <tr><td>COA tagging</td><td>An LLM behind <code>coa-ai</code> (Sentiment, Summary, Category, Bad Words, Greeting)</td><td><span class="tag inf">Inference</span></td><td>The code for this part is not in the repository; get the model and prompt from the team.</td></tr>
+    </tbody></table></div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span>I have obtained the exact list of production models (ASR, TTS, the seven LLM roles, embedding) from the team and filled in the table above.</span></label></li>
+    <li><label><input type="checkbox"><span>I know that switching models in this architecture is a Config change, not a Code change (OpenAI-compatible).</span></label></li>
+    <li><label><input type="checkbox"><span>I know the difference between the "light" model (classification, filter) and the "heavy" model (final answer), and the cost of each.</span></label></li>
+  </ul>
+</section>
+
+<section id="asr" data-sec>
+  <div class="head"><h2>3. ASR in depth</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <p class="callout">The ASR model name is not in the repository or in the Technical Dossier. The models are on Triton, and in production <code>STT_BASE_URL</code> probably points to neurobox-gateway (inferred). Until you ask the team, any name you give is a guess.</p>
+  <div class="grid2">
+    <div class="cell"><h3>Live path (IVA)</h3>
+      <p>Each utterance goes to STT after VAD. The client is OpenAI-compatible, with 3 retries and a ten-second timeout. Each sentence's output has a <code>transcript_confidence</code>.</p></div>
+    <div class="cell"><h3>Offline path (COA)</h3>
+      <p><code>grogu</code> sends the whole call file to ASR, behind a Circuit Breaker. The two tracks are converted to mono with ffmpeg and placed in one stereo MP3 file: caller on the left, Agent on the right.</p></div>
+  </div>
+  <h3>You should be able to explain</h3>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>WER</b>: what it is, how it is measured, and what the current WER is on Persian telephone audio. (The documentation reports no measurement; there is no eval for AIVA and CCA.)</span></label></li>
+    <li><label><input type="checkbox"><span><b>Telephone audio quality:</b> G.711 means 8kHz. Even with upsampling, quality does not improve. The ASR model must be trained or fine-tuned on 8kHz audio.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Double compression:</b> the merge output in grogu is MP3, which means a second lossy compression on telephone audio, and the Agent channel, which is wideband to begin with, is downsampled to 8kHz. The documentation itself suggests testing 16kHz PCM/FLAC for ASR.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Split-stereo:</b> speaker separation is free and error-free (no diarization needed), but the two tracks must be time-aligned.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Endpointing and latency:</b> time to first audio ≈ endpointing delay + STT + first LLM sentence + first TTS chunk. <code>AGENT_MIN_ENDPOINTING_DELAY</code> can be tuned directly.</span></label></li>
+    <li><label><input type="checkbox"><span><b>The Triton service:</b> gRPC, dynamic batching, ensemble (VAD → ASR → Emotion in one call), and the role of the gateway (round-robin, cache for TTS, sending analytics to Kafka).</span></label></li>
+    <li><label><input type="checkbox"><span>How ASR behaves on organization-specific words (unit names, MCI services, employee names). No hotword or custom vocabulary mechanism was found in the documentation; you need to ask.</span></label></li>
+  </ul>
+</section>
+
+<section id="aiva" data-sec>
+  <div class="head"><h2>4. aiva: brain, knowledge and memory</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>The flow of one turn:</b> message embedding → search in four collections (<code>aiva-contexts</code>, <code>aiva-instructions</code>, guardrail, classification) → optional LLM filter → ReAct for up to 10 rounds → SSE response → sentence-by-sentence TTS.</span></label></li>
+    <li><label><input type="checkbox"><span><b>MAX_SIM:</b> each KB answer has several paraphrases of the question; each is a separate vector in one Qdrant point, and the point's score equals the best match. Cosine metric, top 10, minimum score 0.5.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Parallel branches:</b> classifier, clarifying, guardrail and the main answer; one of them wins. Classification and clarifying do not have feature flags yet.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Tools:</b> <code>send_sms</code>, <code>set_reminder</code>, <code>redirect_to_human_agent</code>, <code>exit_tool</code> and others. For the pilot, the active ones are limited with <code>AGENT_ENABLED_TOOLS</code>; demo tools such as <code>tell_joke</code> and <code>get_gold_price</code> must be turned off for HR.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Long-term memory:</b> the user is identified by phone number, and memory is rewritten after each call. The privacy sensitivity of this for HR is serious.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Prompts and roles:</b> each role has its own prompt (<code>aiva/prompts/&lt;role&gt;.py</code> or <code>&lt;ROLE&gt;_LLM_TEMPLATE</code>); know where the HR project's tone and instructions (the <code>hr-ex-phoenix/public/docs/knowledge-base/tones</code> folder) come in.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Arize Phoenix + OpenTelemetry</b> for tracing every LLM call (prompt, tokens, latency). The documentation counts it as an "unused capability" and sees it as the fix for the lack of evals.</span></label></li>
+  </ul>
+</section>
+
+<section id="coa" data-sec>
+  <div class="head"><h2>5. COA: analytics and dashboard</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>grogu:</b> Kafka consumer, downloads the two tracks, stereo merge, ASR, stores into <code>call_records</code> and <code>call_ai_tags</code>, and dead-letters into <code>call_asr_dl</code>.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Shared schema:</b> grogu (Go) and coa-api (Django) write to the same tables, but migrations exist only in Django. Every column change must also go into the Go structs.</span></label></li>
+    <li><label><input type="checkbox"><span><b>AI tags:</b> sentiment, summary, category/subcategory, bad words, greeting, and tags based on silence and overlap (from the ASR and voice-segmenter output).</span></label></li>
+    <li><label><input type="checkbox"><span><b>ClickHouse and the sync daemons:</b> analytics data is in ClickHouse and six sync loops move it to Postgres. Celery runs only with concurrency=1.</span></label></li>
+    <li><label><input type="checkbox"><span><b>IVA dashboard:</b> the endpoints <code>/iva/dashboard/{metrics,satisfaction-timeseries,time-buckets}</code>, which for HR must show satisfaction and topic metrics.</span></label></li>
+    <li><label><input type="checkbox"><span><b>AQA:</b> natural language to SQL over the data; it has only four test files.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Known risk:</b> the audio playback endpoint (<code>/files?name=</code>) has an IDOR vulnerability. For HR data it must be closed before the pilot.</span></label></li>
+  </ul>
+</section>
+
+<section id="hr" data-sec>
+  <div class="head"><h2>6. The HR project itself: the Fit-Gap agreement</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <p>The UAT agreement file contains 87 requirements in eight blocks. MCINEXT's status for them:</p>
+  <div class="fit">
+    <div><strong>43</strong><span>Available in the product</span></div>
+    <div><strong>17</strong><span>Needs configuration</span></div>
+    <div><strong>17</strong><span>Needs development</span></div>
+    <div><strong>3</strong><span>Needs technical review</span></div>
+    <div><strong>2</strong><span>Out of Scope</span></div>
+    <div><strong>5</strong><span>No status</span></div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>Block</th><th>Count</th><th>What you should know technically</th></tr></thead>
+    <tbody>
+    <tr><td>Voice Intake & Access</td><td>8</td><td>Trunk number, employee number Whitelist, behavior for unauthorized numbers. The memory Whitelist is bypassed by default (<code>BYPASS_WHITELIST=True</code>) <span class="tag risk">Risk</span></td></tr>
+    <tr><td>Conversation Experience</td><td>9</td><td>Tone, turn detection, barge-in, cap on follow-up questions (CON-06)</td></tr>
+    <tr><td>AI Analysis</td><td>15</td><td>Tags, sentiment, topic classification; depends on <code>coa-ai</code>, which is not in the repository</td></tr>
+    <tr><td>Segmentation & Employee Context</td><td>7</td><td>Linking the phone number to the employee dataset and job context</td></tr>
+    <tr><td>Privacy & Access</td><td>11</td><td>Retention, anonymization, RBAC, IDOR, <code>permission_classes = ()</code> in aiva <span class="tag risk">Risk</span></td></tr>
+    <tr><td>Knowledge Base Pilot</td><td>10</td><td>KB, guardrail, the import/export process (files in the <code>hr-ex-phoenix/public/docs/knowledge-base/imports</code> folder)</td></tr>
+    <tr><td>Analytics & Management View</td><td>12</td><td>Dashboard, trend, reports for management</td></tr>
+    <tr><td>Pilot, UAT & Technical Setup</td><td>15</td><td>Environment, golden set, acceptance criteria, deadlines</td></tr>
+    </tbody></table></div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span>I have read the "Needs development" rows (17 items) one by one and know which service each one is implemented in.</span></label></li>
+    <li><label><input type="checkbox"><span>I know the three "Needs technical review" rows and the two "Out of Scope" rows, and why they are classified that way.</span></label></li>
+    <li><label><input type="checkbox"><span>I know what a non-Whitelisted caller hears and whether the call is recorded (VIA-03).</span></label></li>
+    <li><label><input type="checkbox"><span>I can explain the privacy options to HR: what is recorded, where (MinIO), how long it is kept, and who listens to it.</span></label></li>
+  </ul>
+</section>
+
+<section id="improve" data-sec>
+  <div class="head"><h2>7. Possible improvements</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <p>Items labeled "DOC" are mentioned in the Technical Dossier. "Suggestion" means my opinion and must be checked with the team.</p>
+  <h3>ASR</h3>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>Build a Golden Set and measure WER</b> on 50 to 200 real Persian telephone calls with manual transcripts. Without this, no improvement can be proven. <span class="tag inf">Suggestion</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Change the merge format</b> from MP3 to 16kHz PCM/FLAC for ASR and Opus for the archive, and compare WER before and after. <span class="tag code">DOC</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Organizational vocabulary / hotwords</b> for unit names and MCI services, if the model supports it. <span class="tag inf">Suggestion</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Use <code>transcript_confidence</code></b>: if it is low, ask the user to repeat instead of giving a wrong answer. <span class="tag inf">Suggestion</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Fine-tune on 8kHz telephone audio</b> with data that is licensed for use (respecting privacy). <span class="tag inf">Suggestion</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Text normalization</b> (Persian/English digits, numbers, zero-width non-joiners) before the text reaches the LLM and tagging. <span class="tag inf">Suggestion</span></span></label></li>
+  </ul>
+  <h3>Conversation and TTS</h3>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>TTS sentence separator:</b> it is only ". "; "؟" (Persian question mark), "!" and "،" (Persian comma) do not split sentences, and answers without a period start playing later. Fix <code>AGENT_SENTENCE_TOKENIZER_SEPARATORS</code>. <span class="tag code">DOC</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Turn on semantic turn detection</b> (<code>mci</code> or <code>openai</code> mode) to interrupt employees less while they are still thinking. <span class="tag code">DOC</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Adaptive TTS chunking</b> (<code>adaptive_fast_first</code>, 4 words for the first chunk) to reduce time-to-first-audio in aiva-realtime. <span class="tag code">DOC</span></span></label></li>
+  </ul>
+  <h3>LLM and knowledge</h3>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span><b>Automated Eval:</b> there is currently no AI quality measurement for AIVA and CCA. A Golden Set for retrieval, guardrail and tool calls + tracing with Arize Phoenix. <span class="tag code">DOC</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Cost-based model routing:</b> a small model for classification, a large one for the final answer. <span class="tag code">DOC</span></span></label></li>
+    <li><label><input type="checkbox"><span><b>Conflict detection in the KB</b> (the proposed project <code>kb-conflict-detection</code> in the project-proposals folder). <span class="tag inf">Suggestion</span></span></label></li>
+  </ul>
+  <h3>Security, testing and operations</h3>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span>Close the IDOR in audio playback and define real authentication on the aiva views. <span class="tag risk">Risk</span></span></label></li>
+    <li><label><input type="checkbox"><span>Turn off <code>BYPASS_WHITELIST</code> for long-term memory in the HR environment. <span class="tag risk">Risk</span></span></label></li>
+    <li><label><input type="checkbox"><span>Add tests for <code>chatbot-iva-agent</code> and <code>adcs-auth</code> (they have zero tests) and feature flags for classification/clarifying. <span class="tag risk">Risk</span></span></label></li>
+    <li><label><input type="checkbox"><span>Fix the message-ordering risk: the Agent sends the file address on Kafka without waiting for the Egress upload to finish; the message may arrive before the file. <span class="tag risk">Risk</span></span></label></li>
+  </ul>
+</section>
+
+<section id="ask" data-sec>
+  <div class="head"><h2>8. Questions you should ask the team</h2><div class="prog"><div class="bar"><i></i></div><span></span></div></div>
+  <ul class="chk">
+    <li><label><input type="checkbox"><span>Which is the production ASR model, which version, what data was it trained on, and what was the WER at the last measurement?</span></label></li>
+    <li><label><input type="checkbox"><span>Are live ASR and offline ASR the same model or two separate models?</span></label></li>
+    <li><label><input type="checkbox"><span>Which models are the seven LLM roles configured with in production, and which model is the production TTS?</span></label></li>
+    <li><label><input type="checkbox"><span>Where has <code>coa-ai</code> been maintained since July 2025, and what is the tagging prompt?</span></label></li>
+    <li><label><input type="checkbox"><span>Who produces <code>chatbot-mci-iva-intent</code>, and where is user memory populated from right now?</span></label></li>
+    <li><label><input type="checkbox"><span>What is the audio and transcript retention policy for employees, and has HR approved it?</span></label></li>
+    <li><label><input type="checkbox"><span>What are the UAT acceptance criteria for ASR and answer quality (specific numbers)? What is the deadline for each block?</span></label></li>
+  </ul>
+</section>
+
+<footer>
+  Built from: <code>technical_dossier_fa.html</code>, <code>IVA_COA_PIPELINES.html</code> and <code>HR - meet UAT agreement - Fit-Gap MVP.csv</code>. Code review date in the documents: 6 Oct 2026. The ASR model name does not appear in these sources and has deliberately not been guessed.
+</footer>
+</main>
+</div>
+
+<script>
+(function(){
+  var KEY="hr-tech-checklist-v1", boxes=[].slice.call(document.querySelectorAll('ul.chk input'));
+  var state={};
+  try{state=JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){}
+  var fa=function(n){return String(n).replace(/\d/g,function(d){return "0123456789"[d]})};
+  function render(){
+    [].slice.call(document.querySelectorAll('[data-sec]')).forEach(function(s){
+      var b=s.querySelectorAll('input'), c=0;
+      b.forEach(function(x){if(x.checked)c++});
+      s.querySelector('.prog span').textContent=fa(c)+" of "+fa(b.length);
+      s.querySelector('.bar i').style.width=(b.length?c/b.length*100:0)+"%";
+    });
+  }
+  boxes.forEach(function(b,i){
+    b.id="c"+i; b.checked=!!state[i];
+    b.addEventListener('change',function(){
+      state[i]=b.checked;
+      try{localStorage.setItem(KEY,JSON.stringify(state))}catch(e){}
+      render();
+    });
+  });
+  render();
+})();
+</script>

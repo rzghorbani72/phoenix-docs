@@ -6,7 +6,7 @@ PAGES1 = {
         "title_plain": "Qwen 35B-A3B / 30B-A3B",
         "status": "off",
         "chip": "0 replica، در حال ارزیابی",
-        "summary": "در یک پاراگراف برای TPM: سه مدل mixture-of-experts از Qwen بسته‌بندی و آماده‌اند، اما خاموش هستند. هر سه Deployment در Kubernetes روی صفر replica است و هیچ سرویسی در git آن‌ها را صدا نمی‌زند. چون فقط حدود 3B پارامتر فعال دارند، سریع‌ترین مدل‌های بزرگ این پلتفرم‌اند و برای مراحل حساس به تأخیر گزینهٔ طبیعی‌اند. load balancerهای آن‌ها هنوز به چند پردازهٔ bare-metal اشاره می‌کنند، پس شاید کسی دستی آن‌ها را آزمایش می‌کند.",
+        "summary": "در یک پاراگراف: سه مدل mixture-of-experts از Qwen بسته‌بندی و آماده‌اند، اما خاموش هستند. هر سه Deployment در Kubernetes روی صفر replica است و هیچ سرویسی در git آن‌ها را صدا نمی‌زند. چون فقط حدود 3B پارامتر فعال دارند، سریع‌ترین مدل‌های بزرگ این پلتفرم‌اند و برای مراحل حساس به تأخیر گزینهٔ طبیعی‌اند. load balancerهای آن‌ها هنوز به چند پردازهٔ bare-metal اشاره می‌کنند، پس شاید کسی دستی آن‌ها را آزمایش می‌کند.",
         "facts": [
             ("مدل‌ها (واقعیت)", "Alibaba Qwen، مجوز Apache-2.0؛ نسخه‌های 3.5 و 3.6 ذاتاً بینایی-زبانی‌اند و 3-30B-2507 فقط متنی است"),
             ("اندازه‌ها (واقعیت)", "35B کل / حدود 3B فعال (3.5 و 3.6)؛ 30.5B / حدود 3.3B (3-30B)"),
@@ -41,7 +41,7 @@ PAGES1 = {
         "title_plain": "Llama-3 TRT-LLM",
         "status": "live",
         "chip": "یک مصرف‌کنندهٔ قدیمی",
-        "summary": "در یک پاراگراف برای TPM: یک راه‌اندازی اولیهٔ LLM درون‌سازمانی. یک مدل از خانوادهٔ Llama-3 روی NVIDIA Triton با TensorRT-LLM در یک میزبان bare-metal اجرا می‌شود و یک سرویس واسط کوچک درخواست‌های به سبک OpenAI را به فراخوانی Triton تبدیل می‌کند. فقط یک بات، یعنی `chatbot-tejarat-local`، هنوز آن را صدا می‌زند. اندازهٔ دقیق مدل در git نیست.",
+        "summary": "در یک پاراگراف: یک راه‌اندازی اولیهٔ LLM درون‌سازمانی. یک مدل از خانوادهٔ Llama-3 روی NVIDIA Triton با TensorRT-LLM در یک میزبان bare-metal اجرا می‌شود و یک سرویس واسط کوچک درخواست‌های به سبک OpenAI را به فراخوانی Triton تبدیل می‌کند. فقط یک بات، یعنی `chatbot-tejarat-local`، هنوز آن را صدا می‌زند. اندازهٔ دقیق مدل در git نیست.",
         "facts": [
             ("مدل (استنباطی)", "خانوادهٔ Llama-3: قالب history در wrapper همان قالب چت Llama-3 است"),
             ("اندازه", "نامشخص (Llama-3 در دو نسخهٔ 8B و 70B عرضه می‌شود)"),
@@ -69,7 +69,7 @@ PAGES1 = {
         "title_plain": "Hakim (Triton)",
         "status": "live",
         "chip": "پرمصرف‌ترین endpoint: 26 سرویس",
-        "summary": "در یک پاراگراف برای TPM: Hakim مدل embedding متن فارسی ساختهٔ خود MCINext است؛ یک جمله را به بردار تبدیل می‌کند تا پرسش‌های مشابه در پایگاه برداری پیدا شوند. این استقرار Triton پرارجاع‌ترین endpoint مدل در پلتفرم است (26 سرویس). در EX بازیابی چت‌بات متنی را سرو می‌کند؛ مسیر صوتی EX از مدل هم‌خانواده‌ای به نام [hakim-unsup](hakim-unsup.html) استفاده می‌کند. هم روی podهای CPU و هم GPU اجرا می‌شود و مصرف‌کننده‌ها از طریق یک پروکسی Envoy که جلوی podهای GPU است می‌آیند.",
+        "summary": "در یک پاراگراف: Hakim مدل embedding متن فارسی ساختهٔ خود MCINext است؛ یک جمله را به بردار تبدیل می‌کند تا پرسش‌های مشابه در پایگاه برداری پیدا شوند. این استقرار Triton پرارجاع‌ترین endpoint مدل در پلتفرم است (26 سرویس). در EX بازیابی چت‌بات متنی را سرو می‌کند؛ مسیر صوتی EX از مدل هم‌خانواده‌ای به نام [hakim-unsup](hakim-unsup.html) استفاده می‌کند. هم روی podهای CPU و هم GPU اجرا می‌شود و مصرف‌کننده‌ها از طریق یک پروکسی Envoy که جلوی podهای GPU است می‌آیند.",
         "facts": [
             ("مدل (استنباطی)", "Hakim، یک encoder فارسی از نوع BERT از MCINext؛ حدود 0.1 تا 0.2B پارامتر، ورودی 512 توکنی (تأییدنشده)"),
             ("موتور", "Triton `mci/tritonserver/torch:25.08-v1.0`، مدل Python (`prod/hakim-embedding-serve/values.yaml:1-11`)"),
@@ -106,7 +106,7 @@ PAGES1 = {
         "title_plain": "hakim-unsup",
         "status": "live",
         "chip": "بازیابی صوتی EX",
-        "summary": "در یک پاراگراف برای TPM: hakim-unsup گونه‌ای از مدل embedding فارسی Hakim است که vLLM آن را در حالت «pooling» سرو می‌کند؛ یعنی به‌جای متن، بردار برمی‌گرداند. مغز صوتی EX برای هر آیتم دانش دو بار از آن استفاده می‌کند: یک بار هنگام همگام‌سازی پایگاه دانش با vector store و یک بار برای هر گفتهٔ تماس‌گیرنده در زمان پاسخ. چون هر دو طرف باید از یک مدل استفاده کنند، تغییر آن یعنی embedding دوبارهٔ تمام آیتم‌های دانش EX.",
+        "summary": "در یک پاراگراف: hakim-unsup گونه‌ای از مدل embedding فارسی Hakim است که vLLM آن را در حالت «pooling» سرو می‌کند؛ یعنی به‌جای متن، بردار برمی‌گرداند. مغز صوتی EX برای هر آیتم دانش دو بار از آن استفاده می‌کند: یک بار هنگام همگام‌سازی پایگاه دانش با vector store و یک بار برای هر گفتهٔ تماس‌گیرنده در زمان پاسخ. چون هر دو طرف باید از یک مدل استفاده کنند، تغییر آن یعنی embedding دوبارهٔ تمام آیتم‌های دانش EX.",
         "facts": [
             ("مدل (استنباطی)", "encoder از خانوادهٔ Hakim، گونهٔ آموزش‌دیدهٔ بدون نظارت؛ اندازه تأییدنشده (حدود 0.1 تا 0.2B)"),
             ("نام سرو‌شده", "`hakim-unsup`"),
@@ -145,7 +145,7 @@ PAGES1 = {
         "title_plain": "hakim-search",
         "status": "unknown",
         "chip": "در حال اجرا، بدون مصرف‌کننده در git",
-        "summary": "در یک پاراگراف برای TPM: گونهٔ سوم Hakim که ظاهراً برای جست‌وجو تنظیم شده، روی دو pod با GPU و یک پردازهٔ bare-metal پشت یک load balancer عمومی مخصوص خودش اجرا می‌شود. هیچ سرویسی در git آن را صدا نمی‌زند. شاید یک محصول جست‌وجو بیرون از این مخزن‌ها از آن استفاده می‌کند یا یک آزمایش است.",
+        "summary": "در یک پاراگراف: گونهٔ سوم Hakim که ظاهراً برای جست‌وجو تنظیم شده، روی دو pod با GPU و یک پردازهٔ bare-metal پشت یک load balancer عمومی مخصوص خودش اجرا می‌شود. هیچ سرویسی در git آن را صدا نمی‌زند. شاید یک محصول جست‌وجو بیرون از این مخزن‌ها از آن استفاده می‌کند یا یک آزمایش است.",
         "facts": [
             ("موتور", "vLLM `v0.15.0`، gpu-mem 0.90 (`prod/hakim-search/values.yaml:1-6,90-95`)"),
             ("وزن‌ها", "`chatbot-data-prod/hakim_search` → سرو‌شده با نام `hakim-search` (`:116-119`)"),
@@ -169,7 +169,7 @@ PAGES1 = {
         "title_plain": "Gemma embedding",
         "status": "unknown",
         "chip": "فقط LB، بدون مصرف‌کننده",
-        "summary": "در یک پاراگراف برای TPM: یک load balancer با نام «gemma embedding» جلوی دو پردازهٔ bare-metal قرار دارد. نام آن به EmbeddingGemma از Google اشاره می‌کند، یک مدل embedding چندزبانهٔ کوچک که احتمالاً برای مقایسه با Hakim آزمایش می‌شود. هیچ چیزی در git آن را صدا نمی‌زند.",
+        "summary": "در یک پاراگراف: یک load balancer با نام «gemma embedding» جلوی دو پردازهٔ bare-metal قرار دارد. نام آن به EmbeddingGemma از Google اشاره می‌کند، یک مدل embedding چندزبانهٔ کوچک که احتمالاً برای مقایسه با Hakim آزمایش می‌شود. هیچ چیزی در git آن را صدا نمی‌زند.",
         "facts": [
             ("مدل (استنباطی)", "EmbeddingGemma: حدود 308M پارامتر، بردار 768 بعدی، ورودی حدود 2K توکن (مشخصات مدل، اگر حدس درست باشد)"),
             ("LB", "`gemma-embedding-vllm-proxy.pr.mci.dev` (`prod/gemma-embedding-lb/values.yaml:1-6,20-24`)"),
@@ -188,7 +188,7 @@ PAGES1 = {
         "title_plain": "Embedding سفارشی MCI / zibert_v2",
         "status": "live",
         "chip": "باتات نسل اول",
-        "summary": "در یک پاراگراف برای TPM: پیش از Hakim، باتات MCI از یک مدل embedding فاین‌تیون‌شده روی Triton (`custom-embedding`) و یک مدل برداری محلی کوچک به نام `zibert_v2` استفاده می‌کردند که درون کانتینر خود بات بارگذاری می‌شود. هر دو هنوز برای باتات قدیمی‌تر (قوهٔ قضائیه، انقلاب، بازخورد، خدمت) اجرا می‌شوند. EX از آن‌ها استفاده نمی‌کند.",
+        "summary": "در یک پاراگراف: پیش از Hakim، باتات MCI از یک مدل embedding فاین‌تیون‌شده روی Triton (`custom-embedding`) و یک مدل برداری محلی کوچک به نام `zibert_v2` استفاده می‌کردند که درون کانتینر خود بات بارگذاری می‌شود. هر دو هنوز برای باتات قدیمی‌تر (قوهٔ قضائیه، انقلاب، بازخورد، خدمت) اجرا می‌شوند. EX از آن‌ها استفاده نمی‌کند.",
         "facts": [
             ("embedding سفارشی MCI", "Triton `nvidia/tritonserver:24.12-trtllm-python-py3`، backend پایتون، max_batch_size 4، 2 replica، میزبان `chatbot-embedding.pr.mci.dev`؛ وزن‌ها `chatbot-datachunk-prod/models/fine_tuned_mci_data` (`prod/chatbot-custom-embedding/values.yaml:1-12,56-60,83`)"),
             ("zibert_v2", "`VECTOR_MODEL_PATH=/app/resources/zibert_v2` در judiciary و revolution (`prod/chatbot-judiciary/values.yaml:106`)؛ `/app/zibert_v2` در feedback (`prod/chatbot-feedback-service/values.yaml:56`)؛ یک اپ Ray Serve به نام `/zibert` (`prod/chatbot-ray/serve-cluster.yaml:29-32`)"),

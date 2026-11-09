@@ -2,7 +2,7 @@
 export const LABELS = {
   en: {
     title: "Documents",
-    lede: "Every document of the HR / EX project: product, technical, knowledge base, requirements and diagrams. Search, filter by type, open in a new tab or preview here.",
+    lede: "Every document of the HR / EX project: product, technical, knowledge base, and requirements. Search, filter by type, open in a new tab or preview here.",
     search: "Search titles, descriptions, file names…",
     all: "All",
     lang: "Language",
@@ -20,17 +20,19 @@ export const LABELS = {
     fetchFail: "This preview needs the app to be served over HTTP (npm run dev or npm run preview); browsers block reading local files. Open the file instead.",
     noPreview: "No preview for this type; open or download it.",
     langName: { en: "English", fa: "Persian" },
+    back: "All documents",
+    missing: "This document does not exist.",
+    onlyIn: (l: string) => `No English version yet; showing the ${l} one.`,
     cats: {
       "product-management": ["Product management", "Business, scope, customers, competitors, roadmap, Fit-Gap and the EX prompt PRD."],
       technical: ["Technical", "Technical dossier, AI learning guide and the older IVA/COA pipeline walkthrough."],
       "knowledge-base": ["Knowledge base", "EX knowledge-base content and ready-to-import files."],
       requirements: ["Requirements", "Source requirement files: the UAT agreement Fit-Gap and the Continuous Listening MVP fit-gap."],
-      diagrams: ["Diagrams", "Photos of hand-drawn architecture notes."],
     } as Record<string, [string, string]>,
   },
   fa: {
     title: "اسناد",
-    lede: "همهٔ اسناد پروژهٔ HR / EX: محصول، فنی، پایگاه دانش، نیازمندی‌ها و نمودارها. جست‌وجو کنید، بر اساس نوع فیلتر کنید، در زبانهٔ تازه باز کنید یا همین‌جا پیش‌نمایش ببینید.",
+    lede: "همهٔ اسناد پروژهٔ HR / EX: محصول، فنی، پایگاه دانش، و نیازمندی‌ها. جست‌وجو کنید، بر اساس نوع فیلتر کنید، در زبانهٔ تازه باز کنید یا همین‌جا پیش‌نمایش ببینید.",
     search: "جست‌وجو در عنوان، توضیح و نام فایل…",
     all: "همه",
     lang: "زبان",
@@ -48,12 +50,14 @@ export const LABELS = {
     fetchFail: "این پیش‌نمایش فقط وقتی برنامه از راه HTTP اجرا شود کار می‌کند (npm run dev یا npm run preview)؛ مرورگر خواندن فایل محلی را مسدود می‌کند. فایل را مستقیم باز کنید.",
     noPreview: "این نوع فایل پیش‌نمایش ندارد؛ آن را باز یا دانلود کنید.",
     langName: { en: "انگلیسی", fa: "فارسی" },
+    back: "همهٔ اسناد",
+    missing: "این سند وجود ندارد.",
+    onlyIn: (l: string) => `نسخهٔ فارسی هنوز آماده نیست؛ نسخهٔ ${l} نمایش داده می‌شود.`,
     cats: {
       "product-management": ["مدیریت محصول", "کسب‌وکار، دامنه، مشتری، رقبا، نقشهٔ راه، Fit-Gap و سند نیازمندی پرامپت EX."],
       technical: ["فنی", "پروندهٔ فنی، راهنمای یادگیری هوش مصنوعی و مرور قدیمی‌تر پایپ‌لاین IVA/COA."],
       "knowledge-base": ["پایگاه دانش", "محتوای پایگاه دانش EX و فایل‌های آمادهٔ ورود."],
       requirements: ["نیازمندی‌ها", "فایل‌های منبع نیازمندی: Fit-Gap توافق‌نامهٔ UAT و Fit-Gap MVP شنیدن مستمر."],
-      diagrams: ["نمودارها", "عکس یادداشت‌های دست‌نویس معماری."],
     } as Record<string, [string, string]>,
   },
 };

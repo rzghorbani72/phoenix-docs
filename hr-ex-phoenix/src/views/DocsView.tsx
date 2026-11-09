@@ -1,13 +1,26 @@
 import { useCallback, useMemo, useState } from "react";
 import type { Data } from "../lib/types";
 import { LABELS, type Labels } from "./docs/labels";
-import { CATEGORIES, DOCS, fileName, fileUrl, fmtSize, previewFile, type DocEntry, type DocFile } from "./docs/manifest";
+import { CATEGORIES, DOCS, docKey, docRoute, fileName, fileUrl, fmtSize, previewFile, twinKey, type DocEntry, type DocFile } from "./docs/manifest";
 import { DocPreview } from "./docs/DocPreview";
 import "./docs/docs.css";
 
 const ALL_TYPES = [...new Set(DOCS.flatMap((e) => e.files.map((f) => f.type)))].sort();
 const IMAGE = new Set(["png", "jpg", "jpeg", "svg"]);
+/** Categories folded by default. Their cards open by themselves while a search or filter is active. */
+const COLLAPSED = new Set<string>();
 const norm = (s: string) => s.toLowerCase().replace(/[‌_-]+/g, " ");
+
+/** Twin keys that have a version in each language: without a language filter only the reader's one is listed. */
+const TWINS = (() => {
+  const by = new Map<string, Set<string>>();
+  for (const e of DOCS) by.set(twinKey(e), (by.get(twinKey(e)) ?? new Set()).add(e.lang));
+  return new Set([...by].filter(([, l]) => l.size > 1).map(([k]) => k));
+})();
+
+/** Where a file opens: HTML inside the app layout, everything else in a new tab. */
+const openProps = (f: DocFile) =>
+  f.type === "html" ? { href: docRoute(docKey(f.path)) } : { href: fileUrl(f), target: "_blank", rel: "noopener" };
 
 function haystack(e: DocEntry): string {
   return norm([e.title, e.desc.en, e.desc.fa, e.id, e.category, ...e.files.map(fileName)].join(" "));
@@ -32,14 +45,14 @@ function DocCard({ e, d, L, onPreview }: { e: DocEntry; d: Data; L: Labels; onPr
       {desc && <p className="doc-desc" dir="auto">{desc}</p>}
       <div className="doc-meta">
         {e.files.map((f) => (
-          <a key={f.path} className={`doc-type t-${f.type}`} href={fileUrl(f)} target="_blank" rel="noopener" title={`${fileName(f)} · ${fmtSize(f.size, d.lang)}`}>{f.type.toUpperCase()}</a>
+          <a key={f.path} className={`doc-type t-${f.type}`} {...openProps(f)} title={`${fileName(f)} · ${fmtSize(f.size, d.lang)}`}>{f.type.toUpperCase()}</a>
         ))}
         <span className="doc-size">{fmtSize(total, d.lang)}</span>
         <span className="doc-lang">{L.langName[e.lang]}</span>
         {e.folder && <span className="doc-folder" dir="ltr">{e.folder}/</span>}
       </div>
       <div className="doc-actions">
-        <a className="doc-btn primary" href={fileUrl(main)} target="_blank" rel="noopener">{L.open} ↗</a>
+        <a className="doc-btn primary" {...openProps(main)}>{L.open}{main.type === "html" ? "" : " ↗"}</a>
         {pv && <button className="doc-btn" onClick={() => onPreview(e, pv)}>{L.preview}</button>}
       </div>
     </article>
@@ -60,9 +73,9 @@ export function DocsView({ d }: { d: Data }) {
     const words = norm(q).split(/\s+/).filter(Boolean);
     return DOCS.filter((e) =>
       (!types.size || e.files.some((f) => types.has(f.type))) &&
-      (!lang || e.lang === lang) &&
+      (lang ? e.lang === lang : e.lang === d.lang || !TWINS.has(twinKey(e))) &&
       words.every((w) => index.get(e)!.includes(w)));
-  }, [q, types, lang, index]);
+  }, [q, types, lang, index, d.lang]);
   const filtering = q !== "" || types.size > 0 || lang !== "";
   const toggle = (t: string) => setTypes((s) => { const n = new Set(s); if (n.has(t)) n.delete(t); else n.add(t); return n; });
   const count = (n: number) => n.toLocaleString(d.lang === "fa" ? "fa-IR" : "en-US");
@@ -99,15 +112,22 @@ export function DocsView({ d }: { d: Data }) {
         const items = shown.filter((e) => e.category === c);
         if (!items.length) return null;
         const [name, blurb] = L.cats[c] ?? [c, ""];
+        const head = (
+          <header className="docs-cat-head">
+            <h2>{name} <span className="docs-n">{count(items.length)}</span></h2>
+            {!filtering && blurb && <p className="muted">{blurb}</p>}
+          </header>
+        );
+        const grid = (
+          <div className="docs-grid">
+            {items.map((e) => <DocCard key={e.id} e={e} d={d} L={L} onPreview={(en, f) => setOpen({ e: en, f })} />)}
+          </div>
+        );
         return (
           <section key={c} className="docs-cat" id={`docs-${c}`}>
-            <header className="docs-cat-head">
-              <h2>{name} <span className="docs-n">{count(items.length)}</span></h2>
-              {!filtering && blurb && <p className="muted">{blurb}</p>}
-            </header>
-            <div className="docs-grid">
-              {items.map((e) => <DocCard key={e.id} e={e} d={d} L={L} onPreview={(en, f) => setOpen({ e: en, f })} />)}
-            </div>
+            {COLLAPSED.has(c)
+              ? <details className="docs-fold" open={filtering}><summary>{head}</summary>{grid}</details>
+              : <>{head}{grid}</>}
           </section>
         );
       })}

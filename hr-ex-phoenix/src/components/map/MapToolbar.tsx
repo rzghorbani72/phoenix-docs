@@ -6,6 +6,8 @@ import { T } from "./i18n";
 import { exportPng } from "./exportPng";
 import { tourHash } from "./tourData";
 import { useNarrow } from "./useNarrow";
+import { ALL, CATEGORIES } from "../../views/instances/model";
+import { T as instanceStrings } from "../../views/instances/i18n";
 
 interface Props {
   d: Data; filters: MapFilters; setFilters: (f: MapFilters) => void;
@@ -42,7 +44,7 @@ export function MapToolbar({ d, filters, setFilters, overview, tourActive, lane,
     if (st.has(s) && st.size > 1) st.delete(s); else st.add(s);
     setFilters({ ...filters, statuses: st });
   };
-  const active = (filters.model ? 1 : 0) + (filters.query.trim() ? 1 : 0) + (filters.statuses.size < STATUSES.length ? 1 : 0) + (filters.cross ? 1 : 0);
+  const active = (filters.instance ? 1 : 0) + (filters.model ? 1 : 0) + (filters.query.trim() ? 1 : 0) + (filters.statuses.size < STATUSES.length ? 1 : 0) + (filters.cross ? 1 : 0);
   const doExport = async () => {
     setBusy("export");
     try { await exportPng(overview ? "phoenix-ex-overview" : "phoenix-ex-map"); setBusy(""); }
@@ -60,6 +62,18 @@ export function MapToolbar({ d, filters, setFilters, overview, tourActive, lane,
       </a>
 
       <div className="mtb-fold">
+        <select className="mtb-instance" value={filters.instance} onChange={(e) => setFilters({ ...filters, instance: e.target.value })} aria-label={t.pickInstance}>
+          <option value="">{t.allInstances}</option>
+          {CATEGORIES.map((c) => {
+            const list = ALL.filter((i) => i.category === c);
+            return list.length > 0 && (
+              <optgroup key={c} label={instanceStrings(d.lang).categories[c]}>
+                {list.map((i) => <option key={i.id} value={i.id}>{i.name[d.lang]}</option>)}
+              </optgroup>
+            );
+          })}
+        </select>
+        {filters.instance && <a className="mtb-btn" href={`#/instance/${filters.instance}`}>{t.openInstance}</a>}
         {!overview && <>
           <select value={filters.model} onChange={(e) => setFilters({ ...filters, model: e.target.value })} aria-label={t.highlightModel}>
             <option value="">{t.highlightModel}</option>

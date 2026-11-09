@@ -6,7 +6,7 @@
 <title>راهنمای اسناد Phoenix HR</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap">
 <style>
-/* Layout: فهرست چسبان + ستون اصلی؛ هر بخش جواب یک سؤال مدیر محصول است و به سند مرجع لینک می‌دهد. */
+/* Layout: فهرست چسبان + ستون اصلی؛ هر بخش جواب یک سؤال رایج دربارهٔ پروژه است و به سند مرجع لینک می‌دهد. */
 :root{
   --bg:#f6f7f9; --surface:#ffffff; --fg:#14202b; --muted:#5b6b7a; --line:#dde3ea;
   --accent:#0b6e8a; --accent-soft:#e1f1f5;
@@ -99,7 +99,7 @@ footer{color:var(--muted);font-size:12.5px}
 <main>
 <header style="display:flex;flex-direction:column;gap:10px">
   <h1>راهنمای اسناد Phoenix HR</h1>
-  <p class="lead">نقطه شروع پوشه <code>product-management</code>. هر بخش به یک سؤال مدیر محصول فنی جواب کوتاه می‌دهد و به سندی لینک می‌دهد که جزئیات آنجاست. شناسه‌هایی مثل <span class="id">BR-07</span> از <a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a>، شناسه‌هایی مثل <span class="id">PRV-10</span> از توافق Fit-Gap، و شناسه‌هایی مثل <span class="id">SEN-01</span> از سند نیازمندی پرامپت هستند.</p>
+  <p class="lead">نقطه شروع پوشه <code>product-management</code>. هر بخش به یک سؤال رایج دربارهٔ پروژه جواب کوتاه می‌دهد و به سندی لینک می‌دهد که جزئیات آنجاست. شناسه‌هایی مثل <span class="id">BR-07</span> از <a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a>، شناسه‌هایی مثل <span class="id">PRV-10</span> از توافق Fit-Gap، و شناسه‌هایی مثل <span class="id">SEN-01</span> از سند نیازمندی پرامپت هستند.</p>
   <p class="callout warn">این صفحه محتوای تازه‌ای نمی‌سازد؛ خلاصه‌ای از اسناد همین پوشه و پوشه <code>technical</code> است. هر جا نوشته شده <span class="pill prop">پیشنهاد</span>، نظر من است و در هیچ سندی تصمیم‌گیری نشده.</p>
 </header>
 
@@ -119,7 +119,7 @@ footer{color:var(--muted);font-size:12.5px}
     <a href="HR_TECH_CHECKLIST_FA.html"><b>از نظر فنی چه چیزهایی را باید بلد باشم؟</b><span>مدل‌ها، ASR، aiva، COA و سؤال‌هایی که باید از تیم بپرسی ← چک‌لیست فنی</span></a>
     <a href="PRODUCT_DOSSIER_FA.html#s5"><b>بحرانی‌ترین مشکلات امروز کد کدام‌اند؟</b><span>IDOR صوت، API بدون احراز هویت، لاگ توکن و غیره ← پرونده محصول §۵</span></a>
     <a href="ANSWER_PACK_FA.html"><b>در جلسه با خریدار چه بگویم؟</b><span>معیارهای انتخاب، سناریوی نمایش، ده پرسش جلسه ← بسته پاسخ؛ همچنین <span class="id">§10</span> پرونده محصول</span></a>
-    <a href="../technical/IVA_COA_PIPELINES.html"><b>یک تماس از کجا تا کجا می‌رود؟</b><span>نمودار IVA و COA از روی کد ← پوشه technical</span></a>
+    <a href="../technical/IVA_COA_PIPELINES_FA.html"><b>یک تماس از کجا تا کجا می‌رود؟</b><span>نمودار IVA و COA از روی کد ← پوشه technical</span></a>
   </div>
   <h3>ترتیب خواندن برای کسی که تازه وارد پروژه شده</h3>
   <ol class="order">
@@ -157,14 +157,14 @@ footer{color:var(--muted);font-size:12.5px}
     <tbody>
       <tr><td><a href="FIT_GAP_TRACKER_FA.html">ردیاب Fit-Gap</a><br><small>+ <a href="FIT_GAP_TRACKER.xlsx">xlsx</a></small></td><td>۸۷ نیازمندی قرارداد در ۸ بلوک: شاهد در کد، اطمینان، مالک، ددلاین شرطی</td><td>خودت (برای پر کردن)</td><td>هر هفته؛ مرجع اصلی تعهدات</td></tr>
       <tr><td><a href="IVA_EX_PROMPT_REQUIREMENTS_FA.html">PRD پرامپت ایجنت EX</a></td><td>رفتار ایجنت صوتی؛ نیازمندی‌های INT تا SEC، قرارداد ابزارها، سناریوهای آزمون، دروازه انتشار، تصمیم‌های باز Q1 تا Q8</td><td>تیم پرامپت، تیم IVA، واحد EX</td><td>قبل از هر جلسه با تیم پرامپت یا EX</td></tr>
-      <tr><td><a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a></td><td>فهرست اصلی همه قابلیت‌های محصول EX؛ برای هر کدام: نیاز، گزینه‌ها، کار رقبا، وضعیت ما، اولویت، تلاش</td><td>TPM، CTO، سرپرست‌های فنی</td><td>اولویت‌بندی و برآورد</td></tr>
-      <tr><td><a href="PRODUCT_DOSSIER_FA.html">پرونده محصول</a></td><td>کاتالوگ کامل از کد، یافته‌های بحرانی، ریسک‌ها، هزینه هر تماس، Scope، رقبا (§۲۵)، قابلیت‌های EX (§۲۷)</td><td>TPM، ذی‌نفعان</td><td>مرجع؛ با فهرست بالای صفحه برو سراغ فصل لازم</td></tr>
-      <tr><td><a href="ROADMAP_FA.html">نقشه راه</a></td><td>اصول تصمیم، سه لایه قابلیت، موج‌ها، ساختار تیم، درخت شاخص‌ها، بیست روز اول</td><td>TPM، CTO</td><td>برنامه‌ریزی و گزارش به مدیریت</td></tr>
-      <tr><td><a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار</a></td><td>نیازهای همراه اول به زبان بازار؛ مدل دسترسی معاونت/اداره؛ موارد حساس و اتصال HR در رقبا</td><td>TPM، CTO</td><td>طراحی دسترسی و داده</td></tr>
-      <tr><td><a href="INSPIRATION_PLAYBOOK_FA.html">الهام از بازار</a></td><td>شرکت‌های ایرانی و خارجی شبیه ما، هر قابلیت چطور کار می‌کند و ما چطور بسازیم؛ نسخه‌بندی v1 تا v3</td><td>TPM، توسعه‌دهندگان</td><td>وقتی دنبال ایده یا الگوی پیاده‌سازی هستی</td></tr>
+      <tr><td><a href="FEATURE_CATALOG_FA.html">FEATURE_CATALOG.md</a></td><td>فهرست اصلی همه قابلیت‌های محصول EX؛ برای هر کدام: نیاز، گزینه‌ها، کار رقبا، وضعیت ما، اولویت، تلاش</td><td>همه</td><td>اولویت‌بندی و برآورد</td></tr>
+      <tr><td><a href="PRODUCT_DOSSIER_FA.html">پرونده محصول</a></td><td>کاتالوگ کامل از کد، یافته‌های بحرانی، ریسک‌ها، هزینه هر تماس، Scope، رقبا (§۲۵)، قابلیت‌های EX (§۲۷)</td><td>همه، ذی‌نفعان</td><td>مرجع؛ با فهرست بالای صفحه برو سراغ فصل لازم</td></tr>
+      <tr><td><a href="ROADMAP_FA.html">نقشه راه</a></td><td>اصول تصمیم، سه لایه قابلیت، موج‌ها، ساختار تیم، درخت شاخص‌ها، بیست روز اول</td><td>همه</td><td>برنامه‌ریزی و گزارش به مدیریت</td></tr>
+      <tr><td><a href="MARKET_ALIGNMENT_FA.html">هم‌راستایی بازار</a></td><td>نیازهای همراه اول به زبان بازار؛ مدل دسترسی معاونت/اداره؛ موارد حساس و اتصال HR در رقبا</td><td>همه</td><td>طراحی دسترسی و داده</td></tr>
+      <tr><td><a href="INSPIRATION_PLAYBOOK_FA.html">الهام از بازار</a></td><td>شرکت‌های ایرانی و خارجی شبیه ما، هر قابلیت چطور کار می‌کند و ما چطور بسازیم؛ نسخه‌بندی v1 تا v3</td><td>همه، به‌ویژه توسعه‌دهندگان</td><td>وقتی دنبال ایده یا الگوی پیاده‌سازی هستی</td></tr>
       <tr><td><a href="ANSWER_PACK_FA.html">بسته پاسخ</a></td><td>جواب به راهنمای انتخاب نرم‌افزار HR چارگون: معیارها، سناریوی نمایش، ورودی‌های لازم، ساختار مالی</td><td>واحد EX و کمیته ارزیابی</td><td>قبل از جلسه نمایش یا قرارداد</td></tr>
       <tr><td><a href="HR_TECH_CHECKLIST_FA.html">چک‌لیست فنی</a></td><td>مدل‌ها، ASR، aiva، COA، بهبودها، سؤال برای تیم؛ با تیک پیشرفت</td><td>خودت</td><td>یادگیری فنی</td></tr>
-      <tr><td><a href="../technical/IVA_COA_PIPELINES.html">پایپلاین IVA و COA</a></td><td>نمودار مسیر تماس زنده و تحلیل، embedding، پایان تماس، شکاف‌ها</td><td>همه</td><td>وقتی می‌خواهی بدانی یک داده از کجا می‌آید</td></tr>
+      <tr><td><a href="../technical/IVA_COA_PIPELINES_FA.html">پایپلاین IVA و COA</a></td><td>نمودار مسیر تماس زنده و تحلیل، embedding، پایان تماس، شکاف‌ها</td><td>همه</td><td>وقتی می‌خواهی بدانی یک داده از کجا می‌آید</td></tr>
       <tr><td><a href="../technical/TECHNICAL_DOSSIER_FA.html">پرونده فنی</a></td><td>فصل‌های ۱۱ تا ۲۴: معماری، agentlib، aiva، IVA، CCA، AQA، Auth، Config، بدهی فنی</td><td>توسعه‌دهندگان، CTO</td><td>بررسی برآورد یا Review کد</td></tr>
       <tr><td><a href="../technical/AI_LEARNING_GUIDE_FA.html">راهنمای یادگیری AI</a></td><td>مفاهیم، کارت مدل Hugging Face، بنچمارک‌ها، WER/CER فارسی، MOS، روال هفتگی</td><td>همه</td><td>انتخاب یا مقایسه مدل</td></tr>
     </tbody></table></div>

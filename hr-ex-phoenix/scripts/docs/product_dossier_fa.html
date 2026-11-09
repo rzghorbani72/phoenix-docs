@@ -554,7 +554,7 @@ table.big td .small { font-size: 13px; }
     <h1>Phoenix — پرونده مدیریت محصول</h1>
     <div class="sub">
       Fit-Gap، یافته‌ها، ریسک، Unit Economics، Deadline، Scope، آمادگی جلسه،
-      فرصت‌های محصول HR و تحلیل رقبا<br />برای Technical Product Manager و
+      فرصت‌های محصول HR و تحلیل رقبا<br />برای همهٔ اعضای پروژه و
       ذی‌نفعان کسب‌وکار
     </div>
     <table class="meta">
@@ -758,7 +758,7 @@ table.big td .small { font-size: 13px; }
     <div class="num">بخش اول</div>
     <div class="ttl">کسب‌وکار</div>
     <div class="desc">
-      آنچه یک Technical Product Manager باید در جلسه بداند: چه داریم، چه قول
+      آنچه باید در جلسه دانست: چه داریم، چه قول
       داده‌ایم، کدام قول با Code نمی‌خواند، ریسک کجاست و Deadline را چطور تعهد
       کنیم.
     </div>
@@ -7411,6 +7411,13 @@ table.big td .small { font-size: 13px; }
 (function () {
   var root = document.documentElement;
   var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
@@ -7429,7 +7436,7 @@ table.big td .small { font-size: 13px; }
   if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
     var nav = document.createElement("nav");
     nav.id = "side";
-    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    nav.setAttribute("aria-label", T.toc);
     var h1 = document.querySelector("h1");
     var docT = document.createElement("div");
     docT.className = "doc";
@@ -7497,21 +7504,21 @@ table.big td .small { font-size: 13px; }
     if (t) return t === "dark";
     return true;
   }
-  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
     var next = isDark() ? "light" : "dark";
     root.setAttribute("data-theme", next);
     save("phx-theme", next);
-    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+    b.textContent = next === "dark" ? T.light : T.dark;
   });
   if (hasBlame) {
-    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+    var bb = btn("BLAME", T.blame, function (b) {
       var hidden = body.classList.toggle("hide-blame");
       b.setAttribute("aria-pressed", String(!hidden));
       save("phx-blame", hidden ? "hide" : "show");
     });
     bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
   }
-  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
   body.appendChild(bar);
 })();
 

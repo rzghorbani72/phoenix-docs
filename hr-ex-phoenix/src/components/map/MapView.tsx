@@ -5,6 +5,7 @@ import {
 } from "@xyflow/react";
 import type { Data, Status } from "../../lib/types";
 import { plain } from "../../lib/md";
+import { byId, instanceLane } from "../../lib/instances";
 import { CROSS, HEX, LANE_COLOR, type MapFilters } from "./shared";
 import { NodeTip, type TipApi } from "./NodeTip";
 import { isNarrow } from "./useNarrow";
@@ -141,7 +142,7 @@ function routeCross(meta: Record<string, Meta>, lang: "en" | "fa") {
   return out;
 }
 
-function build(d: Data, f: MapFilters, selected: string | undefined, tour: string[] | undefined, allCross: boolean) {
+function build(d: Data, f: MapFilters, selected: string | undefined, tour: string[] | undefined, allCross: boolean, focus?: string) {
   const rtl = d.dir === "rtl";
   const modelSteps = f.model ? new Set(d.models.cards.find((c) => c.id === f.model)?.steps ?? []) : null;
   const q = f.query.trim().toLowerCase();
@@ -161,6 +162,8 @@ function build(d: Data, f: MapFilters, selected: string | undefined, tour: strin
       width: LANE_W, height: h, style: { width: LANE_W, height: h }, zIndex: -1,
       data: { hex: HEX[lane.color] ?? "#888", title: plain(lane.title), desc: plain(lane.desc), color, count: `${lane.steps.length} ${d.ui.steps_word}` },
     });
+    const shown = byId(f.instance);
+    const laneUsed = (!shown || instanceLane(shown, lane.id).used) && (!focus || focus === lane.id);
     lane.steps.forEach((sid, i) => {
       const s = d.steps[sid];
       const row = Math.floor(i / PER_ROW);
@@ -168,7 +171,7 @@ function build(d: Data, f: MapFilters, selected: string | undefined, tour: strin
       if (row % 2 === 1) col = PER_ROW - 1 - col;
       if (rtl) col = PER_ROW - 1 - col;
       const hay = `${s.title} ${s.chip ?? ""} ${s.summary}`.toLowerCase();
-      const pass = (!modelSteps || modelSteps.has(sid)) && f.statuses.has(s.status) && (!q || hay.includes(q));
+      const pass = (!modelSteps || modelSteps.has(sid)) && f.statuses.has(s.status) && (!q || hay.includes(q)) && laneUsed;
       const box = { x: PAD + col * (NW + GX), y: y + HEAD + row * (NH + GY), width: NW, height: NH };
       boxes[sid] = box;
       meta[sid] = { box, lane: li, row, rows };
@@ -222,13 +225,14 @@ const PANEL_W = 620;
 /** Fitted content keeps clear of the floating toolbar at the top (px). */
 const FIT_TOP = 70, FIT_BOTTOM = 18, FIT_X = 28;
 
-function Canvas({ d, filters, selected, lane, onOpen, theme, tour }: Props) {
+function Canvas({ d, filters, selected, lane, onOpen, theme, tour, panel }: Props) {
   const rf = useReactFlow();
   const [inited, setInited] = useState(false);
   const tip = useRef<TipApi | null>(null);
   const tourKey = tour?.join(",");
   const { nodes, edges, boxes } = useMemo(
-    () => build(d, filters, selected, tourKey ? tourKey.split(",") : undefined, lane === "all"), [d, filters, selected, tourKey, lane]);
+    () => build(d, filters, selected, tourKey ? tourKey.split(",") : undefined, lane === "all", panel ? lane : undefined),
+    [d, filters, selected, tourKey, lane, panel]);
   // Camera from our own layout boxes (no dependence on DOM measurement): a selected step is centred in the
   // part of the canvas the detail panel (side panel, or bottom sheet on narrow screens) leaves visible.
   useEffect(() => {
@@ -241,10 +245,13 @@ function Canvas({ d, filters, selected, lane, onOpen, theme, tour }: Props) {
     // Fit a box below the toolbar (fitBounds only takes symmetric padding).
     const fit = (b: Box, duration: number) => {
       const el = document.querySelector(".mapwrap");
-      const W = el?.clientWidth ?? window.innerWidth, H = el?.clientHeight ?? window.innerHeight - 56;
+      const fullW = el?.clientWidth ?? window.innerWidth, fullH = el?.clientHeight ?? window.innerHeight - 56;
+      // An open panel takes a side on desktop and the lower part on narrow screens: fit what is left.
+      const aside = panel && !isNarrow() ? Math.min(PANEL_W, window.innerWidth * 0.6) : 0;
+      const W = fullW - aside, H = panel && isNarrow() ? fullH * 0.42 : fullH;
       const zoom = Math.max(0.06, Math.min(1.2, (W - 2 * FIT_X) / b.width, (H - FIT_TOP - FIT_BOTTOM) / b.height));
       rf.setViewport({
-        x: (W - b.width * zoom) / 2 - b.x * zoom,
+        x: (d.dir === "rtl" ? aside : 0) + (W - b.width * zoom) / 2 - b.x * zoom,
         y: FIT_TOP + (H - FIT_TOP - FIT_BOTTOM - b.height * zoom) / 2 - b.y * zoom, zoom,
       }, { duration });
     };
@@ -272,7 +279,7 @@ function Canvas({ d, filters, selected, lane, onOpen, theme, tour }: Props) {
     return () => clearTimeout(t);
     // boxes only change with language/filters; camera should not jump when filters change
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inited, selected, lane, d.lang]);
+  }, [inited, selected, lane, d.lang, panel]);
 
   const onEnter: NodeMouseHandler = useCallback((e, n) => {
     if (n.type !== "step") return;
@@ -303,6 +310,8 @@ function Canvas({ d, filters, selected, lane, onOpen, theme, tour }: Props) {
 
 interface Props {
   d: Data; filters: MapFilters; selected?: string; lane?: string; theme: "dark" | "light";
+  /** A details panel is open beside a focused lane. */
+  panel?: boolean;
   onOpen: (id: string) => void;
   /** Step ids of an active guided tour: they stay bright, everything else fades. */
   tour?: string[];

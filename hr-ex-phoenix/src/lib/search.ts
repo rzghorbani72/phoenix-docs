@@ -1,11 +1,12 @@
+import { INSTANCES } from "./instances";
 import type { Data } from "./types";
 
-export type SearchKind = "step" | "model" | "guide" | "risk";
+export type SearchKind = "step" | "model" | "guide" | "risk" | "instance";
 
 export interface SearchEntry {
   /** What sort of thing this is. */
   type: SearchKind;
-  /** Short tag shown in the palette: lane step number (e.g. B10), MODEL, GUIDE or RISK. */
+  /** Short tag shown in the palette: lane step number (e.g. B10), MODEL, GUIDE, RISK or INSTANCE. */
   kind: string;
   label: string;
   sub: string;
@@ -17,7 +18,7 @@ export interface SearchEntry {
 
 const strip = (s: string) => s.replace(/[`*]/g, "");
 
-/** Flat index over steps (in lane order), model pages, guide sections and risks. */
+/** Flat index over steps (in lane order), model pages, guide sections, risks and instances. */
 export function buildIndex(d: Data): SearchEntry[] {
   const out: SearchEntry[] = [];
   for (const lane of d.lanes)
@@ -49,6 +50,15 @@ export function buildIndex(d: Data): SearchEntry[] {
   d.risks.items.forEach((r) =>
     out.push({ type: "risk", kind: "RISK", label: strip(r.title), sub: strip(r.why), hay: `${r.title} ${r.why}`.toLowerCase(), to: "#/risks" }),
   );
+  for (const i of INSTANCES.instances)
+    out.push({
+      type: "instance",
+      kind: "INSTANCE",
+      label: strip(i.name[d.lang]),
+      sub: strip(i.about[d.lang]),
+      hay: `${i.name.en} ${i.name.fa} ${i.releases.join(" ")} ${i.id} ${i.about.en} ${i.about.fa}`.toLowerCase(),
+      to: `#/instance/${i.id}`,
+    });
   return out;
 }
 

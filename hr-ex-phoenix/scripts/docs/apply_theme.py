@@ -26,6 +26,16 @@ FILES = [
     "iva_ex_prompt_requirements_fa.html",
     "feature_catalog.html",
     "feature_catalog_fa.html",
+    # English versions (translated from the _fa sources; the app shows the one matching its language)
+    "product_dossier.html",
+    "technical_dossier.html",
+    "roadmap.html",
+    "answer_pack.html",
+    "fit_gap_tracker.html",
+    "inspiration_playbook.html",
+    "market_alignment.html",
+    "ai_learning_guide.html",
+    "iva_ex_prompt_requirements.html",
 ]
 
 HEAD_START, HEAD_END = "<!-- theme:head:start -->", "<!-- theme:head:end -->"

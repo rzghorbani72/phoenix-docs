@@ -1,6 +1,7 @@
 /** UI strings used only by the map, its toolbar, overview and tour (EN / FA). */
 const EN = {
   overview: "Overview", detail: "Detail", mode: "Map level",
+  pickInstance: "Instance", allInstances: "All instances", openInstance: "Open instance",
   highlightModel: "Highlight steps by model…", filterSteps: "Filter steps…",
   status: "Status", handoffs: "Hand-offs", handoffsTitle: "Show every cross-lane hand-off (otherwise only those of the open step's lane)",
   fit: "Fit everything", laneJump: "Jump to lane",
@@ -19,6 +20,7 @@ const EN = {
 type Strings = typeof EN;
 const FA: Strings = {
   overview: "نمای کلی", detail: "جزئیات", mode: "سطح نقشه",
+  pickInstance: "نمونه", allInstances: "همهٔ نمونه‌ها", openInstance: "باز کردن نمونه",
   highlightModel: "برجسته‌سازی بر اساس مدل…", filterSteps: "فیلتر گام‌ها…",
   status: "وضعیت", handoffs: "تحویل‌ها", handoffsTitle: "نمایش همهٔ تحویل‌های بین مسیرها (در غیر این صورت فقط مسیرِ گام باز)",
   fit: "نمای کامل", laneJump: "رفتن به مسیر",

@@ -550,7 +550,7 @@ table.big td .small { font-size: 13px; }
     <div class="cover">
       <h1>Phoenix EX — Complete Feature Catalog</h1>
       <p><b>Product:</b> an AI employee-experience (EX) HR platform. Employees talk to it by voice (IVA, phone) and text (chatbot). It answers, takes requests, and analyses every conversation into tags, categories and insights for HR.</p>
-<p><b>Audience:</b> TPM, CTO, tech leads. Use this as the master list: add rows, change priorities, link Fit-Gap IDs.</p>
+<p><b>Audience:</b> everyone on the project. Use this as the master list: add rows, change priorities, link Fit-Gap IDs.</p>
 <p><b>Date:</b> 2026-10-17 · <b>Code basis:</b> repo at <code>cb570a50b</code> (see <code>product/README.md</code> and the dossiers) · <b>Competitor basis:</b> dossier §25 (sources G1–G31, R1–R*) + new research listed in <a href="#sources">Sources</a>.</p>
       <p class="small">Generated from <code>product-management/FEATURE_CATALOG.md</code>. Edit the Markdown, then run <code>source/build.sh</code>.</p>
     </div>
@@ -1022,6 +1022,13 @@ table.big td .small { font-size: 13px; }
 (function () {
   var root = document.documentElement;
   var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
 
@@ -1040,7 +1047,7 @@ table.big td .small { font-size: 13px; }
   if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
     var nav = document.createElement("nav");
     nav.id = "side";
-    nav.setAttribute("aria-label", "فهرست فصل‌ها");
+    nav.setAttribute("aria-label", T.toc);
     var h1 = document.querySelector("h1");
     var docT = document.createElement("div");
     docT.className = "doc";
@@ -1108,21 +1115,21 @@ table.big td .small { font-size: 13px; }
     if (t) return t === "dark";
     return true;
   }
-  var tb = btn(isDark() ? "☀ روشن" : "☾ تیره", "تغییر تم", function (b) {
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
     var next = isDark() ? "light" : "dark";
     root.setAttribute("data-theme", next);
     save("phx-theme", next);
-    b.textContent = next === "dark" ? "☀ روشن" : "☾ تیره";
+    b.textContent = next === "dark" ? T.light : T.dark;
   });
   if (hasBlame) {
-    var bb = btn("BLAME", "نمایش یا پنهان کردن خطوط Git Blame", function (b) {
+    var bb = btn("BLAME", T.blame, function (b) {
       var hidden = body.classList.toggle("hide-blame");
       b.setAttribute("aria-pressed", String(!hidden));
       save("phx-blame", hidden ? "hide" : "show");
     });
     bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
   }
-  btn("↑", "بالای صفحه", function () { window.scrollTo({ top: 0 }); });
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
   body.appendChild(bar);
 })();
 

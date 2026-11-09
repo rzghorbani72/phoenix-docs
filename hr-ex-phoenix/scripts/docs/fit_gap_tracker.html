@@ -1,0 +1,894 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Phoenix — Fit-Gap Tracker</title>
+    <!-- theme:head:start -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark light" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Vazirmatn:wght@400;500;700;800&display=swap" />
+    <style>
+/* Phoenix product docs — shared design system (Persian, RTL).
+   Inlined into every HTML source by apply_theme.py; edit here, then run ./build.sh.
+   Screen: single reading column, cards for tables/figures, chapter sidebar on wide screens.
+   Dark by default on screen and in print/PDF; light is opt-in via the toolbar.
+   Print/PDF: A4, page breaks from .pb and .part. */
+
+:root {
+  --bg: #0f141a;
+  --surface: #161d26;
+  --surface-2: #1d2631;
+  --ink: #e4e9ef;
+  --muted: #9aa6b4;
+  --line: #2c3744;
+  --accent: #8fb4ef;
+  --accent-ink: #0f141a;
+  --accent-tint: #172a45;
+  --ok: #84d48c;
+  --ok-bg: #15301a;
+  --warn: #f1c45c;
+  --warn-bg: #34290b;
+  --bad: #ff9289;
+  --bad-bg: #3a1714;
+  --gap: #c9cdd3;
+  --gap-bg: #2a3039;
+  --info: #8fbfff;
+  --info-bg: #142a47;
+  --code-bg: #1b2430;
+  --who: #dcc48e;
+  --part-bg: #1c2c45;
+  --part-ink: #eef3fb;
+  --fill-bg: #3a3010;
+  --fill-line: #d9a21a;
+  --c-violet: #b79cf5;
+  --c-teal: #5eead4;
+  --c-pink: #f9a8d4;
+  --c-orange: #fdba74;
+  --c-cyan: #67e8f9;
+  color-scheme: dark;
+  --f-body: "Vazirmatn", "Noto Sans Arabic", "DejaVu Sans", system-ui, sans-serif;
+  --f-mono: "IBM Plex Mono", "Vazirmatn", "Noto Sans Arabic", ui-monospace, monospace;
+  --col: 1200px;
+  --side: 290px;
+}
+/* light is opt-in only (toolbar toggle) — all docs default to dark */
+:root[data-theme="light"] {
+  --bg: #f4f6f8;
+  --surface: #ffffff;
+  --surface-2: #eef2f6;
+  --ink: #17202b;
+  --muted: #5b6776;
+  --line: #d6dde5;
+  --accent: #1f5fbf;
+  --accent-ink: #ffffff;
+  --accent-tint: #e5eefb;
+  --ok: #1d7a3b;
+  --ok-bg: #e2f3e7;
+  --warn: #8a5a00;
+  --warn-bg: #fcf1d2;
+  --bad: #b42318;
+  --bad-bg: #fde7e4;
+  --gap: #4b5563;
+  --gap-bg: #eceff3;
+  --info: #1d5fa8;
+  --info-bg: #e3eefb;
+  --code-bg: #f0f3f7;
+  --who: #86651a;
+  --part-bg: #17263d;
+  --part-ink: #f3f6fa;
+  --fill-bg: #fff4cf;
+  --fill-line: #c99a00;
+  --c-violet: #6b46c1;
+  --c-teal: #0f766e;
+  --c-pink: #be185d;
+  --c-orange: #c2410c;
+  --c-cyan: #0e7490;
+  color-scheme: light;
+}
+
+/* ---------- base ---------- */
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 20px; }
+body {
+  margin: 0;
+  padding: 0 16px 96px;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15.5px/1.95 var(--f-body);
+  text-rendering: optimizeLegibility;
+}
+body > * { max-width: var(--col); margin-inline: auto; }
+::selection { background: var(--accent-tint); }
+a { color: var(--accent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+a:hover { text-decoration-thickness: 2px; }
+b, strong { font-weight: 700; }
+p { margin: 10px auto; }
+ul, ol { padding-inline-start: 24px; margin-block: 8px; }
+ol { list-style-type: persian; }
+li { margin: 4px 0; }
+li::marker { color: var(--muted); }
+hr { border: 0; border-top: 1px solid var(--line); }
+
+h1, h2, h3, h4 { line-height: 1.45; text-wrap: balance; }
+h1 { font-size: clamp(28px, 4.6vw, 42px); font-weight: 800; margin: 0 0 8px; }
+h2 {
+  font-size: clamp(22px, 3vw, 27px);
+  font-weight: 800;
+  margin-top: 72px;
+  margin-bottom: 14px;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+}
+h3 { font-size: 19px; font-weight: 700; margin-top: 40px; margin-bottom: 8px; }
+h4 { font-size: 16px; font-weight: 700; margin-top: 28px; margin-bottom: 6px; color: var(--ink); }
+
+/* ---------- inline ---------- */
+.en { direction: ltr; unicode-bidi: isolate; }
+.ab { font-size: 0.86em; color: var(--muted); }
+code, .mono {
+  font-family: var(--f-mono);
+  font-size: 0.84em;
+  direction: ltr;
+  unicode-bidi: isolate;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0 5px;
+  overflow-wrap: anywhere;
+}
+pre {
+  font: 12.5px/1.6 var(--f-mono);
+  direction: ltr;
+  text-align: left;
+  background: var(--code-bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  margin-block: 12px;
+}
+pre code { background: none; border: 0; padding: 0; font-size: inherit; }
+.small { font-size: 13px; color: var(--muted); }
+
+/* source labels: CODE / GIT / DOC / IMG / FIT-GAP / INFERENCE / WEB / TELECOM / BLAME */
+.k {
+  --c: var(--muted);
+  display: inline-block;
+  font: 600 10.5px/1.7 var(--f-mono);
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border-radius: 4px;
+  color: var(--c);
+  background: color-mix(in srgb, var(--c) 14%, transparent);
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.k-code { --c: var(--info); }
+.k-git { --c: var(--c-violet); }
+.k-doc { --c: var(--c-teal); }
+.k-img { --c: var(--c-pink); }
+.k-fg { --c: var(--c-orange); }
+.k-inf { --c: var(--warn); }
+.k-web { --c: var(--ok); }
+.k-tel { --c: var(--c-cyan); }
+.k-who { --c: var(--who); }
+
+.src {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  unicode-bidi: isolate;
+  font: 11.5px/1.6 var(--f-mono);
+  color: var(--muted);
+  margin-top: 4px;
+  overflow-wrap: anywhere;
+}
+.srcblock { margin-top: 6px; margin-bottom: 18px; }
+.who {
+  display: block;
+  direction: ltr;
+  text-align: left;
+  font: 11px/1.55 var(--f-mono);
+  color: var(--who);
+  margin-top: 2px;
+  overflow-wrap: anywhere;
+}
+body.hide-blame .who { display: none; }
+
+/* status pills — dossier (t-*) and pack/roadmap (ok/warn/gap) */
+.tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.8;
+  padding: 0 10px;
+  border-radius: 999px;
+  white-space: nowrap;
+  vertical-align: 1px;
+}
+.t-ok, .tag.ok { color: var(--ok); background: var(--ok-bg); }
+.t-warn, .tag.warn { color: var(--warn); background: var(--warn-bg); }
+.t-bad, .tag.gap { color: var(--bad); background: var(--bad-bg); }
+.t-gap { color: var(--gap); background: var(--gap-bg); }
+.t-info { color: var(--info); background: var(--info-bg); }
+.fill {
+  background: var(--fill-bg);
+  border: 1px dashed var(--fill-line);
+  border-radius: 4px;
+  padding: 0 5px;
+  font-size: 0.92em;
+}
+
+/* ---------- cover ---------- */
+.cover {
+  margin-top: 40px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 32px clamp(18px, 4vw, 40px) 28px;
+  box-shadow: 0 1px 0 var(--line), 0 18px 40px -28px rgb(0 0 0 / 0.35);
+  position: relative;
+  overflow: hidden;
+}
+.cover::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: linear-gradient(90deg, var(--accent), var(--c-teal), var(--c-violet));
+}
+.cover > .small:first-child {
+  display: inline-block;
+  font: 700 12px/1 var(--f-body);
+  color: var(--bad);
+  background: var(--bad-bg);
+  padding: 6px 9px;
+  border-radius: 4px;
+  margin-bottom: 14px;
+}
+.cover .sub, .cover > div:not(.small):not(.menu) { font-size: 17px; color: var(--muted); line-height: 1.9; }
+.cover p.meta, .cover .meta:not(table) { color: var(--muted); font-size: 13px; }
+.cover table.meta {
+  margin: 20px 0 6px;
+  border: 0;
+  background: transparent;
+  border-radius: 0;
+  font-size: 14px;
+}
+.cover table.meta td { border-bottom: 1px dashed var(--line); padding: 7px 0 7px 12px; background: transparent; }
+.cover table.meta td:first-child { color: var(--muted); font-weight: 600; width: 30%; }
+.cover table.meta tr:last-child td { border-bottom: 0; }
+
+/* cover menu -> chip navigation */
+.menu { margin-top: 22px; border-top: 1px solid var(--line); padding-top: 16px; }
+.menu-ttl { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
+.menu-toc { float: left; font-size: 13px; font-weight: 600; text-decoration: none; }
+.menu-grp {
+  font: 700 12px/1 var(--f-body);
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+.menu ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 7px; }
+.menu li { margin: 0; }
+.menu li a {
+  display: inline-block;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--ink);
+  text-decoration: none;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  transition: border-color 0.15s, background 0.15s;
+}
+.menu li a:hover, .menu li a:focus-visible { border-color: var(--accent); background: var(--accent-tint); outline: none; }
+
+/* ---------- table of contents ---------- */
+ol.toc {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 12px 40px 12px 16px;
+  columns: 2 280px;
+  column-gap: 32px;
+}
+ol.toc li { break-inside: avoid; }
+ol.toc a { color: var(--ink); text-decoration: none; }
+ol.toc a:hover { color: var(--accent); }
+
+/* ---------- part dividers ---------- */
+.part {
+  margin-top: 88px;
+  background: var(--part-bg);
+  color: var(--part-ink);
+  border-radius: 16px;
+  padding: 28px clamp(18px, 4vw, 40px);
+  position: relative;
+  overflow: hidden;
+}
+.part::after {
+  content: "";
+  position: absolute;
+  inset: auto -60px -80px auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgb(255 255 255 / 0.10), transparent 70%);
+}
+.part .num { font: 700 13px/1 var(--f-body); opacity: 0.75; }
+.part .ttl { font-size: clamp(24px, 3.4vw, 32px); font-weight: 800; margin-top: 10px; line-height: 1.4; }
+.part .desc { margin-top: 8px; opacity: 0.85; max-width: 720px; }
+.part + h2 { border-top: 0; margin-top: 40px; }
+
+/* ---------- tables ---------- */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.75;
+  margin-block: 14px 8px;
+}
+th, td {
+  text-align: start;
+  vertical-align: top;
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
+}
+th {
+  background: var(--surface-2);
+  font-size: 12.5px;
+  font-weight: 700;
+  color: var(--ink);
+  white-space: normal;
+}
+tr:last-child td { border-bottom: 0; }
+tbody tr:hover td, table > tr:hover td { background: color-mix(in srgb, var(--accent) 4%, transparent); }
+td code { font-size: 0.8em; }
+td .ab { display: inline; }
+.feat td:first-child { width: 27%; font-weight: 700; }
+.feat th:first-child { width: 21%; }
+.feat th:nth-child(3) { width: 10%; }
+.two td { width: 50%; }
+.c { text-align: center; }
+@media (min-width: 900px) { table { table-layout: fixed; } }
+
+/* ---------- callouts, KPIs, figures ---------- */
+.box {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-inline-start: 4px solid var(--accent);
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin-block: 16px;
+}
+.box.ok { border-inline-start-color: var(--ok); background: color-mix(in srgb, var(--ok-bg) 60%, var(--surface)); }
+.box.warn { border-inline-start-color: var(--warn); background: color-mix(in srgb, var(--warn-bg) 60%, var(--surface)); }
+.box.bad { border-inline-start-color: var(--bad); background: color-mix(in srgb, var(--bad-bg) 60%, var(--surface)); }
+.box.dev { border-inline-start-color: var(--c-violet); }
+.box ul, .box ol { margin-block: 6px 2px; }
+
+.kpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-block: 18px;
+}
+.kpi {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.kpi b { display: block; font-size: 32px; font-weight: 800; line-height: 1.2; color: var(--accent); }
+.kpi span { display: block; font-size: 13px; color: var(--muted); line-height: 1.6; margin-top: 4px; }
+
+.diagram {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  margin-block: 18px 8px;
+  overflow-x: auto;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 760px; direction: ltr; }
+.cap { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+
+/* ---------- sidebar + toolbar (built by phoenix_fa.js) ---------- */
+#side { display: none; }
+.toolbar {
+  position: fixed;
+  inset-inline-end: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  z-index: 20;
+  max-width: none;
+  margin: 0;
+}
+.toolbar button {
+  font: 600 12px/1 var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 9px 13px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px -10px rgb(0 0 0 / 0.5);
+}
+.toolbar button:hover, .toolbar button:focus-visible { border-color: var(--accent); outline: none; }
+.toolbar button[aria-pressed="true"] { background: var(--accent-tint); border-color: var(--accent); }
+
+@media (min-width: 1320px) {
+  body { padding-inline-start: calc(var(--side) + 32px); }
+  #side {
+    display: block;
+    position: fixed;
+    inset-block: 0;
+    inset-inline-start: 0;
+    width: var(--side);
+    max-width: none;
+    margin: 0;
+    overflow-y: auto;
+    padding: 28px 18px 40px 14px;
+    background: var(--surface);
+    border-inline-end: 1px solid var(--line);
+    font-size: 13px;
+    line-height: 1.6;
+    z-index: 10;
+  }
+  #side .doc { font-weight: 800; font-size: 15px; line-height: 1.5; margin-bottom: 14px; }
+  #side .grp { font: 700 11.5px/1.4 var(--f-body); color: var(--muted); margin: 18px 0 6px; }
+  #side ol { list-style: none; padding: 0; margin: 0; }
+  #side li { margin: 0; }
+  #side a {
+    display: block;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    border-inline-start: 2px solid transparent;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #side a:hover { color: var(--ink); background: var(--surface-2); }
+  #side a.on { color: var(--accent); background: var(--accent-tint); border-inline-start-color: var(--accent); font-weight: 600; }
+}
+
+/* ---------- small screens ---------- */
+@media (max-width: 760px) {
+  body { font-size: 15px; line-height: 1.9; }
+  table { display: block; overflow-x: auto; }
+  th, td { min-width: 120px; }
+  .kpis { grid-template-columns: repeat(2, 1fr); }
+  ol.toc { columns: 1; }
+  .menu-toc { float: none; display: inline-block; margin-bottom: 6px; }
+}
+
+/* ---------- print / PDF ---------- */
+@page { size: A4; margin: 15mm 14mm 16mm; }
+@media print {
+  * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  html { scroll-behavior: auto; }
+  body { padding: 0; font-size: 10.5pt; line-height: 1.85; }
+  body > * { max-width: none; }
+  #side, .toolbar { display: none !important; }
+  body.hide-blame .who { display: block; }
+  a { color: inherit; text-decoration: none; }
+  .cover { margin-top: 0; box-shadow: none; }
+  .part { break-before: page; margin-top: 0; }
+  .pb { break-before: page; }
+  h2 { margin-top: 28px; }
+  h2, h3, h4 { break-after: avoid; }
+  tr, .box, .kpi, pre, .diagram { break-inside: avoid; }
+  table { font-size: 9pt; display: table; }
+  th, td { padding: 5px 8px; min-width: 0; }
+  tbody tr:hover td, table > tr:hover td { background: none; }
+  .diagram { overflow: visible; }
+  .diagram svg { min-width: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .menu li a { transition: none; }
+}
+
+/* ---------- tracker / sheet pages ---------- */
+.lede { font-size: 16px; color: var(--muted); }
+.scroll-x { overflow-x: auto; }
+body > .scroll-x:has(table.wide) { max-width: none; }
+@media (min-width: 1320px) { body > .scroll-x:has(table.wide) { max-width: calc(100vw - var(--side) - 80px); } }
+table.sheet { table-layout: fixed; }
+table.sheet.wide { font-size: 13px; max-width: none; }
+table.sheet tr.sub td { background: var(--surface-2); font-weight: 700; color: var(--accent); }
+td.c-num { text-align: center; white-space: nowrap; }
+td.c-mono { font: 11.5px/1.7 var(--f-mono); unicode-bidi: plaintext; text-align: start; color: var(--muted); }
+td.c-note { color: var(--muted); font-size: 0.92em; }
+td.c-key { font-weight: 700; color: var(--muted); }
+td.c-ok { background: color-mix(in srgb, var(--ok-bg) 70%, transparent); }
+td.c-warn { background: color-mix(in srgb, var(--warn-bg) 70%, transparent); }
+td.c-bad { background: color-mix(in srgb, var(--bad-bg) 70%, transparent); }
+td.c-gap { background: color-mix(in srgb, var(--gap-bg) 70%, transparent); }
+td.c-edit { background: color-mix(in srgb, var(--info-bg) 70%, transparent); }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 12px auto; }
+.filters input, .filters select {
+  font: 14px var(--f-body);
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 7px 12px;
+}
+.filters input { flex: 1 1 260px; }
+.filters input:focus, .filters select:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+@media print {
+  .filters { display: none; }
+  table.sheet.wide { width: 100% !important; font-size: 7.5pt; }
+}
+
+/* ---------- big wide table (dossier §27.2) ---------- */
+table.big { font-size: 15px; line-height: 1.9; }
+table.big th { font-size: 13.5px; padding: 11px 14px; }
+table.big td { padding: 12px 14px; }
+table.big td .small { font-size: 13px; }
+@media print { table.big { font-size: 8.5pt; line-height: 1.7; } table.big th { font-size: 8pt; } table.big td { padding: 5px 6px; } }
+
+    </style>
+    <!-- theme:head:end -->
+  </head>
+  <body>
+    <section class="cover">
+      <div class="small">Confidential — MCINEXT internal</div>
+      <h1>Employee Voice Pilot Fit-Gap Tracker</h1>
+      <div class="sub">87 requirements of the MCINEXT × MCI EX agreement, with code-verified status, evidence, dependency owner and proposed deadline</div>
+      <p class="meta">Editable version: <code>FIT_GAP_TRACKER.xlsx</code> (same data; fill in the "EX priority" and "Final deadline" columns in Excel) · Generated from <code>source/verdicts.tsv</code> and <code>fitgap_part*.tsv</code></p>
+      <nav class="menu"><div class="menu-grp">Sheets</div><ul><li><a href="#guide">Guide</a></li><li><a href="#rows">Rows</a></li><li><a href="#summary">Summary</a></li><li><a href="#findings">Critical findings</a></li><li><a href="#architecture">Architecture</a></li></ul></nav>
+    </section>
+<h2 id="guide">Guide</h2>
+<p class="lede">How to use this file</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:26.2%"><col style="width:73.8%"></colgroup>
+<tbody>
+<tr><td class="c-key">Subject</td><td>Fit-Gap agreement for the Employee Voice (EX) pilot — MCINEXT × MCI's EX department</td></tr>
+<tr><td class="c-key">Number of requirements</td><td>87 rows in 8 blocks</td></tr>
+<tr><td class="c-key">Basis of the "Verified status" column</td><td>Direct reading of the phoenix repository code — only Python projects active in the last 3 months</td></tr>
+<tr><td class="c-key">Code review date</td><td>1405/07/06 — equivalent to 2026-09-28</td></tr>
+<tr><td class="c-key">Review scope</td><td>coa-api, aiva, adcs, aqa, chatbot-iva-agent, agentlib, adcs-auth, adcs-knowledgebase, aiva-knowledgebase, fastlib</td></tr>
+<tr><td class="c-key">Out of scope</td><td>python/coa-ai — the sentiment/summary/topic analysis engine. Last commit 2025-07-13 (frozen for 14 months)</td></tr>
+<tr><td class="c-key">Columns you fill in</td><td>"EX priority" is filled in by EX. You fix the "Final deadline" based on the "Proposed deadline" column.</td></tr>
+<tr><td class="c-key">Deadline rule</td><td>Do not write any calendar date. Write "T + n business days from receipt of [specific input]". This rule is based on the acceptance criterion of row TEC-14 itself.</td></tr>
+<tr class="sub"><td colspan="2">Color meanings</td></tr>
+<tr><td class="c-ok">Green — Verified</td><td>Found in the code and works. Defensible in UAT.</td></tr>
+<tr><td class="c-warn">Yellow — Partial</td><td>Partly implemented. Without an explanation, it will be rejected in UAT.</td></tr>
+<tr><td class="c-bad">Red — Rejected</td><td>The agreement's claim does not match the code. Fix it before the meeting.</td></tr>
+<tr><td class="c-gap">Gray — Missing</td><td>No code exists. Real development is needed.</td></tr>
+<tr><td class="c-edit">Blue — Blank</td><td>The column was left blank in the agreement and must be filled in.</td></tr>
+<tr><td>No color — Configuration/infrastructure</td><td>No code needed; it is configuration or process.</td></tr>
+<tr><td class="c-key">Sample filled-in row</td><td>Example: PRV-03 | Claim: Available in product | Verified: Rejected | Evidence: coa/apps/files/views.py:19 | Deadline: before UAT, T+3 business days</td></tr>
+</tbody>
+</table></div>
+<h2 id="rows">Rows</h2>
+<div class="filters"><input type="search" id="q" placeholder="Search ID, requirement, evidence…" aria-label="Search"><select id="st" aria-label="Status filter"><option value="">All statuses</option><option value="c-ok">Verified</option><option value="c-warn">Partial / Unclear</option><option value="c-bad">Rejected</option><option value="c-gap">Missing</option><option value="c-edit">Blank in agreement</option><option value="plain">Configuration / outside code</option></select><span id="cnt" class="small"></span></div>
+<div class="scroll-x"><table class="sheet wide" style="width:3536px">
+<colgroup><col style="width:187px"><col style="width:76px"><col style="width:221px"><col style="width:442px"><col style="width:391px"><col style="width:85px"><col style="width:170px"><col style="width:187px"><col style="width:391px"><col style="width:76px"><col style="width:136px"><col style="width:255px"><col style="width:442px"><col style="width:340px"><col style="width:136px"></colgroup>
+<thead><tr><th>Block</th><th>ID</th><th>Requirement</th><th>Description / expected behavior</th><th>Scenario or acceptance criterion</th><th>EX priority</th><th>MCINEXT declared status</th><th>Code-verified status</th><th>Evidence in code (file:line)</th><th>Confidence</th><th>Dependency owner</th><th>Proposed deadline</th><th>Required action / risk</th><th>Agreement technical notes</th><th>Final deadline</th></tr></thead>
+<tbody>
+<tr data-st="plain"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-01</td><td>Inbound service number / voice channel</td><td>A dedicated voice channel should be set up for EX so that whitelisted employees can call the AI directly. The channel must be usable and traceable independently of the general Contact Center environment.</td><td>The pilot number is called from an authorized number and enters the AI conversation without a human operator.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration / infrastructure</td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_SIP_*, AGENT_ORIGINAL_CALL_ID_FALLBACK); src/entrypoint.py</td><td class="c-num">Certain</td><td>MCINEXT + MCI-IT</td><td>T+5 business days after the service number and Virtual IP are allocated</td><td>The SIP path and the x-originalcallid/city_code headers are implemented; only the service number allocation and the Kamailio connection remain</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-02</td><td>MCI employee whitelist</td><td>Only numbers belonging to employees with an MCI contract that are in the approved dataset should be allowed into the pilot service.</td><td>A call from a number on the whitelist enters the service; a number outside the whitelist does not enter the main flow.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">aiva/memory/config.py:20-21 (PHONE_WHITELIST=[], BYPASS_WHITELIST=True); aiva_consume_kafka.py:310</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+7 business days after receiving the number dataset from EX</td><td class="c-warn">⚠️ The existing whitelist only gates "memory collection", not "call entry". A call admission gate must be added at the SIP layer. Also, BYPASS_WHITELIST defaults to True</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-03</td><td>Behavior for numbers outside the whitelist</td><td>A clear, controlled behavior should be defined for unauthorized numbers, such as a short no-access message, without disclosing internal information or creating a wrong analytics record.</td><td>An unauthorized number is tested and receives the correct message; the call is not recorded as Employee Voice.</td><td class="c-edit"></td><td>Requires technical review</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">Search across 8 services: no rejection path for unauthorized calls was found</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+5 business days after EX defines the message</td><td class="c-gap">Needs a short message and a hang-up path at the SIP/Agent layer, without creating an analytics record</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-04</td><td>Receiving the caller number as the mapping key</td><td>The caller number should be received only to identify the employee record and attach organizational context; the number should not be visible in the analytics dashboard by default.</td><td>The employee's number is mapped to the correct record, but the name/number is not shown in the analytics view.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (phone_number); coa/apps/main/models.py:381 (user_num)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days after the identity policy decision</td><td class="c-warn">The number is stored in plaintext in both the Kafka payload and the DB; hiding it in the Serializer/View requires development</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-05</td><td>Mapping the number to organizational data</td><td>Using the approved dataset, the system should be able to link the number to the required organizational data such as deputy division, general directorate and department.</td><td>A test call is shown in the analysis with the correct organizational segment.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">No number→org structure mapping table was found</td><td class="c-num">Certain</td><td>Shared (dataset from EX)</td><td>T+10 business days after receiving the organizational dataset</td><td class="c-gap">Needs a mapping data model (deputy division/general directorate/department) + a lookup service</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-06</td><td>Recording call metadata</td><td>For every call, a unique ID, date and time, call duration and completed/dropped status should be recorded so that analysis and audit are possible.</td><td>Every call has a unique Conversation ID and complete metadata visible in the backend.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (session_id, call_id, original_call_id, session_duration, agent_prewarmed/started/ended_time); coa/apps/main/models.py:166</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+5 business days (completed/dropped tag: after EX defines it)</td><td class="c-warn">Unique ID, time and duration are all present; only the Incomplete/Complete tag remains — most of this row is "available"</td><td class="c-note">Some items, such as the unique ID and the date and time, already exist in the system, but the completed or dropped call status requires a specific, clear definition in order to create a tag, which is not a priority in the current phase. Also, searching on metadata requires samples to be provided and development by the MCINEXT team.</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-07</td><td>Handling dropped or incomplete calls</td><td>If a call is dropped before it ends, the system should mark it Incomplete and store only the part actually received; the AI must not complete or guess unspoken information.</td><td>A call is dropped on purpose; an Incomplete record is created and no fabricated summary is produced.</td><td class="c-edit"></td><td>Requires technical review</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">No min_duration/min_turns guard before summarization was found</td><td class="c-num">Certain</td><td>MCINEXT</td><td>Guard: T+3 business days | Incomplete tag: after EX defines it</td><td class="c-gap">⚠️ Red Flag: a summary may be generated from a dropped call. Add the minimum duration/turn guard in this phase even if the tag is delayed</td><td class="c-note">The completed or dropped call status requires a specific, clear definition in order to create a tag, which is not a priority in the current phase.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>1. Voice Intake &amp; Access</td><td class="c-num">VIA-08</td><td>Voice service stability and quality</td><td>Within the pilot capacity, the channel must have sufficient quality and stability, and connection errors, dropped calls and failures must be logged.</td><td>Several consecutive and concurrent pilot calls run without losing any record, and the error log is available to the technical team.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_MAX_UNRECOVERABLE_ERRORS, STT/LLM/TTS retry+timeout); src/utils/prometheus_metrics.py; src/utils/apm.py</td><td class="c-num">Certain</td><td>MCINEXT</td><td>—</td><td class="c-ok">Retry, timeout, Prometheus and Elastic APM are complete. The pilot concurrency capacity must be established with a load test</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-01</td><td>Short AI introduction and channel purpose</td><td>At the start of the call, the AI briefly and clearly introduces itself and says the channel is for hearing employees' experiences, issues, suggestions and questions.</td><td>A short, understandable intro runs without long legal text.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">chatbot-iva-agent/src/config.py (AGENT_GREETING_MESSAGE, AGENT_GREETING_ALLOW_INTERRUPTION)</td><td class="c-num">Certain</td><td>EX (text)</td><td>T+1 business day after the text is approved</td><td class="c-ok">The intro text is fully configurable</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>2. Conversation Experience</td><td class="c-num">CON-02</td><td>Short privacy notice</td><td>At the start of the interaction, the employee is told in general terms how the conversation will be used and that the data is used to analyze employee experience.</td><td>Before stating the main content, the user hears the EX-approved notice.</td><td class="c-edit"></td><td>Available in product</td><td>Configuration</td><td class="c-mono">Same AGENT_GREETING_MESSAGE</td><td class="c-num">Certain</td><td>EX</td><td>T+1 business day after the notice text is approved</td><td>Text only; no new code needed</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-03</td><td>Open-ended start</td><td>The conversation starts with an open question and the employee is not forced to pick a menu option or categorize their voice.</td><td>The employee can raise any topic in natural language without first choosing a category.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/prompts/greeting.py; aiva/prompts/react.py</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Free start with no menu</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-04</td><td>Smart follow-up when unclear</td><td>The AI asks a follow-up question only when there is a real gap in understanding the issue; the question must be neutral, relevant and based on what the person said before.</td><td>For the vague sentence "the evaluation process isn't good", the AI asks a relevant clarifying question.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/chat/handlers/clarifying.py; aiva/chat/handlers/classification.py; aiva/prompts/clarifying_chitchat.py</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Clarifying branch with a separate classifier; architecture in docs/RequestFlow.md</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-05</td><td>No repeated questions</td><td>The AI does not ask again for information the employee already gave in the same conversation, and keeps the conversation context.</td><td>In the UAT scenario, information already given is not requested again.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/chat/config.py (CHAT_HISTORY_LIMIT=50); docs/RequestFlow.md (shared ChatContext)</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Context is kept throughout the conversation ⚠️ Besides the call context, AIVA builds a long-term memory across calls for each number (aiva/memory, ChatbotUser.memory) — this must be disclosed in the notice or turned off for EX.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>2. Conversation Experience</td><td class="c-num">CON-06</td><td>Follow-up limit</td><td>The conversation must not turn into a long interview or an interrogation. The number/logic of follow-ups should be controllable, and the conversation should wrap up once there is enough understanding.</td><td>For a normal conversation, the number of follow-ups does not exceed the cap agreed in UAT.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">aiva/chat/config.py (REACT_MAX_ITERS=10, AGENT_MAX_HISTORY_TURNS=6)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+3 business days</td><td class="c-warn">Caps on the tool loop and history exist, but a "follow-up count cap" does not exist as a separate parameter</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-07</td><td>Detecting a complete voice and not asking extra questions</td><td>If the employee has clearly explained the issue, its timing/context and its impact from the start, the AI does not ask extra questions just because it can converse.</td><td>The complete scenario is tested and no unnecessary follow-up occurs.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/prompts/classification.py:88; aiva/prompts/clarifying_chitchat.py:48</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Complete-voice detection is built into the classification prompt</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>2. Conversation Experience</td><td class="c-num">CON-08</td><td>Summary confirmation where possible</td><td>If the product supports it, the AI can restate its short understanding before the end so the person can confirm or correct it.</td><td>The user can confirm the summary or correct an important point.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX (redefinition)</td><td>On hold until EX redefines it</td><td class="c-gap">The agreement itself marks this row as "needs review"; do not commit</td><td class="c-note">This item needs review because it is not well defined and there is no way to define the right way to ask the question during the call.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>2. Conversation Experience</td><td class="c-num">CON-09</td><td>Clear ending with no promise of individual follow-up</td><td>The closing message confirms that the voice was received but, since the MVP is not designed for individual case handling, it does not create an SLA or a promise of a personal response.</td><td>No phrase like "this will be followed up within X hours" or any out-of-scope promise is heard.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/chat/config.py (TOOL_CALLING_EXIT_ANSWER, exit_tool); INTENT_AGENT_ENABLED_TOOLS</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Clear ending with no SLA promise</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-01</td><td>Persian speech-to-text</td><td>Persian conversation is transcribed with acceptable quality, and the quality is measured on employees' real way of speaking, not just studio samples.</td><td>The set of UAT scenarios is run with natural accents/speed and STT errors are logged.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">chatbot-iva-agent/src/utils/stt.py + AGENT_STT_MODEL/BASE_URL; adcs POST /api/v1/chat/asr</td><td class="c-num">Certain</td><td>MCINEXT</td><td>—</td><td class="c-ok">⚠️ Implemented, but WER has never been measured. "Available" means implemented, not measured</td><td class="c-note">This part is a component of a whole service; improving its quality is the MCINEXT team's responsibility, and EX does not need to review each conversation one by one.</td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>3. AI Analysis</td><td class="c-num">AI-02</td><td>Full conversation transcript</td><td>The conversation text is stored in a form that authorized users can retrieve, and its link to the Conversation ID is preserved.</td><td>The transcript of every completed call is available in the backend and linked to the correct call.</td><td class="c-edit"></td><td>Out of scope for now</td><td><span class="tag t-bad">Rejected (claim incorrect)</span></td><td class="c-mono">coa/apps/main/models.py:397 (raw_input); services/call.py:771 (&quot;asr_data&quot;: raw_input if debug); models.py:395 (conversation_reform); chatbot-iva-agent/src/schema.py (messages[].text)</td><td class="c-num">Certain</td><td>Shared (policy decision)</td><td>T+2 business days for the policy decision</td><td class="c-bad">⚠️⚠️ The transcript is stored and published on Kafka. "Out of scope" is incorrect. Either declare the retention or stop storing it</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-03</td><td>Fact-based summary</td><td>For each conversation or voice item, the AI produces a short summary that reflects only what the person said and does not invent new causes/judgments.</td><td>A human reviewer can compare the summary with the transcript and confirm its faithfulness.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/main/models.py:372 (call_summary); chatbot-iva-agent AGENT_LLM_SESSION_SUMMARY_URL</td><td class="c-num">Certain</td><td>MCINEXT</td><td>—</td><td class="c-ok">⚠️ This row's acceptance criterion is comparison with the transcript — it is tied to AI-02. Faithfulness has not been measured</td><td class="c-note">The acceptance criterion can be met by listening to the conversation and reviewing the call summary.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-04</td><td>Separating multiple topics in one conversation</td><td>If the employee raises several independent issues in one call, the system splits them into separate voice items so that each topic gets its own coding.</td><td>The food + promotion + portal scenario is split into at least three separate voice items.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Unclear (coa-ai frozen)</span></td><td class="c-mono">coa/apps/main/models.py:396 (topics JSON), 370 (category_subcategory_dict) — reading the result only</td><td class="c-num">Likely</td><td>MCINEXT</td><td>T+15 business days after coa-ai is reactivated</td><td class="c-warn">The multi-topic splitting logic lives in python/coa-ai, whose last commit is 2025-07-13</td><td class="c-note">In the intelligent analysis system they are detected separately and automatically.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-05</td><td>Voice type detection</td><td>The message type, such as suggestion, pain point, complaint, concern, question/ambiguity or positive experience, is detected; multi-label where needed.</td><td>A message that contains both a pain point and a suggestion does not lose either aspect.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-warn">Unclear (coa-ai frozen)</span></td><td class="c-mono">coa/config.py (tag schema)</td><td class="c-num">Likely</td><td>Shared</td><td>T+15 business days after EX gives a precise definition</td><td class="c-warn">Multi-label support could not be verified</td><td class="c-note">Needs a more precise definition</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-06</td><td>Theme Detection</td><td>The main topic of each voice item is identified based on the taxonomy agreed with EX.</td><td>AI coding is compared with the EX team's human-coded samples.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Unclear (coa-ai frozen)</span></td><td class="c-mono">category_subcategory_dict; GET /api/v1/analyse/calls/Thematic-analysis/category</td><td class="c-num">Likely</td><td>Shared (taxonomy from EX)</td><td>T+10 business days after receiving the taxonomy</td><td class="c-warn">The serving and reporting layer is complete; coding quality has not been measured</td><td class="c-note">The EX team can provide an initial list of the different topics to the MCINEXT team.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-07</td><td>Sub-theme Detection</td><td>Where a sub-topic structure exists, the AI places the voice in the right sub-theme so the report does not become too general.</td><td>For a restaurant voice, a sub-topic such as quality/variety is detected, if defined in the taxonomy.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Unclear (coa-ai frozen)</span></td><td class="c-mono">GET /api/v1/analyse/calls/Thematic-analysis/subcategory</td><td class="c-num">Likely</td><td>Shared</td><td>Same as AI-06</td><td class="c-warn">Sub-topics are supported in the API and the data model</td><td class="c-note">Available in the system, which creates it automatically.</td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-08</td><td>Sentiment / Direction</td><td>The overall direction of the voice content is analyzed at the Positive / Neutral-Mixed / Negative level; the basis is the content expressed, not a definitive claim about the person's mental state.</td><td>The overall direction of the voice content is analyzed at the Positive / Neutral-Mixed / Negative level; the basis is the content expressed, not a definitive claim about the person's mental state.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial → "configuration", not "development"</span></td><td class="c-mono">coa/apps/main/models.py:340-345 (user_sentiment, agent_sentiment, *_meta, indexed)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+5 business days</td><td class="c-warn">Sentiment is already stored; only the three-level scale and the "content-based" wording need configuring. ⚠️ This row's acceptance criterion cell is a copy of the requirement description — ask EX for the real criterion</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-09</td><td>Positive Signal Detection</td><td>Besides problems and dissatisfaction, the system also extracts positive experiences and improvements noticed by employees.</td><td>Positive feedback about a service is visible in the dashboard/report.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">user_sentiment (positive values) + models.py:373 (suggestions)</td><td class="c-num">Likely</td><td>MCINEXT</td><td>T+5 business days</td><td class="c-warn">The data exists; a dedicated Positive view/filter is needed</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-10</td><td>Frequency Analysis</td><td>The number and share of voices related to each theme/sub-theme over a time period is calculated so that frequent topics stand out.</td><td>Top themes are reported based on a defined unit of analysis and a clear denominator.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/main/services/thematic_analysis.py; /analyse/calls/Thematic-analysis/*</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Topic frequency and share are complete</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>3. AI Analysis</td><td class="c-num">AI-11</td><td>Trend Detection</td><td>The system detects how topics change over time and reports Rising/Stable/Falling or a similar trend; high volume alone must not mean an alert.</td><td>A topic with noticeable growth relative to the baseline is identified as Rising.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/trends/services/sync.py; coa/apps/trends/models.py:81 (trend_score, baseline, trend_signal, is_trend, time_series)</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">It has a real baseline and signal — not just a volume count</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-12</td><td>Similarity &amp; Clustering</td><td>Similar voices are placed in shared clusters, without deleting the original record, so that recurring patterns become visible.</td><td>Several similar pieces of feedback about first-day access are seen in one shared cluster.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-gap">Missing (in active repos)</span></td><td class="c-mono">No clustering/similarity code was found</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+20 business days</td><td class="c-gap">It is either in the frozen coa-ai or does not exist; check before committing</td><td class="c-note">Needs a more precise definition from the EX team</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-13</td><td>Emerging Theme Detection</td><td>The system can identify a new topic that is not in the existing taxonomy but around which several similar voices have formed, and show it as a candidate.</td><td>The new topic is not forced onto the nearest existing theme, and a reviewable candidate is created.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-gap">Missing (in active repos)</span></td><td class="c-mono">No emerging/candidate topic code was found</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+20 business days</td><td class="c-gap">Same status as AI-12</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>3. AI Analysis</td><td class="c-num">AI-14</td><td>Confidence / model uncertainty</td><td>Where possible, the confidence of the main outputs is recorded, and in ambiguous cases the AI can return Unclear / Needs Review instead of making a definitive classification.</td><td>An ambiguous audio or text sample can be identified as Low Confidence/Needs Review.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">chatbot-iva-agent/src/schema.py (transcript_confidence per utterance)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-warn">ASR-level confidence already flows on Kafka; LLM output confidence and the Needs Review label are missing</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>3. AI Analysis</td><td class="c-num">AI-15</td><td>Severity / potential importance</td><td>Where possible, the severity of the issue is detected separately from sentiment, so that calm but important content can be told apart from a minor complaint.</td><td>An issue with serious consequences can receive a higher severity than its sentiment.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">No severity field independent of sentiment was found</td><td class="c-num">Certain</td><td>Shared</td><td>T+15 business days</td><td class="c-gap">trends/services/webhook.py:93 only has a fixed severity of &quot;high&quot;</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-01</td><td>Receiving a valid MCI employee dataset</td><td>For the pilot, a controlled dataset containing the phone numbers and required attributes of MCI employees is provided to the system.</td><td>The initial version of the dataset is loaded without unnecessary fields and can be mapped.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>T+3 business days after the dataset is delivered</td><td>Fully dependent on EX</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-02</td><td>Required organizational structure</td><td>At least the deputy division, general directorate and department fields are usable for segment analysis; extra attributes are added only if truly needed.</td><td>Each call's voice is aggregated in the correct organizational segment.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>Same as SEG-01</td><td>At least three organizational fields</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-03</td><td>Separating context from displayed identity</td><td>The system can use organizational context for analysis without showing the person's name or number in the normal dashboard.</td><td>The organizational filter works, but the table/chart does not show people's names or numbers.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">coa/apps/users/permissions.py; coa/apps/main/services/call.py:849 (view_all_calls → agent_id scoping)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-warn">Real RBAC and row-level scoping exist; identity hiding is needed in the serializer layer</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-04</td><td>Dataset refresh / update</td><td>The process for updating the whitelist and the employee mapping is defined, so that an organizational move or a number change does not lead to stale data being used.</td><td>The refresh method, frequency and the person responsible for updates are documented.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-gap">Missing (process)</span></td><td class="c-mono">—</td><td class="c-num">Certain</td><td>Shared</td><td>T+5 business days after the frequency is agreed</td><td class="c-gap">Process and owner, not code</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-05</td><td>Handling failed mapping</td><td>If a number is on the whitelist but its organizational context cannot be retrieved, the system marks the record Unmapped and avoids guesswork attribution.</td><td>An Unmapped sample shows up in the error/data report and is not attributed to the wrong unit.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">No Unmapped label was found in the data model</td><td class="c-num">Likely</td><td>MCINEXT</td><td>T+7 business days</td><td class="c-warn">Marked "available" in the agreement, but no code evidence was found — confirm before UAT</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-06</td><td>Limiting the pilot population to MCI contracts</td><td>In the first version, segments are analyzed only for the MCI population; other contract groups stay outside the pilot until a valid source and mapping are determined.</td><td>No non-MCI record enters the pilot population without a new decision.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>T+3 business days</td><td>Limiting the pilot population</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>4. Segmentation &amp; Employee Context</td><td class="c-num">SEG-07</td><td>Direct SAP connection and automatic sync of employee data</td><td>Instead of receiving and manually updating the employee Excel file, the system connects to SAP or an approved middleware service and receives and updates the required employee data automatically. When a colleague is created, moved or leaves in SAP, the system's data is also updated according to the agreed schedule or sync mechanism.</td><td>After an employee's data changes in SAP, such as a move from one department to another, their data is updated in the EX system without an Excel upload and within the agreed time window. Sync errors are also visible and traceable.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">No SAP/middleware code was found</td><td class="c-num">Certain</td><td>MCI-IT (granting access)</td><td>Phase 2 — T+30 business days after SAP access is granted</td><td class="c-gap">⚠️ The largest development item in the whole agreement, and outside your team's control. MVP alternative: SEG-01 + SEG-04 (Excel + documented frequency)</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-01</td><td>Identity hidden by default</td><td>The employee's name and number are not shown in the system's normal view, not even to the system administrator; viewing identity requires a specific action and a special access level.</td><td>Opening the dashboard/call list does not show identity by default.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">grep redact|mask|anonymi|deidentif across 8 services → zero results</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days after the identity policy decision</td><td class="c-gap">No identity-hiding layer exists</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-02</td><td>Identity access for the system administrator only</td><td>In the pilot, only the system administrator role can resolve identity when necessary; other EX users have no such access.</td><td>A non-admin user cannot recover identity through the UI, an export or any other path.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">coa/apps/users/permissions.py (AnyOfPermission, HasPermission, PermissionGroup)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-warn">The RBAC infrastructure is ready; the "system administrator" role and the identity-resolve path have not been built ⚠️ Second path: AQA runs free-form queries on ClickHouse and may return user_num; AQA's dedicated DB user must only have access to a view without identity columns.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-03</td><td>Raw call for the system administrator only</td><td>The raw call audio file is accessible only to the system administrator, and only when needed for operations/review.</td><td>No management view or normal user can play/download raw audio.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-bad">Rejected (critical security flaw)</span></td><td class="c-mono">coa/apps/files/views.py:19 → @with_permissions({view_calls}) then minio.download(name) with no ownership check</td><td class="c-num">Certain</td><td>MCINEXT</td><td>⛔ Before UAT — T+3 business days</td><td class="c-bad">⚠️⚠️ IDOR: any user with view_calls can download the audio of any call by supplying the file name. The file name is derived from call_id (services/call.py). This row is marked "available" and it is not</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-04</td><td>Aggregate output for managers</td><td>If output is provided to managers, only aggregate analysis, trends, themes and non-identifying summaries are shown; not individual identity or raw calls.</td><td>A sample report given to a manager contains no individual names, numbers or audio.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">Aggregate dashboard endpoints (coa/apps/iva, coa/apps/main/views)</td><td class="c-num">Likely</td><td>MCINEXT</td><td>T+3 business days to review exports</td><td class="c-ok">The aggregate reports are correct, but exports and drill-downs must be reviewed for identity fields</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-05</td><td>Minimum Group Size / Privacy Suppression</td><td>To prevent people from being identified in small segments, the minimum count required to show a drill-down or breakdown is configurable.</td><td>Filters that produce a very small group do not show detailed data.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">grep min_count|k_anon|suppress → only the unrelated contextlib.suppress</td><td class="c-num">Certain</td><td>Shared</td><td>T+7 business days after EX sets the k threshold</td><td class="c-gap">No small-group suppression exists</td><td class="c-note">Needs a more precise definition</td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-06</td><td>Audit logging of identity/audio access</td><td>Every time the system administrator views an identity or a raw call, the user, the time and the record concerned are logged.</td><td>A test access is performed and the audit event can be retrieved.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-bad">Rejected</span></td><td class="c-mono">grep audit|LogEntry|access_log|viewed_by|actor_id in coa-api, adcs, aiva, adcs-auth, aqa, agentlib and both KBs → zero results</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-bad">⚠️ No audit log exists. What exists is coa/middlewares.py:26 (logging method/path/headers), which is not a queryable audit trail</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-07</td><td>Audio retention policy</td><td>The retention period for raw audio files is defined and enforceable; audio is not kept indefinitely just because it is technically possible.</td><td>The agreed policy can be applied to pilot records, and their deletion/archiving can be proven.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/main/management/commands/archive_old_calls.py (ARCHIVE_CALLS_MONTHS, pg_dump → MinIO → delete → VACUUM, with abort-on-failure and --dry-run)</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">✅ The retention design is correct and provable</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-08</td><td>Retention policy for transcripts and analytics data</td><td>The retention period for transcripts and structured data can be defined independently of the audio, to balance analytics needs and confidentiality.</td><td>The retention of each data type is specified in the technical documentation.</td><td class="c-edit"></td><td>Out of scope for now</td><td><span class="tag t-warn">Rejected (reality better than the claim)</span></td><td class="c-mono">Same archive_old_calls: the call_ai_tags table (including raw_input and call_summary) is also archived and deleted</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+2 business days for documentation</td><td class="c-warn">⚠️ The stated reason ("no transcription provided") is incorrect. Retention of structured data is in fact implemented — claim credit for it</td><td class="c-note">Not applicable, since no transcription is provided.</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-09</td><td>PII detection / redaction in outputs</td><td>If the employee mentions another person's name or identifiable details, the management output can provide a de-identified/redacted version.</td><td>A scenario containing a person's name is shown without PII in the manager-facing summary.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">Zero redaction/PII code</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+15 business days</td><td class="c-gap">Fully greenfield</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-10</td><td>Sensitive voice detection and separation</td><td>Potentially sensitive content such as harassment, discrimination, threats or misconduct is separated from the normal dashboard/alert flow, and access to it is restricted.</td><td>A sensitive scenario does not appear in the general dashboard with a raw transcript.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">coa/apps/main/models.py:346-348 (user_bad_words, agent_bad_words, *_meta)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+20 business days</td><td class="c-warn">Only "inappropriate language" is detected. Harassment, discrimination and threats are not detected. Never announce an unmeasured recall figure</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>5. Privacy &amp; Access</td><td class="c-num">PRV-11</td><td>Separating technical access from content access</td><td>Having Technical Admin access to the infrastructure must not by default mean free access to employees' content.</td><td>Technical and content roles can be separated in the access architecture.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">python/adcs-auth (token issuance) + permission-based RBAC in all services</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">⚠️ adcs-auth has zero test files even though it is the authentication authority for all services ⚠️ The aiva and adcs Chat APIs all have permission_classes=(); security is left to the gateway.</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-01</td><td>Knowledge scope: our own department only</td><td>In the MVP, only knowledge belonging to the Communications and Employee Experience department is loaded, so that multi-owner access and complex governance are not needed.</td><td>The AI gives content answers only in the department's approved domains.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">adcs_kb/knowledgebase/api.py (/qa, /list_qa, /question, /answer)</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Question/answer entry from the panel</td><td class="c-note">Data can be entered through the panel as questions and answers.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-02</td><td>Approved seed content</td><td>The EX team prepares and delivers the initial set of questions/answers, processes, links and service information as the source of truth.</td><td>The loaded content has an owner and an approved version.</td><td class="c-edit"></td><td></td><td>Outside code</td><td class="c-mono">adcs_kb /import exists</td><td class="c-num">Certain</td><td>EX</td><td>T+0 (EX delivery)</td><td>The status column in the agreement is blank</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-03</td><td>Answers based on a valid source</td><td>The AI generates answers from the loaded knowledge and is prevented from making up policies, numbers or processes outside the sources.</td><td>A question that has an answer in the knowledge base gets a correct answer consistent with the source.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/retrieve/qdrant.py; aiva/chat/config.py (CONTEXTS_COLLECTION_NAME, CONTEXT_RETRIEVE_THRESHOLD=0.5)</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">RAG with a configurable similarity threshold</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-04</td><td>Answer-scope guardrail</td><td>The agent knows which topics are inside the pilot domain and does not produce definitive organizational answers outside it.</td><td>An out-of-scope question gets a controlled response, not a made-up answer.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">aiva/prompts/guardrail.py; GUARDRAIL_COLLECTION_NAME + GUARDRAIL_RETRIEVE_COUNT; adcs_kb /guardrail</td><td class="c-num">Certain</td><td>EX (document)</td><td>T+5 business days after receiving the EX document</td><td>Example-based guardrail in Qdrant — configured with data, not code</td><td class="c-note">Defined based on the document provided by EX.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-05</td><td>I Don't Know / no answer available</td><td>When the knowledge base has no valid answer, the AI states explicitly that it does not have enough information and, if defined, points to an alternative reference.</td><td>A scenario with a question that has no answer in the knowledge base is handled without hallucination.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">aiva/prompts/guardrail.py + the clarifying branch in the orchestrator</td><td class="c-num">Likely</td><td>—</td><td>—</td><td class="c-ok">The "I don't know" behavior is in the prompt; confirm it with a golden set</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-06</td><td>Sending links/information by SMS</td><td>Where appropriate, the AI can send a link, contact information or a needed summary to the caller by SMS.</td><td>In a test scenario, an approved link is sent to the caller's number.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-ok">Verified (upgraded from Customization)</span></td><td class="c-mono">aiva/tools/sms.py (POST resan.mci.dev/api/messages/send/to/); enabled by default in AGENT_ENABLED_TOOLS; chatbot-iva-agent/src/utils/sms.py</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+5 business days for guardrail and rate limit</td><td class="c-ok">✅ Built. ⚠️ But the LLM itself decides when to send → a rate limit and restrictions are needed before the pilot</td><td class="c-note">The EX team needs to specify the SMS-sending scenarios and introduce the SMS technical team to MCINEXT</td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-07</td><td>Logging unanswered questions</td><td>Questions the AI could not answer from the knowledge base are logged so the EX team can see the knowledge gaps.</td><td>A list of unanswered questions can be extracted.</td><td class="c-edit"></td><td>Requires technical review</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">grep unanswered|no_answer|dont_know → zero results</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+7 business days</td><td class="c-gap">Upgrade "Requires technical review" to an estimated development item</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-08</td><td>FAQ / frequent questions</td><td>From the conversations, the system shows which questions are frequent so that knowledge content and internal communications can be improved based on real needs.</td><td>Top questions over a time period are visible.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">—</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-gap">Can be handed to AQA with a ready-made query</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-09</td><td>Knowledge managed by a limited scope in the pilot</td><td>In the MVP we do not need access for multiple owners across different areas; knowledge is managed only by the designated team/user of the EX department.</td><td>No multi-owner development requirement blocks the pilot launch.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-ok">Verified (upgraded)</span></td><td class="c-mono">Writing to the KB only through the API with human action</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">This is a "restriction", not development — do not charge for not building something</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>6. Knowledge Base Pilot</td><td class="c-num">KB-10</td><td>No knowledge auto-update in the MVP</td><td>The AI can point out gaps but in the first version must not be allowed to change the knowledge base automatically.</td><td>No knowledge change is applied without human action/approval.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-ok">Verified (upgraded)</span></td><td class="c-mono">No auto-ingest/self-update path was found in the KB</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">Holds structurally</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-01</td><td>Full view for EX / system administrator</td><td>A complete analytics view is created for a small number of EX users or the system administrator; in the MVP we do not need several separate dashboards for managers.</td><td>An authorized EX user can analyze all pilot data according to the privacy rules.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/main/views/*; coa/apps/iva/views.py; adcs/dashboard/api.py</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">A complete analytics view exists</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-02</td><td>Call and voice item volume</td><td>The dashboard shows the number of conversations and, where segmented, the number of voice items, with a clear time period.</td><td>The call and voice item counts can be reconciled with the raw pilot data.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">/analyse/dashboard/calls/report; /iva/dashboard/metrics; /iva/dashboard/time-buckets</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-03</td><td>Top themes and sub-themes</td><td>Frequent topics and sub-topics are shown with a clear count/share.</td><td>The user can see the top themes for the selected time period.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">/analyse/calls/Thematic-analysis/{category,subcategory} + /enums</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-04</td><td>Trends and topic changes</td><td>The dashboard shows how themes change over time and which topics are Rising/Stable/Falling.</td><td>A topic with a real increase relative to the base period can be identified in the trend.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">/trends/, /trends/categories/, /trends/subjects/&lt;id&gt;/</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-warn"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-05</td><td>Positive / Negative Signals</td><td>The output is not only complaint-focused; positive experiences are also visible alongside negative signals.</td><td>At least one view/filter exists for positive signals.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td><span class="tag t-warn">Partial</span></td><td class="c-mono">sentiment in call_ai_tags</td><td class="c-num">Likely</td><td>MCINEXT</td><td>T+5 business days</td><td class="c-warn">Only a dedicated Positive view/filter is needed</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-gap"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-06</td><td>Segment Analysis</td><td>Analysis by deputy division, general directorate and department is possible, provided there is enough data and privacy is respected.</td><td>The segment filter works on mapped data, and small groups are suppressed.</td><td class="c-edit"></td><td>Requires development / Customization</td><td><span class="tag t-gap">Missing</span></td><td class="c-mono">—</td><td class="c-num">Certain</td><td>Shared</td><td>T+12 business days after the organizational mapping is complete</td><td class="c-gap">Depends on VIA-05 and PRV-05 — cannot be delivered before them</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-07</td><td>Time filter</td><td>Different time periods such as day/week/month or a custom range can be viewed.</td><td>Selecting a time period updates all related KPIs and trends.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">timeseries endpoints + date_from/date_to parameters</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-08</td><td>Drill-down to the conversation summary</td><td>EX can go from a theme or cluster to the voice item/conversation summary; access to the transcript or audio is subject to permissions.</td><td>A drill-down is performed from a sample theme to the supporting summaries.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">GET /api/v1/analyse/voice/call/&lt;call_id&gt; (CallDetailAPIView)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>Depends on the PRV-03 fix</td><td class="c-ok">Drill-down works, but audio access must be fixed as per PRV-03</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-bad"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-09</td><td>Alert / Management Signal</td><td>For frequent topics, spikes, important trends or sensitive cases, configurable signals/alerts can be created; not every negative voice should trigger an alert.</td><td>A spike scenario creates an alert, but sustained high volume does not create repeated alerts.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-bad">Rejected (partial)</span></td><td class="c-mono">coa/apps/trends/services/webhook.py:93 → fixed severity &quot;high&quot;; no user-configurable threshold was found</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+10 business days</td><td class="c-bad">⚠️ It is "available" in the agreement, but your own note says it is not configurable. Downgrade it yourselves</td><td class="c-note">In general, alerts and trends are notified, but they cannot be configured by the user.</td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-10</td><td>Periodic management output</td><td>The system can produce a presentable summary of the most important topics, changes and signals for the EX team/management meeting.</td><td>A weekly/periodic summary is produced from the pilot data with traceable evidence.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">/trends/report/; /analyse/calls/special-analysis/timeseries/report</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok"></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-11</td><td>Data/report export</td><td>If the EX team needs it, structured output or reports can be exported to allow further analysis or management presentations.</td><td>A sample export contains no unauthorized identity fields.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">coa/apps/experts/service.py (CSV output)</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+3 business days</td><td class="c-ok">Identity fields must be removed from the export to meet the acceptance criterion</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>7. Analytics &amp; Management View</td><td class="c-num">AN-12</td><td>Natural-language analytics assistant</td><td>If the capability is ready, a limited set of EX users can ask natural questions about all pilot data and receive answers with evidence.</td><td>The question "What is the most important topic this month?" gets a traceable answer based on pilot data.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">python/aqa — 9,119 LOC; POST /api/v1/chat/message (SSE); /configs/{prompts,sql-examples}; POST /eval/run</td><td class="c-num">Certain</td><td>—</td><td>—</td><td class="c-ok">✅ Your strongest showcase asset. The only service that has an eval harness</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-01</td><td>Dedicated EX environment</td><td>Because of the confidentiality of employee data, the EX service environment is set up with specific, approved resources and settings.</td><td>A pilot environment that is independent and distinguishable from other environments is ready.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration / infrastructure</td><td class="c-mono">helm/cloud; dockerfiles/</td><td class="c-num">Certain</td><td>MCINEXT + MCI-IT</td><td>T+10 business days after resources are allocated</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-02</td><td>Database / Namespace / Compute</td><td>The data infrastructure, namespace and required compute resources are provided before UAT, and the initial capacity is defined.</td><td>The technical team confirms the infrastructure components are ready to start UAT.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration / infrastructure</td><td class="c-mono">helm/cloud; coa-api/docker-compose.yml</td><td class="c-num">Certain</td><td>MCINEXT + MCI-IT</td><td>Same as TEC-01</td><td>⚠️ Celery runs with concurrency=1 — define the capacity ceiling before committing</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-03</td><td>Network / Domain / Security Setup</td><td>The network, domain and security access requirements for the voice service and the analytics panel are defined and implemented.</td><td>The infrastructure checklist is closed with no open blockers before UAT.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration / infrastructure</td><td class="c-mono">ansible-roles/envoy_*; ansible-roles/ingress_controller</td><td class="c-num">Certain</td><td>MCINEXT + MCI-IT</td><td>Same as TEC-01</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-04</td><td>Connecting the service number to the AI service</td><td>The service/pilot number is connected to the correct voice agent and backend, and the call path is tested end to end.</td><td>A test call from a whitelisted number succeeds from the service number all the way to the stored record.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">chatbot-iva-agent SIP config</td><td class="c-num">Certain</td><td>MCINEXT + MCI-IT</td><td>T+5 business days after the service number is allocated</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-05</td><td>Demo / test instance</td><td>Before full sign-off, a test environment with non-sensitive or sample data is given to the EX team to explore the product and discover real gaps.</td><td>The EX team can see and test the main capabilities without real employee data.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>MCINEXT</td><td>T+7 business days</td><td>Demo environment with sample data</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-06</td><td>Loading the pilot whitelist and mapping</td><td>The dataset of numbers and organizational context for the pilot population is prepared in the agreed format, validated and loaded into the system.</td><td>Sampling of the mappings is confirmed with no meaningful errors.</td><td class="c-edit"></td><td>Requires setup / Configuration</td><td>Configuration</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX (dataset)</td><td>T+3 business days after the dataset is delivered</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-ok"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-07</td><td>Loading seed knowledge</td><td>The initial knowledge of our own department is prepared in a format the product accepts and loaded.</td><td>The set of golden questions reaches the correct answers based on the seed knowledge.</td><td class="c-edit"></td><td>Available in product</td><td><span class="tag t-ok">Verified</span></td><td class="c-mono">adcs_kb /import</td><td class="c-num">Certain</td><td>EX</td><td>T+0</td><td class="c-ok">Carried out by EX</td><td class="c-note">Done by the EX team.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-08</td><td>Track A: Golden Test Scenarios</td><td>A set of controlled scenarios is designed to test the features, such as a multi-topic voice, an ambiguous voice, a positive one, an unanswered question, a sensitive one and a dropped call.</td><td>For each scenario, the expected result and pass/fail are recorded.</td><td class="c-edit"></td><td>Available in product</td><td>Outside code</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>T+0</td><td>EX writes the scenarios</td><td class="c-note">Done by the EX team.</td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-09</td><td>Track B: Natural Use</td><td>Besides scripted testing, department members use the channel like a real user, without a predefined script, so the product's natural behavior can be measured.</td><td>Feedback from natural-use users is recorded separately from the golden scenario tests.</td><td class="c-edit"></td><td>Available in product</td><td>Outside code</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>T+0</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-10</td><td>Internal UAT and issue log</td><td>All errors, gaps, unexpected behaviors and change requests are recorded in a single issue log.</td><td>Each issue has an ID, severity, owner, status and retest result.</td><td class="c-edit"></td><td>Available in product</td><td>Outside code</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>Shared</td><td>T+0</td><td></td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="plain"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-11</td><td>Retest after a fix</td><td>Every important technical or configuration fix must be retested on the previous scenario to make sure no regression has been introduced.</td><td>An issue is closed only after a successful retest.</td><td class="c-edit"></td><td>Available in product</td><td>Outside code</td><td class="c-mono">—</td><td class="c-num">Certain</td><td>EX</td><td>T+0</td><td></td><td class="c-note">Done by the EX team.</td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-12</td><td>Pilot success criteria</td><td>Before the pilot runs, success criteria are defined in four categories: Experience, AI Quality, Management Value and Governance.</td><td>Go/No-Go is decided based on criteria recorded in advance, not just on a successful demo.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">Blank — must be filled in</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>Shared</td><td>T+5 business days</td><td class="c-edit">⚠️ The status column in the agreement is blank. The four categories of success criteria must be fixed before the pilot</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-13</td><td>Failure / Red Flag Criteria</td><td>Items such as weak STT, alert noise, identity disclosure, irrelevant follow-ups or unreliable sensitive detection are defined in advance as red flags.</td><td>For red flags, the fix/stop/scope-reduction decision is defined.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">Blank — must be filled in</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>Shared</td><td>T+5 business days</td><td class="c-edit">⚠️ Must explicitly include VIA-07 (fabricated summary), PRV-03 (audio disclosure) and PRV-10 (sensitive)</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-14</td><td>Row-by-row timeline and dependencies</td><td>After the Fit-Gap, MCINEXT provides the dependencies and a deadline/time estimate for each in-scope requirement.</td><td>No overall timeline is recorded as a final commitment without the main dependencies being specified.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">Blank — MCINEXT commitment</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>MCINEXT</td><td>T+3 business days</td><td class="c-edit">⚠️ This very file is the answer to this row. This row's own acceptance criterion is your shield: without the dependencies being specified, no timeline is a final commitment</td><td class="c-note"></td><td class="c-edit"></td></tr>
+<tr data-st="c-edit"><td>8. Pilot, UAT &amp; Technical Setup</td><td class="c-num">TEC-15</td><td>Go / No-Go Review</td><td>After UAT and the limited pilot, a decision meeting is held and, based on evidence, it is decided whether the product is ready for further development, needs fixes or needs a scope review.</td><td>The meeting output includes the decision, the open gaps and the next-phase roadmap.</td><td class="c-edit"></td><td></td><td><span class="tag t-info">Blank — process</span></td><td class="c-mono">—</td><td class="c-num">—</td><td>Shared</td><td>After UAT ends</td><td class="c-edit">Go/No-Go based on evidence, not a demo</td><td class="c-note"></td><td class="c-edit"></td></tr>
+</tbody>
+</table></div>
+<h2 id="summary">Summary</h2>
+<p class="lede">Status summary — computed live from the "Rows" sheet</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:27.4%"><col style="width:11.3%"><col style="width:11.3%"><col style="width:50.0%"></colgroup>
+<thead><tr><th>Category</th><th>Count</th><th>Percent</th><th>Interpretation</th></tr></thead>
+<tbody>
+<tr class="sub"><td colspan="4">— Status declared in the agreement —</td></tr>
+<tr><td>Available in product</td><td class="c-num">43</td><td class="c-num">49%</td><td>Claimed as "built" — most of the UAT pressure falls on these</td></tr>
+<tr><td>Requires setup / Configuration</td><td class="c-num">17</td><td class="c-num">20%</td><td>No new code; the fastest part</td></tr>
+<tr><td>Requires development / Customization</td><td class="c-num">17</td><td class="c-num">20%</td><td>Real development; the main source of schedule risk</td></tr>
+<tr><td>Requires technical review</td><td class="c-num">3</td><td class="c-num">3%</td><td>Must be turned into an estimated item</td></tr>
+<tr><td>Out of scope for now</td><td class="c-num">2</td><td class="c-num">2%</td><td>Neither row matches the code — AI-02 and PRV-08</td></tr>
+<tr><td>No status (blank)</td><td class="c-num">5</td><td class="c-num">6%</td><td>KB-02 and TEC-12 to TEC-15</td></tr>
+<tr class="sub"><td colspan="4">— Code-verified status —</td></tr>
+<tr><td>Verified</td><td class="c-num">30</td><td class="c-num">34%</td><td>Proven in code — defensible</td></tr>
+<tr><td>Partial</td><td class="c-num">12</td><td class="c-num">14%</td><td>Partly implemented — needs a precise explanation in the meeting</td></tr>
+<tr><td>Rejected</td><td class="c-num">5</td><td class="c-num">6%</td><td>Agreement claim incorrect — fix before the meeting</td></tr>
+<tr><td>Missing</td><td class="c-num">15</td><td class="c-num">17%</td><td>No code at all — real development</td></tr>
+<tr><td>Unclear</td><td class="c-num">4</td><td class="c-num">5%</td><td>In the frozen coa-ai — no team velocity data</td></tr>
+<tr><td>Configuration</td><td class="c-num">12</td><td class="c-num">14%</td><td>Configuration or infrastructure</td></tr>
+<tr><td>Outside code</td><td class="c-num">5</td><td class="c-num">6%</td><td>Process or EX task</td></tr>
+<tr><td>Blank</td><td class="c-num">4</td><td class="c-num">5%</td><td>The agreement column is blank</td></tr>
+<tr class="sub"><td colspan="4">— Dependency —</td></tr>
+<tr><td>EX</td><td class="c-num">13</td><td class="c-num">15%</td><td>Your clock does not start until EX delivers the input</td></tr>
+<tr><td>MCINEXT</td><td class="c-num">39</td><td class="c-num">45%</td><td>Your team's direct commitment</td></tr>
+<tr><td>Shared</td><td class="c-num">13</td><td class="c-num">15%</td><td>Requires a decision by both sides</td></tr>
+<tr><td>MCI-IT</td><td class="c-num">1</td><td class="c-num">1%</td><td>Outside the control of both teams — such as SAP access</td></tr>
+<tr><td class="c-key">Note</td><td></td><td></td><td class="c-note">Percentages are calculated with COUNTIF formulas; if you change a status in the "Rows" sheet, this table updates automatically. An asterisk in the search pattern means "starts with".</td></tr>
+</tbody>
+</table></div>
+<h2 id="findings">Critical findings</h2>
+<p class="lede">Critical findings from reading the code</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:5.1%"><col style="width:16.7%"><col style="width:21.8%"><col style="width:37.2%"><col style="width:19.2%"></colgroup>
+<thead><tr><th>#</th><th>Title</th><th>Evidence in code</th><th>What it means for the business</th><th>Action</th></tr></thead>
+<tbody>
+<tr><td class="c-num">1</td><td class="c-bad">IDOR on raw audio files</td><td class="c-mono">coa/apps/files/views.py:19 — @with_permissions({view_calls}) and then minio.download(name) with no ownership check</td><td>Any user with view_calls can download the audio of any call. The file name is derived from call_id. Row PRV-03 is marked "available" and it is not. On employee voice data, this finding could stop the pilot.</td><td class="c-bad">⛔ Fix before UAT — T+3 business days</td></tr>
+<tr><td class="c-num">2</td><td class="c-bad">Transcripts are stored but declared "out of scope"</td><td class="c-mono">coa/apps/main/models.py:397 (raw_input) · services/call.py:771 · chatbot-iva-agent/src/schema.py (messages[].text)</td><td>The conversation text is stored and published on Kafka, and even has transcript_confidence. The AI-02 claim and the PRV-08 reason are incorrect. This both damages technical credibility and creates an undisclosed privacy risk.</td><td class="c-bad">Policy decision within 2 days: retain and disclose, or stop storing</td></tr>
+<tr><td class="c-num">3</td><td class="c-bad">No audit log exists</td><td class="c-mono">Search for audit|LogEntry|access_log|viewed_by|actor_id across 8 services → zero results</td><td>Row PRV-06 is marked "available". What exists is coa/middlewares.py:26, which is an infrastructure log, not a queryable audit trail. Also, the same middleware logs all headers, which means Authorization tokens end up in the logs.</td><td class="c-bad">Downgrade in the agreement + estimate of T+10 business days</td></tr>
+<tr><td class="c-num">4</td><td class="c-warn">The analysis engine has been frozen for 14 months</td><td class="c-mono">python/coa-ai — last commit 2025-07-13, while coa-api has a commit on 2026-09-27</td><td>All the quality rows in block 3 (AI-04 to AI-07, AI-12, AI-13) go through code that has no up-to-date velocity data. Do not give aggressive deadlines for this block.</td><td class="c-warn">Reactivate or confirm stability before committing</td></tr>
+<tr><td class="c-num">5</td><td class="c-warn">There is no quality measurement for AIVA and CCA</td><td class="c-mono">The only existing eval: aqa POST /api/v1/eval/run — there is no equivalent for WER, faithfulness or theme accuracy</td><td>The 43 "available in product" rows include 11 quality claims. "Available" means implemented, not measured, but EX will test them as measured (the AI-06 criterion is explicitly a comparison with human-coded samples).</td><td class="c-warn">A minimal golden set before UAT</td></tr>
+<tr><td class="c-num">6</td><td class="c-ok">Good news: there is no destructive pruner</td><td class="c-mono">All deletion paths were reviewed: archive_old_calls.py (archive→delete) · trends/services/sync.py:388 (full rebuild) · services/call.py:448</td><td>What was designed on the whiteboard as "delete a topic and its calls" has not been implemented. Also, TrendAnnotation is deliberately denormalized so that human notes survive a rebuild.</td><td class="c-ok">No action needed — present this as a strength</td></tr>
+<tr><td class="c-num">7</td><td class="c-ok">Good news: retention is better than claimed</td><td class="c-mono">archive_old_calls.py — pg_dump → MinIO → delete → VACUUM, with abort-on-failure and --dry-run</td><td>PRV-07 is correct, and PRV-08 is in fact covered too, because call_ai_tags is also archived and deleted. You are claiming less than you can actually do.</td><td class="c-ok">Move PRV-08 out of "out of scope"</td></tr>
+<tr><td class="c-num">8</td><td class="c-ok">Good news: SMS is built</td><td class="c-mono">aiva/tools/sms.py → POST resan.mci.dev/api/messages/send/to/ · enabled by default in AGENT_ENABLED_TOOLS</td><td>KB-06 is wrongly marked "requires development". But the LLM itself decides when to send, so the real dependency on "EX scenarios" is a guardrail need, not an integration need.</td><td class="c-ok">Upgrade to "available" + rate limit in T+5 business days</td></tr>
+<tr><td class="c-num">9</td><td class="c-warn">A whitelist exists, but in the wrong place</td><td class="c-mono">aiva/memory/config.py:20-21 — PHONE_WHITELIST=[] and BYPASS_WHITELIST=True · aiva_consume_kafka.py:310</td><td>This whitelist only gates "memory collection", not "call admission". The VIA-02 requirement is call admission, which must be implemented at the SIP layer. Also, the default is set to bypass.</td><td class="c-warn">SIP gate + populate PHONE_WHITELIST and set BYPASS_WHITELIST=false</td></tr>
+<tr><td class="c-num">10</td><td class="c-ok">AQA is your strongest showcase asset</td><td class="c-mono">python/aqa — 9,119 lines · POST /api/v1/chat/message (SSE) · /configs/prompts editable at runtime · /eval/run</td><td>Row AN-12 (natural-language analytics assistant), the most ambitious row in the agreement, is actually built and is the only service with an eval harness.</td><td class="c-ok">Demo it live in the meeting</td></tr>
+<tr><td class="c-num">11</td><td class="c-warn">Long-term memory across calls</td><td class="c-mono">aiva/memory/management/commands/aiva_consume_kafka.py · ChatbotUser.memory · aiva/chat/views/session.py</td><td>After each call, a summary of the user is built and fed into the context of the next call; the number and the memory are also recorded in the tracing span. For employees, this is a privacy decision.</td><td class="c-warn">Disclose in the privacy notice or turn off the consumer for EX</td></tr>
+<tr><td class="c-num">12</td><td class="c-bad">Chat APIs without authentication</td><td class="c-mono">permission_classes = () in all aiva and adcs chat views</td><td>Security is left to the gateway. Anyone who creates a session with an arbitrary number gets that number's memory in the context.</td><td class="c-bad">The gateway as the only entry path in the pilot</td></tr>
+<tr><td class="c-num">13</td><td class="c-warn">AQA as a second path to identity</td><td class="c-mono">aqa/agents/tools/sql_executor.py — free-form queries, read-only only through the DB user</td><td>PRV-02 forbids recovering identity through "any other path"; AQA can return the number column.</td><td class="c-warn">A view without identity columns for AQA's dedicated DB user</td></tr>
+</tbody>
+</table></div>
+<h2 id="architecture">Architecture</h2>
+<p class="lede">Active Python services — committed to in the last 3 months</p>
+<div class="scroll-x"><table class="sheet">
+<colgroup><col style="width:21.3%"><col style="width:8.2%"><col style="width:8.2%"><col style="width:37.7%"><col style="width:24.6%"></colgroup>
+<thead><tr><th>Service</th><th>Lines of code</th><th>Files</th><th>Role</th><th>Last commit</th></tr></thead>
+<tbody>
+<tr><td>python/coa-api</td><td class="c-num">31596</td><td class="c-num">325</td><td>CCA serving layer — analysis, trends, tickets, experts, IVA dashboard, ClickHouse sync, archiving</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/agentlib</td><td class="c-num">19188</td><td class="c-num">444</td><td>Core agent library — LLM, tools, ReAct, monitoring. 140 test files</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/aiva</td><td class="c-num">11492</td><td class="c-num">121</td><td>The IVA chat brain — event-driven orchestrator: Guardrail, Intent, Classification, Clarifying, VoiceBridge, ReAct</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>python/adcs</td><td class="c-num">11411</td><td class="c-num">230</td><td>Previous/parallel generation of aiva — Chat API, ASR/TTS proxy, chat dashboard, feedback</td><td class="c-num">2026-09-25</td></tr>
+<tr><td>python/aqa</td><td class="c-num">9119</td><td class="c-num">156</td><td>Agentic Query Analyzer — natural language to SQL over analytics data. Has an eval</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>python/chatbot-iva-agent</td><td class="c-num">5671</td><td class="c-num">26</td><td>Realtime voice agent on LiveKit — SIP, VAD, turn detection, STT/TTS, recording, Kafka</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>python/adcs-knowledgebase</td><td class="c-num">4716</td><td class="c-num">84</td><td>Knowledge microservice — question/answer CRUD, Guardrail, Tag, Summarize, Import/Export</td><td class="c-num">Active</td></tr>
+<tr><td>python/adcs-auth</td><td class="c-num">2610</td><td class="c-num">67</td><td>Central authentication — JWT issuance. ⚠️ Zero test files</td><td class="c-num">Active</td></tr>
+<tr><td>python/fastlib</td><td class="c-num">1740</td><td class="c-num">40</td><td>Shared FastAPI infrastructure — request logging, error wrapping, healthz</td><td class="c-num">Active</td></tr>
+<tr><td>python/aiva-knowledgebase</td><td class="c-num">730</td><td class="c-num">17</td><td>AIVA knowledge microservice — embeddings with an OpenAI-compatible client</td><td class="c-num">Active</td></tr>
+<tr><td>golang/grogu</td><td class="c-num">—</td><td class="c-num">—</td><td>Main CCA ingestion (Go): Kafka, MinIO, ASR with a circuit breaker, MyMCI, upsert into Postgres, dead-letter</td><td class="c-num">2026-09-27</td></tr>
+<tr><td>golang/neurobox-gateway</td><td class="c-num">—</td><td class="c-num">—</td><td>Gateway for ASR/TTS models on Triton (gRPC)</td><td class="c-num">2026-09-13</td></tr>
+<tr><td>golang/websocall</td><td class="c-num">—</td><td class="c-num">—</td><td>Voice over WebSocket for the browser</td><td class="c-num">2026-09-28</td></tr>
+<tr><td>golang/dobby</td><td class="c-num">—</td><td class="c-num">—</td><td>MCP server for AIVA tools</td><td class="c-num">2026-09-27</td></tr>
+<tr><td class="c-warn">python/coa-ai</td><td class="c-num">—</td><td class="c-num">—</td><td class="c-warn">⚠️ Analysis engine (sentiment, summary, topic) — outside the review scope, frozen for 14 months</td><td class="c-num">2025-07-13</td></tr>
+<tr class="sub"><td colspan="5">Data infrastructure</td></tr>
+<tr><td>PostgreSQL</td><td></td><td></td><td>19 main tables: voices, calls, call_ai_tags, call_records, trends, subjects, trend_annotations, tickets, experts …</td><td></td></tr>
+<tr><td>ClickHouse</td><td></td><td></td><td>Source of analysis results; four sync daemons: clickhouse_sync, clickhouse_update_sync, failed_calls_sync, sync_canonical_mappings</td><td></td></tr>
+<tr><td>Qdrant (gRPC)</td><td></td><td></td><td>AIVA collections: guardrail, aiva-contexts, aiva-instructions, aiva-classification, aiva-jokes — configurable threshold and top-k</td><td></td></tr>
+<tr><td>MinIO / S3</td><td></td><td></td><td>The chatbot-mci-iva bucket for call recordings + the pg_dump archive destination</td><td></td></tr>
+<tr><td>Kafka</td><td></td><td></td><td>Produced: chatbot-mci-iva (from the voice agent) · Consumed: chatbot-mci-iva-intent (memory module in aiva)</td><td></td></tr>
+<tr><td>LLM models</td><td></td><td></td><td>google/gemma-4-31B-it (self-hosted) and openai/gpt-oss-120b — seven independent roles, each configurable separately</td><td></td></tr>
+<tr><td>Observability</td><td></td><td></td><td>Prometheus, Elastic APM, Phoenix/OpenTelemetry tracing</td><td></td></tr>
+</tbody>
+</table></div>
+    <script>
+(function () {
+  var q = document.getElementById('q'), st = document.getElementById('st'), cnt = document.getElementById('cnt');
+  if (!q) return;
+  var rows = [].slice.call(document.querySelectorAll('tr[data-st]'));
+  function run() {
+    var term = q.value.trim().toLowerCase(), want = st.value, n = 0;
+    rows.forEach(function (r) {
+      var ok = (!want || r.getAttribute('data-st') === want) && (!term || r.textContent.toLowerCase().indexOf(term) > -1);
+      r.hidden = !ok; if (ok) n++;
+    });
+    cnt.textContent = n + ' of ' + rows.length + ' rows';
+  }
+  q.addEventListener('input', run); st.addEventListener('change', run); run();
+})();
+</script>
+    <!-- theme:script:start -->
+    <script>
+/* Phoenix product docs — chapter sidebar, scroll-spy, theme and BLAME toggles.
+   Inlined at the end of <body> by apply_theme.py. Storage is a convenience only. */
+(function () {
+  var root = document.documentElement;
+  var body = document.body;
+  /* UI strings follow the page language; inside the app (a frame) the app header owns the theme */
+  var en = (root.getAttribute("lang") || "").slice(0, 2) === "en";
+  var T = en
+    ? { toc: "Chapters", light: "☀ Light", dark: "☾ Dark", theme: "Switch theme", blame: "Show or hide the Git Blame lines", top: "Back to top" }
+    : { toc: "فهرست فصل‌ها", light: "☀ روشن", dark: "☾ تیره", theme: "تغییر تم", blame: "نمایش یا پنهان کردن خطوط Git Blame", top: "بالای صفحه" };
+  var framed = false;
+  try { framed = window.self !== window.top; } catch (e) { framed = true; }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+  function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+
+  var theme = load("phx-theme");
+  if (theme === "light" || theme === "dark") root.setAttribute("data-theme", theme);
+
+  var hasBlame = !!document.querySelector(".who");
+  if (hasBlame && load("phx-blame") !== "show") body.classList.add("hide-blame");
+
+  /* every h2 gets an id so it can be linked and listed */
+  [].forEach.call(document.querySelectorAll("h2:not([id])"), function (h, i) { h.id = "sec-" + (i + 1); });
+
+  /* sidebar from part dividers + h2[id] */
+  var heads = [].slice.call(document.querySelectorAll("section.part, h2[id]"))
+    .filter(function (el) { return el.id !== "toc"; });
+  if (heads.filter(function (el) { return el.tagName === "H2"; }).length > 3) {
+    var nav = document.createElement("nav");
+    nav.id = "side";
+    nav.setAttribute("aria-label", T.toc);
+    var h1 = document.querySelector("h1");
+    var docT = document.createElement("div");
+    docT.className = "doc";
+    docT.textContent = h1 ? h1.textContent.trim() : document.title;
+    nav.appendChild(docT);
+    var list = document.createElement("ol");
+    nav.appendChild(list);
+    var links = [];
+    heads.forEach(function (el) {
+      if (el.tagName !== "H2") {
+        var t = el.querySelector(".ttl");
+        var g = document.createElement("li");
+        g.className = "grp";
+        g.textContent = t ? t.textContent.trim() : "";
+        list.appendChild(g);
+        return;
+      }
+      var li = document.createElement("li");
+      var a = document.createElement("a");
+      a.href = "#" + el.id;
+      var label = el.cloneNode(true);
+      [].forEach.call(label.querySelectorAll(".ab"), function (n) { n.remove(); });
+      a.textContent = label.textContent.replace(/\s+/g, " ").trim();
+      a.title = a.textContent;
+      li.appendChild(a);
+      list.appendChild(li);
+      links.push({ a: a, el: el });
+    });
+    body.insertBefore(nav, body.firstChild);
+
+    if ("IntersectionObserver" in window) {
+      var current = null;
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (!e.isIntersecting) return;
+          links.forEach(function (l) {
+            var on = l.el === e.target;
+            l.a.classList.toggle("on", on);
+            if (on && l.a !== current) {
+              current = l.a;
+              var r = l.a.getBoundingClientRect(), n = nav.getBoundingClientRect();
+              if (r.top < n.top || r.bottom > n.bottom) l.a.scrollIntoView({ block: "nearest" });
+            }
+          });
+        });
+      }, { rootMargin: "0px 0px -75% 0px" });
+      links.forEach(function (l) { io.observe(l.el); });
+    }
+  }
+
+  /* toolbar */
+  var bar = document.createElement("div");
+  bar.className = "toolbar";
+  function btn(label, title, fn) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.textContent = label;
+    b.title = title;
+    b.addEventListener("click", function () { fn(b); });
+    bar.appendChild(b);
+    return b;
+  }
+  function isDark() {
+    var t = root.getAttribute("data-theme");
+    if (t) return t === "dark";
+    return true;
+  }
+  if (!framed) btn(isDark() ? T.light : T.dark, T.theme, function (b) {
+    var next = isDark() ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    save("phx-theme", next);
+    b.textContent = next === "dark" ? T.light : T.dark;
+  });
+  if (hasBlame) {
+    var bb = btn("BLAME", T.blame, function (b) {
+      var hidden = body.classList.toggle("hide-blame");
+      b.setAttribute("aria-pressed", String(!hidden));
+      save("phx-blame", hidden ? "hide" : "show");
+    });
+    bb.setAttribute("aria-pressed", String(!body.classList.contains("hide-blame")));
+  }
+  btn("↑", T.top, function () { window.scrollTo({ top: 0 }); });
+  body.appendChild(bar);
+})();
+
+    </script>
+    <!-- theme:script:end -->
+  </body>
+</html>

@@ -10,7 +10,7 @@ export const HEX: Record<string, string> = { teal: "#14b8a6", violet: "#8b5cf6",
 
 export const STATUSES: Status[] = ["live", "off", "notdeployed", "external", "unknown"];
 
-export interface MapFilters { model: string; statuses: Set<Status>; query: string; cross: boolean }
+export interface MapFilters { model: string; statuses: Set<Status>; query: string; cross: boolean; /** Instance id; "" shows the general pipeline. */ instance: string }
 
 /** Hand-off points between lanes; the label explains what crosses. */
 export const CROSS: { from: string; to: string; en: string; fa: string }[] = [

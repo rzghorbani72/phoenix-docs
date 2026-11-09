@@ -9,10 +9,10 @@ import sys
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[1]
-WORKSPACE = APP.parent
+WORKSPACE = APP  # the app is its own git repository
 RESULT = APP / ".source-sync" / "changed-docs.json"
-ALLOWED_PREFIXES = ("hr-ex-phoenix/content/", "hr-ex-phoenix/scripts/docs/")
-ALLOWED_FILES = {"hr-ex-phoenix/public/phoenix-pipelines.drawio"}
+ALLOWED_PREFIXES = ("content/", "scripts/docs/", "public/diagrams/")
+ALLOWED_FILES = {"public/phoenix-pipelines.drawio"}
 
 
 def run(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[str]:
@@ -24,8 +24,9 @@ def run(args: list[str], *, check: bool = True) -> subprocess.CompletedProcess[s
 
 def main() -> int:
     staged = subprocess.run(
-        ["git", "diff", "--cached", "--quiet", "--", "hr-ex-phoenix/content",
-         "hr-ex-phoenix/scripts/docs", "hr-ex-phoenix/public/phoenix-pipelines.drawio"],
+        ["git", "diff", "--cached", "--quiet", "--", "content",
+         "scripts/docs", "public/phoenix-pipelines.drawio",
+         "public/diagrams"],
         cwd=WORKSPACE,
     )
     if staged.returncode:

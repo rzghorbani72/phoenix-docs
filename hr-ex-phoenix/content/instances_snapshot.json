@@ -1,0 +1,6896 @@
+{
+ "source": {
+  "repo": "chatbot-ops",
+  "branch": "prod",
+  "commit": "2d51df96",
+  "date": "2026-11-08",
+  "releases": 127
+ },
+ "releases": [
+  {
+   "id": "aiva",
+   "components": [
+    {
+     "name": "api",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.36.0",
+     "replicas": 4,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "worker",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.36.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "websocall-ui",
+     "role": "media",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.41.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "vector",
+     "family": "vector",
+     "role": "media",
+     "version": "0.56.X-a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "kb",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "synapse",
+     "family": "synapse",
+     "role": "media",
+     "version": "v0.16.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-ch-update-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-trends-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-archive-old-calls",
+     "family": "coa-api-archive-old-calls",
+     "role": "analytics",
+     "version": "dfe14133",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": true,
+     "schedule": "0 0 31 2 *",
+     "neverRuns": true
+    },
+    {
+     "name": "general-ai-syncer-canonical",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "general-ai-syncer-failed",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-general-ai",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.33.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-general-ai-neda",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.33.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-general-ai-dora",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.33.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-scoring-api",
+     "family": "coa-scoring",
+     "role": "analytics",
+     "version": "18cf1ecd",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-scoring-syncer",
+     "family": "coa-scoring",
+     "role": "analytics",
+     "version": "18cf1ecd",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-scoring-sms-worker",
+     "family": "coa-scoring",
+     "role": "analytics",
+     "version": "18cf1ecd",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-scoring-campaign-events",
+     "family": "coa-scoring",
+     "role": "analytics",
+     "version": "18cf1ecd",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "0 0 31 2 *",
+     "neverRuns": true
+    },
+    {
+     "name": "coa-scoring-maintenance",
+     "family": "coa-scoring",
+     "role": "analytics",
+     "version": "18cf1ecd",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "0 0 31 2 *",
+     "neverRuns": true
+    },
+    {
+     "name": "general-ai-gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "general-ai-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام، من دستیار هوشمند شخصی شما هستم، چطور می‌تونم کمکتون کنم؟",
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "False",
+     "AGENT_STT_CLIENT": "soniox",
+     "AGENT_TTS_MODEL": "aiva_prod",
+     "AGENT_TTS_SPEED": "1.1",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "0.5",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.4",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": ".4",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "1",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-iva-intent"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "gpt-6-luna",
+     "AGENT_ENABLED_TOOLS": "[\"get_gold_price\",\"websearch\",\"send_sms\", \"tell_joke\", \"campaign_rank\"]",
+     "CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "aiva-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "aiva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "VOICE_BRIDGE_ENABLED": "true",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "aiva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_general_ai",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-general-ai",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-mci-call-asr",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod",
+     "KAFKA_CALL_TOPIC": "anzu-coa-general-ai",
+     "KAFKA_IVA_TOPIC": "chatbot-mci-iva-intent",
+     "MINIO_IVA_BUCKET_NAME": "chatbot-mci-iva"
+    },
+    "campaign": {
+     "AI_AGENT": "raya",
+     "CAMPAIGN_CODE": "raya-beta",
+     "CAMPAIGN_NAME": "کمپین بتای رایا",
+     "CAMPAIGN_END_AT": "2026-09-23T00:00:00+03:30",
+     "SCORING_AGENT_ID": "raya"
+    }
+   },
+   "deps": [
+    "gemma4-26b-llm-lb",
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "aiva",
+    "version": "v0.36.0",
+    "component": "api"
+   },
+   "ivaTopics": [
+    "chatbot-mci-iva-intent",
+    "chatbot-mci-iva-intent-1",
+    "chatbot-mci-iva-intent-2"
+   ],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "aiva-aqa",
+   "components": [
+    {
+     "name": "chainlit",
+     "family": "aqa",
+     "role": "other",
+     "version": "v0.34.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "api",
+     "family": "aqa",
+     "role": "other",
+     "version": "v0.34.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "aiva-neda",
+   "components": [
+    {
+     "name": "api",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.36.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "api_sms",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.36.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "api_bale",
+     "family": "aiva",
+     "role": "brain",
+     "version": "cd31d57d",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "worker",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.31.1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "websocall-ui",
+     "role": "media",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "6e7330be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "vector",
+     "family": "vector",
+     "role": "media",
+     "version": "0.56.X-a",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "kb",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "75e5a523",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "75e5a523",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "False",
+     "AGENT_STT_CLIENT": "soniox",
+     "AGENT_STT_MODEL": "stt-rt-v5",
+     "AGENT_TTS_MODEL": "aiva_neda_prod",
+     "AGENT_TTS_SPEED": "1.1",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "0.5",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.4",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": ".4",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "1",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-iva-intent-1"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "gpt-6-luna",
+     "AGENT_ENABLED_TOOLS": "[\"get_gold_price\",\"websearch\",\"send_sms\", \"tell_joke\", \"campaign_rank\"]",
+     "CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "aiva-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "aiva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "VOICE_BRIDGE_ENABLED": "true",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "aiva-neda"
+    },
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "aiva",
+    "version": "v0.36.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "aiva-poll",
+   "components": [
+    {
+     "name": "api",
+     "family": "aiva-poll",
+     "role": "brain",
+     "version": "v0.7.1",
+     "replicas": 4,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "worker",
+     "family": "aiva-poll",
+     "role": "brain",
+     "version": "v0.7.1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "websocall-ui",
+     "role": "media",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "0e88ccbc",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "vector",
+     "family": "vector",
+     "role": "media",
+     "version": "0.56.X-a",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "kb",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "75e5a523",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "75e5a523",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام. به رویداد گیم همراه اول خوش اومدید. من پرسشگر هوشمند همراه اول هستم؛ می‌خواستم چند تا سوال کوتاه بپرسم، فرصت دارید؟",
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "True",
+     "AGENT_STT_MODEL": "aiva_poll_prod_vad",
+     "AGENT_TTS_MODEL": "aiva_poll_prod",
+     "AGENT_TTS_SPEED": "1.1",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "0.5",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.4",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": "1",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "1",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-iva-intent-2"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "gpt-6-luna",
+     "AGENT_ENABLED_TOOLS": "[\"go_to_question\", \"end_call\"]",
+     "CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "aiva-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "aiva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "VOICE_BRIDGE_ENABLED": "true",
+     "CONTEXTS_FILTER_LLM_ENABLED": "false",
+     "PHOENIX_PROJECT_NAME": "aiva-poll"
+    },
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "aiva-poll",
+    "version": "v0.7.1",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "aqa",
+   "components": [
+    {
+     "name": "chainlit",
+     "family": "aqa",
+     "role": "other",
+     "version": "v0.36.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "api",
+     "family": "aqa",
+     "role": "other",
+     "version": "v0.36.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "aqa-backoffice",
+   "components": [
+    {
+     "name": "backend",
+     "family": "aqa-backoffice-backend",
+     "role": "other",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "frontend",
+     "family": "aqa-backoffice-frontend",
+     "role": "other",
+     "version": "v0.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "auth-system",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "1.29.2-a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "auth-system",
+     "role": "other",
+     "version": "1a5054cc",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui",
+     "family": "mcinext-ai",
+     "role": "other",
+     "version": "c5cea8b3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "auth-system"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-alerts",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-arbaeen",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.18.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v5.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.39.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "clickhouse_sync",
+     "family": "chatbot-mci-syncer",
+     "role": "other",
+     "version": "4dbf4dc7",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/10 * * * *",
+     "neverRuns": false
+    },
+    {
+     "name": "apiAgentic",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "62ab354e",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "mci-agentic-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "mci-agentic-instructions"
+    },
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.18.1",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-audio-wrapper",
+   "components": [
+    {
+     "name": "api",
+     "family": "audio-wrapper",
+     "role": "other",
+     "version": "02cdee4e",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.33.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "8.0-M03-",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-b2b",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "iva_kb",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva_kb_worker",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.31.1",
+     "replicas": 4,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.41.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "v1.8.4",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-iva",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.34.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-ch-update-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-trends-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-syncer-canonical",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-syncer-failed",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "True",
+     "AGENT_STT_CLIENT": "soniox",
+     "AGENT_TTS_MODEL": "b2b_prod",
+     "AGENT_TTS_SPEED": "1.1",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "0.5",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.4",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": ".4",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "1",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-b2b-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "AGENT_ENABLED_TOOLS": "[\"send_sms\"]",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-b2b-aiva-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "chatbot-b2b-aiva-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-b2b-aiva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-b2b-aiva-iva-contexts",
+     "VOICE_BRIDGE_ENABLED": "false",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-b2b-iva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_b2b",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-b2b-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod",
+     "KAFKA_CALL_TOPIC": "anzu-coa-call-b2b",
+     "KAFKA_IVA_TOPIC": "chatbot-mci-b2b-iva",
+     "MINIO_IVA_BUCKET_NAME": "chatbot-mci-iva"
+    },
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "aiva",
+    "version": "v0.31.1",
+    "component": "iva-chatbot"
+   },
+   "ivaTopics": [
+    "chatbot-mci-b2b-iva"
+   ],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-bale",
+   "components": [
+    {
+     "name": "bot",
+     "family": "chatbot-bale",
+     "role": "other",
+     "version": "10dab5d1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.18.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.35.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "clickhouse_sync",
+     "family": "chatbot-mci-syncer",
+     "role": "other",
+     "version": "4dbf4dc7",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/10 * * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.18.1",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-complaint",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-complaint-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-complaint-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-complaint-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_complaint",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-complaint-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-custom-embedding",
+   "components": [
+    {
+     "name": "triton",
+     "family": "tritonserver",
+     "role": "other",
+     "version": "24.12-tr",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-dhd",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-dhd-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-dhd-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-dhd-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-dhd"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_dhd",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-dhd-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-dual-agent",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui",
+     "family": "dual-agent",
+     "role": "other",
+     "version": "dual-v5.",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-ewano",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-ewano-api",
+     "role": "brain",
+     "version": "v2.1.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "ewano",
+     "role": "ui",
+     "version": "ewano-v5",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "clickhouse_sync",
+     "family": "ewano-clickhouse",
+     "role": "other",
+     "version": "10e5eccc",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/30 * * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [
+    "chatbot-ewano-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-ewano-api",
+    "version": "v2.1.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-ewano-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.35.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-ewano"
+  },
+  {
+   "id": "chatbot-ewano-new",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v5.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-ewano-new-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-ewano-new-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-ewano-new-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_ewano_new",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-ewano-new-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-ex",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "iva_kb",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva_kb_worker",
+     "family": "aiva-knowledgebase",
+     "role": "knowledge",
+     "version": "df70f4be",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.37.0",
+     "replicas": 4,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.22.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-ex",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "3524df3f",
+     "replicas": 6,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "v1.8.4",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-iva",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.33.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-ch-update-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-trends-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-syncer-canonical",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-syncer-failed",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "95a12c1e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "True",
+     "AGENT_STT_CLIENT": "soniox",
+     "AGENT_TTS_MODEL": "ex_prod",
+     "AGENT_TTS_SPEED": "1.1",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "0.5",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.4",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": ".4",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "1",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-ex-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "AGENT_ENABLED_TOOLS": "[]",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-ex-aiva-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "chatbot-ex-aiva-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-ex-aiva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-ex-aiva-iva-contexts",
+     "VOICE_BRIDGE_ENABLED": "false",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-ex-iva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_ex",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-ex-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod",
+     "KAFKA_CALL_TOPIC": "anzu-coa-call-ex",
+     "KAFKA_IVA_TOPIC": "chatbot-mci-ex-iva",
+     "MINIO_IVA_BUCKET_NAME": "chatbot-mci-iva"
+    },
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "aiva",
+    "version": "v0.37.0",
+    "component": "iva-chatbot"
+   },
+   "ivaTopics": [
+    "chatbot-mci-ex-iva"
+   ],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-feedback-service",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-feedback-service",
+     "role": "other",
+     "version": "v2.25.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "chatbot-service"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-front-iva",
+   "components": [
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.39.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_STT_MODEL": "front_prod_vad",
+     "AGENT_TTS_MODEL": "front_prod",
+     "AGENT_TTS_SPEED": "1.2",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.7",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-front-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-front-iva-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-front-iva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-front-iva-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true"
+    },
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-gateway",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "tools-v1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-gateway-ratelimiter",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-generator-service",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-generator-service",
+     "role": "other",
+     "version": "v3.4.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-golang",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-chat",
+     "role": "other",
+     "version": "4f79beba",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-gw",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-gw",
+     "role": "other",
+     "version": "v3.1.1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "chatbot-feedback-service",
+    "chatbot-generator-service",
+    "chatbot-service",
+    "chatbot-ui"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-inference-exporter",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-iva-monitoring",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-iva-monitoring",
+     "role": "other",
+     "version": "7a4b8420",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-judiciary",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-service",
+     "role": "brain",
+     "version": "v3.2.7",
+     "replicas": 0,
+     "autoscaled": true,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "web-search-service"
+   ],
+   "brain": {
+    "family": "chatbot-service",
+    "version": "v3.2.7",
+    "component": "zarebin"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-llm-gateway",
+   "components": [
+    {
+     "name": "core",
+     "family": "axonhub",
+     "role": "other",
+     "version": "v1.0.0-beta11",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-magika",
+   "components": [
+    {
+     "name": "api",
+     "family": "magika-mime-api",
+     "role": "other",
+     "version": "eab4c7fd",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.20.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "v5.16.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-mci-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma3-27-llm-lb",
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.20.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-agent-chat",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "92de5f42",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "controller",
+     "family": "chatbot-mci-controller",
+     "role": "other",
+     "version": "118cf368",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "agent",
+     "role": "ui",
+     "version": "agent-v4",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.36.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma3-27-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "92de5f42",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-ar",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-arabic-api",
+     "role": "brain",
+     "version": "6889830d",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.13.12",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-arabic-api",
+    "version": "6889830d",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-clone",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.14.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v4.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.35.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.14.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-en",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-english-api",
+     "role": "brain",
+     "version": "bb09c662",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.13.12",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-english-api",
+    "version": "bb09c662",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-english-iva-avatar",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "0f2eb79c",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "6500b435",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.14.6",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "frontend",
+     "family": "frontend",
+     "role": "ui",
+     "version": "v0.3.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "Hi, I'm MCI Intelligence Assistant, how can I help you?",
+     "AGENT_TURN_MODEL": "english",
+     "AGENT_MIN_ENDPOINTING_DELAY": "1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "3",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.4",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.8",
+     "AGENT_NUM_IDLE_PROCESSES": "4"
+    },
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "0f2eb79c",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-fa",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v3.14.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.13.12",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v3.14.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-general",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "mci-general-chatbot",
+     "role": "brain",
+     "version": "3d984ca9",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.40.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "mci-general-chatbot",
+    "version": "3d984ca9",
+    "component": "zarebin"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.34.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-mci"
+  },
+  {
+   "id": "chatbot-mci-iva",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-iva-api",
+     "role": "brain",
+     "version": "164af464",
+     "replicas": 6,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "cef7fd86",
+     "replicas": 6,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.7.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "vector",
+     "family": "vector",
+     "role": "media",
+     "version": "0.50.X-a",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "health_checker",
+     "family": "chatbot-iva-health-checker",
+     "role": "other",
+     "version": "a4279a2c",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام، من دستیار هوشمند همراه اول هستم، چطور می‌تونم کمکتون کنم؟",
+     "AGENT_STT_CLIENT": "local-stt-prod",
+     "AGENT_STT_MODEL": "iva_prod_vad",
+     "AGENT_TTS_MODEL": "iva_prod",
+     "AGENT_TTS_SPEED": "1.20",
+     "AGENT_TURN_MODEL": "deactive",
+     "AGENT_MIN_ENDPOINTING_DELAY": "1.0",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2"
+    },
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-iva-api",
+    "version": "164af464",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-iva-avatar",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "9f43a2ef",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "f1eba464",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.15.4",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "frontend",
+     "family": "frontend",
+     "role": "ui",
+     "version": "v0.3.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام، من دستیار هوشمند همراه اول هستم، چطور می‌تونم کمکتون کنم؟",
+     "AGENT_STT_CLIENT": "local-stt-prod",
+     "AGENT_MIN_ENDPOINTING_DELAY": "1",
+     "AGENT_MAX_ENDPOINTING_DELAY": "3",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.4",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.8",
+     "AGENT_NUM_IDLE_PROCESSES": "4"
+    },
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "9f43a2ef",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-iva-load-test",
+   "components": [
+    {
+     "name": "openai-mock",
+     "family": "openai-mock",
+     "role": "other",
+     "version": "4f4c2ca8",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "chatbot-iva-api",
+     "role": "brain",
+     "version": "de52d3db",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "intent",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "5960dd83",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "44ecc6c7",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.7.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "test-agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "cef7fd86",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "health_checker",
+     "family": "chatbot-iva-health-checker",
+     "role": "other",
+     "version": "11efef57",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "server",
+     "family": "livekit-server",
+     "role": "other",
+     "version": "",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام، من دستیار هوشمند همراه اول هستم، چطور می‌تونم کمکتون کنم؟",
+     "AGENT_STT_CLIENT": "local-stt-prod",
+     "AGENT_STT_MODEL": "iva_load_test_test_prod_vad",
+     "AGENT_TTS_MODEL": "iva_load_test_test_prod",
+     "AGENT_TTS_SPEED": "1.20",
+     "AGENT_TURN_MODEL": "deactive",
+     "AGENT_MIN_ENDPOINTING_DELAY": "1.0",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-iva-load-test-test"
+    },
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "chatbot-llm-gateway"
+   ],
+   "brain": {
+    "family": "chatbot-iva-api",
+    "version": "de52d3db",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-multilingual",
+   "components": [
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.15.47",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.2",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-sms",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.2.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v3.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.19.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.34.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "sms-input-api",
+     "family": "chatbot-mci-sms-input",
+     "role": "other",
+     "version": "c638c57f",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "sms-input-gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.34.1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.2.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mci-survey",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "chatbot-mci-survey",
+     "role": "brain",
+     "version": "7eaa283d",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "chatbot-mci-survey",
+     "role": "brain",
+     "version": "7eaa283d",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-mci-survey-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-mci-survey-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-mci-survey-iva-contexts"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_mci_survey",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-mci-survey-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-survey",
+    "version": "7eaa283d",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-mci-telecom",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "a810c3ee",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "telecom",
+     "role": "ui",
+     "version": "v3.24.10",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.18.10",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.32.1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "a810c3ee",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mcinext-llm-gateway",
+   "components": [
+    {
+     "name": "core",
+     "family": "axonhub",
+     "role": "other",
+     "version": "v1.0.0-beta11",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mcymci-redirector",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mymci-redirector-api",
+     "role": "brain",
+     "version": "16b6740c",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v4.1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.36.2",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma3-27-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mymci-redirector-api",
+    "version": "16b6740c",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mobinnet",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mobinnet-api",
+     "role": "brain",
+     "version": "v2.2.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mobinnet",
+     "role": "ui",
+     "version": "mobinnet",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "controller",
+     "family": "chatbot-controller",
+     "role": "other",
+     "version": "45ab36bf",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "syncer",
+     "family": "mobinnet-clickhouse-syncer",
+     "role": "other",
+     "version": "65cb1a2a",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/30 * * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [
+    "chatbot-mobinnet-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mobinnet-api",
+    "version": "v2.2.1",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-mobinnet-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.35.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-mobinnet"
+  },
+  {
+   "id": "chatbot-mobinnet-iva",
+   "components": [
+    {
+     "name": "iva-chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.40.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_STT_MODEL": "mobinnet_prod_vad",
+     "AGENT_TTS_MODEL": "mobinnet_prod",
+     "AGENT_TTS_SPEED": "1.2",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.7",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-mobinnet-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-mobinnet-iva-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-mobinnet-iva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-mobinnet-iva-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-mobinnet-iva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_mobinnet",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-mobinnet-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "iva-chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-mymci-arbaeen",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.13.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v4.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui-admin",
+     "family": "chatbot",
+     "role": "ui",
+     "version": "chatbot-",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.34.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.13.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-openai-exporter",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "squid-observer",
+     "role": "other",
+     "version": "v1.1.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-phoenix",
+   "components": [
+    {
+     "name": "phoenix",
+     "family": "",
+     "role": "other",
+     "version": "",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-postgres",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-qdrant",
+   "components": [
+    {
+     "name": "qdrant",
+     "family": "qdrant",
+     "role": "other",
+     "version": "",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-qdrant-lb",
+   "components": [
+    {
+     "name": "qdrant",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-ray",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-revolution",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-service",
+     "role": "brain",
+     "version": "v3.2.7",
+     "replicas": 0,
+     "autoscaled": true,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "web-search-service"
+   ],
+   "brain": {
+    "family": "chatbot-service",
+    "version": "v3.2.7",
+    "component": "zarebin"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-rubika",
+   "components": [
+    {
+     "name": "bot",
+     "family": "chatbot-rubika",
+     "role": "other",
+     "version": "2bad5baf",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "v4.18.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.35.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "clickhouse_sync",
+     "family": "chatbot-mci-syncer",
+     "role": "other",
+     "version": "4dbf4dc7",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/10 * * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "v4.18.1",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-rubika-iva",
+   "components": [
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.40.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.7.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "a819d7d5",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_STT_MODEL": "rubika_prod_vad",
+     "AGENT_TTS_MODEL": "rubika_prod",
+     "AGENT_TTS_SPEED": "1.2",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.7",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-rubika-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-rubika-iva-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-rubika-iva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-rubika-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-rubika-iva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_rubika",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-rubika-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "a819d7d5",
+    "component": "iva-chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-sales-agent",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-sales-agent-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-sales-agent-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-sales-agent-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_sales_agent",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-sales-agent-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-service",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-service",
+     "role": "brain",
+     "version": "v3.2.9",
+     "replicas": 0,
+     "autoscaled": true,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "web-search-service"
+   ],
+   "brain": {
+    "family": "chatbot-service",
+    "version": "v3.2.9",
+    "component": "zarebin"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-setare-yek",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v5.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-setare-yek-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-setare-yek-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-setare-yek-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_setare_yek",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-setare-yek-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-shaad-iva",
+   "components": [
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "v0.40.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "iva-front",
+     "role": "ui",
+     "version": "v4.7.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "adcs-chatbot",
+     "role": "brain",
+     "version": "v0.54.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.20.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_STT_MODEL": "shaad_prod_vad",
+     "AGENT_TTS_MODEL": "shaad_prod",
+     "AGENT_TTS_SPEED": "1.2",
+     "AGENT_TURN_MODEL": "openai",
+     "AGENT_MIN_ENDPOINTING_DELAY": "0.7",
+     "AGENT_MAX_ENDPOINTING_DELAY": "2",
+     "AGENT_MIN_INTERRUPTION_DURATION": "0.2",
+     "AGENT_VAD_MIN_SILENCE_DURATION": "0.5",
+     "AGENT_VAD_PREFIX_PADDING_DURATION": "0.5",
+     "AGENT_NUM_IDLE_PROCESSES": "10",
+     "AGENT_APM_TRANSACTION_SAMPLE_RATE": "0.2",
+     "AGENT_KAFKA_TOPIC": "chatbot-mci-shaad-iva"
+    },
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "chatbot-shad-iva-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "chatbot-shad-iva-instructions",
+     "IVA_CONTEXTS_COLLECTION_NAME": "chatbot-shad-iva-contexts",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "chatbot-shaad-iva"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_shad",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-shad-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod"
+    },
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "brain": {
+    "family": "adcs-chatbot",
+    "version": "v0.54.1",
+    "component": "iva-chatbot"
+   },
+   "ivaTopics": [],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "chatbot-sms-wrapper",
+   "components": [
+    {
+     "name": "api",
+     "family": "sms-wrapper",
+     "role": "other",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "chatbot-sms-wrapper"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-tejarat",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-tejarat-api",
+     "role": "brain",
+     "version": "debbb0bb",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.24.1",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-tejarat-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-tejarat-api",
+    "version": "debbb0bb",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-tejarat-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-tejarat"
+  },
+  {
+   "id": "chatbot-tejarat-local",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-tejarat-api",
+     "role": "brain",
+     "version": "debbb0bb",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.11.4",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-tejarat-local-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-tejarat-api",
+    "version": "debbb0bb",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-tejarat-local-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-tejarat-local"
+  },
+  {
+   "id": "chatbot-tejarat-temp",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-tejarat-api",
+     "role": "brain",
+     "version": "fcdfbc79",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.11.4",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-tejarat-temp-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "brain": {
+    "family": "chatbot-tejarat-api",
+    "version": "fcdfbc79",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-tejarat-temp-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-tejarat-temp"
+  },
+  {
+   "id": "chatbot-telc-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.40.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-telecom",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-telecom-api",
+     "role": "brain",
+     "version": "8859c835",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.15.45",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-telecom-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "chatbot-telecom-api",
+    "version": "8859c835",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-telecom-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-telecom"
+  },
+  {
+   "id": "chatbot-ui",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "chatbot-ui",
+     "role": "other",
+     "version": "v3.8.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-xperix-assistant",
+   "components": [
+    {
+     "name": "api",
+     "family": "chatbot-xperix-assistant-api",
+     "role": "brain",
+     "version": "46ab9a2d",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ui",
+     "family": "chatbot-lib-ui",
+     "role": "ui",
+     "version": "v3.15.46",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [
+    "chatbot-xperix-assistant-gw"
+   ],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "chatbot-xperix-assistant-api",
+    "version": "46ab9a2d",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "chatbot-xperix-assistant-gw",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.31.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ratelimiter",
+     "family": "ratelimit",
+     "role": "gateway",
+     "version": "8b6a44b0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": [],
+   "companion_of": "chatbot-xperix-assistant"
+  },
+  {
+   "id": "chatbot-xperix-crm",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "xperix-crm",
+     "role": "other",
+     "version": "v1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "demo-iva-sales",
+   "components": [
+    {
+     "name": "api",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "worker",
+     "family": "aiva",
+     "role": "brain",
+     "version": "v0.20.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "AGENT_ENABLED_TOOLS": "[\"send_sms\", \"send_rubika_message\"]",
+     "CONTEXTS_COLLECTION_NAME": "aiva-contexts",
+     "INSTRUCTIONS_COLLECTION_NAME": "aiva-instructions"
+    },
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gpt-oss-120-iva-llm-lb"
+   ],
+   "brain": {
+    "family": "aiva",
+    "version": "v0.20.0",
+    "component": "api"
+   },
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "embedding-exporter",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "ewano-ping",
+   "components": [
+    {
+     "name": "cloud",
+     "family": "ewano-ping",
+     "role": "other",
+     "version": "afb1eb45",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "front",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma-embedding-lb",
+   "components": [
+    {
+     "name": "proxy",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "contrib-",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma3-12-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma3-12b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.11.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma3-27-llm-lb",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-26b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.25.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-26b-coa",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.23.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-26b-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.38.3",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-31b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.25.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-31b-coa",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.25.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-31b-coa-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.38.3",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-31b-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.38.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-31b-zarebin-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gemma4-e2b-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.38.2",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gpt-oss-120-iva-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.36.4",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gpt-oss-120-llm-lb",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "gpt-oss-120b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.11.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "hakim-embedding-serve",
+   "components": [
+    {
+     "name": "triton",
+     "family": "torch",
+     "role": "other",
+     "version": "25.08-v1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "triton-gpu",
+     "family": "torch",
+     "role": "other",
+     "version": "25.08-v1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "proxy",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "contrib-",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "hakim-search",
+   "components": [
+    {
+     "name": "inference",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.15.0",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "loadbalancer",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "hakim-unsupervised",
+   "components": [
+    {
+     "name": "cpu",
+     "family": "vllm-openai-cpu",
+     "role": "other",
+     "version": "v0.25.1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "gpu",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.25.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "proxy",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "contrib-",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-proxy",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "contrib-",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "hrm",
+   "components": [
+    {
+     "name": "app",
+     "family": "odoo",
+     "role": "other",
+     "version": "17.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "iva-record",
+   "components": [
+    {
+     "name": "agent",
+     "family": "chatbot-iva-agent",
+     "role": "voice",
+     "version": "d270445e",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "egress",
+     "family": "egress",
+     "role": "media",
+     "version": "",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {
+     "AGENT_GREETING_MESSAGE": "سلام وقتتون بخیر، لطفا پس از اتمام صحبت من، شما شروع به صحبت کردن کنید. هر زمان که صحبتتون تمام شد، میتوانید قطع کنید.",
+     "AGENT_GREETING_ALLOW_INTERRUPTION": "False",
+     "AGENT_TTS_MODEL": "iva_record_prod",
+     "AGENT_SIP_RTP_STABILIZATION_DELAY": ".5"
+    },
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "llmhub",
+   "components": [
+    {
+     "name": "ui",
+     "family": "llmhub-ui",
+     "role": "other",
+     "version": "2eeb1bd4",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "mci-nexus",
+     "role": "other",
+     "version": "61b8bb39",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "mci-agentic",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chatbot",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "7.2.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "kb_worker",
+     "family": "adcs-kb",
+     "role": "knowledge",
+     "version": "v0.23.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "auth",
+     "family": "adcs-auth",
+     "role": "auth",
+     "version": "v0.8.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "hodor",
+     "family": "hodor",
+     "role": "other",
+     "version": "e2c25f3a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "websocall",
+     "family": "websocall",
+     "role": "media",
+     "version": "v0.2.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva-gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "iva-chatbot",
+     "family": "chatbot-mci-api",
+     "role": "brain",
+     "version": "7.2.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "iva-ui",
+     "family": "mci",
+     "role": "ui",
+     "version": "mci-v5.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-api",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "ch-update-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "trends-syncer",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "archive-old-calls",
+     "family": "coa-api-archive-old-calls",
+     "role": "analytics",
+     "version": "dfe14133",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": true,
+     "schedule": "0 0 31 2 *",
+     "neverRuns": true
+    },
+    {
+     "name": "syncer-canonical",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "syncer-failed",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.23.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.34.1",
+     "replicas": 6,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-iva",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.34.1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "grogu-ticket",
+     "family": "grogu",
+     "role": "analytics",
+     "version": "v0.34.1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-ai",
+     "family": "coa-ai",
+     "role": "analytics",
+     "version": "159f92ae",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "coa-ui",
+     "family": "coa",
+     "role": "other",
+     "version": "coa-v5.3",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ticket-upload",
+     "family": "ticket-upload",
+     "role": "other",
+     "version": "v0.5.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-redis",
+     "family": "redis",
+     "role": "cache",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "dashboard-cache",
+     "family": "coa-api",
+     "role": "analytics",
+     "version": "v5.19.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-gw",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "coa-agent-ui",
+     "family": "agent-ui",
+     "role": "ui",
+     "version": "v2.21.0-config",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {
+     "AGENT_LLM_MODEL": "google/gemma-4-31B-it",
+     "CONTEXTS_COLLECTION_NAME": "mci-agentic-contexts",
+     "GUARDRAIL_COLLECTION_NAME": "mci-agentic-guardrails",
+     "INSTRUCTIONS_COLLECTION_NAME": "mci-agentic-instructions",
+     "CONTEXTS_FILTER_LLM_ENABLED": "true",
+     "PHOENIX_PROJECT_NAME": "mci-agentic-chatbot"
+    },
+    "data": {
+     "POSTGRES_DATABASE": "coa_mci",
+     "CLICKHOUSE_DATABASE": "zaal",
+     "KAFKA_TELC_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_CALL_ASR_TOPIC": "anzu-coa-mci-call-asr",
+     "KAFKA_TICKET_TOPIC": "anzu-coa-mci-ticket",
+     "MINIO_BUCKET_NAME": "coa-analysis-prod",
+     "KAFKA_CALL_TOPIC": "anzu-coa-call-mci",
+     "KAFKA_IVA_TOPIC": "chatbot-mci-iva",
+     "MINIO_IVA_BUCKET_NAME": "chatbot-mci-iva"
+    },
+    "campaign": {
+     "AI_AGENT": "mcinext-ticket"
+    }
+   },
+   "deps": [
+    "chatbot-llm-gateway",
+    "proxy-lb"
+   ],
+   "brain": {
+    "family": "chatbot-mci-api",
+    "version": "7.2.1",
+    "component": "chatbot"
+   },
+   "ivaTopics": [
+    "chatbot-mci-iva"
+   ],
+   "panelApps": [
+    "COA",
+    "CCA"
+   ]
+  },
+  {
+   "id": "mci-navigator",
+   "components": [
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "api",
+     "family": "mci-navigator",
+     "role": "other",
+     "version": "v0.5.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "chainlit",
+     "family": "mci-navigator-chainlit",
+     "role": "other",
+     "version": "v0.5.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "model-respository",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "mlflow",
+     "role": "other",
+     "version": "v0.1.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "openai-trtllm",
+   "components": [
+    {
+     "name": "api",
+     "family": "openai_trtllm",
+     "role": "other",
+     "version": "1.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "prompt-inventory",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "prompt-inventory",
+     "role": "other",
+     "version": "c033337e",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "proxy-lb",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "tools-v1",
+     "replicas": 2,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "qdrant-backup",
+   "components": [
+    {
+     "name": "rust-qdrant-backup",
+     "family": "qdrant-backup",
+     "role": "other",
+     "version": "ff304f60",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "0 2 * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "qwen3-30b-a3b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.15.1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "loadbalancer",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "qwen3.5-35b-a3b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.17.0",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "loadbalancer",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "qwen3.6-35b-a3b",
+   "components": [
+    {
+     "name": "model",
+     "family": "vllm-openai",
+     "role": "other",
+     "version": "v0.19.1",
+     "replicas": 0,
+     "autoscaled": false,
+     "metrics": true
+    },
+    {
+     "name": "loadbalancer",
+     "family": "envoy",
+     "role": "gateway",
+     "version": "v1.37.0",
+     "replicas": 3,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "ray-websearch",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "ray-websearch",
+     "role": "other",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "ray-websearch-test",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "ray-websearch",
+     "role": "other",
+     "version": "latest",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "se-agent",
+   "components": [
+    {
+     "name": "app",
+     "family": "se-agent",
+     "role": "other",
+     "version": "v0.3.2",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "gemma4-26b-llm-lb"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "sentiment-analysis",
+   "components": [
+    {
+     "name": "api",
+     "family": "sentiment-analysis-api",
+     "role": "other",
+     "version": "5e18245a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "worker",
+     "family": "sentiment-analysis-api",
+     "role": "other",
+     "version": "5e18245a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "ui",
+     "family": "sentiment-analysis-ui",
+     "role": "other",
+     "version": "5e18245a",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    },
+    {
+     "name": "gateway",
+     "family": "nginx",
+     "role": "gateway",
+     "version": "alpine",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "proxy-lb"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "sip-messager-exporter",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "tts-service",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "tts-service",
+     "role": "other",
+     "version": "765e8b75",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "turn-detection-exporter",
+   "components": [],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "web-search-service",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "web-search-service",
+     "role": "other",
+     "version": "v2.26.0",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": true
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [
+    "ray-websearch"
+   ],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "web-search-service-test",
+   "components": [
+    {
+     "name": "zarebin",
+     "family": "web-search-service",
+     "role": "other",
+     "version": "1e4e4ae1",
+     "replicas": 1,
+     "autoscaled": false,
+     "metrics": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  },
+  {
+   "id": "zazu",
+   "components": [
+    {
+     "name": "zazu",
+     "family": "zazu",
+     "role": "other",
+     "version": "dfd3803e",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "59 23 * * 5",
+     "neverRuns": false
+    },
+    {
+     "name": "zazu-category",
+     "family": "zazu",
+     "role": "other",
+     "version": "dfd3803e",
+     "replicas": null,
+     "autoscaled": false,
+     "metrics": false,
+     "schedule": "*/30 * * * *",
+     "neverRuns": false
+    }
+   ],
+   "companions": [],
+   "config": {
+    "voice": {},
+    "brain": {},
+    "data": {},
+    "campaign": {}
+   },
+   "deps": [],
+   "ivaTopics": [],
+   "panelApps": []
+  }
+ ]
+}

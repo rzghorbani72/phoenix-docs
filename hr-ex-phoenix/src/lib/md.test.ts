@@ -46,12 +46,12 @@ describe("resolveHref", () => {
     for (const p of ["models", "risks", "guide", "docs"]) expect(r(`${p}.html`)).toEqual({ href: `#/${p}`, external: false });
     expect(r("../risks.html", deep)).toEqual({ href: "#/risks", external: false });
   });
-  it("maps document links of any old layout to docs/<folder>/<file>", () => {
-    const guide = { href: "docs/technical/AI_LEARNING_GUIDE_FA.html", external: true };
+  it("maps HTML document links of any old layout to the in-app reader, other files to docs/<folder>/<file>", () => {
+    const guide = { href: "#/doc/AI_LEARNING_GUIDE", external: false };
     expect(r("../../AI_LEARNING_GUIDE_FA.html")).toEqual(guide);
     expect(r("../../../product-management/AI_LEARNING_GUIDE_FA.html", deep)).toEqual(guide);
     expect(r("docs/technical/AI_LEARNING_GUIDE_FA.html")).toEqual(guide);
-    expect(r("../../../product-management/START_HERE_FA.html#map")).toEqual({ href: "docs/product-management/START_HERE_FA.html#map", external: true });
+    expect(r("../../../product-management/START_HERE_FA.html#map")).toEqual({ href: "#/doc/START_HERE/map", external: false });
     expect(r("product_dossier_fa.pdf")).toEqual({ href: "docs/product-management/PRODUCT_DOSSIER_FA.pdf", external: true });
   });
   it("URL-encodes document paths with spaces", () => {
@@ -65,7 +65,8 @@ describe("resolveHref", () => {
   it("uses the generated manifest by default", () => {
     expect(DOC_INDEX.size).toBeGreaterThan(0);
     const { docs: _omit, ...noDocs } = ctx;
-    expect(r("../../AI_LEARNING_GUIDE_FA.html", noDocs).href).toBe(DOC_INDEX.get("ai_learning_guide_fa.html"));
+    expect(r("../../AI_LEARNING_GUIDE_FA.html", noDocs).href).toBe("#/doc/AI_LEARNING_GUIDE");
+    expect(r("../FIT_GAP_TRACKER.xlsx", noDocs).href).toBe(DOC_INDEX.get("fit_gap_tracker.xlsx"));
   });
 });
 
@@ -85,9 +86,10 @@ describe("md", () => {
   it("renders internal links in the same tab", () => {
     expect(md("see [ReAct](steps/b-react.html)", ctx)).toBe('see <a href="#/step/b-react">ReAct</a>');
   });
-  it("renders document and web links in a new tab", () => {
-    expect(md("[guide](../../AI_LEARNING_GUIDE_FA.html)", ctx))
-      .toBe('<a href="docs/technical/AI_LEARNING_GUIDE_FA.html" target="_blank" rel="noopener">guide</a>');
+  it("renders HTML documents as app routes, other files and web links in a new tab", () => {
+    expect(md("[guide](../../AI_LEARNING_GUIDE_FA.html)", ctx)).toBe('<a href="#/doc/AI_LEARNING_GUIDE">guide</a>');
+    expect(md("[pdf](PRODUCT_DOSSIER_FA.pdf)", ctx))
+      .toBe('<a href="docs/product-management/PRODUCT_DOSSIER_FA.pdf" target="_blank" rel="noopener">pdf</a>');
     expect(md("[q](https://x.io/?a=1&b=2)", ctx))
       .toBe('<a href="https://x.io/?a=1&amp;b=2" target="_blank" rel="noopener">q</a>');
   });

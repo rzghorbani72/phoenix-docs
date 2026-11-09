@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { DATA, laneOf } from "./lib/data";
 import { ctxFor } from "./lib/md";
 import MapView from "./components/map/MapView";
@@ -10,14 +10,24 @@ import { STATUSES, type MapFilters } from "./components/map/shared";
 import { BodyView, Md } from "./components/Blocks";
 import { Search } from "./components/Search";
 import { DocsView } from "./views/DocsView";
+import { DocView } from "./views/DocView";
 import { GuideView } from "./views/GuideView";
+import { InstancePage } from "./views/instances/InstancePage";
+import { InstancesView, type InstancesMode } from "./views/instances/InstancesView";
+import { T as instanceStrings } from "./views/instances/i18n";
+import { StagePanel } from "./views/instances/StagePanel";
+import { byId, instanceLane } from "./lib/instances";
 import { ModelPage } from "./views/ModelPage";
 import { ModelsView } from "./views/ModelsView";
 import { RisksView } from "./views/RisksView";
 import { StepPanel } from "./views/StepPanel";
 
 type Route = {
-  view: "map" | "step" | "models" | "model" | "guide" | "risks" | "docs"; id?: string; lane?: string;
+  view: "map" | "step" | "models" | "model" | "instances" | "instance" | "guide" | "risks" | "docs" | "doc"; id?: string; lane?: string;
+  /** Selected pipeline step of an instance (#/instance/<id>/<stage>). */
+  stage?: string;
+  /** Anchor inside a document (#/doc/<key>/<anchor>). */
+  anchor?: string;
   /** Map level: lane cards instead of the step-level diagram (#/map/overview). */
   overview?: boolean;
   /** 0-based stop of the "follow one turn" tour (#/tour/1 … #/tour/16). */
@@ -33,7 +43,9 @@ function parse(hash: string): Route {
   }
   if (p[0] === "map" && p[1] === "overview") return { view: "map", overview: true };
   if (p[0] === "model" && p[1]) return { view: "model", id: p[1] };
-  if (p[0] === "models" || p[0] === "guide" || p[0] === "risks" || p[0] === "docs") return { view: p[0] };
+  if (p[0] === "instance" && p[1]) return { view: "instance", id: p[1], stage: p[2] };
+  if (p[0] === "doc" && p[1]) return { view: "doc", id: decodeURIComponent(p[1]), anchor: p.slice(2).join("/") || undefined };
+  if (p[0] === "models" || p[0] === "instances" || p[0] === "guide" || p[0] === "risks" || p[0] === "docs") return { view: p[0] };
   if (p[0] === "map" && p[1] === "lane" && p[2]) return { view: "map", lane: p[2] };
   return { view: "map" };
 }
@@ -61,7 +73,8 @@ export default function App() {
   });
   const [searchOpen, setSearchOpen] = useState(false);
   const [aboutOpen, setAboutOpen] = useState(false);
-  const [filters, setFilters] = useState<MapFilters>({ model: "", statuses: new Set(STATUSES), query: "", cross: false });
+  const [filters, setFilters] = useState<MapFilters>({ model: "", statuses: new Set(STATUSES), query: "", cross: true, instance: "" });
+  const [instancesMode, setInstancesMode] = useState<InstancesMode>("all");
   const d = DATA[lang];
   const ctx = useMemo(() => ctxFor(d, 0), [d]);
 
@@ -74,7 +87,7 @@ export default function App() {
     document.documentElement.lang = lang;
     document.documentElement.dir = d.dir;
     document.documentElement.dataset.theme = theme;
-    document.title = lang === "fa" ? "پایپ‌لاین‌های Phoenix EX" : "Phoenix EX Pipelines";
+    document.title = lang === "fa" ? "پایپ‌لاین‌های Phoenix" : "Phoenix Pipelines";
     store.set("pp-lang", lang); store.set("pp-theme", theme);
   }, [lang, theme, d.dir]);
   useEffect(() => {
@@ -101,21 +114,30 @@ export default function App() {
     window.addEventListener("keydown", k);
     return () => window.removeEventListener("keydown", k);
   }, [route, d, searchOpen, aboutOpen]);
-  useEffect(() => { if (route.view !== "map" && route.view !== "step") window.scrollTo(0, 0); }, [route]);
+  // Opening, changing or closing a step of an instance stays on the same page, so it must not jump.
+  const shownInstance = useRef<string | undefined>(undefined);
+  useEffect(() => {
+    const same = route.view === "instance" && route.id === shownInstance.current;
+    shownInstance.current = route.view === "instance" ? route.id : undefined;
+    if (!same && route.view !== "map" && route.view !== "step") window.scrollTo(0, 0);
+  }, [route]);
 
   const onMap = route.view === "map" || route.view === "step";
+  const instance = byId(filters.instance);
+  // A lane focused while an instance is selected opens that instance's own details beside the map.
+  const focused = route.view === "map" && instance && route.lane ? instanceLane(instance, route.lane) : undefined;
   const ui = d.ui;
-  const tabs: [Route["view"], string][] = [["map", ui.nav_map], ["models", ui.nav_models], ["guide", ui.nav_guide ?? "Guide"], ["risks", ui.nav_risks], ["docs", lang === "fa" ? "اسناد" : "Documents"]];
+  const tabs: [Route["view"], string][] = [["map", ui.nav_map], ["models", ui.nav_models], ["instances", instanceStrings(lang).tab], ["guide", ui.nav_guide ?? "Guide"], ["risks", ui.nav_risks], ["docs", lang === "fa" ? "اسناد" : "Documents"]];
   const stepLane = route.view === "step" && route.id ? laneOf(d, route.id)?.lane.id : undefined;
   const inTour = route.tour !== undefined;
 
   return (
-    <div className={`app ${onMap ? "on-map" : ""}`}>
+    <div className={`app ${onMap ? "on-map" : ""}${route.view === "doc" ? " on-doc" : ""}`}>
       <header className="top">
         <a className="brand" href="#/map"><span className="logo">◆</span>{ui.brand}</a>
         <nav className="tabs">
           {tabs.map(([v, label]) => {
-            const on = route.view === v || (v === "map" && (route.view === "step")) || (v === "models" && route.view === "model");
+            const on = route.view === v || (v === "map" && (route.view === "step")) || (v === "models" && route.view === "model") || (v === "instances" && route.view === "instance") || (v === "docs" && route.view === "doc");
             return (
             <a key={v} href={`#/${v}`} className={on ? "on" : ""} aria-current={on ? "page" : undefined}>{label}</a>
             );
@@ -130,22 +152,26 @@ export default function App() {
       </header>
 
       {onMap && (
-        <div className={`mapwrap${route.view === "step" ? " has-panel" : ""}${inTour ? " in-tour" : ""}`}>
+        <div className={`mapwrap${route.view === "step" || focused?.detail ? " has-panel" : ""}${inTour ? " in-tour" : ""}`}>
           <MapToolbar d={d} filters={filters} setFilters={setFilters} overview={!!route.overview} tourActive={inTour}
-            lane={route.lane ?? stepLane} compact={route.view === "step"} />
+            lane={route.lane ?? stepLane} compact={route.view === "step" || !!focused?.detail} />
           {route.overview
-            ? <OverviewMap d={d} theme={theme} onLane={(id) => go(`#/map/lane/${id}`)} />
-            : <MapView d={d} filters={filters} selected={route.view === "step" ? route.id : undefined} lane={route.lane} theme={theme}
+            ? <OverviewMap d={d} theme={theme} instance={instance} onLane={(id) => go(`#/map/lane/${id}`)} />
+            : <MapView d={d} filters={filters} selected={route.view === "step" ? route.id : undefined} lane={route.lane} theme={theme} panel={!!focused?.detail}
                 tour={inTour ? TOUR_IDS : undefined} onOpen={(id) => go(`#/step/${id}`)} />}
-          {route.view === "step" && route.id && <StepPanel d={d} id={route.id} tour={inTour} />}
+          {route.view === "step" && route.id && <StepPanel d={d} id={route.id} tour={inTour} theme={theme} />}
+          {instance && focused?.detail && <StagePanel inst={focused.owner} pageId={instance.id} detail={focused.detail} lang={lang} theme={theme} onMap />}
           {inTour && <TourBar d={d} index={route.tour!} />}
         </div>
       )}
       {route.view === "models" && <ModelsView d={d} />}
       {route.view === "model" && route.id && <ModelPage d={d} id={route.id} />}
+      {route.view === "instances" && <InstancesView lang={lang} mode={instancesMode} onMode={setInstancesMode} />}
+      {route.view === "instance" && route.id && <InstancePage lang={lang} id={route.id} stage={route.stage} theme={theme} />}
       {route.view === "guide" && <GuideView d={d} />}
       {route.view === "risks" && <RisksView d={d} />}
       {route.view === "docs" && <DocsView d={d} />}
+      {route.view === "doc" && route.id && <DocView d={d} id={route.id} anchor={route.anchor} theme={theme} />}
 
       <footer className="app-footer">Developed by Reza.Ghorbani</footer>
 

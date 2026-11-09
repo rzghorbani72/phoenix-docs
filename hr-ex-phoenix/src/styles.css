@@ -166,3 +166,8 @@ th, td { border-bottom: 1px solid var(--line); padding: 6px 8px; text-align: sta
   .toolbar .lanes, .toolbar .chk { display: none; }
   .risk { grid-template-columns: 1fr; }
 }
+
+/* Generated runtime diagram inside a step panel. Its width matches the diagram's 1390:760 shape. */
+.runtime-diagram { margin: 14px 0; }
+.runtime-frame { display: block; width: 100%; aspect-ratio: 1390 / 760; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.runtime-note { margin: 6px 0 0; font-size: .85em; }

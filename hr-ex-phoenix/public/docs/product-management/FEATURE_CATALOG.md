@@ -2,7 +2,7 @@
 
 **Product:** an AI employee-experience (EX) HR platform. Employees talk to it by voice (IVA, phone) and text (chatbot). It answers, takes requests, and analyses every conversation into tags, categories and insights for HR.
 
-**Audience:** TPM, CTO, tech leads. Use this as the master list: add rows, change priorities, link Fit-Gap IDs.
+**Audience:** everyone on the project. Use this as the master list: add rows, change priorities, link Fit-Gap IDs.
 
 **Date:** 2026-10-17 · **Code basis:** repo at `cb570a50b` (see `product/README.md` and the dossiers) · **Competitor basis:** dossier §25 (sources G1–G31, R1–R*) + new research listed in [Sources](#sources).
 

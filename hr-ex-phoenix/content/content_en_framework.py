@@ -196,7 +196,7 @@ FRAMEWORK_STEPS = {
                 "The orchestrator forwards to `orchestrator.chan` and publishes `FirstChunkEvent` / `LastChunkEvent` ([F3](f-orch-base.html)).",
                 "ADCS turns `orchestrator.chan` into the SSE response that the voice agent reads (lane 1, [V7](v-aiva.html)).",
             ]}),
-            ("What a TPM should know", ["Reasoning tokens and tool-call chunks travel on the same channel as spoken text. Whoever consumes the stream must filter them; aiva / the voice agent do this (inferred from the chunk types).",
+            ("What to know", ["Reasoning tokens and tool-call chunks travel on the same channel as spoken text. Whoever consumes the stream must filter them; aiva / the voice agent do this (inferred from the chunk types).",
                                        "An agent's channel can only be used for one answer: once closed it stays closed. That is why aiva builds a new orchestrator and agents on every request (`aiva/chat/handlers/chat.py:92-223`)."]),
             ("Gotchas", ({"note": "In 0.45.0, sending to a closed channel raises `ChanClosedError`. The agent checks before forwarding a model chunk, but not before forwarding a tool result (`stream/agent.py:150-157`), so a cancelled branch that was mid tool call can raise (inferred).", "kind": "warn"},)),
             ("What changed on main", "0.46.1 skips tool execution entirely when the channel is already closed, and `send_nowait` gained `raise_on_closed` / `raise_on_full` switches."),

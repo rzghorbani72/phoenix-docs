@@ -4,6 +4,10 @@ import {
   type Edge, type Node, type NodeProps,
 } from "@xyflow/react";
 import type { Data, Lane, Status } from "../../lib/types";
+import type { Instance } from "../../lib/instanceTypes";
+import { instanceLane, isStage } from "../../lib/instances";
+import { T as instanceStrings } from "../../views/instances/i18n";
+import { stepLook, stepWordText } from "../../views/instances/model";
 import { plain } from "../../lib/md";
 import { CROSS, LANE_COLOR, STATUSES } from "./shared";
 import { T } from "./i18n";
@@ -70,7 +74,40 @@ function handoffs(d: Data) {
   return list;
 }
 
-type CardData = LaneStats & { color: string; lang: "en" | "fa"; statusLabel: Record<string, string> };
+type CardData = LaneStats & { color: string; lang: "en" | "fa"; statusLabel: Record<string, string>; instance?: Instance };
+
+/** The same lane as this instance runs it: read from ops, and only what ops really shows. */
+function InstanceCard({ st, inst, lang }: { st: LaneStats; inst: Instance; lang: "en" | "fa" }) {
+  const t = T(lang);
+  const s = instanceStrings(lang);
+  const { owner, detail, builtIn } = instanceLane(inst, st.lane.id);
+  const look = detail && stepLook(detail);
+  return (
+    <>
+      <div className="ov-head">
+        <span className="ov-prefix">{st.lane.prefix}</span>
+        <div className="ov-names">
+          <div className="ov-short">{isStage(st.lane.id) ? s.stages[st.lane.id] : plain(st.lane.short)}</div>
+          <div className="ov-tag"><bdi>{detail?.stage.family ?? ""}</bdi>{detail?.stage.version ? <> · <bdi>{detail.stage.version}</bdi></> : null}</div>
+          {owner.id !== inst.id && <div className="ov-tag ins-from"><bdi>{owner.name[lang]}</bdi></div>}
+        </div>
+      </div>
+      {detail && detail.components.length > 0 && (
+        <div className="ov-stats">
+          <div><b>{detail.on}/{detail.components.length}</b><span>{s.statParts}</span></div>
+          <div><b>{detail.replicas}</b><span>{s.statReplicas}</span></div>
+          <div><b>{detail.settings.length}</b><span>{s.settings}</span></div>
+        </div>
+      )}
+      <div className="ov-foot">
+        <div className={`ins-step-status ${look?.tone ?? "off"}`}>
+          <strong>{look ? stepWordText(look.word, lang) : builtIn ? s.laneBuiltIn : s.laneNotInOps}</strong>
+        </div>
+        <div className="ov-cta">{detail ? s.openStep : t.openLane} {lang === "fa" ? "←" : "→"}</div>
+      </div>
+    </>
+  );
+}
 
 function Card({ st, lang, statusLabel }: { st: LaneStats; lang: "en" | "fa"; statusLabel: Record<string, string> }) {
   const t = T(lang);
@@ -95,9 +132,11 @@ function Card({ st, lang, statusLabel }: { st: LaneStats; lang: "en" | "fa"; sta
   );
 }
 
+const cardClass = (lane: string, inst?: Instance) => `ovcard${inst && !instanceLane(inst, lane).used ? " ov-unused" : ""}`;
+
 const LaneCard = memo(function LaneCard({ data }: NodeProps<Node<CardData>>) {
   return (
-    <div className="ovcard" style={{ ["--lc" as string]: data.color }}>
+    <div className={cardClass(data.lane.id, data.instance)} style={{ ["--lc" as string]: data.color }}>
       {HANDLES.map(([s, p]) => {
         const style = s === "l" || s === "r" ? { top: `${p}%` } : { left: `${p}%` };
         return [
@@ -105,14 +144,14 @@ const LaneCard = memo(function LaneCard({ data }: NodeProps<Node<CardData>>) {
           <Handle key={`t${s}${p}`} type="target" id={`t-${s}:${p}`} position={POS[s]} style={style} />,
         ];
       })}
-      <Card st={data} lang={data.lang} statusLabel={data.statusLabel} />
+      {data.instance ? <InstanceCard st={data} inst={data.instance} lang={data.lang} /> : <Card st={data} lang={data.lang} statusLabel={data.statusLabel} />}
     </div>
   );
 });
 
 const nodeTypes = { lanecard: LaneCard };
 
-function build(d: Data) {
+function build(d: Data, instance?: Instance) {
   const rtl = d.dir === "rtl";
   const stats = laneStats(d);
   const nodes: Node[] = stats.map((st, i) => {
@@ -121,10 +160,11 @@ function build(d: Data) {
     return {
       id: st.lane.id, type: "lanecard", position: { x: col * (CW + GX), y: r * (CH + GY) }, draggable: false,
       width: CW, height: CH, style: { width: CW, height: CH },
-      data: { ...st, color: LANE_COLOR[st.lane.color] ?? "var(--accent)", lang: d.lang, statusLabel: d.ui.status } satisfies CardData,
+      data: { ...st, color: LANE_COLOR[st.lane.color] ?? "var(--accent)", lang: d.lang, statusLabel: d.ui.status, instance } satisfies CardData,
     };
   });
-  const edges: Edge[] = handoffs(d).map((h) => {
+  const runs = (lane: string) => !instance || instanceLane(instance, lane).used;
+  const edges: Edge[] = handoffs(d).filter((h) => runs(h.from) && runs(h.to)).map((h) => {
     const color = LANE_COLOR[d.lanes.find((l) => l.id === h.from)?.color ?? ""] ?? "var(--accent)";
     const spec = ROUTE[`${h.from}>${h.to}`];
     return {
@@ -139,13 +179,13 @@ function build(d: Data) {
   return { nodes, edges, stats };
 }
 
-interface Props { d: Data; theme: "dark" | "light"; onLane: (id: string) => void }
+interface Props { d: Data; theme: "dark" | "light"; onLane: (id: string) => void; instance?: Instance }
 
 /** One card per lane with its counts and the hand-offs between lanes; click a card to zoom into it. */
-export default function OverviewMap({ d, theme, onLane }: Props) {
+export default function OverviewMap({ d, theme, onLane, instance }: Props) {
   const narrow = useNarrow();
-  const { nodes, edges, stats } = useMemo(() => build(d), [d]);
-  if (narrow) return <OverviewList d={d} stats={stats} onLane={onLane} />;
+  const { nodes, edges, stats } = useMemo(() => build(d, instance), [d, instance]);
+  if (narrow) return <OverviewList d={d} stats={stats} onLane={onLane} instance={instance} />;
   return (
     <ReactFlowProvider>
       <ReactFlow
@@ -162,14 +202,14 @@ export default function OverviewMap({ d, theme, onLane }: Props) {
 }
 
 /** Phone layout: the same cards as a scrolling list, hand-offs written out under each card. */
-function OverviewList({ d, stats, onLane }: { d: Data; stats: LaneStats[]; onLane: (id: string) => void }) {
+function OverviewList({ d, stats, onLane, instance }: { d: Data; stats: LaneStats[]; onLane: (id: string) => void; instance?: Instance }) {
   const t = T(d.lang);
   return (
     <div className="ovlist">
       {stats.map((st) => (
-        <button key={st.lane.id} className="ovcard" style={{ ["--lc" as string]: LANE_COLOR[st.lane.color] }} onClick={() => onLane(st.lane.id)}>
-          <Card st={st} lang={d.lang} statusLabel={d.ui.status} />
-          {st.out.length > 0 && (
+        <button key={st.lane.id} className={cardClass(st.lane.id, instance)} style={{ ["--lc" as string]: LANE_COLOR[st.lane.color] }} onClick={() => onLane(st.lane.id)}>
+          {instance ? <InstanceCard st={st} inst={instance} lang={d.lang} /> : <Card st={st} lang={d.lang} statusLabel={d.ui.status} />}
+          {!instance && st.out.length > 0 && (
             <div className="ov-out">
               {st.out.map((o) => (
                 <span key={o.to.id} style={{ ["--tc" as string]: LANE_COLOR[o.to.color] }} title={t.handoffsOut}>

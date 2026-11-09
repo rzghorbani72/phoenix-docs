@@ -23,16 +23,16 @@ PUBLIC = APP / "public"
 DOCS = PUBLIC / "docs"
 OUT = APP / "src" / "data" / "docs.json"
 
-CATEGORIES = ["product-management", "technical", "knowledge-base", "requirements", "diagrams"]
+CATEGORIES = ["product-management", "technical", "knowledge-base", "requirements"]
 TYPES = {"html", "pdf", "md", "csv", "xlsx", "docx", "png", "jpg", "jpeg", "svg", "json"}
 # Which file of a twin group opens first (and is previewed).
 PRIMARY = ["html", "pdf", "md", "csv", "png", "jpg", "jpeg", "svg", "json", "xlsx", "docx"]
 PERSIAN = re.compile(r"[؀-ۿ]")
 
 # The documents a newcomer should open first.
-START = {"START_HERE_FA", "README", "README_FA"}
+START = {"START_HERE_FA", "START_HERE", "README", "README_FA"}
 
-# Curated one-liners, keyed by file stem (README.md tables; knowledge-base/README.md).
+# Curated one-liners, keyed by file stem, or stem.xlsx for a spreadsheet (README.md tables; knowledge-base/README.md).
 DESC: dict[str, tuple[str, str]] = {
     "START_HERE_FA": (
         "Hub page: question-to-document router, map of every file, HR requirements per pipeline stage, sensitive and emergency call handling, AI models and the pilot gate.",
@@ -46,7 +46,7 @@ DESC: dict[str, tuple[str, str]] = {
         "Product dossier §1–10, §25, §27: feature catalog, Fit-Gap verdict, critical findings, risks, unit economics, scope, competitors and HCM vendors.",
         "پروندهٔ محصول (§۱–۱۰، §۲۵، §۲۷): کاتالوگ قابلیت‌ها، حکم Fit-Gap، یافته‌های بحرانی، ریسک‌ها، اقتصاد واحد، دامنه، رقبا و فروشندگان HCM.",
     ),
-    "FIT_GAP_TRACKER": (
+    "FIT_GAP_TRACKER.xlsx": (
         "The 87 agreement rows with code-verified status, evidence, confidence, owner, conditional deadline and action. RTL, filterable, with a live summary sheet.",
         "۸۷ ردیف توافق‌نامه با وضعیت تأییدشده از کد، شاهد، اطمینان، مالک وابستگی، ددلاین شرطی و اقدام؛ راست‌به‌چپ و قابل فیلتر با برگهٔ خلاصهٔ زنده.",
     ),
@@ -141,7 +141,7 @@ DESC: dict[str, tuple[str, str]] = {
 
 # Names that the generic humanizer gets wrong (acronyms, dashes in the original name).
 TITLES = {
-    "FIT_GAP_TRACKER": "Fit-Gap tracker (Excel)",
+    "FIT_GAP_TRACKER.xlsx": "Fit-Gap tracker (Excel)",
     "HR - meet UAT agreement - Fit-Gap MVP": "HR UAT agreement — Fit-Gap MVP",
     "Continuous_Listening_MVP_Detailed_FitGap_v1": "Continuous Listening MVP — detailed Fit-Gap v1",
     "instruction_14-05": "Instruction 14-05 (telecom Q&A)",
@@ -192,29 +192,32 @@ def persian_text(p: Path) -> bool:
 
 
 def build() -> list[dict]:
-    groups: dict[tuple[str, str], list[Path]] = {}
+    groups: dict[tuple[str, str, str], list[Path]] = {}
     for p in sorted(DOCS.rglob("*")):
         if not p.is_file() or p.name.startswith((".", "~")) or p.name.endswith("#"):
             continue
         ext = p.suffix.lower().lstrip(".")
         if ext not in TYPES:
             continue
-        groups.setdefault((str(p.parent), p.stem), []).append(p)
+        # A spreadsheet is its own entry: FIT_GAP_TRACKER.xlsx is not a twin of the EN page FIT_GAP_TRACKER.html.
+        groups.setdefault((str(p.parent), p.stem, ".xlsx" if ext == "xlsx" else ""), []).append(p)
 
     entries = []
-    for (_, stem), paths in groups.items():
+    for (_, stem, solo), paths in groups.items():
+        name = stem + solo
         paths.sort(key=lambda p: PRIMARY.index(p.suffix.lower().lstrip(".")))
         rel_dir = paths[0].parent.relative_to(DOCS).parts
         category = rel_dir[0] if rel_dir else "other"
         files = [{"path": p.relative_to(PUBLIC).as_posix(), "type": p.suffix.lower().lstrip("."), "size": p.stat().st_size} for p in paths]
-        title = TITLES.get(stem) or next((t for p in paths if (t := read_title(p, p.suffix.lower().lstrip(".")))), None) or humanize(stem)
+        title = TITLES.get(name) or TITLES.get(stem) or next((t for p in paths if (t := read_title(p, p.suffix.lower().lstrip(".")))), None) or humanize(stem)
         # FEATURE_CATALOG (EN) pairs .md + .html; the folder README keeps its folder in the title.
         if stem.startswith("README") and len(rel_dir) > 1 and "/" not in title:
             title = f"{title} — {rel_dir[-1]}"
         lang = "fa" if stem.endswith("_FA") or PERSIAN.search(title) or persian_text(paths[0]) else "en"
-        en, fa = DESC.get(stem, ("", ""))
+        # EN and FA versions of a document share the description of whichever is curated.
+        en, fa = DESC.get(name) or DESC.get(stem) or DESC.get(re.sub(r"_FA$", "", stem)) or DESC.get(f"{stem}_FA") or ("", "")
         entries.append({
-            "id": "/".join(rel_dir + (stem,)),
+            "id": "/".join(rel_dir + (name,)),
             "category": category,
             "folder": "/".join(rel_dir[1:]),
             "title": title,

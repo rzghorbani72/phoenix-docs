@@ -76,3 +76,19 @@
   .docs-grid { grid-template-columns: 1fr; }
   .dp-title strong { white-space: normal; }
 }
+
+/* one document inside the app layout (#/doc/<key>) */
+.docview { display: flex; flex-direction: column; height: calc(100vh - var(--hdr)); }
+.docview-bar { display: flex; align-items: center; gap: 10px; padding: 6px 16px; border-bottom: 1px solid var(--line); background: var(--surface); flex-wrap: wrap; }
+.docview-title { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.docview-note { margin: 0; padding: 3px 10px; font-size: .85em; }
+.docview-frame { flex: 1; width: 100%; border: 0; background: var(--bg); }
+.on-doc .app-footer { display: none; }
+
+/* A category folded by default: the whole header is the toggle. */
+.docs-fold > summary { cursor: pointer; list-style: none; display: flex; align-items: flex-start; gap: 10px; }
+.docs-fold > summary::-webkit-details-marker { display: none; }
+.docs-fold > summary::before { content: "▸"; color: var(--muted); line-height: 1.8; }
+[dir="rtl"] .docs-fold > summary::before { content: "◂"; }
+.docs-fold[open] > summary::before { content: "▾"; }
+.docs-fold > summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 6px; }

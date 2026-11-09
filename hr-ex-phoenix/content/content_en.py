@@ -15,7 +15,7 @@ OPS = "chatbot-ops/prod/chatbot-ex/values.yaml"
 AG = "python/chatbot-iva-agent@3524df3f"
 
 UI = {
-    "brand": "Phoenix EX pipelines",
+    "brand": "Phoenix pipelines",
     "nav_map": "Pipeline map", "nav_models": "Models", "nav_risks": "Risks & gaps", "nav_guide": "Guide", "other_lang": "فارسی",
     "status": {"live": "Live", "off": "Configured, off", "notdeployed": "Not deployed",
                "external": "External / outside repo", "unknown": "Unverified"},
@@ -27,9 +27,9 @@ UI = {
 }
 
 META = {
-    "title": "Phoenix EX (Employee Voice): every pipeline, step by step",
-    "title_plain": "Phoenix EX pipelines",
-    "lede": "How an employee's phone call becomes a live AI conversation, how the agent decides each answer, where its knowledge comes from, and how every call becomes analytics. Each box opens a deep dive: the model, its size, why it is used, inputs and outputs, settings and the exact logic.",
+    "title": "Phoenix: every pipeline, across every instance",
+    "title_plain": "Phoenix pipelines",
+    "lede": "Phoenix runs many instances: Employee Voice (EX), the MCI call center, Raya, Mobinnet and others. The Instances tab lists all of them and how each one differs. This map walks through the pipeline step by step, using EX as the verified example: how a phone call becomes a live AI conversation, how the agent decides each answer, where its knowledge comes from, and how every call becomes analytics. Each box opens a deep dive: the model, its size, why it is used, inputs and outputs, settings and the exact logic.",
     "source": "Read from code and prod config on 2026-11-02: `chatbot-ops` prod @ `dd851385e` (includes the 2026-11-02 move of the EX main agent and guardrail to a dedicated Gemma-4 31B); `phoenix` main @ `7b7c602eb`. Code refs follow what prod actually runs: aiva v0.31.1 (= commit `206e55746`; main is already at 0.33.3), voice agent `3524df3f` from the unmerged branch `feat-soniox-lang` (main v0.40.0 has no Soniox), coa-api v5.22.0 (= main). Paths are relative to each repo.",
     "footer": "Status labels: Live = in prod config and wired. Configured, off = present but disabled by a flag. Not deployed = code exists, no prod component. External = outside the cluster or outside both repos. Text marked (inferred) is reasoning, not code. Model sizes are public model facts, not read from code.",
 }
@@ -60,7 +60,7 @@ LANES = [
      "steps": ["m-history", "m-longterm", "m-writer", "m-stores"]},
     {"id": "ops", "prefix": "P", "color": "blue", "short": "6 · Models & platform", "tagline": "serving, gateway, tracing",
      "title": "6 · Models, serving and observability", "title_plain": "6. Models, serving and observability",
-     "desc": "Where the models run, how traffic reaches them, and where a TPM can see tokens, latency, prompts and traces.",
+     "desc": "Where the models run, how traffic reaches them, and where you can see tokens, latency, prompts and traces.",
      "steps": ["p-serving", "p-gateway", "p-phoenix", "p-metrics"]},
 ]
 
@@ -74,7 +74,7 @@ SYSTEM_EDGES = [
 ]
 
 KEY_POINTS = [
-    {"note": "**In one sentence:** Soniox (cloud) transcribes the employee → a Gemma-4 26B-A4B model decides the turn is over → aiva runs guardrail, retrieval (Hakim embeddings + Gemma-4 E2B filter) and a Gemma-4 31B ReAct agent (guardrail and agent share one dedicated 31B instance) → neurobox TTS speaks the answer → after hang-up, grogu re-transcribes the call and the external CCA engine tags it for the EX panel."},
+    {"note": "**In one sentence:** Soniox (cloud) transcribes the employee → a Gemma-4 26B-A4B model decides the turn is over → aiva runs guardrail, retrieval (Hakim embeddings + Gemma-4 26B-A4B filter) and a Gemma-4 31B ReAct agent (guardrail and agent share one dedicated 31B instance) → neurobox TTS speaks the answer → after hang-up, grogu re-transcribes the call and the external CCA engine tags it for the EX panel."},
     {"note": "**Things to know before you read:** prod runs code that is not on local `main`. Two steps send employee data outside the cluster (Soniox speech-to-text, OpenAI greeting). The LLM call-tagging engine (CCA) and the EX panel source are not in our repos. See [Risks & gaps](risks.html).", "kind": "warn"},
 ]
 
@@ -353,24 +353,24 @@ STEPS = {
         ]},
     "k-search": {
         "title": "Search at answer time", "title_plain": "Query + search", "status": "live",
-        "chip": "embed current utterance · top-10 · threshold 0.25", "chip_plain": "top-10 @ 0.25",
-        "summary": "On every turn, only the employee's latest utterance is embedded and compared with the stored questions. Up to 10 matches above a low similarity bar are kept.",
-        "facts": [("Query", "current utterance only; no rewriting, no history"), ("Top-k", "10"),
+        "chip": "embed current utterance · top-20 · threshold 0.25", "chip_plain": "top-20 @ 0.25",
+        "summary": "On every turn, only the employee's latest utterance is embedded and compared with the stored questions. Up to 20 matches above a low similarity bar are kept.",
+        "facts": [("Query", "current utterance only; no rewriting, no history"), ("Top-k", "20"),
                   ("Threshold", "cosine 0.25 (code default 0.5)"), ("Filters", "none (no tag / department filter)")],
         "sections": [
             ("Logic", {"ol": [
                 "`UserInputEvent` → `EmbeddingEvent` with `recent_item_only=True` (`agentlib@0.45.0:agentlib/events/embedding.py:18`).",
                 "`AIVARetrieveEvent` fans out in parallel to contexts, instructions, guardrails, tools and classification retrievers (`aiva/chat/handlers/orchestrator.py:197-205`).",
-                "Contexts: `LLMFilteredAdcsQdrantRetriever` on `chatbot-ex-aiva-contexts`, top-10, threshold 0.25. For each hit only the best-matching question text is kept (`aiva/retrieve/qdrant.py:47-82`).",
+                "Contexts: `LLMFilteredAdcsQdrantRetriever` on `chatbot-ex-aiva-contexts`, top-20, threshold 0.25. For each hit only the best-matching question text is kept (`aiva/retrieve/qdrant.py:47-82`).",
             ]}),
-            ("Why a low threshold", "A permissive 0.25 favours recall: better to over-fetch and let the LLM filter ([K7](k-filter.html)) remove noise. The trade-off is that precision rests on the smallest model in the stack (inferred)."),
+            ("Why a low threshold", "A permissive 0.25 favours recall: better to over-fetch and let the LLM filter ([K7](k-filter.html)) remove noise. The trade-off is that precision rests on the Gemma-4 26B-A4B relevance filter (inferred)."),
             ("Weak spot", "Follow-ups like «اون یکی چی؟» carry little meaning alone. Without query rewriting, grounding for follow-ups depends on carry-over ([K8](k-carry.html))."),
         ]},
     "k-filter": {
         "title": "Relevance filter (LLM)", "title_plain": "Contexts filter LLM", "status": "live",
-        "chip": "Gemma-4 E2B · ~2B effective · fails open", "chip_plain": "Gemma-4 E2B filter",
-        "summary": "A small, fast language model reads the conversation and the retrieved Q&A and picks which items are actually relevant. Only those reach the answer agent.",
-        "facts": [("Model", "`google/gemma-4-E2B-it` at `gemma-4-e2b-llm-lb`"), ("Size", "~2B effective (~5B with embeddings)"),
+        "chip": "Gemma-4 26B-A4B · fails open", "chip_plain": "Gemma-4 26B-A4B filter",
+        "summary": "A language model reads the conversation and up to 20 retrieved Q&A candidates and picks which items are actually relevant. Only those reach the answer agent.",
+        "facts": [("Model", "`google/gemma-4-26B-A4B-it` at `gemma4-26b-llm-lb`"), ("Size", "26B total, ~4B active per token (MoE)"),
                   ("Prompt", "`ex_iva_contexts_filter_llm_template` (Phoenix, tag production)"), ("History", "last 16 messages"),
                   ("Max output", "4096 tokens; temperature = server default"), ("Output", "`{\"indexes\":[…]}`")],
         "sections": [
@@ -380,7 +380,7 @@ STEPS = {
                 "Kept current hits + kept previous contexts go to the answer agent.",
                 "An empty search with no previous contexts skips the call.",
             ]}),
-            ("Why E2B", "Picking relevant items from a short list is an easy classification task, and it runs on every turn of a live call. The smallest Gemma keeps latency and GPU cost low (inferred)."),
+            ("Why 26B-A4B", "Picking relevant items from a short list is an easy classification task, and it runs on every turn of a live call. The configured model is Gemma-4 26B-A4B (26B total, about 4B active per token)."),
             ("Fail-open", {"note": "On an exception, non-JSON reply, duplicate or out-of-range index, all Qdrant candidates pass **unfiltered** and previous contexts are dropped (`qdrant.py:208-269`). Combined with threshold 0.25, “answer only from the KB” is enforced by the prompt alone; there is no code-level “no context → refuse” gate.", "kind": "warn"}),
             ("Instructions filter", "A second filter (`ex_iva_instructions_filter_llm_template`) is configured but disabled (`INSTRUCTIONS_FILTER_LLM_ENABLED` unset); its code default model is `openai/gpt-oss-120b`."),
         ]},
@@ -541,7 +541,7 @@ STEPS = {
                 ["`172.23.0.17:8318` (no LB)", "Gemma-4 31B", "unknown", "dedicated bare-metal vLLM for EX main agent + guardrail since 2026-11-02; launch flags (context, spec-decode) not in git; not scraped by the exporter"],
                 ["`gemma-4-31b-llm-lb`", "Gemma-4 31B", "15K", "speculative decoding (MTP, 4 tokens); shared by 16 services; EX uses it only for KB summarise / markdown and text chat now"],
                 ["`gemma4-26b-llm-lb`", "Gemma-4 26B-A4B", "23K", "spec-decode off (vLLM 0.25.1 bug); shared by 11 services; EX: intent, router, clarifying, end-of-turn"],
-                ["`gemma-4-e2b-llm-lb`", "Gemma-4 E2B", "unknown", "bare-metal only; flags not in git; 13 services"],
+                ["`gemma4-26b-llm-lb`", "Gemma-4 26B-A4B", "unknown", "bare-metal only; flags not in git; 13 services"],
                 ["`hakim-unsupervised-vllm-proxy`", "hakim-unsup", "512", "vLLM pooling (CPU + GPU)"]]}),
             ("Gaps", ["No values file requests GPUs or sets tensor-parallel, dtype or max-num-seqs; bare-metal launch flags are not in git.",
                       "The dedicated 31B endpoint is a raw IP in the EX values (`" + OPS + ":1318-1327`), not behind any Envoy pool: no health check, no failover. The host `172.23.0.17` also backs other pools on other ports (31B pool `:8319`, zarebin, COA, Qwen, embeddings), so “dedicated” means its own vLLM process, not necessarily its own GPUs (inferred).",
@@ -562,7 +562,7 @@ STEPS = {
                   ("Prompt tag", "`production` (greeting suggestion `v0_2_0`)")],
         "sections": [
             ("How prompts load", "`USE_PHOENIX_PROMPTS=true`: aiva pulls each `*_TEMPLATE_PROMPT_NAME` by tag from `phoenix-svc:6006`. If loading fails, it falls back to the template in the env var of the same role (`aiva/prompts/loader/loader.py`, `" + OPS + ":1407-1461`). **Prompt versions are managed in Phoenix, not git**, so a prompt change is a production change without a code review."),
-            ("How to use it as a TPM", ["Prompts → open an `ex_iva_*` prompt → Versions shows who changed what.",
+            ("How to use it", ["Prompts → open an `ex_iva_*` prompt → Versions shows who changed what.",
                                         "Tracing → project `chatbot-ex-iva` → filter by session to replay one call turn by turn, including retrieved contexts.",
                                         "Token counts per span depend on instrumentation; no explicit `LLM_TOKEN_COUNT_*` attribute was found (inferred)."]),
         ]},
@@ -582,7 +582,7 @@ STEPS.update(FRAMEWORK_STEPS)
 LANES.append(dict(FRAMEWORK_LANE, band=True))
 
 RISKS = {
-    "title": "Risks and gaps a TPM should track",
+    "title": "Risks and gaps to track",
     "lede": "Collected from the code reading. Severity is my judgement for the HR pilot, not an agreed rating.",
     "items": [
         {"sev": "high", "title": "Prod voice agent runs an unmerged branch", "why": "STT (Soniox) exists only on `feat-soniox-lang`; a rebuild from main breaks transcription.", "steps": ["v-stt"]},
@@ -591,14 +591,14 @@ RISKS = {
         {"sev": "high", "title": "Analysis engine (CCA) is a black box", "why": "Prompts, models and settings are not in our repos, so EX analytics cannot be audited.", "steps": ["a-cca"]},
         {"sev": "high", "title": "Main agent and guardrail on one unmonitored endpoint", "why": "Since 2026-11-02 both call one bare-metal vLLM at `172.23.0.17:8318`: no load balancer, health check or failover, and not in the exporter, so no metrics. If it fails, every EX turn fails.", "steps": ["b-react", "b-guardrail", "p-serving", "p-metrics"]},
         {"sev": "high", "title": "Fallback prompts are broken", "why": "If Phoenix is unreachable at pod start, env fallbacks load; the ReAct one would make every main turn fail (KeyError) and the guardrail one ignores policies.", "steps": ["b-prompts"]},
-        {"sev": "med", "title": "Grounding is prompt-only", "why": "Threshold 0.25 + fail-open filter on a ~2B model; no code gate for “no approved answer”.", "steps": ["k-search", "k-filter"]},
+        {"sev": "med", "title": "Grounding is prompt-only", "why": "Threshold 0.25 + fail-open Gemma-4 26B-A4B filter; no code gate for “no approved answer”.", "steps": ["k-search", "k-filter"]},
         {"sev": "med", "title": "Human transfer always fails and drops the call", "why": "`AGENT_SIP_REDIRECT_URL` unset.", "steps": ["v-end"]},
         {"sev": "med", "title": "MCI greeting fallback", "why": "If session creation fails the caller hears the MCI assistant greeting.", "steps": ["v-session"]},
         {"sev": "med", "title": "EX panel may show MCI data", "why": "Trends bucket, failed-calls table and NL2SQL tables default to MCI.", "steps": ["a-sync", "a-aqa"]},
         {"sev": "med", "title": "Prompts change outside code review", "why": "All `ex_iva_*` prompts are versioned in Phoenix, tag `production`.", "steps": ["p-phoenix"]},
         {"sev": "med", "title": "Guardrail on every turn, fails open, no timeout", "why": "A 31B check sits on the critical path and now queues on the same instance as the main answer; empty output = allowed; aiva sets no timeouts.", "steps": ["b-guardrail"]},
         {"sev": "med", "title": "Code / prod drift", "why": "aiva main 0.33.3 vs prod 0.31.1 (next deploy changes history handling); KB image tag `df70f4be` matches no commit.", "steps": ["b-setup", "k-author"]},
-        {"sev": "low", "title": "Leftovers from MCI aiva", "why": "`send_sms` enabled without a token; shared `aiva-classification` examples; ignored prompt `ex_iva_guardrail_llm_base_template`.", "steps": ["b-tools", "b-classify", "b-guard-reply"]},
+        {"sev": "low", "title": "Leftovers from MCI aiva", "why": "`AGENT_ENABLED_TOOLS=[]`: no optional IVA agent tools enabled (`chatbot-ops` `prod/chatbot-ex/values.yaml:2504-2507`, `c089fee`); shared `aiva-classification` examples; ignored prompt `ex_iva_guardrail_llm_base_template`.", "steps": ["b-tools", "b-classify", "b-guard-reply"]},
         {"sev": "low", "title": "Voice answer text unused", "why": "`iva_text` is indexed but the agent reads the text-chat answer.", "steps": ["k-collections"]},
         {"sev": "low", "title": "Persian sentence splitting", "why": "TTS splits only on `. `, so questions ending in `؟` are synthesised as one long chunk.", "steps": ["v-tts"]},
         {"sev": "low", "title": "Incomplete model metrics", "why": "Exporter targets do not match LB upstreams.", "steps": ["p-metrics"]},

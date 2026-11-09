@@ -4,7 +4,9 @@ import { laneOf, modelsForStep } from "../lib/data";
 import { ctxFor } from "../lib/md";
 import { Badge, Md, Sections } from "../components/Blocks";
 import { EnTag, Facts, go } from "../components/Common";
+import { RuntimeDiagram } from "../components/RuntimeDiagram";
 import { LANE_COLOR } from "../components/map/shared";
+import { STEP_NODE } from "../lib/runtimeDiagram";
 import { T } from "../components/map/i18n";
 import "./stepPanel.css";
 
@@ -12,7 +14,7 @@ import "./stepPanel.css";
  * Deep dive for one step. A side panel on desktop (docks left in RTL); a bottom sheet below 860px that
  * can be expanded, so the diagram stays visible and usable above it.
  */
-export function StepPanel({ d, id, tour = false }: { d: Data; id: string; tour?: boolean }) {
+export function StepPanel({ d, id, tour = false, theme = "dark" }: { d: Data; id: string; tour?: boolean; theme?: "dark" | "light" }) {
   const ref = useRef<HTMLElement>(null);
   const [tall, setTall] = useState(false);
   useEffect(() => { ref.current?.scrollTo({ top: 0 }); }, [id]);
@@ -42,6 +44,7 @@ export function StepPanel({ d, id, tour = false }: { d: Data; id: string; tour?:
         </div>
       )}
       <Facts page={s} d={d} depth={1} />
+      {STEP_NODE[id] && <RuntimeDiagram id="aiva" lang={d.lang} theme={theme} node={STEP_NODE[id]} />}
       <Sections sections={s.sections} ctx={ctx} />
       <div className="pn">
         {prev ? <button onClick={() => go(`#/step/${prev}`)}>{d.ui.prev} {d.steps[prev].title_plain ?? d.steps[prev].title}</button> : <span />}

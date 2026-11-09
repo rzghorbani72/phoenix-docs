@@ -1,0 +1,504 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phoenix HR Start Here</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;700;800&display=swap">
+<style>
+/* Layout: sticky table of contents + main column; each section answers one common question about the project and links to the reference document. */
+:root{
+  --bg:#f6f7f9; --surface:#ffffff; --fg:#14202b; --muted:#5b6b7a; --line:#dde3ea;
+  --accent:#0b6e8a; --accent-soft:#e1f1f5;
+  --ok:#17794a; --ok-soft:#e2f4ea; --warn:#9a5b00; --warn-soft:#fdf0d8; --risk:#b3261e; --risk-soft:#fbe5e3;
+  --code:#eef1f5;
+  --font:"Vazirmatn",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1720; --surface:#16212c; --fg:#e6edf3; --muted:#9bacbb; --line:#27384a;
+  --accent:#5cc0dc; --accent-soft:#12303b;
+  --ok:#5fd495; --ok-soft:#12301f; --warn:#f0b955; --warn-soft:#352a10; --risk:#ff8a80; --risk-soft:#3a1816;
+  --code:#1d2a37; color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--fg);font-family:var(--font);font-size:15px;line-height:1.85;
+  padding-block:24px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+a{color:var(--accent)}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:210px minmax(0,1fr);gap:32px}
+@media(max-width:860px){.wrap{grid-template-columns:minmax(0,1fr)}}
+nav{position:sticky;top:16px;align-self:start;display:flex;flex-direction:column;gap:2px;font-size:13px}
+@media(max-width:860px){nav{position:static;flex-direction:row;flex-wrap:wrap;gap:6px}}
+nav a{color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:6px}
+nav a:hover{background:var(--accent-soft);color:var(--accent)}
+main{min-width:0;display:flex;flex-direction:column;gap:28px}
+h1{font-size:28px;line-height:1.4;margin:0;font-weight:800;text-wrap:balance}
+h2{font-size:20px;margin:0;font-weight:700;text-wrap:balance}
+h3{font-size:15px;margin:0;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);max-width:70ch}
+section{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:20px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.callout{border-radius:8px;padding:10px 14px;background:var(--accent-soft);border-inline-start:3px solid var(--accent)}
+.callout.warn{background:var(--warn-soft);border-color:var(--warn)}
+.callout.risk{background:var(--risk-soft);border-color:var(--risk)}
+.tbl{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:680px;font-size:14px}
+th,td{text-align:start;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:500;letter-spacing:.02em;white-space:nowrap}
+td:first-child{font-weight:500}
+code{font-family:var(--mono);font-size:12.5px;background:var(--code);padding:1px 6px;border-radius:4px;direction:ltr;unicode-bidi:isolate}
+.id{font-family:var(--mono);font-size:12px;direction:ltr;unicode-bidi:isolate;white-space:nowrap}
+.pill{display:inline-block;font-size:11.5px;padding:1px 9px;border-radius:99px;white-space:nowrap}
+.have{background:var(--ok-soft);color:var(--ok)}
+.part{background:var(--warn-soft);color:var(--warn)}
+.miss{background:var(--risk-soft);color:var(--risk)}
+.prop{background:var(--code);color:var(--muted)}
+.router{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px}
+.router a{display:flex;flex-direction:column;gap:2px;text-decoration:none;color:var(--fg);border:1px solid var(--line);border-radius:8px;padding:10px 14px}
+.router a:hover{border-color:var(--accent);background:var(--accent-soft)}
+.router b{font-weight:700}
+.router span{font-size:12.5px;color:var(--muted)}
+ol.order{margin:0;padding-inline-start:22px;display:flex;flex-direction:column;gap:4px}
+.flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px}
+.step{border:1px solid var(--line);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.step .when{font-size:12px;color:var(--muted);letter-spacing:.02em}
+.step ul{margin:0;padding-inline-start:18px}
+.wgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+.wcard{border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.wcard header{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.wcard dl{margin:0;display:grid;grid-template-columns:72px minmax(0,1fr);gap:6px 10px;font-size:14px}
+.wcard dt{color:var(--muted);font-size:12px;padding-top:3px}
+.wcard dd{margin:0}
+.wcard ul{margin:0;padding-inline-start:18px}
+.wcard .src{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:6px}
+.wgroup{font-size:13px;color:var(--muted);letter-spacing:.02em;margin-top:6px}
+footer{color:var(--muted);font-size:12.5px}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Contents">
+  <a href="#router">Where to start</a>
+  <a href="#key">Key dossier sections</a>
+  <a href="#docs">Document map</a>
+  <a href="#pipeline">Requirements in the pipeline</a>
+  <a href="#sensitive">Sensitive and emergency calls</a>
+  <a href="#world">Global solutions</a>
+  <a href="#models">Models and levers</a>
+  <a href="#gate">Pilot gate</a>
+</nav>
+
+<main>
+<header style="display:flex;flex-direction:column;gap:10px">
+  <h1>Phoenix HR Start Here</h1>
+  <p class="lead">The starting point of the <code>product-management</code> folder. Each section gives a short answer to a common question about the project and links to the document that holds the details. IDs like <span class="id">BR-07</span> come from <a href="FEATURE_CATALOG.html">FEATURE_CATALOG.md</a>, IDs like <span class="id">PRV-10</span> from the Fit-Gap agreement, and IDs like <span class="id">SEN-01</span> from the prompt requirements document.</p>
+  <p class="callout warn">This page creates no new content; it is a summary of the documents in this folder and the <code>technical</code> folder. Wherever it says <span class="pill prop">Proposal</span>, it is my own view and has not been decided in any document.</p>
+</header>
+
+<!-- 1 -->
+<section id="router">
+  <h2>Where do I start? Find your question</h2>
+  <div class="router">
+    <a href="FIT_GAP_TRACKER.html#rows"><b>What exactly does the HR contract require?</b><span>87 UAT agreement rows, the status of each in the code, owner and deadline → Fit-Gap tracker</span></a>
+    <a href="IVA_EX_PROMPT_REQUIREMENTS.html"><b>How should the voice agent behave?</b><span>About 70 testable requirements, 25 test scenarios, release gate → Prompt PRD</span></a>
+    <a href="#sensitive"><b>How do we handle assault, harassment and emergencies?</b><span>Step-by-step flow and the responsibility of each layer → this page</span></a>
+    <a href="FEATURE_CATALOG.html"><b>What are all the features and priorities?</b><span>About 180 features in 18 areas, with P0/P1/P2, what competitors do and our status → Feature Catalog</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25"><b>What have global and Iranian competitors done?</b><span>Eight competitor categories, 13 HCMs, capability matrix, red lines → Product Dossier §25</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6"><b>What should we build, and how?</b><span>Idea portfolio (A, B, C) and build approaches → Product Dossier §25.6 and §25.6b</span></a>
+    <a href="INSPIRATION_PLAYBOOK.html#listen"><b>How do "Employee Voice" listening products work?</b><span>Perceptyx, Qualtrics, Listen Labs, Culture Amp and Iranian companies → Inspiration Playbook</span></a>
+    <a href="MARKET_ALIGNMENT.html"><b>Deputy/department access and minimum group size?</b><span>Nine product blocks, role × data-level matrix, competitors' handling of sensitive cases (§5c, §6) → Market Alignment</span></a>
+    <a href="ROADMAP.html"><b>In what order should we build?</b><span>Decision principles, waves, metrics, the first twenty days → Roadmap</span></a>
+    <a href="HR_TECH_CHECKLIST.html"><b>What do I need to know technically?</b><span>Models, ASR, aiva, COA and questions to ask the team → Technical Checklist</span></a>
+    <a href="PRODUCT_DOSSIER.html#s5"><b>What are the most critical problems in the code today?</b><span>Audio IDOR, unauthenticated API, token logging and more → Product Dossier §5</span></a>
+    <a href="ANSWER_PACK.html"><b>What do I say in a meeting with the buyer?</b><span>Selection criteria, demo scenario, ten meeting questions → Answer Pack; also <span class="id">§10</span> of the Product Dossier</span></a>
+    <a href="../technical/IVA_COA_PIPELINES.html"><b>Where does a call go, end to end?</b><span>IVA and COA diagram drawn from the code → technical folder</span></a>
+  </div>
+  <h3>Reading order for someone new to the project</h3>
+  <ol class="order">
+    <li>This page, all the way through.</li>
+    <li>The <a href="HR_TECH_CHECKLIST.html">Technical Checklist</a> for an overall picture of the system and the models.</li>
+    <li>The <a href="FIT_GAP_TRACKER.html">Fit-Gap tracker</a>, only the "needs development" and "technical review" rows.</li>
+    <li>The <a href="IVA_EX_PROMPT_REQUIREMENTS.html">Prompt PRD</a>, the chapters on red lines, scenarios and open decisions.</li>
+    <li>The <a href="FEATURE_CATALOG.html">Catalog</a>, sections 19 to 21 (judgments, release cut, red lines).</li>
+    <li>The <a href="ROADMAP.html">Roadmap</a> and <a href="MARKET_ALIGNMENT.html">Market Alignment</a>.</li>
+    <li>Keep the <a href="PRODUCT_DOSSIER.html">Product Dossier</a> as a reference, not for reading in one sitting.</li>
+  </ol>
+</section>
+
+<!-- Direct links to the key sections of the Product Dossier -->
+<section id="key">
+  <h2>Direct links to the most important sections of the Product Dossier</h2>
+  <p>These seven links open directly on the matching heading in <a href="PRODUCT_DOSSIER.html#s25">Product Dossier §25</a>. They are arranged in reading order: first "where we stand", then "what to build", then "how to build it".</p>
+  <div class="router">
+    <a href="PRODUCT_DOSSIER.html#s25-5b"><b>25.5b · Feature extraction from 13 HCM/HRIS products</b><span>Where we stand; comparison with 13 HCM/HRIS software products</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-5b-patterns"><b>Seven recurring patterns and our response</b><span>Patterns that recur across all 13 products and Phoenix's answer to each (inside 25.5b)</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6"><b>25.6 · Idea portfolio — what to build</b><span>List of ideas with priority and effort (S, M, L) and what gets reused from the current code</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6a"><b>25.6 A · Buildable on current features</b><span>Mostly configuration and domain work; the cheapest ideas</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6b-new-dev"><b>25.6 B · Requires new development</b><span>Ideas that need new code</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6c"><b>25.6 C · Ideas drawn from the 25.5b extraction</b><span>Ideas that came out of the comparison with 13 HCM/HRIS products</span></a>
+    <a href="PRODUCT_DOSSIER.html#s25-6-approaches"><b>25.6b · Approaches drawn from competitors' blogs — how to build</b><span>The previous sections say what to build; this one says how, tied to the current code and the 25.6 ideas</span></a>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="docs">
+  <h2>Document map: what each file is for</h2>
+  <p>The PDF files have the same content as the HTML file of the same name. Open the HTML version, because it has internal links.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Document</th><th>What question it answers</th><th>Audience</th><th>When to use it</th></tr></thead>
+    <tbody>
+      <tr><td><a href="FIT_GAP_TRACKER.html">Fit-Gap tracker</a><br><small>+ <a href="FIT_GAP_TRACKER.xlsx">xlsx</a></small></td><td>87 contract requirements in 8 blocks: evidence in the code, confidence, owner, conditional deadline</td><td>You (to fill in)</td><td>Every week; the main reference for commitments</td></tr>
+      <tr><td><a href="IVA_EX_PROMPT_REQUIREMENTS.html">EX agent prompt PRD</a></td><td>Voice agent behavior; requirements INT through SEC, tool contract, test scenarios, release gate, open decisions Q1 to Q8</td><td>Prompt team, IVA team, EX unit</td><td>Before any meeting with the prompt team or EX</td></tr>
+      <tr><td><a href="FEATURE_CATALOG.html">FEATURE_CATALOG.md</a></td><td>Master list of all EX product features; for each: need, options, what competitors do, our status, priority, effort</td><td>Everyone</td><td>Prioritization and estimation</td></tr>
+      <tr><td><a href="PRODUCT_DOSSIER.html">Product Dossier</a></td><td>Full catalog from the code, critical findings, risks, cost per call, scope, competitors (§25), EX features (§27)</td><td>Everyone, stakeholders</td><td>Reference; use the table of contents at the top to jump to the chapter you need</td></tr>
+      <tr><td><a href="ROADMAP.html">Roadmap</a></td><td>Decision principles, three feature layers, waves, team structure, metrics tree, the first twenty days</td><td>Everyone</td><td>Planning and reporting to management</td></tr>
+      <tr><td><a href="MARKET_ALIGNMENT.html">Market Alignment</a></td><td>MCI's needs in the market's language; deputy/department access model; sensitive cases and HR integration in competitors</td><td>Everyone</td><td>Designing access and data</td></tr>
+      <tr><td><a href="INSPIRATION_PLAYBOOK.html">Inspiration Playbook</a></td><td>Iranian and foreign companies similar to us, how each feature works and how we would build it; versioning v1 to v3</td><td>Everyone, especially developers</td><td>When you are looking for an idea or an implementation pattern</td></tr>
+      <tr><td><a href="ANSWER_PACK.html">Answer Pack</a></td><td>Response to Chargoon's HR software selection guide: criteria, demo scenario, required inputs, financial structure</td><td>EX unit and evaluation committee</td><td>Before a demo or contract meeting</td></tr>
+      <tr><td><a href="HR_TECH_CHECKLIST.html">Technical Checklist</a></td><td>Models, ASR, aiva, COA, improvements, questions for the team; with progress checkboxes</td><td>You</td><td>Technical learning</td></tr>
+      <tr><td><a href="../technical/IVA_COA_PIPELINES.html">IVA and COA pipeline</a></td><td>Diagram of the live call path and analytics, embedding, call end, gaps</td><td>Everyone</td><td>When you want to know where a piece of data comes from</td></tr>
+      <tr><td><a href="../technical/TECHNICAL_DOSSIER.html">Technical Dossier</a></td><td>Chapters 11 to 24: architecture, agentlib, aiva, IVA, CCA, AQA, Auth, Config, technical debt</td><td>Developers, CTO</td><td>Reviewing an estimate or a code review</td></tr>
+      <tr><td><a href="../technical/AI_LEARNING_GUIDE.html">AI Learning Guide</a></td><td>Concepts, Hugging Face model cards, benchmarks, Persian WER/CER, MOS, weekly routine</td><td>Everyone</td><td>Choosing or comparing models</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 3 -->
+<section id="pipeline">
+  <h2>HR requirements at each pipeline stage</h2>
+  <p>The path of a call from entry to human action, in 13 stages. For each stage: what runs there, which requirements belong to that stage, and what you need to measure to improve it.</p>
+  <p><span class="pill have">Present</span> <span class="pill part">Partial</span> <span class="pill miss">Missing</span> Status is according to the catalog and the Product Dossier, not a live test.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Stage</th><th>What runs</th><th>Requirements</th><th>Status</th><th>What to know and measure</th></tr></thead>
+    <tbody>
+      <tr><td>1. Entry and access</td><td>SBC/Kamailio, LiveKit SIP, number matching</td><td>Employee whitelist <span class="id">VIA-02</span>, <span class="id">ID-05</span>; anonymous/confidential/identified modes <span class="id">ID-01</span>; AI and recording disclosure <span class="id">SC-10</span>, <span class="id">ID-04</span></td><td><span class="pill part">Partial</span></td><td>Today the whitelist only blocks memory, not entry; and it is bypassed by default (<code>BYPASS_WHITELIST=True</code>).</td></tr>
+      <tr><td>2. Audio and turns</td><td>Silero VAD, endpointing 0.5 to 3 seconds, turn detection, barge-in</td><td><span class="id">VX-05</span> low latency, <span class="id">VX-06</span> turns, <span class="id">VOX-05</span></td><td><span class="pill have">Present</span></td><td>Time to first audio; number of times the employee is cut off. An employee talking about harassment pauses for a long time; short endpointing cuts them off.</td></tr>
+      <tr><td>3. Live ASR</td><td>ASR model on Triton, behind <code>neurobox-gateway</code>; the model name is not in the documents</td><td><span class="id">VX-01</span> Persian 8kHz, <span class="id">VOX-04</span> unintelligible input</td><td><span class="pill part">Partial</span></td><td>WER has never been measured. Measure WER separately on sensitive sentences; if "آزار" ("harassment") is misheard, every downstream layer goes blind.</td></tr>
+      <tr><td>4. Understanding and triage</td><td>aiva: classification branch, guardrail, clarifying (in parallel)</td><td><span class="id">BR-01</span> triage into four tasks, <span class="id">BR-07</span> sensitive detection, <span class="id">BR-10</span> handoff to a human</td><td><span class="pill miss">Missing</span></td><td>Classification exists but has no HR-specific schema and no sensitive detection. Classification and clarifying have no feature flag yet.</td></tr>
+      <tr><td>5. Knowledge (RAG)</td><td>Qdrant, embedding <code>text-embedding-3-large</code> or Hakim, MAX_SIM, top 10, score ≥ 0.5</td><td><span class="id">BR-02</span>, <span class="id">KB-01</span> to <span class="id">KB-04</span>, logging unanswered questions (KB-G)</td><td><span class="pill part">Partial</span></td><td>Rate of "I don't have enough information", retrieval accuracy on real questions. The catalog considers logging unanswered questions the cheapest high-value feature.</td></tr>
+      <tr><td>6. Response and behavior</td><td>ReAct in aiva with <code>gemma-4-31B-it</code> / <code>gpt-oss-120b</code>; EX prompt</td><td>The whole PRD: <span class="id">GRD</span>, <span class="id">SEN</span>, <span class="id">EMO</span>, <span class="id">MDT</span>; <span class="id">BR-06</span> no promises</td><td><span class="pill miss">Missing</span></td><td>The EX prompt has not been written yet. Critical errors must be zero across 25 scenarios × 3 variants × 5 runs.</td></tr>
+      <tr><td>7. Tools and actions</td><td>Tool registry in aiva; <code>exit_tool</code>, <code>redirect_to_human_agent</code></td><td><code>mark_sensitive_voice</code>, <code>search_knowledge_base</code>, <span class="id">AC-07</span> tool safety layer</td><td><span class="pill miss">Missing</span></td><td>There is no tool for flagging sensitive cases. Demo tools (<code>tell_joke</code>, <code>get_gold_price</code>) should be turned off for HR. <code>send_sms</code> has no rate limit.</td></tr>
+      <tr><td>8. TTS</td><td>OpenAI-compatible client, default <code>tts-1</code>; on Triton in production</td><td><span class="id">VOX-01</span> to <span class="id">VOX-03</span></td><td><span class="pill part">Partial</span></td><td>The sentence splitter is only ". "; the Persian "؟" and "،" do not split sentences, so playback starts later.</td></tr>
+      <tr><td>9. Call end</td><td>Session summary on Kafka <code>chatbot-mci-iva</code>; recording in MinIO; user memory rewrite</td><td><span class="id">ID-06</span> memory with consent, <span class="id">CLO</span></td><td><span class="pill part">Partial</span></td><td>Memory is always on for every number. The Kafka message may arrive before the recording file does.</td></tr>
+      <tr><td>10. Post-call analytics</td><td><code>grogu</code>, offline ASR on stereo MP3, <code>coa-ai</code> (LLM tagging), ClickHouse</td><td><span class="id">AN-02</span> removal of personal data, <span class="id">AN-04</span> HR classification, <span class="id">AN-11</span> risk flag, <span class="id">AN-18</span> rebuild of the analytics engine, AI Analysis block in the Fit-Gap</td><td><span class="pill miss">Missing</span></td><td><code>coa-ai</code> has not changed since 13 July 2025 and was built for a customer contact center. The MP3 output is a second compression; test 16kHz PCM/FLAC.</td></tr>
+      <tr><td>11. Storage, access, dashboard</td><td><code>coa-api</code> (Django), Postgres, ClickHouse, <code>coa-ui</code></td><td><span class="id">SC-01</span> to <span class="id">SC-06</span>, <span class="id">IN-02</span> org-unit filter, <span class="id">IN-03</span> minimum group size, <span class="id">PRV-10</span> separation of sensitive cases</td><td><span class="pill miss">Missing</span></td><td>IDOR in audio playback, chat API without application-level authentication, no audit log, role expiry date not enforced.</td></tr>
+      <tr><td>12. Human action</td><td>Outside the product: EX unit, sensitive-case reviewer</td><td><span class="id">CS-09</span> confidential queue, <span class="id">ID-08</span> emergency access to identity, <span class="id">LP-02</span>, <span class="id">LP-04</span> closing the loop</td><td><span class="pill miss">Missing</span></td><td>Who reads the alert, and within how many hours. Without "you said, we did", employees will not call a second time.</td></tr>
+      <tr><td>13. Quality and evaluation (all stages)</td><td>Only AQA has an evaluation endpoint; Arize Phoenix has not been used for traces</td><td><span class="id">QA-01</span> golden set, <span class="id">QA-06</span> human review of all sensitive cases, <span class="id">QA-07</span> logging of model and prompt versions</td><td><span class="pill miss">Missing</span></td><td>One number per stage: WER, triage accuracy, answer faithfulness to the KB, tag accuracy, sensitive recall.</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- 4 -->
+<section id="sensitive">
+  <h2>Sensitive and emergency calls: where, when and how</h2>
+  <p>Keep two paths separate. A <b>sensitive topic</b> (harassment, assault, discrimination, threats, misconduct) must be recorded carefully and reach a designated reviewer. An <b>emergency situation</b> (immediate danger to life, threat of violence, self-harm) is time-critical and cannot wait until after the call.</p>
+  <p class="callout risk">The core rule from the documents: missing a harassment case does serious harm, while over-flagging is more tolerable. The detection target in testing is 100% (PRD, risks section). That means detection must not be left to a single layer.</p>
+
+  <h3>What each layer does</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Layer</th><th>Responsibility</th><th>Owner</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td>Taxonomy</td><td>The official list of sensitive and emergency categories, with two examples for each</td><td>EX unit</td><td><span class="pill miss">Missing</span> open decision Q2</td></tr>
+      <tr><td>Prompt</td><td>Detection in conversation; listening without judgment; only the necessary questions; no predicting the outcome; saying the "recorded" sentence only if the tool confirmed it</td><td>Prompt team</td><td><span class="pill part">Written in the PRD</span> <span class="id">SEN-01..05</span></td></tr>
+      <tr><td><span class="id">Sensitive Detector</span></td><td>Keyword Rules + LLM Classifier running in parallel with the main model and overriding it for sensitive cases</td><td>aiva team</td><td><span class="pill miss">Missing</span> <span class="id">BR-01</span>, <span class="id">BR-07</span></td></tr>
+      <tr><td>Tool</td><td><code>mark_sensitive_voice(category, reason)</code>; once per sensitive call</td><td>IVA team</td><td><span class="pill miss">Missing</span></td></tr>
+      <tr><td>Alert backend</td><td>Send an alert to the designated person; that person's name and number only in backend configuration, never in the prompt</td><td>Technical team</td><td><span class="pill miss">Missing</span></td></tr>
+      <tr><td>Knowledge base</td><td>Only verified facts: recording and confidentiality policy, emergency contact, official complaint channel. The KB is not for detection</td><td>EX unit + Legal</td><td><span class="pill miss">Missing</span> Q4, Q7</td></tr>
+      <tr><td>Post-call analytics</td><td>Second net: risk flag on the full call transcript, to find cases missed during the live call</td><td>COA team</td><td><span class="pill miss">Missing</span> <span class="id">AN-11</span></td></tr>
+      <tr><td>Access and data</td><td>Separate from the regular dashboard; restricted queue; every opening logged; no long-term memory</td><td>COA team + Auth</td><td><span class="pill miss">Missing</span> <span class="id">PRV-10</span>, <span class="id">CS-09</span>, <span class="id">SC-03</span></td></tr>
+      <tr><td>Human process</td><td>Reviewer, coverage hours, response time, authority for emergency access</td><td>EX unit</td><td><span class="pill miss">Not defined</span></td></tr>
+      <tr><td>Testing</td><td>Scenario S11 with different variants, emergency scenario, end-to-end test "test call → alert received"</td><td>Prompt team + QA</td><td><span class="pill part">Designed in the PRD</span></td></tr>
+    </tbody></table></div>
+
+  <h3>Sensitive topic, step by step</h3>
+  <div class="flow">
+    <div class="step"><span class="when">Before the pilot</span><h3>Preparation</h3>
+      <ul><li>Taxonomy from EX</li><li>Approved confidentiality sentence in the KB (Q4)</li><li>Designate the reviewer and the response time</li><li>Close the IDOR and add API authentication</li></ul></div>
+    <div class="step"><span class="when">During the call, at detection</span><h3>Two-layer detection</h3>
+      <ul><li>Main model, per the prompt</li><li>Parallel <span class="id">Sensitive Detector</span> <span class="pill prop">Proposal</span></li><li>If either says sensitive, it is sensitive</li></ul></div>
+    <div class="step"><span class="when">During the call, after detection</span><h3>Behavior</h3>
+      <ul><li>No judgment, no interrupting</li><li>Do not ask for unnecessary physical or identifying details</li><li>Call the tool, then say the "it has been recorded" sentence</li><li>No promises and no predicting the outcome</li></ul></div>
+    <div class="step"><span class="when">Call end</span><h3>Recording</h3>
+      <ul><li>Sensitive flag on the Kafka summary</li><li>No long-term memory is created <span class="pill prop">Proposal</span></li><li>Alert to the reviewer</li></ul></div>
+    <div class="step"><span class="when">After the call</span><h3>Review</h3>
+      <ul><li>Restricted queue separate from the dashboard</li><li>Human review of all sensitive cases (<span class="id">QA-06</span>)</li><li>COA analytics as a second net</li><li>Two-way anonymous follow-up (<span class="id">ID-07</span>, P1)</li></ul></div>
+  </div>
+
+  <h3>Emergency situation: what is different</h3>
+  <p class="callout warn">The PRD has left this as open decision Q7 and no document has answered it yet. The points below are my proposal and must be decided with EX and the Legal unit.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Topic</th><th>Sensitive topic</th><th>Emergency situation <span class="pill prop">Proposal</span></th></tr></thead>
+    <tbody>
+      <tr><td>Alert timing</td><td>After the call (per the PRD)</td><td>Immediately, during the call</td></tr>
+      <tr><td>What the agent says</td><td>The base sensitive-recording sentence</td><td>The approved sentence and emergency contact from the KB; the agent never makes up a number or contact on its own</td></tr>
+      <tr><td>Handoff to a human</td><td>Not required</td><td>If a live human line exists, via <code>redirect_to_human_agent</code> (this tool exists in the code)</td></tr>
+      <tr><td>Caller identity</td><td>Per the call mode; not revealed in anonymous mode</td><td>Temporary emergency access with a reason, second-person approval and logging (<span class="id">ID-08</span>)</td></tr>
+      <tr><td>Call end</td><td>Normal</td><td>The agent does not end the call on its own; rule <span class="id">EMO-01</span> is applied more strictly</td></tr>
+    </tbody></table></div>
+  <p>Catalog red line: we do not build a full whistleblowing product (like NAVEX); only a private queue. Detecting individual employees' emotions is also prohibited; only aggregate use is allowed.</p>
+</section>
+
+<!-- 5 -->
+<section id="world">
+  <h2>Needs that global products have solved and that we need too</h2>
+  <p>Each card is one need: the problem in plain words, who has solved it, exactly how it works, and in which layer and what form it would be implemented for us. The bottom of each card says which document has the details.</p>
+  <p class="callout warn">All these descriptions come from the documents in this folder, and those documents took them from the companies' own websites and documentation. In other words, these are the companies' own claims. I have not re-checked them on the web; before citing them in a meeting, open the source link in that document.</p>
+
+  <p class="wgroup">Trust and anonymity</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>Stay anonymous but allow follow-up</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>An employee reporting harassment does not want to be identified, but the reviewer has questions in order to handle the case.</dd>
+        <dt>Who</dt><dd>AllVoices and Deel (anonymous employee reporting platforms)</dd>
+        <dt>How</dt><dd>The employee reports anonymously. HR can message them within the same case and the employee can reply, without their identity being revealed. Identity is disclosed only when the employee decides to do so.</dd>
+        <dt>For us</dt><dd>Data and channel layer: every call has one of three modes, anonymous, confidential or identified, and that mode is stored on the record. For follow-up, the employee gets a case code and a PIN and calls back with them. In anonymous mode no long-term memory is created.</dd>
+      </dl>
+      <p class="src"><span class="id">ID-01, ID-04, ID-06, ID-07</span> · <a href="FEATURE_CATALOG.html#3-identity-consent-and-anonymity">Catalog §3</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Misconduct reporting with a voice assistant</h3><span class="pill part">Us: architecture yes, product no</span></header>
+      <dl>
+        <dt>Problem</dt><dd>The reporter speaks in their own words, but the reviewer needs an orderly case file.</dd>
+        <dt>Who</dt><dd>NAVEX (the EthicsPoint system, one of the most widely used whistleblowing hotlines), SpeakUp (Amsterdam, more than 700 customers such as IKEA and BMW), FaceUp (Czech Republic)</dd>
+        <dt>How</dt><dd><ul>
+          <li>NAVEX Nira (1 Sep 2026): a guided two-way conversation that balances free narrative with the required case fields; multilingual; anonymity settings based on each country's law; immediate handoff to a human operator.</li>
+          <li>SpeakUp: the Sienna AI voice assistant takes a voice report and builds a structured case from it; voice messages in more than 75 languages; two-way anonymous chat.</li>
+          <li>FaceUp: a 24-hour AI line that converses, asks for context and writes the case automatically.</li></ul></dd>
+        <dt>For us</dt><dd>This is the closest pattern to our IVA (follow-up questions + handoff to a human). Per the catalog red line we do not build a full whistleblowing product; only a private queue. But we should take three things: a structured case from free narrative, immediate handoff to a human in emergencies, and anonymous follow-up. No serious player in this space has been seen in Iran.</dd>
+      </dl>
+      <p class="src"><span class="id">CS-09, BR-10</span> · <a href="PRODUCT_DOSSIER.html#s25">Product Dossier §25.2 and §25.3</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Transparency about AI and data</h3><span class="pill part">Us: partial</span></header>
+      <dl>
+        <dt>Problem</dt><dd>The employee must know they are talking to a machine and what happens to their data; a government buyer also wants proof.</dd>
+        <dt>Who</dt><dd>EU AI Act; HiBob (HR software)</dd>
+        <dt>How</dt><dd><ul>
+          <li>EU AI Act: disclosing that it is AI is mandatory. Article 5 has banned emotion recognition in the workplace since February 2025. AI in hiring and employee evaluation is "high-risk" (Annex III).</li>
+          <li>HiBob has published an "AI trust center": customer data is not used to train models and each customer's data is kept separate.</li></ul></dd>
+        <dt>For us</dt><dd>Prompt layer: the call-opening sentence that says it is AI (present in <span class="id">INT-01</span>). Analytics layer: emotion only in aggregate, never on an employee's profile. Sales layer: a trust page for the buyer. Note: the current PRD decision (<span class="id">INT-03</span>) has removed the recording announcement from the call opening.</dd>
+      </dl>
+      <p class="src"><span class="id">SC-10, SC-11</span> · <a href="PRODUCT_DOSSIER.html#s25">Product Dossier §25.8</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Voluntary listening only</h3><span class="pill have">Us: complied</span></header>
+      <dl>
+        <dt>Problem</dt><dd>The temptation to covertly analyze employees' email and chat in order to "listen" more.</dd>
+        <dt>Who</dt><dd>Culture Amp (employee experience platform, Melbourne)</dd>
+        <dt>How</dt><dd>They consider covert message analysis "hype": only 24% of HR professionals recommend their organization's listening approach, and their own experiment showed that in analyzing work messages some groups (by region, gender, tenure) are less visible.</dd>
+        <dt>For us</dt><dd>Product red line: only a voluntary, informed channel. No monitoring of email, chat or work calls.</dd>
+      </dl>
+      <p class="src"><a href="INSPIRATION_PLAYBOOK.html#listen">Inspiration Playbook, Employee Voice listening</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">Sensitive cases and access</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>Sensitive categories and a separate permission to view</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>Comments about harassment or violence should not appear on the regular dashboard alongside everything else.</dd>
+        <dt>Who</dt><dd>Workday Peakon and Microsoft Viva Glint (employee surveys and feedback analytics)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Peakon: has a word list and a few fixed categories: violence, safety, ethics and integrity, inappropriate behavior, and custom categories defined by the organization. Two separate permissions: "read sensitive comments" and "flag sensitive comments". Next to each comment it shows which managers can see it.</li>
+          <li>Glint: a separate permission for managing sensitive comments. Microsoft warns that if someone has two roles, the access rights add up and a comment may be exposed.</li></ul></dd>
+        <dt>For us</dt><dd>Classification layer: sensitive taxonomy from the EX unit. Detection layer: <span class="id">Sensitive Detector</span> (Keyword List + LLM Classifier). Access layer: a "sensitive-case reviewer" role that sees only the sensitive queue, with every opening logged.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-07, PRV-10, SC-02</span> · <a href="MARKET_ALIGNMENT.html">Market Alignment §5a and §5c</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Confidential case</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>A harassment, medical or ethics case must not reach the regular HR support teams.</dd>
+        <dt>Who</dt><dd>Workday Help and Oracle HR Case Management (the HR service desk in two large HCMs)</dd>
+        <dt>How</dt><dd>A "confidential" case type is defined. These cases are routed only to the authorized team, and others cannot even see that they exist. Routing and SLA are also configured separately for each type.</dd>
+        <dt>For us</dt><dd>Data and access layer: a separate confidential queue. Never synced to an external system. Every access is logged. Anonymous follow-up uses the "Stay anonymous" card.</dd>
+      </dl>
+      <p class="src"><span class="id">CS-09, SC-03</span> · <a href="FEATURE_CATALOG.html#8-requests-cases-and-ticketing">Catalog §8</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Minimum group size in reports</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>If a manager sees the results of a three-person group, they can guess who said what.</dd>
+        <dt>Who</dt><dd>Viva Glint, Culture Amp, Workday Peakon</dd>
+        <dt>How</dt><dd><ul>
+          <li>Glint: numbers and charts from 5 people up (can be lowered to 3); comment text from 10 people. If one group is hidden, it also hides the neighboring group so it cannot be inferred by subtraction.</li>
+          <li>Culture Amp: at least 5 people. A filter that takes the group below the minimum is not applied, even when combined with another filter.</li>
+          <li>Peakon: 5 distinct people within a year; when two groups overlap, it counts distinct individuals.</li></ul></dd>
+        <dt>For us</dt><dd>The reporting API layer in <code>coa-api</code>. The Market Alignment document proposes: 5 distinct employees for numbers, 10 distinct employees for summaries. A phone-specific point: one person may call ten times; employees must be counted, not calls. Survey-based competitors do not have this problem.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-03, PRV-05</span> · <a href="MARKET_ALIGNMENT.html">Market Alignment §5b</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Each manager sees only their own reporting line</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>The manager of one department must not see another department's data, and after an org restructuring, historical data must not shift.</dd>
+        <dt>Who</dt><dd>Qualtrics EX, Medallia, NICE CXone</dd>
+        <dt>How</dt><dd><ul>
+          <li>Qualtrics: the manager opens the dashboard and automatically sees only their own reporting line. The org tree is updated automatically from the HR system. Historical data is shown with the structure of that time.</li>
+          <li>Medallia: a unit can belong to several trees at once (geographic and business).</li>
+          <li>NICE CXone (contact center): separate permissions for playing audio, downloading audio, viewing transcripts and exporting; redaction of sensitive information from transcripts and audio; a log for every search and playback.</li></ul></dd>
+        <dt>For us</dt><dd>Data layer: OrgUnit tables (with a full path such as <code>1.4.17</code>), Person with a masked code, and ScopeGrant for each user's access. On every message, store the employee's unit at the time of the call. Security layer: fix the audio IDOR and add a separate permission for audio.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-02, SC-02, SC-04, AN-02</span> · <a href="MARKET_ALIGNMENT.html">Market Alignment §5a and §6</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">Analytics and alerts</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>Rules on the call transcript, then an alert</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>A case missed during the live call must be found later, and an important issue must reach the person responsible.</dd>
+        <dt>Who</dt><dd>Amazon Connect Contact Lens (AWS call analytics); Qualtrics</dd>
+        <dt>How</dt><dd><ul>
+          <li>Contact Lens: the manager defines rules (word or phrase, sentiment, category). If the call transcript matches a rule, the call is categorized and a Task or alert is created. Separately, it discovers new topics automatically.</li>
+          <li>Qualtrics: creates tickets from responses that meet a specific condition and sends them to the person responsible.</li></ul></dd>
+        <dt>For us</dt><dd>The post-call analytics layer in COA: rules + LLM on the full call transcript. This is the second net for sensitive detection. If a case is found that was not flagged during the call, it goes to the sensitive queue.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-11, IN-05</span> · <a href="FEATURE_CATALOG.html#9-conversation-analytics-tags-categories-enrichment">Catalog §9</a>; <a href="PRODUCT_DOSSIER.html#s27">Product Dossier §27.3c</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Accurate analysis of employee feedback</h3><span class="pill part">Us: partial</span></header>
+      <dl>
+        <dt>Problem</dt><dd>Extract reliable topic, intent and sentiment from free text, without leaking people's names.</dd>
+        <dt>Who</dt><dd>Perceptyx (Employee Voice listening platform)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Topics via three methods at once: a model trained on labeled samples, a keyword list, and automatic discovery of new topics.</li>
+          <li>Intent of each comment: praise, request, suggestion, need or concern.</li>
+          <li>Before sending to the language model, people's names are masked with a named-entity recognition model.</li>
+          <li>Accuracy benchmark: four organizational psychologists labeled 1,000 comments and disagreed among themselves in 7% of cases. A small fine-tuned model reached 89.4% accuracy, almost equal to the large model but cheaper.</li></ul></dd>
+        <dt>For us</dt><dd>COA analytics layer: masking names and numbers before storage, an intent column next to sentiment, discovery of new topics, and a Persian benchmark of 1,000 anonymized segments from pilot calls.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-02, AN-04, AN-05, AN-14</span> · <a href="INSPIRATION_PLAYBOOK.html#listen">Inspiration Playbook, Perceptyx</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Automatic evaluation of every call</h3><span class="pill part">Us: partial</span></header>
+      <dl>
+        <dt>Problem</dt><dd>Without numbers you cannot say the assistant works correctly; listening to a few calls by hand is not enough.</dd>
+        <dt>Who</dt><dd>Google Quality AI, Observe.AI, Level AI, Calabrio (contact center quality evaluation)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Every call is scored against an evaluation form, not a sample of calls. For each answer, the evidence sentence, its timestamp in the call and a short reason are given.</li>
+          <li>Google has calibration sets and sampling rules for human review.</li>
+          <li>Form rule (Calabrio): yes/no questions, each question one observable behavior, with an explanation and an example for each option.</li>
+          <li>Calls the model is unsure about are flagged for human review.</li></ul></dd>
+        <dt>For us</dt><dd>Evaluation layer: the same engine measures the quality of our own assistant ("Was the follow-up question appropriate?", "Did it make a promise?"). All sensitive calls get human review. The PRD scenarios are the first golden set.</dd>
+      </dl>
+      <p class="src"><span class="id">AN-16, QA-01, QA-06</span> · <a href="INSPIRATION_PLAYBOOK.html#quality">Inspiration Playbook, call evaluation</a></p>
+    </article>
+  </div>
+
+  <p class="wgroup">Conversation quality</p>
+  <div class="wgrid">
+    <article class="wcard">
+      <header><h3>Targeted follow-up questions, not a form</h3><span class="pill part">Us: in the code, but not its rules</span></header>
+      <dl>
+        <dt>Problem</dt><dd>A vague answer like "things are bad" is not usable, but too many questions tire the employee out.</dd>
+        <dt>Who</dt><dd>Qualtrics, Perceptyx, Listen Labs (AI interviews at scale)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Qualtrics: AI reads the open answer and, if it is vague, asks one follow-up question about that same point. About 40% of respondents expanded their answer.</li>
+          <li>Perceptyx: conversation instead of a form; the assistant reaches out on its own at key moments (such as the end of a probation period).</li>
+          <li>Listen Labs: for each question a follow-up depth is set (none, only if the answer was short, once, two to three times) plus a "probing instruction" stating exactly what to look for.</li></ul></dd>
+        <dt>For us</dt><dd>Prompt layer: the <span class="id">FUP</span> and <span class="id">INF</span> rules in the PRD. aiva layer: the clarifying branch exists; the Inspiration document proposes that each line (pilot, exit interview) have a "conversation plan" with a question depth for each topic.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-03</span> · <a href="IVA_EX_PROMPT_REQUIREMENTS.html#fup">PRD, follow-up questions</a>; <a href="INSPIRATION_PLAYBOOK.html#listen">Inspiration Playbook</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>An assistant that does not guess</h3><span class="pill part">Us: partial</span></header>
+      <dl>
+        <dt>Problem</dt><dd>When a language model needs a code, date or number, it makes up something that "looks right".</dd>
+        <dt>Who</dt><dd>Moveworks (employee assistant, now part of ServiceNow)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Every required value is a defined "slot". Options are read from the system of record and the model only chooses among them. The selected value is locked.</li>
+          <li>It asks a question only when there is ambiguity.</li>
+          <li>"Resolved" is counted with separate events; if the user gives up and leaves, it is not resolved.</li></ul></dd>
+        <dt>For us</dt><dd>Prompt layer: <span class="id">KB-01</span> and <span class="id">KB-04</span> (only from the knowledge base). Tool layer: for personal tasks, slot + reading from the system + verbal confirmation ("مرخصی استحقاقی، شنبه ۱۲ مهر؛ درست است؟" ("Annual leave, Saturday 12 Mehr; is that right?")). Measurement layer: if the same number calls again within 72 hours, count it as unresolved.</dd>
+      </dl>
+      <p class="src"><span class="id">BR-02, BR-04, VX-08, QA-04</span> · <a href="INSPIRATION_PLAYBOOK.html#helpdesk">Inspiration Playbook, Moveworks</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>A report where every sentence has evidence</h3><span class="pill part">Us: partial</span></header>
+      <dl>
+        <dt>Problem</dt><dd>A manager will not trust an AI summary if they cannot see where it came from.</dd>
+        <dt>Who</dt><dd>Lattice (performance management); Rippling (HR platform)</dd>
+        <dt>How</dt><dd><ul>
+          <li>Lattice: every sentence of the report links to its specific source. If data is scarce, it writes "not enough information" instead of a generic sentence. Decisions and sending rest with a human only.</li>
+          <li>Rippling: the answer is shown together with its underlying query. The assistant sees only the data the user is allowed to see.</li></ul></dd>
+        <dt>For us</dt><dd>Dashboard layer: each topic in the monthly report refers to a few anonymized quotes; below the threshold, it says "not enough data". AQA layer: the query and the row count next to each chart; the user's role is passed to the query.</dd>
+      </dl>
+      <p class="src"><span class="id">IN-06</span> · <a href="INSPIRATION_PLAYBOOK.html#data">Inspiration Playbook, asking the data</a></p>
+    </article>
+
+    <article class="wcard">
+      <header><h3>Closing the loop: "you said, we did"</h3><span class="pill miss">Us: missing</span></header>
+      <dl>
+        <dt>Problem</dt><dd>If an employee does not see that what they said had an effect, they will not call a second time.</dd>
+        <dt>Who</dt><dd>Qualtrics, Viva Glint, Culture Amp</dd>
+        <dt>How</dt><dd><ul>
+          <li>Qualtrics: only 48% of employees say they have seen the effect of their feedback; wherever the organization listened more and acted, engagement nearly doubled.</li>
+          <li>Glint and Culture Amp: an action plan for each topic with an owner and a due date. Culture Amp has an AI Coach for managers that helps with difficult conversations and interpreting results.</li></ul></dd>
+        <dt>For us</dt><dd>Product and process layer: each main topic has an owner; an action plan with a due date and status; after each cycle, IVA says what was done in the greeting, at the end of the call or by SMS. This does not force the agent to make promises, because the organization is the one announcing the action.</dd>
+      </dl>
+      <p class="src"><span class="id">LP-01, LP-02, LP-04</span> · <a href="FEATURE_CATALOG.html#11-closing-the-loop-action-on-insights">Catalog §11</a></p>
+    </article>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="models">
+  <h2>AI models and the improvement lever for each</h2>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Model today</th><th>Measurement metric</th><th>Improvement lever</th></tr></thead>
+    <tbody>
+      <tr><td>VAD</td><td>Silero (ONNX)</td><td>Speech cut-offs, missed silences</td><td>Threshold and minimum silence in <code>config.py</code></td></tr>
+      <tr><td>Turn detection</td><td>Fixed endpointing; <code>mci</code> and <code>openai</code> modes off</td><td>Response latency, speech cut-offs</td><td>Turn on semantic detection</td></tr>
+      <tr><td>ASR</td><td><b>Name not in the documents</b>; Triton</td><td>Persian telephone WER and CER, separately for sensitive words</td><td>Golden set, 16kHz format with no second compression, organizational vocabulary, use of <code>transcript_confidence</code></td></tr>
+      <tr><td>Embedding</td><td><code>text-embedding-3-large</code> or Hakim</td><td>Retrieval accuracy on real questions</td><td>More paraphrases in the KB, score threshold</td></tr>
+      <tr><td>Conversation LLM</td><td><code>gemma-4-31B-it</code>, <code>gpt-oss-120b</code>; seven separate roles</td><td>PRD critical errors, faithfulness to the KB, latency</td><td>Small model for classification and large for answers; prompt under 2,500 tokens; low temperature</td></tr>
+      <tr><td>TTS</td><td>Default <code>tts-1</code>; production on Triton</td><td>MOS, correct reading of numbers</td><td>Persian sentence splitter, short first chunk</td></tr>
+      <tr><td>COA tagging</td><td>LLM behind <code>coa-ai</code>; model and prompt not in the documents</td><td>Tag accuracy against human labels</td><td>Rebuild the engine with evaluation (<span class="id">AN-18</span>)</td></tr>
+      <tr><td>Emotion and Gender</td><td>Available on Triton</td><td>—</td><td>Aggregate only; individual emotion detection is a red line</td></tr>
+    </tbody></table></div>
+  <p>More details in the <a href="HR_TECH_CHECKLIST.html#models">Technical Checklist</a> and the <a href="../technical/AI_LEARNING_GUIDE.html#voice">voice chapter of the AI Learning Guide</a>.</p>
+</section>
+
+<!-- 7 -->
+<section id="gate">
+  <h2>Pilot gate: what is needed before the first real employee call</h2>
+  <p>From the catalog's Release R0 and the PRD release gate. The catalog has 54 P0 features; these are the ones directly related to HR and trust.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Group</th><th>Items</th><th>Source</th></tr></thead>
+    <tbody>
+      <tr><td>Security</td><td>Authentication on every API, auditing, fixing the audio IDOR, removing tokens from logs, enforcing role expiry</td><td class="id">SC-01, 03, 04, 05, 06</td></tr>
+      <tr><td>Identity and consent</td><td>Call modes, explicit consent, entry control, memory with consent, emergency access</td><td class="id">ID-01, 04, 05, 06, 08</td></tr>
+      <tr><td>Data and reporting</td><td>Org-unit filter, minimum group size, controlled export, removal of personal data</td><td class="id">IN-02, 03, 13 · AN-02</td></tr>
+      <tr><td>Agent behavior</td><td>No promises, sensitive detection, tool safety</td><td class="id">BR-06, BR-07, AC-07</td></tr>
+      <tr><td>PRD gate</td><td>Zero critical errors; voice test of 10 scenarios; written EX approval of 20 scripts; open decisions closed; end-to-end test of the sensitive alert</td><td><a href="IVA_EX_PROMPT_REQUIREMENTS.html#accept">PRD, release gate</a></td></tr>
+      <tr><td>EX decisions</td><td>Taxonomy (Q2), confidentiality sentence (Q4), emergency path (Q7), recording announcement at call start (INT-03)</td><td><a href="IVA_EX_PROMPT_REQUIREMENTS.html#open">PRD, open decisions</a></td></tr>
+    </tbody></table></div>
+</section>
+
+<footer>
+  Built from the documents in this folder and the <code>technical</code> folder, 31 Oct 2026. Code baseline in the documents: commit <code>cb570a50b</code> (6 Oct 2026). When a new document is added to the folder, add a row to the "Document map".
+</footer>
+</main>
+</div>
+</body>
+</html>

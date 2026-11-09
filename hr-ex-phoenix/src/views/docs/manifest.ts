@@ -29,6 +29,26 @@ export const fileUrl = (f: DocFile) => encodeURI(f.path);
 
 export const fileName = (f: DocFile) => f.path.split("/").pop() ?? f.path;
 
+/** Key shared by the EN and FA versions of a document: the file stem without "_FA" (AI_LEARNING_GUIDE). */
+export const docKey = (path: string) => (path.split("/").pop() ?? path).replace(/\.[^.]+$/, "").replace(/_FA$/i, "");
+
+/** Same key for twin entries (X and X_FA in one folder), for the library's one-card-per-document view. */
+export const twinKey = (e: DocEntry) => e.id.replace(/_FA$/i, "");
+
+/** HTML documents shown inside the app (#/doc/<key>), with the file of each language that exists. */
+export const HTML_DOCS: Map<string, Partial<Record<"en" | "fa", { entry: DocEntry; file: DocFile }>>> = (() => {
+  const m = new Map<string, Partial<Record<"en" | "fa", { entry: DocEntry; file: DocFile }>>>();
+  for (const entry of DOCS) for (const file of entry.files) {
+    if (file.type !== "html") continue;
+    const k = docKey(file.path);
+    m.set(k, { ...m.get(k), [entry.lang]: { entry, file } });
+  }
+  return m;
+})();
+
+/** In-app route of an HTML document, optionally at an anchor inside it. */
+export const docRoute = (key: string, anchor = "") => `#/doc/${encodeURIComponent(key)}${anchor ? `/${anchor}` : ""}`;
+
 export function fmtSize(bytes: number, lang: "en" | "fa"): string {
   const loc = lang === "fa" ? "fa-IR" : "en-US";
   const [n, u] = bytes >= 1048576 ? [bytes / 1048576, "MB"] : [bytes / 1024, "KB"];

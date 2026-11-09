@@ -17,7 +17,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 APP = Path(__file__).resolve().parents[1]
-WORKSPACE = APP.parent
+WORKSPACE = APP  # the app is its own git repository
 CACHE = APP / ".source-sync"
 STATE = CACHE / "state.json"
 RESULT = CACHE / "changed-docs.json"
@@ -36,6 +36,9 @@ SOURCES = {
         "documented": "dd851385e",
     },
 }
+
+
+RUNTIME_DIAGRAMS = {"aiva": "aiva-runtime.html", "aiva-poll": "aiva-poll-runtime.html"}
 
 
 def run(args: list[str], *, cwd: Path | None = None, check: bool = True) -> str:
@@ -99,8 +102,8 @@ def main() -> int:
 
     dirty = run([
         "git", "-C", str(WORKSPACE), "status", "--porcelain", "--untracked-files=all",
-        "--", "hr-ex-phoenix/content", "hr-ex-phoenix/scripts/docs",
-        "hr-ex-phoenix/public/phoenix-pipelines.drawio",
+        "--", "content", "scripts/docs",
+        "public/phoenix-pipelines.drawio", "public/diagrams",
     ])
     if dirty:
         raise RuntimeError(
@@ -131,6 +134,7 @@ as the authority. Update the app's interactive diagrams only for verified change
 the EX pipelines, models, integrations, or risks; unrelated changes do not belong in this app.
 Keep file:line and commit evidence current, label inference, and do not claim product behavior
 from commit messages alone. Do not commit, push, or broaden the HR/EX scope.
+Never edit `content/instances_snapshot.json`; it is generated from chatbot-ops after this review.
 
 If documentation changed, regenerate the app data and Draw.io file with `npm run content` from
 `{APP}`. Do not run tests. End with a short summary of changes or why no documentation update was
@@ -153,13 +157,21 @@ Upstream changes:
     if result.returncode:
         raise RuntimeError(f"Codex review failed with exit code {result.returncode}")
 
+    # The app shows these generated diagrams as they are, so they are copied, never reviewed.
+    for name, target in RUNTIME_DIAGRAMS.items():
+        source = repositories["phoenix"] / "python" / name / "docs" / "aiva-runtime-architecture.html"
+        shutil.copyfile(source, APP / "public" / "diagrams" / target)
+
+    # Facts for the Instances section. Deterministic, so it is not left to the review above, and it
+    # runs after it because a failed review must not leave content/ dirty for the next run.
+    run([sys.executable, str(APP / "scripts" / "build_instances.py"), "--ops", str(repositories["chatbot-ops"])])
     run(["npm", "run", "content"], cwd=APP)
     status = run([
         "git", "-C", str(WORKSPACE), "status", "--porcelain", "--untracked-files=all",
-        "--", "hr-ex-phoenix/content", "hr-ex-phoenix/scripts/docs",
-        "hr-ex-phoenix/public/phoenix-pipelines.drawio",
+        "--", "content", "scripts/docs",
+        "public/phoenix-pipelines.drawio", "public/diagrams",
     ])
-    changed_docs = [line[3:] for line in status.splitlines() if len(line) > 3]
+    changed_docs = [line.split(None, 1)[1] for line in status.splitlines() if len(line.split(None, 1)) == 2]
     RESULT.write_text(json.dumps(changed_docs, indent=2) + "\n", encoding="utf-8")
     STATE.write_text(json.dumps(current, indent=2) + "\n", encoding="utf-8")
     summary = last_message.read_text(encoding="utf-8").strip() if last_message.exists() else "No summary returned."
